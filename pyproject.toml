@@ -1,0 +1,56 @@
+[project]
+name = "dart-tools"
+version = "0.1.0"
+description = "The Dart CLI and Python Library"
+readme = "README.md"
+requires-python = ">=3.7"
+
+license = {file = "LICENSE"}
+keywords = ["dart", "cli", "projectmanagement", "taskmanagement"]
+authors = [
+  { name="Dart Software Team", email="software@itsdart.com" }
+]
+maintainers = [
+  { name="Dart Software Team", email="software@itsdart.com" }
+]
+classifiers=[
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Office/Business",
+    "Topic :: Office/Business :: Groupware",
+    "Topic :: Office/Business :: Scheduling",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+  "pick",
+  "requests"
+]
+
+[project.urls]
+"Homepage" = "https://www.itsdart.com/?nr=1"
+"Web App" = "https://app.itsdart.com/"
+"Help Center" = "https://its-dart.notion.site/Dart-Help-Center-8206a2aa2956496f8988b7b32cdcd205"
+"Bugs and Features" = "https://github.com/its-dart/dart-tools/issues"
+"Library Source" = "https://github.com/its-dart/dart-tools/"
+
+[project.scripts]
+dart = "dart:cli"
+
+[build-system]
+requires = ["setuptools>=43.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
