@@ -1,8 +1,16 @@
-# dart-tools
+<div align="center">
+  <h1>Dart Tools</h1>
+  <p>
+    <a href="https://pypi.org/project/dart-tools"><img src="https://img.shields.io/pypi/v/dart-tools.svg" alt="PyPI"></a>
+    <a href="tox.ini"><img src="https://img.shields.io/pypi/pyversions/dart-tools" alt="Supported Python Versions"></a>
+    <br/>
+    <a href="LICENSE"><img src="https://img.shields.io/github/license/its-dart/dart-tools" alt="License"></a>
+  </p>
+</div>
 
 [Dart](https://itsdart.com?nr=1) is Project Management on Autopilot.
 
-This is the Dart CLI and Python Library. It enables direct interation with Dart through a terminal CLI or through Python.
+`dart-tools` is the Dart CLI and Python Library. It enables direct interation with Dart through a terminal CLI or through Python.
 
 
 ## Setup
