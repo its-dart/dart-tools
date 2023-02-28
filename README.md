@@ -10,7 +10,7 @@
 
 [Dart](https://itsdart.com?nr=1) is Project Management on Autopilot.
 
-`dart-tools` is the Dart CLI and Python Library. It enables direct interation with Dart through a terminal CLI or through Python.
+`dart-tools` is the Dart CLI and Python Library. It enables direct integration with Dart through a terminal CLI or through Python.
 
 
 ## Setup
