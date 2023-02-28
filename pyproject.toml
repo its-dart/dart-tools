@@ -1,6 +1,6 @@
 [project]
 name = "dart-tools"
-version = "0.1.0"
+version = "0.1.1"
 description = "The Dart CLI and Python Library"
 readme = "README.md"
 requires-python = ">=3.7"
@@ -8,9 +8,6 @@ requires-python = ">=3.7"
 license = {file = "LICENSE"}
 keywords = ["dart", "cli", "projectmanagement", "taskmanagement"]
 authors = [
-  { name="Dart Software Team", email="software@itsdart.com" }
-]
-maintainers = [
   { name="Dart Software Team", email="software@itsdart.com" }
 ]
 classifiers=[
