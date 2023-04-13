@@ -273,8 +273,9 @@ def begin_task():
     filtered_tasks = [
         e
         for e in user_bundle["tasks"]
-        if user_email in e["assigneeEmails"]
+        if not e["inTrash"]
         and e["dartboardDuid"] == active_duid
+        and user_email in e["assigneeEmails"]
         and e["statusDuid"] in unterm_status_duids
         and e["drafterEmail"] is None
     ]
