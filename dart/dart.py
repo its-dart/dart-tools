@@ -47,7 +47,26 @@ _CSRF_TOKEN_KEY = "csrfToken"
 _SESSION_ID_KEY = "sessionId"
 
 _DUID_CHARS = string.ascii_lowercase + string.ascii_uppercase + string.digits + "-_"
-_TERM_STATUS_KINDS = {"Finished", "Canceled"}
+_COMPLETED_STATUS_KINDS = {"Finished", "Canceled"}
+_DEFAULT_DESCRIPTION = {
+    "root": {
+        "direction": None,
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1,
+        "children": [
+            {
+                "direction": None,
+                "format": "",
+                "indent": 0,
+                "type": "paragraph",
+                "version": 1,
+                "children": [],
+            }
+        ],
+    }
+}
 
 
 # TODO dedupe these functions with other usages elsewhere
@@ -268,7 +287,7 @@ def begin_task():
     unterm_status_duids = {
         e["duid"]
         for e in user_bundle["statuses"]
-        if e["kind"] not in _TERM_STATUS_KINDS
+        if e["kind"] not in _COMPLETED_STATUS_KINDS
     }
     filtered_tasks = [
         e
@@ -325,7 +344,7 @@ def create_task(title):
         "dartboardUuid": active_uuid,
         "order": order,
         "title": title,
-        "description": "",
+        "description": _DEFAULT_DESCRIPTION,
         "statusDuid": status_duid,
         "assigneeEmails": [user_email],
         "subscriberEmails": [user_email],
