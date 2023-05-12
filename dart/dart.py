@@ -6,6 +6,7 @@
 import argparse
 from collections import defaultdict
 from getpass import getpass
+from importlib.metadata import version
 import json
 import os
 import random
@@ -25,6 +26,7 @@ _PROD_HOST = "https://app.itsdart.com"
 _DEV_HOST = "http://localhost:5173"
 _HOST_MAP = {"prod": _PROD_HOST, "dev": _DEV_HOST}
 
+_VERSION_CMD = "--version"
 _SET_HOST_CMD = "sethost"
 _LOGIN_CMD = "login"
 _CREATE_TASK_CMD = "createtask"
@@ -241,6 +243,10 @@ def _check_response_and_maybe_exit(response):
         sys.exit(1)
 
 
+def print_version():
+    print(f"dart-tools version {version('dart-tools')}")
+
+
 def login():
     config = _Config()
     session = _Session(config)
@@ -360,6 +366,10 @@ def create_task(title):
 
 
 def cli():
+    if _VERSION_CMD in sys.argv:
+        print_version()
+        sys.exit(0)
+
     parser = argparse.ArgumentParser(
         prog="dart", description="A CLI to interact with Dart"
     )

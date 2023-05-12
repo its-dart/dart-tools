@@ -1,9 +1,9 @@
 [project]
 name = "dart-tools"
-version = "0.1.3"
+version = "0.1.4"
 description = "The Dart CLI and Python Library"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 
 license = {file = "LICENSE"}
 keywords = ["dart", "cli", "projectmanagement", "taskmanagement"]
@@ -20,7 +20,6 @@ classifiers=[
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
