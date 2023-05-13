@@ -14,7 +14,6 @@ import re
 import string
 import subprocess
 import sys
-from uuid import uuid4
 
 from pick import pick
 import requests
@@ -329,11 +328,11 @@ def create_task(title):
     user_bundle = _get_full_user_bundle(session)
 
     user_email = user_bundle["user"]["email"]
-    active_uuid = next(
-        e["uuid"] for e in user_bundle["dartboards"] if e["kind"] == "Active"
+    active_duid = next(
+        e["duid"] for e in user_bundle["dartboards"] if e["kind"] == "Active"
     )
     first_order = min(
-        e["order"] for e in user_bundle["tasks"] if e["dartboardUuid"] == active_uuid
+        e["order"] for e in user_bundle["tasks"] if e["dartboardDuid"] == active_duid
     )
     order = get_orders_between(None, first_order, 1)[0]
     status_duid = next(
@@ -345,9 +344,8 @@ def create_task(title):
     print("Creating task")
     task = {
         "duid": _make_duid(),
-        "uuid": str(uuid4()),
         "drafterEmail": None,
-        "dartboardUuid": active_uuid,
+        "dartboardDuid": active_duid,
         "order": order,
         "title": title,
         "description": _DEFAULT_DESCRIPTION,
