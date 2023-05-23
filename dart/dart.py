@@ -79,6 +79,10 @@ def _run_cmd(cmd):
     return subprocess.check_output(cmd, shell=True).decode()
 
 
+def _get_task_url(host, duid):
+    return f"{host}/search?t={duid}"
+
+
 class _Config:
     def __init__(self):
         if os.path.isfile(_CONFIG_FPATH):
@@ -285,7 +289,8 @@ def begin_task():
 
     user_bundle = _get_full_user_bundle(session)
 
-    user_email = user_bundle["user"]["email"]
+    user = user_bundle["user"]
+    user_duid = user["duid"]
     active_duid = next(
         e["duid"] for e in user_bundle["dartboards"] if e["kind"] == "Active"
     )
@@ -299,9 +304,9 @@ def begin_task():
         for e in user_bundle["tasks"]
         if not e["inTrash"]
         and e["dartboardDuid"] == active_duid
-        and user_email in e["assigneeEmails"]
+        and user_duid in e["assigneeDuids"]
         and e["statusDuid"] in unterm_status_duids
-        and e["drafterEmail"] is None
+        and e["drafterDuid"] is None
     ]
     filtered_tasks.sort(key=lambda e: e["order"])
 
@@ -312,12 +317,16 @@ def begin_task():
             "→",
         )[1]
     ]
+
     response = session.post(_COPY_BRANCH_URL_FRAG, json={"duid": chosen_task["duid"]})
     _check_response_and_maybe_exit(response)
 
-    branch_name = _Git.make_task_name(user_email, chosen_task)
+    branch_name = _Git.make_task_name(user["email"], chosen_task)
     _Git.checkout_branch(branch_name)
 
+    print(
+        f"Started work on [{chosen_task['title']}]({_get_task_url(config.host, chosen_task['duid'])}) on branch {branch_name}"
+    )
     print("Done.")
 
 
@@ -327,7 +336,7 @@ def create_task(title):
 
     user_bundle = _get_full_user_bundle(session)
 
-    user_email = user_bundle["user"]["email"]
+    user_duid = user_bundle["user"]["duid"]
     active_duid = next(
         e["duid"] for e in user_bundle["dartboards"] if e["kind"] == "Active"
     )
@@ -341,17 +350,16 @@ def create_task(title):
         if e["kind"] == "Unstarted" and e["locked"]
     )
 
-    print("Creating task")
     task = {
         "duid": _make_duid(),
-        "drafterEmail": None,
+        "drafterDuid": None,
         "dartboardDuid": active_duid,
         "order": order,
         "title": title,
         "description": _DEFAULT_DESCRIPTION,
         "statusDuid": status_duid,
-        "assigneeEmails": [user_email],
-        "subscriberEmails": [user_email],
+        "assigneeDuids": [user_duid],
+        "subscriberDuids": [user_duid],
         "tagDuids": [],
         "priority": None,
         "size": None,
@@ -360,6 +368,7 @@ def create_task(title):
     response = session.post(_CREATE_TASK_URL_FRAG, json={"item": task})
     _check_response_and_maybe_exit(response)
 
+    print(f"Created task [{task['title']}]({_get_task_url(config.host, task['duid'])})")
     print("Done.")
 
 
