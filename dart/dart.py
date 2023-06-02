@@ -414,15 +414,21 @@ def cli():
     create_task_parser.add_argument("title", help="the title of the task")
     create_task_parser.add_argument(
         "-b",
+        "--begin",
         dest="should_begin",
         action="store_true",
         help="begin work on the task after creation",
     )
     create_task_parser.add_argument(
-        "-p", dest="priority_int", type=int, choices=_PRIORITY_MAP.keys(), help="priority"
+        "-p",
+        "--priority",
+        dest="priority_int",
+        type=int,
+        choices=_PRIORITY_MAP.keys(),
+        help="priority",
     )
     create_task_parser.add_argument(
-        "-i", dest="size", type=int, choices=_SIZES, help="size"
+        "-i", "--size", type=int, choices=_SIZES, help="size"
     )
     create_task_parser.set_defaults(func=create_task)
 
