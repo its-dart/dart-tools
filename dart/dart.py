@@ -48,6 +48,8 @@ _CSRF_TOKEN_KEY = "csrfToken"
 _SESSION_ID_KEY = "sessionId"
 
 _DUID_CHARS = string.ascii_lowercase + string.ascii_uppercase + string.digits + "-_"
+_PRIORITY_MAP = {0: "Critical", 1: "High", 2: "Medium", 3: "Low"}
+_SIZES = {1, 2, 3, 5, 8}
 _COMPLETED_STATUS_KINDS = {"Finished", "Canceled"}
 _DEFAULT_DESCRIPTION = {
     "root": {
@@ -280,10 +282,65 @@ def _get_full_user_bundle(session):
     return res
 
 
-def begin_task():
+def _begin_task(config, session, user_email, get_task):
     _Git.ensure_no_unstaged_changes()
     _Git.ensure_on_main_or_intended()
 
+    task = get_task()
+
+    response = session.post(_COPY_BRANCH_URL_FRAG, json={"duid": task["duid"]})
+    _check_response_and_maybe_exit(response)
+
+    branch_name = _Git.make_task_name(user_email, task)
+    _Git.checkout_branch(branch_name)
+
+    print(
+        f"Started work on [{task['title']}]({_get_task_url(config.host, task['duid'])}) on branch {branch_name}"
+    )
+
+
+def begin_task():
+    config = _Config()
+    session = _Session(config)
+
+    user_bundle = _get_full_user_bundle(session)
+    user = user_bundle["user"]
+
+    def _get_task():
+        user_duid = user["duid"]
+        active_duid = next(
+            e["duid"] for e in user_bundle["dartboards"] if e["kind"] == "Active"
+        )
+        unterm_status_duids = {
+            e["duid"]
+            for e in user_bundle["statuses"]
+            if e["kind"] not in _COMPLETED_STATUS_KINDS
+        }
+        filtered_tasks = [
+            e
+            for e in user_bundle["tasks"]
+            if not e["inTrash"]
+            and e["dartboardDuid"] == active_duid
+            and user_duid in e["assigneeDuids"]
+            and e["statusDuid"] in unterm_status_duids
+            and e["drafterDuid"] is None
+        ]
+        filtered_tasks.sort(key=lambda e: e["order"])
+
+        return filtered_tasks[
+            pick(
+                [e["title"] for e in filtered_tasks],
+                "Which of your active, unfinalized tasks are you beginning work on?",
+                "→",
+            )[1]
+        ]
+
+    _begin_task(config, session, user["email"], _get_task)
+
+    print("Done.")
+
+
+def create_task(title, should_begin, priority_int, size):
     config = _Config()
     session = _Session(config)
 
@@ -291,52 +348,6 @@ def begin_task():
 
     user = user_bundle["user"]
     user_duid = user["duid"]
-    active_duid = next(
-        e["duid"] for e in user_bundle["dartboards"] if e["kind"] == "Active"
-    )
-    unterm_status_duids = {
-        e["duid"]
-        for e in user_bundle["statuses"]
-        if e["kind"] not in _COMPLETED_STATUS_KINDS
-    }
-    filtered_tasks = [
-        e
-        for e in user_bundle["tasks"]
-        if not e["inTrash"]
-        and e["dartboardDuid"] == active_duid
-        and user_duid in e["assigneeDuids"]
-        and e["statusDuid"] in unterm_status_duids
-        and e["drafterDuid"] is None
-    ]
-    filtered_tasks.sort(key=lambda e: e["order"])
-
-    chosen_task = filtered_tasks[
-        pick(
-            [e["title"] for e in filtered_tasks],
-            "Which of your active, unfinalized tasks are you beginning work on?",
-            "→",
-        )[1]
-    ]
-
-    response = session.post(_COPY_BRANCH_URL_FRAG, json={"duid": chosen_task["duid"]})
-    _check_response_and_maybe_exit(response)
-
-    branch_name = _Git.make_task_name(user["email"], chosen_task)
-    _Git.checkout_branch(branch_name)
-
-    print(
-        f"Started work on [{chosen_task['title']}]({_get_task_url(config.host, chosen_task['duid'])}) on branch {branch_name}"
-    )
-    print("Done.")
-
-
-def create_task(title):
-    config = _Config()
-    session = _Session(config)
-
-    user_bundle = _get_full_user_bundle(session)
-
-    user_duid = user_bundle["user"]["duid"]
     active_duid = next(
         e["duid"] for e in user_bundle["dartboards"] if e["kind"] == "Active"
     )
@@ -361,14 +372,18 @@ def create_task(title):
         "assigneeDuids": [user_duid],
         "subscriberDuids": [user_duid],
         "tagDuids": [],
-        "priority": None,
-        "size": None,
+        "priority": _PRIORITY_MAP[priority_int],
+        "size": size,
         "dueAt": None,
     }
     response = session.post(_CREATE_TASK_URL_FRAG, json={"item": task})
     _check_response_and_maybe_exit(response)
 
     print(f"Created task [{task['title']}]({_get_task_url(config.host, task['duid'])})")
+
+    if should_begin:
+        _begin_task(config, session, user["email"], lambda: task)
+
     print("Done.")
 
 
@@ -389,13 +404,28 @@ def cli():
     set_host_parser = subparsers.add_parser(_SET_HOST_CMD, aliases="s")
     set_host_parser.add_argument("host", help="the new host: {prod|dev|[URL]}")
     set_host_parser.set_defaults(func=set_host)
+
     login_parser = subparsers.add_parser(_LOGIN_CMD, aliases="l", help="login")
     login_parser.set_defaults(func=login)
+
     create_task_parser = subparsers.add_parser(
         _CREATE_TASK_CMD, aliases="c", help="create a new task"
     )
     create_task_parser.add_argument("title", help="the title of the task")
+    create_task_parser.add_argument(
+        "-b",
+        dest="should_begin",
+        action="store_true",
+        help="begin work on the task after creation",
+    )
+    create_task_parser.add_argument(
+        "-p", dest="priority_int", type=int, choices=_PRIORITY_MAP.keys(), help="priority"
+    )
+    create_task_parser.add_argument(
+        "-i", dest="size", type=int, choices=_SIZES, help="size"
+    )
     create_task_parser.set_defaults(func=create_task)
+
     begin_task_parser = subparsers.add_parser(
         _BEGIN_TASK_CMD, aliases="b", help="begin work on a task"
     )
