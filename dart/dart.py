@@ -38,7 +38,7 @@ _CURRENT_USER_URL_FRAG = _ROOT_API_URL_FRAG + "/current-user"
 _CREATE_TASK_URL_FRAG = _ROOT_API_URL_FRAG + "/tasks/create"
 _COPY_BRANCH_URL_FRAG = _ROOT_API_URL_FRAG + "/vcs/copy-branch-link"
 
-_CONFIG_FPATH = os.path.expanduser("~/.dart")
+_CONFIG_FPATH = os.path.expanduser("~/.dart-tools")
 _CSRF_TOKEN_COOKIE = "csrftoken"
 _SESSION_ID_COOKIE = "sessionid"
 _CLIENT_DUID_KEY = "clientDuid"
