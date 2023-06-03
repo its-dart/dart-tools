@@ -87,6 +87,7 @@ def _get_task_url(host, duid):
 
 class _Config:
     def __init__(self):
+        self._content = {}
         if os.path.isfile(_CONFIG_FPATH):
             with open(_CONFIG_FPATH, "r", encoding="UTF-8") as fin:
                 self._content = json.load(fin)
