@@ -72,6 +72,8 @@ _DEFAULT_DESCRIPTION = {
     }
 }
 
+_VERSION = version("dart-tools")
+
 
 # TODO dedupe these functions with other usages elsewhere
 def _make_duid():
@@ -255,7 +257,23 @@ def _check_response_and_maybe_exit(response):
 
 
 def print_version():
-    print(f"dart-tools version {version('dart-tools')}")
+    print(f"dart-tools version {_VERSION}")
+
+
+def print_version_update_message_maybe():
+    latest = (
+        _run_cmd("pip index versions dart-tools 2>&1")
+        .rsplit("LATEST:", maxsplit=1)[-1]
+        .strip()
+    )
+    if latest == _VERSION or [int(e) for e in latest.split(".")] <= [
+        int(e) for e in _VERSION.split(".")
+    ]:
+        return
+
+    print(
+        f"A new version of dart-tools is available. To upgrade from {_VERSION} to {latest}, run\n\n\tpip install --upgrade dart-tools\n"
+    )
 
 
 def login():
@@ -395,6 +413,8 @@ def create_task(title, should_begin, priority_int, size):
 
 def cli():
     signal.signal(signal.SIGINT, _exit_gracefully)
+
+    print_version_update_message_maybe()
 
     if _VERSION_CMD in sys.argv:
         print_version()
