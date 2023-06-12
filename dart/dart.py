@@ -236,6 +236,7 @@ class _Git:
 def set_host(host):
     config = _Config()
 
+    print("Setting Dart host")
     config.host = _HOST_MAP.get(host, host)
 
     print("Done.")
@@ -381,32 +382,38 @@ def create_task(
     user_duid = user["duid"]
 
     dartboards = user_bundle["dartboards"]
-    default_dartboard = next(e for e in dartboards if e["kind"] == "Active")
-    dartboard = (
-        next((e for e in dartboards if e["title"] == dartboard_title), None)
-        if dartboard_title is not None
-        else default_dartboard
-    )
-    if dartboard is None:
-        sys.exit("No dartboard found with title '{dartboard_title}'.")
+    if dartboard_title is not None:
+        dartboard_title_norm = dartboard_title.strip().lower()
+        dartboard = next(
+            (
+                e
+                for e in dartboards
+                if dartboard_title_norm in {e["title"].lower(), e["kind"].lower()}
+            ),
+            None,
+        )
+        if dartboard is None:
+            sys.exit(f"No dartboard found with title '{dartboard_title}'.")
+    else:
+        dartboard = next(e for e in dartboards if e["kind"] == "Active")
     dartboard_duid = dartboard["duid"]
 
-    first_order = min(
+    orders = [
         e["order"] for e in user_bundle["tasks"] if e["dartboardDuid"] == dartboard_duid
-    )
+    ]
+    first_order = min(orders) if len(orders) > 0 else None
     order = get_orders_between(None, first_order, 1)[0]
 
     statuses = user_bundle["statuses"]
-    default_status = next(
-        e for e in statuses if e["kind"] == "Unstarted" and e["locked"]
-    )
-    status = (
-        next((e for e in statuses if e["title"] == status_title), None)
-        if status_title is not None
-        else default_status
-    )
-    if status is None:
-        sys.exit("No status found with title '{status_title}'.")
+    if status_title is not None:
+        status_title_norm = status_title.strip().lower()
+        status = next(
+            (e for e in statuses if e["title"].lower() == status_title_norm), None
+        )
+        if status is None:
+            sys.exit(f"No status found with title '{status_title}'.")
+    else:
+        status = next(e for e in statuses if e["kind"] == "Unstarted" and e["locked"])
     status_duid = status["duid"]
 
     users = user_bundle["users"]
@@ -414,11 +421,12 @@ def create_task(
     assignee_duids = []
     subscriber_duids = []
     if assignee_emails is not None:
-        for email in assignee_emails:
-            if email not in user_emails_to_duids:
-                sys.exit(f"No user found with email '{email}'.")
-            assignee_duids.append(user_emails_to_duids[email])
-            subscriber_duids.append(user_emails_to_duids[email])
+        for assignee_email in assignee_emails:
+            assignee_email_norm = assignee_email.strip().lower()
+            if assignee_email_norm not in user_emails_to_duids:
+                sys.exit(f"No user found with email '{assignee_email}'.")
+            assignee_duids.append(user_emails_to_duids[assignee_email_norm])
+            subscriber_duids.append(user_emails_to_duids[assignee_email_norm])
     else:
         assignee_duids.append(user_duid)
     assignee_duids = list(set(assignee_duids))
@@ -429,10 +437,11 @@ def create_task(
     tag_titles_to_duids = {e["title"]: e["duid"] for e in tags}
     tag_duids = []
     if tag_titles is not None:
-        for title in tag_titles:
-            if title not in tag_titles_to_duids:
-                sys.exit(f"No tag found with title '{title}'.")
-            tag_duids.append(tag_titles_to_duids[title])
+        for tag_title in tag_titles:
+            tag_title_norm = tag_title.strip().lower()
+            if tag_title_norm not in tag_titles_to_duids:
+                sys.exit(f"No tag found with title '{tag_title}'.")
+            tag_duids.append(tag_titles_to_duids[tag_title_norm])
 
     due_at = None
     if due_at_str is not None:
@@ -453,7 +462,7 @@ def create_task(
         "tagDuids": tag_duids,
         "priority": _PRIORITY_MAP[priority_int],
         "size": size_int,
-        "dueAt": due_at,
+        "dueAt": due_at.isoformat() if due_at is not None else None,
     }
     response = session.post(_CREATE_TASK_URL_FRAG, json={"item": task})
     _check_response_and_maybe_exit(response)
@@ -509,10 +518,10 @@ def cli():
         "-s", "--status", dest="status_title", help="status title"
     )
     create_task_parser.add_argument(
-        "-a", "--assignee", dest="assignee_emails", nargs="+", help="assignee email(s)"
+        "-a", "--assignee", dest="assignee_emails", nargs="*", help="assignee email(s)"
     )
     create_task_parser.add_argument(
-        "-t", "--tag", dest="tag_titles", nargs="+", help="tag title(s)"
+        "-t", "--tag", dest="tag_titles", nargs="*", help="tag title(s)"
     )
     create_task_parser.add_argument(
         "-p",
