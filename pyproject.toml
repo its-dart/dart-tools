@@ -33,6 +33,7 @@ classifiers=[
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
+  "dateparser",
   "pick",
   "requests"
 ]

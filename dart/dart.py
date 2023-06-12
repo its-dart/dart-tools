@@ -16,8 +16,9 @@ import string
 import subprocess
 import sys
 
-from pick import pick
+import dateparser
 import requests
+from pick import pick
 
 from .order_manager import get_orders_between
 
@@ -191,8 +192,7 @@ class _Git:
     @staticmethod
     def ensure_no_unstaged_changes():
         if _run_cmd("git status --porcelain"):
-            print("You have uncommitted changes. Please commit or stash them.")
-            sys.exit(1)
+            sys.exit("You have uncommitted changes. Please commit or stash them.")
 
     @staticmethod
     def ensure_on_main_or_intended():
@@ -242,8 +242,7 @@ def set_host(host):
 
 
 def _print_login_failure_message_and_exit():
-    print(f"Not logged in, run\n\n{sys.argv[0]} {_LOGIN_CMD}\n\nto log in.")
-    sys.exit(1)
+    sys.exit(f"Not logged in, run\n\n{sys.argv[0]} {_LOGIN_CMD}\n\nto log in.")
 
 
 def _check_response_and_maybe_exit(response):
@@ -252,8 +251,7 @@ def _check_response_and_maybe_exit(response):
     except requests.exceptions.HTTPError:
         if response.status_code in {401, 403}:
             _print_login_failure_message_and_exit()
-        print("Unknown failure, please email support@itsdart.com.")
-        sys.exit(1)
+        sys.exit("Unknown failure, please email support@itsdart.com.")
 
 
 def print_version():
@@ -286,8 +284,7 @@ def login():
 
     result = session.post(_LOGIN_URL_FRAG, json={"email": email, "password": password})
     if result.status_code in {401, 403}:
-        print("Invalid login information.")
-        sys.exit(1)
+        sys.exit("Invalid login information.")
     _check_response_and_maybe_exit(result)
 
     cookies = result.cookies.get_dict()
@@ -364,7 +361,17 @@ def begin_task():
     print("Done.")
 
 
-def create_task(title, should_begin, priority_int, size):
+def create_task(
+    title,
+    should_begin=False,
+    dartboard_title=None,
+    status_title=None,
+    assignee_emails=None,
+    tag_titles=None,
+    priority_int=None,
+    size_int=None,
+    due_at_str=None,
+):
     config = _Config()
     session = _Session(config)
 
@@ -372,33 +379,81 @@ def create_task(title, should_begin, priority_int, size):
 
     user = user_bundle["user"]
     user_duid = user["duid"]
-    active_duid = next(
-        e["duid"] for e in user_bundle["dartboards"] if e["kind"] == "Active"
+
+    dartboards = user_bundle["dartboards"]
+    default_dartboard = next(e for e in dartboards if e["kind"] == "Active")
+    dartboard = (
+        next((e for e in dartboards if e["title"] == dartboard_title), None)
+        if dartboard_title is not None
+        else default_dartboard
     )
+    if dartboard is None:
+        sys.exit("No dartboard found with title '{dartboard_title}'.")
+    dartboard_duid = dartboard["duid"]
+
     first_order = min(
-        e["order"] for e in user_bundle["tasks"] if e["dartboardDuid"] == active_duid
+        e["order"] for e in user_bundle["tasks"] if e["dartboardDuid"] == dartboard_duid
     )
     order = get_orders_between(None, first_order, 1)[0]
-    status_duid = next(
-        e["duid"]
-        for e in user_bundle["statuses"]
-        if e["kind"] == "Unstarted" and e["locked"]
+
+    statuses = user_bundle["statuses"]
+    default_status = next(
+        e for e in statuses if e["kind"] == "Unstarted" and e["locked"]
     )
+    status = (
+        next((e for e in statuses if e["title"] == status_title), None)
+        if status_title is not None
+        else default_status
+    )
+    if status is None:
+        sys.exit("No status found with title '{status_title}'.")
+    status_duid = status["duid"]
+
+    users = user_bundle["users"]
+    user_emails_to_duids = {e["email"]: e["duid"] for e in users}
+    assignee_duids = []
+    subscriber_duids = []
+    if assignee_emails is not None:
+        for email in assignee_emails:
+            if email not in user_emails_to_duids:
+                sys.exit(f"No user found with email '{email}'.")
+            assignee_duids.append(user_emails_to_duids[email])
+            subscriber_duids.append(user_emails_to_duids[email])
+    else:
+        assignee_duids.append(user_duid)
+    assignee_duids = list(set(assignee_duids))
+    subscriber_duids.append(user_duid)
+    subscriber_duids = list(set(subscriber_duids))
+
+    tags = user_bundle["tags"]
+    tag_titles_to_duids = {e["title"]: e["duid"] for e in tags}
+    tag_duids = []
+    if tag_titles is not None:
+        for title in tag_titles:
+            if title not in tag_titles_to_duids:
+                sys.exit(f"No tag found with title '{title}'.")
+            tag_duids.append(tag_titles_to_duids[title])
+
+    due_at = None
+    if due_at_str is not None:
+        due_at = dateparser.parse(due_at_str)
+        if due_at is None:
+            sys.exit(f"Could not parse due date '{due_at_str}'.")
 
     task = {
         "duid": _make_duid(),
         "drafterDuid": None,
-        "dartboardDuid": active_duid,
+        "dartboardDuid": dartboard_duid,
         "order": order,
         "title": title,
         "description": _DEFAULT_DESCRIPTION,
         "statusDuid": status_duid,
-        "assigneeDuids": [user_duid],
-        "subscriberDuids": [user_duid],
-        "tagDuids": [],
+        "assigneeDuids": assignee_duids,
+        "subscriberDuids": subscriber_duids,
+        "tagDuids": tag_duids,
         "priority": _PRIORITY_MAP[priority_int],
-        "size": size,
-        "dueAt": None,
+        "size": size_int,
+        "dueAt": due_at,
     }
     response = session.post(_CREATE_TASK_URL_FRAG, json={"item": task})
     _check_response_and_maybe_exit(response)
@@ -418,7 +473,7 @@ def cli():
 
     if _VERSION_CMD in sys.argv:
         print_version()
-        sys.exit(0)
+        return
 
     parser = argparse.ArgumentParser(
         prog="dart", description="A CLI to interact with Dart"
@@ -448,6 +503,18 @@ def cli():
         help="begin work on the task after creation",
     )
     create_task_parser.add_argument(
+        "-d", "--dartboard", dest="dartboard_title", help="dartboard title"
+    )
+    create_task_parser.add_argument(
+        "-s", "--status", dest="status_title", help="status title"
+    )
+    create_task_parser.add_argument(
+        "-a", "--assignee", dest="assignee_emails", nargs="+", help="assignee email(s)"
+    )
+    create_task_parser.add_argument(
+        "-t", "--tag", dest="tag_titles", nargs="+", help="tag title(s)"
+    )
+    create_task_parser.add_argument(
         "-p",
         "--priority",
         dest="priority_int",
@@ -456,7 +523,10 @@ def cli():
         help="priority",
     )
     create_task_parser.add_argument(
-        "-i", "--size", type=int, choices=_SIZES, help="size"
+        "-i", "--size", dest="size_int", type=int, choices=_SIZES, help="size"
+    )
+    create_task_parser.add_argument(
+        "-r", "--duedate", dest="due_at_str", help="due date"
     )
     create_task_parser.set_defaults(func=create_task)
 
