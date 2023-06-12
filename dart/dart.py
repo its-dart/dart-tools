@@ -11,6 +11,7 @@ import json
 import os
 import random
 import re
+import signal
 import string
 import subprocess
 import sys
@@ -83,6 +84,10 @@ def _run_cmd(cmd):
 
 def _get_task_url(host, duid):
     return f"{host}/search?t={duid}"
+
+
+def _exit_gracefully(_signal_received, _frame) -> None:
+    sys.exit("Quitting.")
 
 
 class _Config:
@@ -389,6 +394,8 @@ def create_task(title, should_begin, priority_int, size):
 
 
 def cli():
+    signal.signal(signal.SIGINT, _exit_gracefully)
+
     if _VERSION_CMD in sys.argv:
         print_version()
         sys.exit(0)
