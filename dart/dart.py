@@ -4,9 +4,6 @@
 """A CLI to interact with the Dart web app."""
 
 import argparse
-from collections import defaultdict
-from getpass import getpass
-from importlib.metadata import version
 import json
 import os
 import random
@@ -15,6 +12,10 @@ import signal
 import string
 import subprocess
 import sys
+from collections import defaultdict
+from datetime import timezone
+from getpass import getpass
+from importlib.metadata import version
 
 import dateparser
 import requests
@@ -236,8 +237,9 @@ class _Git:
 def set_host(host):
     config = _Config()
 
-    print("Setting Dart host")
-    config.host = _HOST_MAP.get(host, host)
+    new_host = _HOST_MAP.get(host, host)
+    print(f"Setting host to {new_host}")
+    config.host = new_host
 
     print("Done.")
 
@@ -317,7 +319,7 @@ def _begin_task(config, session, user_email, get_task):
     _Git.checkout_branch(branch_name)
 
     print(
-        f"Started work on [{task['title']}]({_get_task_url(config.host, task['duid'])}) on branch {branch_name}"
+        f"Started work on {task['title']} at {_get_task_url(config.host, task['duid'])} on branch {branch_name}"
     )
 
 
@@ -373,6 +375,7 @@ def create_task(
     size_int=None,
     due_at_str=None,
 ):
+    print(priority_int)
     config = _Config()
     session = _Session(config)
 
@@ -443,11 +446,19 @@ def create_task(
                 sys.exit(f"No tag found with title '{tag_title}'.")
             tag_duids.append(tag_titles_to_duids[tag_title_norm])
 
+    priority = None
+    if priority_int is not None:
+        priority = _PRIORITY_MAP[priority_int]
+
     due_at = None
     if due_at_str is not None:
         due_at = dateparser.parse(due_at_str)
         if due_at is None:
             sys.exit(f"Could not parse due date '{due_at_str}'.")
+        due_at = due_at.replace(
+            hour=9, minute=0, second=0, microsecond=0, tzinfo=timezone.utc
+        )
+        due_at = due_at.isoformat()[:-6] + ".000Z"
 
     task = {
         "duid": _make_duid(),
@@ -460,14 +471,14 @@ def create_task(
         "assigneeDuids": assignee_duids,
         "subscriberDuids": subscriber_duids,
         "tagDuids": tag_duids,
-        "priority": _PRIORITY_MAP[priority_int],
+        "priority": priority,
         "size": size_int,
-        "dueAt": due_at.isoformat() if due_at is not None else None,
+        "dueAt": due_at,
     }
     response = session.post(_CREATE_TASK_URL_FRAG, json={"item": task})
     _check_response_and_maybe_exit(response)
 
-    print(f"Created task [{task['title']}]({_get_task_url(config.host, task['duid'])})")
+    print(f"Created task {task['title']} at {_get_task_url(config.host, task['duid'])}")
 
     if should_begin:
         _begin_task(config, session, user["email"], lambda: task)
@@ -518,10 +529,20 @@ def cli():
         "-s", "--status", dest="status_title", help="status title"
     )
     create_task_parser.add_argument(
-        "-a", "--assignee", dest="assignee_emails", nargs="*", help="assignee email(s)"
+        "-a",
+        "--assignee",
+        dest="assignee_emails",
+        nargs="*",
+        action="extend",
+        help="assignee email(s)",
     )
     create_task_parser.add_argument(
-        "-t", "--tag", dest="tag_titles", nargs="*", help="tag title(s)"
+        "-t",
+        "--tag",
+        dest="tag_titles",
+        nargs="*",
+        action="extend",
+        help="tag title(s)",
     )
     create_task_parser.add_argument(
         "-p",
