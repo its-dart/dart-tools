@@ -1,6 +1,6 @@
 [project]
 name = "dart-tools"
-version = "0.3.5"
+version = "0.3.6"
 description = "The Dart CLI and Python Library"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -33,6 +33,7 @@ classifiers=[
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
+  "dateparser",
   "pick",
   "requests"
 ]
