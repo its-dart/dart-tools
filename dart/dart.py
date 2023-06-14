@@ -375,7 +375,6 @@ def create_task(
     size_int=None,
     due_at_str=None,
 ):
-    print(priority_int)
     config = _Config()
     session = _Session(config)
 
