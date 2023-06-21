@@ -354,7 +354,7 @@ def begin_task():
         return filtered_tasks[
             pick(
                 [e["title"] for e in filtered_tasks],
-                "Which of your active, unfinalized tasks are you beginning work on?",
+                "Which of your active, incomplete tasks are you beginning work on?",
                 "→",
             )[1]
         ]
