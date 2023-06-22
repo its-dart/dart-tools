@@ -178,7 +178,9 @@ class _Session:
 class _Git:
     @staticmethod
     def _format_for_branch(s):
-        return re.sub("[^A-Za-z0-9_]+", "-", s.lower())
+        return re.sub(
+            r"-{2,}", "-", re.sub(r"[^a-z0-9-]+", "-", s.lower().replace("'", ""))
+        ).strip("-")
 
     @staticmethod
     def make_task_name(email, task):
