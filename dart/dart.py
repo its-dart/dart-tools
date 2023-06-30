@@ -186,7 +186,13 @@ class _Git:
     def make_task_name(email, task):
         username = _Git._format_for_branch(email.split("@")[0])
         title = _Git._format_for_branch(task["title"])
-        return f"{username}/{task['duid']}-{title}"[:60]
+        long = f"{username}/{task['duid']}-{title}"
+        if len(long) <= 60:
+            return long
+        for i in range(1, 11):
+            if long[60 - i] == "-":
+                return long[: 60 - i]
+        return long[:60]
 
     @staticmethod
     def get_current_branch():
