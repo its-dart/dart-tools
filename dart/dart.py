@@ -281,7 +281,7 @@ def print_version_update_message_maybe():
         return
 
     print(
-        f"A new version of dart-tools is available. To upgrade from {_VERSION} to {latest}, run\n\n\tpip install --upgrade dart-tools\n"
+        f"A new version of dart-tools is available. Upgrade from {_VERSION} to {latest} with\n\n  pip install --upgrade dart-tools\n"
     )
 
 
@@ -327,7 +327,7 @@ def _begin_task(config, session, user_email, get_task):
     _Git.checkout_branch(branch_name)
 
     print(
-        f"Started work on {task['title']} at {_get_task_url(config.host, task['duid'])} on branch {branch_name}"
+        f"Started work on\n\n  {task['title']}\n  {_get_task_url(config.host, task['duid'])}\n"
     )
 
 
