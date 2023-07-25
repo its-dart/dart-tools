@@ -4,6 +4,7 @@
 """A CLI to interact with the Dart web app."""
 
 import argparse
+from functools import wraps
 import json
 import os
 import random
@@ -88,6 +89,17 @@ def _run_cmd(cmd):
 
 def _get_task_url(host, duid):
     return f"{host}/search?t={duid}"
+
+
+def suppress_exception(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        try:
+            return fn(*args, **kwargs)
+        except Exception:
+            pass
+
+    return wrapper
 
 
 def _exit_gracefully(_signal_received, _frame) -> None:
@@ -269,10 +281,12 @@ def print_version():
     print(f"dart-tools version {_VERSION}")
 
 
+@suppress_exception
 def print_version_update_message_maybe():
     latest = (
-        _run_cmd("pip index versions dart-tools 2>&1")
+        _run_cmd("pip --disable-pip-version-check index versions dart-tools 2>&1")
         .rsplit("LATEST:", maxsplit=1)[-1]
+        .split("\n", maxsplit=1)[0]
         .strip()
     )
     if latest == _VERSION or [int(e) for e in latest.split(".")] <= [
