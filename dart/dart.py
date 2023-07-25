@@ -96,8 +96,8 @@ def suppress_exception(fn):
     def wrapper(*args, **kwargs):
         try:
             return fn(*args, **kwargs)
-        except Exception:
-            pass
+        except Exception:  # pylint: disable=broad-except
+            return None
 
     return wrapper
 
