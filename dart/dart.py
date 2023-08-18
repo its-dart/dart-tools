@@ -373,6 +373,9 @@ def begin_task():
         ]
         filtered_tasks.sort(key=lambda e: e["order"])
 
+        if len(filtered_tasks) == 0:
+            sys.exit("No active, incomplete tasks found.")
+
         return filtered_tasks[
             pick(
                 [e["title"] for e in filtered_tasks],
