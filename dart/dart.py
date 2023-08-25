@@ -189,6 +189,16 @@ class _Session:
 
 class _Git:
     @staticmethod
+    def _cmd_succeeds(cmd):
+        try:
+            _run_cmd(f"{cmd} 2>&1")
+        except subprocess.CalledProcessError as ex:
+            if "128" in str(ex):
+                return False
+            raise ex
+        return True
+
+    @staticmethod
     def _format_for_branch(s):
         return re.sub(
             r"-{2,}", "-", re.sub(r"[^a-z0-9-]+", "-", s.lower().replace("'", ""))
@@ -211,9 +221,16 @@ class _Git:
         return _run_cmd("git rev-parse --abbrev-ref HEAD").strip()
 
     @staticmethod
+    def ensure_in_repo():
+        if _Git._cmd_succeeds("git rev-parse --is-inside-work-tree"):
+            return
+        sys.exit("You are not in a git repo.")
+
+    @staticmethod
     def ensure_no_unstaged_changes():
-        if _run_cmd("git status --porcelain"):
-            sys.exit("You have uncommitted changes. Please commit or stash them.")
+        if _run_cmd("git status --porcelain") == "":
+            return
+        sys.exit("You have uncommitted changes. Please commit or stash them.")
 
     @staticmethod
     def ensure_on_main_or_intended():
@@ -233,13 +250,7 @@ class _Git:
 
     @staticmethod
     def branch_exists(branch):
-        try:
-            _run_cmd(f"git rev-parse --verify {branch} 2>&1")
-        except subprocess.CalledProcessError as ex:
-            if "128" in str(ex):
-                return False
-            raise ex
-        return True
+        return _Git._cmd_succeeds(f"git rev-parse --verify {branch}")
 
     @staticmethod
     def checkout_branch(branch):
@@ -329,6 +340,7 @@ def _get_full_user_bundle(session):
 
 
 def _begin_task(config, session, user_email, get_task):
+    _Git.ensure_in_repo()
     _Git.ensure_no_unstaged_changes()
     _Git.ensure_on_main_or_intended()
 
