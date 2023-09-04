@@ -24,6 +24,7 @@ from pick import pick
 
 from .order_manager import get_orders_between
 
+_PROG = "dart"
 
 _PROD_HOST = "https://app.itsdart.com"
 _DEV_HOST = "http://localhost:5173"
@@ -276,7 +277,7 @@ def set_host(host):
 
 
 def _print_login_failure_message_and_exit():
-    sys.exit(f"Not logged in, run\n\n{sys.argv[0]} {_LOGIN_CMD}\n\nto log in.")
+    sys.exit(f"Not logged in, run\n\n{_PROG} {_LOGIN_CMD}\n\nto log in.")
 
 
 def _check_response_and_maybe_exit(response):
@@ -498,6 +499,7 @@ def create_task(
 
     task = {
         "duid": _make_duid(),
+        "sourceType": "CLI",
         "drafterDuid": None,
         "dartboardDuid": dartboard_duid,
         "order": order,
@@ -527,12 +529,12 @@ def cli():
 
     print_version_update_message_maybe()
 
-    if _VERSION_CMD in sys.argv:
+    if _VERSION_CMD in sys.argv[1:]:
         print_version()
         return
 
     parser = argparse.ArgumentParser(
-        prog="dart", description="A CLI to interact with Dart"
+        prog=_PROG, description="A CLI to interact with Dart"
     )
     subparsers = parser.add_subparsers(
         title="command",
