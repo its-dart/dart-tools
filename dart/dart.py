@@ -19,9 +19,23 @@ from getpass import getpass
 from importlib.metadata import version
 
 import dateparser
-import requests
 from pick import pick
+import requests
 
+from .generated import (
+    transactions_create,
+    ClientGenerated,
+    Operation,
+    OperationKind,
+    OperationModelKind,
+    Priority,
+    RequestBody,
+    TaskCreate,
+    TaskSourceType,
+    TaskUpdate,
+    Transaction,
+    TransactionKind,
+)
 from .order_manager import get_orders_between
 
 _PROG = "dart"
@@ -34,13 +48,13 @@ _VERSION_CMD = "--version"
 _SET_HOST_CMD = "sethost"
 _LOGIN_CMD = "login"
 _CREATE_TASK_CMD = "createtask"
+_UPDATE_TASK_CMD = "updatetask"
 _BEGIN_TASK_CMD = "begintask"
 
 _ROOT_API_URL_FRAG = "/api/v0"
 _CSRF_URL_FRAG = _ROOT_API_URL_FRAG + "/csrf-token"
 _LOGIN_URL_FRAG = _ROOT_API_URL_FRAG + "/login"
 _CURRENT_USER_URL_FRAG = _ROOT_API_URL_FRAG + "/current-user"
-_CREATE_TASK_URL_FRAG = _ROOT_API_URL_FRAG + "/tasks/create"
 _COPY_BRANCH_URL_FRAG = _ROOT_API_URL_FRAG + "/vcs/copy-branch-link"
 
 _CONFIG_FPATH = os.path.expanduser("~/.dart-tools")
@@ -53,28 +67,14 @@ _CSRF_TOKEN_KEY = "csrfToken"
 _SESSION_ID_KEY = "sessionId"
 
 _DUID_CHARS = string.ascii_lowercase + string.ascii_uppercase + string.digits + "-_"
-_PRIORITY_MAP = {0: "Critical", 1: "High", 2: "Medium", 3: "Low"}
+_PRIORITY_MAP = {
+    0: Priority.CRITICAL,
+    1: Priority.HIGH,
+    2: Priority.MEDIUM,
+    3: Priority.LOW,
+}
 _SIZES = {1, 2, 3, 5, 8}
 _COMPLETED_STATUS_KINDS = {"Finished", "Canceled"}
-_DEFAULT_DESCRIPTION = {
-    "root": {
-        "direction": None,
-        "format": "",
-        "indent": 0,
-        "type": "root",
-        "version": 1,
-        "children": [
-            {
-                "direction": None,
-                "format": "",
-                "indent": 0,
-                "type": "paragraph",
-                "version": 1,
-                "children": [],
-            }
-        ],
-    }
-}
 
 _VERSION = version("dart-tools")
 
@@ -155,6 +155,12 @@ class _Session:
         if (session_id := self._config.get(_SESSION_ID_KEY)) is not None:
             self._session.cookies.set(_SESSION_ID_COOKIE, session_id)
 
+    def get_base_url(self):
+        return self._config.host
+
+    def get_client_duid(self):
+        return self._config.client_duid
+
     def _refresh_csrf(self):
         response = self._session.get(self._config.host + _CSRF_URL_FRAG)
         response.raise_for_status()
@@ -162,29 +168,36 @@ class _Session:
         self._config.set(_CSRF_TOKEN_KEY, csrf_token)
         return csrf_token
 
-    def _get_csrf_token(self):
+    def get_csrf_token(self):
         csrf_token = self._config.get(_CSRF_TOKEN_KEY)
         if csrf_token is None:
             csrf_token = self._refresh_csrf()
         return csrf_token
 
-    def _make_headers(self, headers):
-        headers["client-duid"] = self._config.client_duid
-        headers["x-csrftoken"] = self._get_csrf_token()
-        headers["Origin"] = self._config.host
-        return headers
+    def get_headers(self):
+        return {
+            "client-duid": self._config.client_duid,
+            "Origin": self._config.host,
+            "x-csrftoken": self.get_csrf_token(),
+        }
+
+    def get_cookies(self):
+        return {
+            _SESSION_ID_COOKIE: self._config.get(_SESSION_ID_KEY),
+            _CSRF_TOKEN_COOKIE: self.get_csrf_token(),
+        }
 
     def get(self, url_frag, *args, **kwargs):
-        kwargs["headers"] = self._make_headers(kwargs.get("headers", {}))
+        kwargs["headers"] = self.get_headers() | kwargs.get("headers", {})
         return self._session.get(self._config.host + url_frag, *args, **kwargs)
 
     def post(self, url_frag, *args, **kwargs):
-        kwargs["headers"] = self._make_headers(kwargs.get("headers", {}))
+        kwargs["headers"] = self.get_headers() | kwargs.get("headers", {})
         result = self._session.post(self._config.host + url_frag, *args, **kwargs)
         if result.status_code != 403:
             return result
         self._refresh_csrf()
-        kwargs["headers"] = self._make_headers(kwargs.get("headers", {}))
+        kwargs["headers"] = self.get_headers() | kwargs.get("headers", {})
         return self._session.post(self._config.host + url_frag, *args, **kwargs)
 
 
@@ -264,6 +277,32 @@ class _Git:
             return
 
         _run_cmd(f"git checkout -b {branch}")
+
+
+class Client(ClientGenerated):
+    def __init__(self, session):
+        self._session = session
+        super().__init__(
+            base_url=self._session.get_base_url(),
+            cookies=self._session.get_cookies(),
+            headers=self._session.get_headers(),
+        )
+
+    def transact(self, kind: TransactionKind, operations: list[Operation]):
+        transaction = Transaction(
+            duid=_make_duid(),
+            kind=kind,
+            operations=operations,
+        )
+        request_body = RequestBody(
+            client_duid=self._session.get_client_duid(),
+            items=[transaction],
+        )
+        return transactions_create.sync(
+            client=self,
+            x_csrftoken=self._session.get_csrf_token(),
+            json_body=request_body,
+        )
 
 
 def set_host(host):
@@ -415,6 +454,7 @@ def create_task(
 ):
     config = _Config()
     session = _Session(config)
+    client = Client(session)
 
     user_bundle = _get_full_user_bundle(session)
 
@@ -487,6 +527,8 @@ def create_task(
     if priority_int is not None:
         priority = _PRIORITY_MAP[priority_int]
 
+    size = size_int
+
     due_at = None
     if due_at_str is not None:
         due_at = dateparser.parse(due_at_str)
@@ -495,33 +537,202 @@ def create_task(
         due_at = due_at.replace(
             hour=9, minute=0, second=0, microsecond=0, tzinfo=timezone.utc
         )
-        due_at = due_at.isoformat()[:-6] + ".000Z"
 
-    task = {
-        "duid": _make_duid(),
-        "sourceType": "CLI",
-        "drafterDuid": None,
-        "dartboardDuid": dartboard_duid,
-        "order": order,
-        "title": title,
-        "description": _DEFAULT_DESCRIPTION,
-        "statusDuid": status_duid,
-        "assigneeDuids": assignee_duids,
-        "subscriberDuids": subscriber_duids,
-        "tagDuids": tag_duids,
-        "priority": priority,
-        "size": size_int,
-        "dueAt": due_at,
-    }
-    response = session.post(_CREATE_TASK_URL_FRAG, json={"item": task})
+    task_create = TaskCreate(
+        duid=_make_duid(),
+        source_type=TaskSourceType.CLI,
+        drafter_duid=None,
+        dartboard_duid=dartboard_duid,
+        order=order,
+        title=title,
+        status_duid=status_duid,
+        assignee_duids=assignee_duids,
+        subscriber_duids=subscriber_duids,
+        tag_duids=tag_duids,
+        priority=priority,
+        size=size,
+        due_at=due_at,
+    )
+    task_create_op = Operation(
+        model=OperationModelKind.TASK,
+        kind=OperationKind.CREATE,
+        data=task_create,
+    )
+    response = client.transact(TransactionKind.TASK_CREATE, [task_create_op])
     _check_response_and_maybe_exit(response)
 
-    print(f"Created task {task['title']} at {_get_task_url(config.host, task['duid'])}")
+    print(
+        f"Created task {task_create['title']} at {_get_task_url(config.host, task_create['duid'])}"
+    )
 
     if should_begin:
-        _begin_task(config, session, user["email"], lambda: task)
+        _begin_task(config, session, user["email"], lambda: task_create)
 
     print("Done.")
+
+
+def update_task(
+    duid,
+    title=None,
+    dartboard_title=None,
+    status_title=None,
+    assignee_emails=None,
+    tag_titles=None,
+    priority_int=None,
+    size_int=None,
+    due_at_str=None,
+):
+    config = _Config()
+    session = _Session(config)
+    client = Client(session)
+
+    user_bundle = _get_full_user_bundle(session)
+
+    user = user_bundle["user"]
+    user_duid = user["duid"]
+
+    tasks = user_bundle["tasks"]
+    task = next((e for e in tasks if e["duid"] == duid), None)
+    if task is None:
+        sys.exit(f"No task found with DUID '{duid}'.")
+
+    task_update_kwargs = {"duid": duid}
+
+    if title is not None:
+        task_update_kwargs["title"] = title
+
+    dartboards = user_bundle["dartboards"]
+    if dartboard_title is not None:
+        dartboard_title_norm = dartboard_title.strip().lower()
+        dartboard = next(
+            (
+                e
+                for e in dartboards
+                if dartboard_title_norm in {e["title"].lower(), e["kind"].lower()}
+            ),
+            None,
+        )
+        if dartboard is None:
+            sys.exit(f"No dartboard found with title '{dartboard_title}'.")
+        dartboard_duid = dartboard["duid"]
+        if dartboard_duid != task["dartboard_duid"]:
+            task_update_kwargs["dartboard_duid"] = dartboard_duid
+
+    statuses = user_bundle["statuses"]
+    if status_title is not None:
+        status_title_norm = status_title.strip().lower()
+        status = next(
+            (e for e in statuses if e["title"].lower() == status_title_norm), None
+        )
+        if status is None:
+            sys.exit(f"No status found with title '{status_title}'.")
+        status_duid = status["duid"]
+        if status_duid != task["status_duid"]:
+            task_update_kwargs["status_duid"] = status_duid
+
+    users = user_bundle["users"]
+    user_emails_to_duids = {e["email"]: e["duid"] for e in users}
+    subscriber_duids = []
+    if assignee_emails is not None:
+        assignee_duids = []
+        for assignee_email in assignee_emails:
+            assignee_email_norm = assignee_email.strip().lower()
+            if assignee_email_norm not in user_emails_to_duids:
+                sys.exit(f"No user found with email '{assignee_email}'.")
+            assignee_duids.append(user_emails_to_duids[assignee_email_norm])
+            subscriber_duids.append(user_emails_to_duids[assignee_email_norm])
+        assignee_duids = sorted(set(assignee_duids))
+        if assignee_duids != task["assignee_duids"]:
+            task_update_kwargs["assignee_duids"] = assignee_duids
+
+    # TODO do add to list operation rather than replace
+    subscriber_duids = list(
+        set(task["subscriber_duids"]) | set(subscriber_duids) | {user_duid}
+    )
+    if subscriber_duids != task["subscriber_duids"]:
+        task_update_kwargs["subscriber_duids"] = subscriber_duids
+
+    tags = user_bundle["tags"]
+    tag_titles_to_duids = {e["title"]: e["duid"] for e in tags}
+    if tag_titles is not None:
+        tag_duids = []
+        for tag_title in tag_titles:
+            tag_title_norm = tag_title.strip().lower()
+            if tag_title_norm not in tag_titles_to_duids:
+                sys.exit(f"No tag found with title '{tag_title}'.")
+            tag_duids.append(tag_titles_to_duids[tag_title_norm])
+        task_update_kwargs["tag_duids"] = tag_duids
+
+    # TODO add a way for optional stuff to be removed
+    if priority_int is not None:
+        priority = _PRIORITY_MAP[priority_int]
+        if priority != task["priority"]:
+            task_update_kwargs["priority"] = priority
+
+    if size_int is not None:
+        size = size_int
+        if size != task["size"]:
+            task_update_kwargs["size"] = size
+
+    if due_at_str is not None:
+        due_at = dateparser.parse(due_at_str)
+        if due_at is None:
+            sys.exit(f"Could not parse due date '{due_at_str}'.")
+        due_at = due_at.replace(
+            hour=9, minute=0, second=0, microsecond=0, tzinfo=timezone.utc
+        )
+        due_at = due_at.isoformat()[:-6] + ".000Z"
+        if due_at != task["due_at"]:
+            task_update_kwargs["due_at"] = due_at
+
+    task_update = TaskUpdate(**task_update_kwargs)
+    task_update_op = Operation(
+        model=OperationModelKind.TASK,
+        kind=OperationKind.UPDATE,
+        data=task_update,
+    )
+    response = client.transact(TransactionKind.TASK_UPDATE, [task_update_op])
+    _check_response_and_maybe_exit(response)
+
+    print(
+        f"Updated task {task_update_kwargs['title']} at {_get_task_url(config.host, task_update_kwargs['duid'])}"
+    )
+    print("Done.")
+
+
+def _add_standard_task_arguments(parser):
+    parser.add_argument(
+        "-d", "--dartboard", dest="dartboard_title", help="dartboard title"
+    )
+    parser.add_argument("-s", "--status", dest="status_title", help="status title")
+    parser.add_argument(
+        "-a",
+        "--assignee",
+        dest="assignee_emails",
+        nargs="*",
+        action="extend",
+        help="assignee email(s)",
+    )
+    parser.add_argument(
+        "-t",
+        "--tag",
+        dest="tag_titles",
+        nargs="*",
+        action="extend",
+        help="tag title(s)",
+    )
+    parser.add_argument(
+        "-p",
+        "--priority",
+        dest="priority_int",
+        type=int,
+        choices=_PRIORITY_MAP.keys(),
+        help="priority",
+    )
+    parser.add_argument(
+        "-i", "--size", dest="size_int", type=int, choices=_SIZES, help="size"
+    )
+    parser.add_argument("-r", "--duedate", dest="due_at_str", help="due date")
 
 
 def cli():
@@ -560,43 +771,16 @@ def cli():
         action="store_true",
         help="begin work on the task after creation",
     )
-    create_task_parser.add_argument(
-        "-d", "--dartboard", dest="dartboard_title", help="dartboard title"
-    )
-    create_task_parser.add_argument(
-        "-s", "--status", dest="status_title", help="status title"
-    )
-    create_task_parser.add_argument(
-        "-a",
-        "--assignee",
-        dest="assignee_emails",
-        nargs="*",
-        action="extend",
-        help="assignee email(s)",
-    )
-    create_task_parser.add_argument(
-        "-t",
-        "--tag",
-        dest="tag_titles",
-        nargs="*",
-        action="extend",
-        help="tag title(s)",
-    )
-    create_task_parser.add_argument(
-        "-p",
-        "--priority",
-        dest="priority_int",
-        type=int,
-        choices=_PRIORITY_MAP.keys(),
-        help="priority",
-    )
-    create_task_parser.add_argument(
-        "-i", "--size", dest="size_int", type=int, choices=_SIZES, help="size"
-    )
-    create_task_parser.add_argument(
-        "-r", "--duedate", dest="due_at_str", help="due date"
-    )
+    _add_standard_task_arguments(create_task_parser)
     create_task_parser.set_defaults(func=create_task)
+
+    update_task_parser = subparsers.add_parser(
+        _UPDATE_TASK_CMD, aliases="u", help="update an existing task"
+    )
+    update_task_parser.add_argument("duid", help="the Dart ID (DUID) of the task")
+    update_task_parser.add_argument("-e", "--title", dest="title", help="task title")
+    _add_standard_task_arguments(update_task_parser)
+    update_task_parser.set_defaults(func=update_task)
 
     begin_task_parser = subparsers.add_parser(
         _BEGIN_TASK_CMD, aliases="b", help="begin work on a task"
