@@ -22,9 +22,8 @@ import dateparser
 from pick import pick
 import requests
 
-from .generated import (
-    transactions_create,
-    ClientGenerated,
+from .generated import Client
+from .generated.models import (
     Operation,
     OperationKind,
     OperationModelKind,
@@ -36,6 +35,7 @@ from .generated import (
     Transaction,
     TransactionKind,
 )
+from .generated.api.transactions import transactions_create
 from .order_manager import get_orders_between
 
 _PROG = "dart"
@@ -147,8 +147,8 @@ class _Config:
 
 
 class _Session:
-    def __init__(self, config):
-        self._config = config
+    def __init__(self, config=None):
+        self._config = config or _Config()
         self._session = requests.Session()
         if (csrf_token := self._config.get(_CSRF_TOKEN_KEY)) is not None:
             self._session.cookies.set(_CSRF_TOKEN_COOKIE, csrf_token)
@@ -199,6 +199,32 @@ class _Session:
         self._refresh_csrf()
         kwargs["headers"] = self.get_headers() | kwargs.get("headers", {})
         return self._session.post(self._config.host + url_frag, *args, **kwargs)
+
+
+class Dart(Client):
+    def __init__(self, session=None):
+        self._session = session or _Session()
+        super().__init__(
+            base_url=self._session.get_base_url(),
+            cookies=self._session.get_cookies(),
+            headers=self._session.get_headers(),
+        )
+
+    def transact(self, kind: TransactionKind, operations: list[Operation]):
+        transaction = Transaction(
+            duid=_make_duid(),
+            kind=kind,
+            operations=operations,
+        )
+        request_body = RequestBody(
+            client_duid=self._session.get_client_duid(),
+            items=[transaction],
+        )
+        return transactions_create.sync(
+            client=self,
+            x_csrftoken=self._session.get_csrf_token(),
+            json_body=request_body,
+        )
 
 
 class _Git:
@@ -277,32 +303,6 @@ class _Git:
             return
 
         _run_cmd(f"git checkout -b {branch}")
-
-
-class Client(ClientGenerated):
-    def __init__(self, session):
-        self._session = session
-        super().__init__(
-            base_url=self._session.get_base_url(),
-            cookies=self._session.get_cookies(),
-            headers=self._session.get_headers(),
-        )
-
-    def transact(self, kind: TransactionKind, operations: list[Operation]):
-        transaction = Transaction(
-            duid=_make_duid(),
-            kind=kind,
-            operations=operations,
-        )
-        request_body = RequestBody(
-            client_duid=self._session.get_client_duid(),
-            items=[transaction],
-        )
-        return transactions_create.sync(
-            client=self,
-            x_csrftoken=self._session.get_csrf_token(),
-            json_body=request_body,
-        )
 
 
 def set_host(host):
@@ -454,7 +454,7 @@ def create_task(
 ):
     config = _Config()
     session = _Session(config)
-    client = Client(session)
+    dart = Dart(session)
 
     user_bundle = _get_full_user_bundle(session)
 
@@ -558,11 +558,10 @@ def create_task(
         kind=OperationKind.CREATE,
         data=task_create,
     )
-    response = client.transact(TransactionKind.TASK_CREATE, [task_create_op])
-    _check_response_and_maybe_exit(response)
+    dart.transact(TransactionKind.TASK_CREATE, [task_create_op])
 
     print(
-        f"Created task {task_create['title']} at {_get_task_url(config.host, task_create['duid'])}"
+        f"Created task {task_create.title} at {_get_task_url(config.host, task_create.duid)}"
     )
 
     if should_begin:
@@ -584,7 +583,7 @@ def update_task(
 ):
     config = _Config()
     session = _Session(config)
-    client = Client(session)
+    dart = Dart(session)
 
     user_bundle = _get_full_user_bundle(session)
 
@@ -615,7 +614,7 @@ def update_task(
         if dartboard is None:
             sys.exit(f"No dartboard found with title '{dartboard_title}'.")
         dartboard_duid = dartboard["duid"]
-        if dartboard_duid != task["dartboard_duid"]:
+        if dartboard_duid != task["dartboardDuid"]:
             task_update_kwargs["dartboard_duid"] = dartboard_duid
 
     statuses = user_bundle["statuses"]
@@ -627,7 +626,7 @@ def update_task(
         if status is None:
             sys.exit(f"No status found with title '{status_title}'.")
         status_duid = status["duid"]
-        if status_duid != task["status_duid"]:
+        if status_duid != task["statusDuid"]:
             task_update_kwargs["status_duid"] = status_duid
 
     users = user_bundle["users"]
@@ -642,14 +641,14 @@ def update_task(
             assignee_duids.append(user_emails_to_duids[assignee_email_norm])
             subscriber_duids.append(user_emails_to_duids[assignee_email_norm])
         assignee_duids = sorted(set(assignee_duids))
-        if assignee_duids != task["assignee_duids"]:
+        if assignee_duids != task["assigneeDuids"]:
             task_update_kwargs["assignee_duids"] = assignee_duids
 
     # TODO do add to list operation rather than replace
     subscriber_duids = list(
-        set(task["subscriber_duids"]) | set(subscriber_duids) | {user_duid}
+        set(task["subscriberDuids"]) | set(subscriber_duids) | {user_duid}
     )
-    if subscriber_duids != task["subscriber_duids"]:
+    if subscriber_duids != task["subscriberDuids"]:
         task_update_kwargs["subscriber_duids"] = subscriber_duids
 
     tags = user_bundle["tags"]
@@ -682,7 +681,7 @@ def update_task(
             hour=9, minute=0, second=0, microsecond=0, tzinfo=timezone.utc
         )
         due_at = due_at.isoformat()[:-6] + ".000Z"
-        if due_at != task["due_at"]:
+        if due_at != task["dueAt"]:
             task_update_kwargs["due_at"] = due_at
 
     task_update = TaskUpdate(**task_update_kwargs)
@@ -691,12 +690,10 @@ def update_task(
         kind=OperationKind.UPDATE,
         data=task_update,
     )
-    response = client.transact(TransactionKind.TASK_UPDATE, [task_update_op])
-    _check_response_and_maybe_exit(response)
+    dart.transact(TransactionKind.TASK_UPDATE, [task_update_op])
 
-    print(
-        f"Updated task {task_update_kwargs['title']} at {_get_task_url(config.host, task_update_kwargs['duid'])}"
-    )
+    new_title = task_update.title or task["title"]
+    print(f"Updated task {new_title} at {_get_task_url(config.host, task_update.duid)}")
     print("Done.")
 
 

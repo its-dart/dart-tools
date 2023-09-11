@@ -1,7 +1,7 @@
-""" A generated client library for accessing Dart API """
-from .api import transactions_create
-from .client import (
-    AuthenticatedClient as AuthenticatedClientGenerated,
-    Client as ClientGenerated,
+""" A client library for accessing Dart API """
+from .client import AuthenticatedClient, Client
+
+__all__ = (
+    "AuthenticatedClient",
+    "Client",
 )
-from .models import *
