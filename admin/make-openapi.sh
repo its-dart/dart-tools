@@ -3,7 +3,7 @@
 
 set -e
 
-rm -rf generated
+rm -rf dart/generated
 openapi-python-client generate --url https://app.itsdart.com/api/v0/schema/
-mv dart-api-client/dart_api_client generated
+mv dart-api-client/dart_api_client dart/generated
 rm -rf dart-api-client

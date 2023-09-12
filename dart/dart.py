@@ -78,6 +78,8 @@ _COMPLETED_STATUS_KINDS = {"Finished", "Canceled"}
 
 _VERSION = version("dart-tools")
 
+_is_cli = __name__ == "__main__"
+
 
 # TODO dedupe these functions with other usages elsewhere
 def _make_duid():
@@ -92,7 +94,7 @@ def _get_task_url(host, duid):
     return f"{host}/search?t={duid}"
 
 
-def suppress_exception(fn):
+def _suppress_exception(fn):
     @wraps(fn)
     def wrapper(*args, **kwargs):
         try:
@@ -105,6 +107,12 @@ def suppress_exception(fn):
 
 def _exit_gracefully(_signal_received, _frame) -> None:
     sys.exit("Quitting.")
+
+
+def _log(s):
+    if not _is_cli:
+        return
+    print(s)
 
 
 class _Config:
@@ -160,6 +168,9 @@ class _Session:
 
     def get_client_duid(self):
         return self._config.client_duid
+
+    def get_is_logged_in(self):
+        return self._config.get(_SESSION_ID_KEY) is not None
 
     def _refresh_csrf(self):
         response = self._session.get(self._config.host + _CSRF_URL_FRAG)
@@ -309,30 +320,52 @@ def set_host(host):
     config = _Config()
 
     new_host = _HOST_MAP.get(host, host)
-    print(f"Setting host to {new_host}")
+    _log(f"Setting host to {new_host}")
     config.host = new_host
 
-    print("Done.")
+    _log("Done.")
+    return True
 
 
-def _print_login_failure_message_and_exit():
+def _auth_failure_exit():
     sys.exit(f"Not logged in, run\n\n{_PROG} {_LOGIN_CMD}\n\nto log in.")
 
 
-def _check_response_and_maybe_exit(response):
+def _unknown_failure_exit():
+    sys.exit(f"Not logged in, run\n\n{_PROG} {_LOGIN_CMD}\n\nto log in.")
+
+
+def _check_request_response_and_maybe_exit(response):
     try:
         response.raise_for_status()
     except requests.exceptions.HTTPError:
         if response.status_code in {401, 403}:
-            _print_login_failure_message_and_exit()
-        sys.exit("Unknown failure, please email support@itsdart.com.")
+            _auth_failure_exit()
+        _unknown_failure_exit()
+
+
+def _parse_transaction_response_and_maybe_exit(response, model_kind, duid):
+    if (
+        response is None
+        or not hasattr(response, "results")
+        or len(response.results) == 0
+        or not response.results[0].success
+    ):
+        _unknown_failure_exit()
+    models = getattr(response.results[0].models, model_kind)
+    model = next((e for e in models if e.duid == duid), None)
+    if model is None:
+        _unknown_failure_exit()
+    return model
 
 
 def print_version():
-    print(f"dart-tools version {_VERSION}")
+    result = f"dart-tools version {_VERSION}"
+    _log(result)
+    return result
 
 
-@suppress_exception
+@_suppress_exception
 def print_version_update_message_maybe():
     latest = (
         _run_cmd("pip --disable-pip-version-check index versions dart-tools 2>&1")
@@ -345,38 +378,50 @@ def print_version_update_message_maybe():
     ]:
         return
 
-    print(
+    _log(
         f"A new version of dart-tools is available. Upgrade from {_VERSION} to {latest} with\n\n  pip install --upgrade dart-tools\n"
     )
 
 
-def login():
+def is_logged_in():
     config = _Config()
     session = _Session(config)
 
-    print("Dart login information")
-    email = input("Email: ")
-    password = getpass()
+    result = session.get_is_logged_in()
+    _log(f"You are {'' if result else 'not '}logged in")
+    return result
+
+
+def login(*, email=None, password=None):
+    config = _Config()
+    session = _Session(config)
+
+    _log("Log in to Dart")
+    if email is None:
+        email = input("Email: ")
+    if password is None:
+        password = getpass()
 
     result = session.post(_LOGIN_URL_FRAG, json={"email": email, "password": password})
     if result.status_code in {401, 403}:
         sys.exit("Invalid login information.")
-    _check_response_and_maybe_exit(result)
+    _check_request_response_and_maybe_exit(result)
 
     cookies = result.cookies.get_dict()
     config.set(_SESSION_ID_KEY, cookies.get(_SESSION_ID_COOKIE))
 
-    print("Logged in.")
+    _log("Logged in.")
+    return True
 
 
 def _get_full_user_bundle(session):
-    print("Loading active tasks")
+    _log("Loading active tasks")
     response = session.get(_CURRENT_USER_URL_FRAG)
-    _check_response_and_maybe_exit(response)
-    res = response.json()
-    if not res["isLoggedIn"]:
-        _print_login_failure_message_and_exit()
-    return res
+    _check_request_response_and_maybe_exit(response)
+    bundle = response.json()
+    if not bundle["isLoggedIn"]:
+        _auth_failure_exit()
+    return bundle
 
 
 def _begin_task(config, session, user_email, get_task):
@@ -387,14 +432,15 @@ def _begin_task(config, session, user_email, get_task):
     task = get_task()
 
     response = session.post(_COPY_BRANCH_URL_FRAG, json={"duid": task["duid"]})
-    _check_response_and_maybe_exit(response)
+    _check_request_response_and_maybe_exit(response)
 
     branch_name = _Git.make_task_name(user_email, task)
     _Git.checkout_branch(branch_name)
 
-    print(
+    _log(
         f"Started work on\n\n  {task['title']}\n  {_get_task_url(config.host, task['duid'])}\n"
     )
+    return True
 
 
 def begin_task():
@@ -438,11 +484,14 @@ def begin_task():
 
     _begin_task(config, session, user["email"], _get_task)
 
-    print("Done.")
+    _log("Done.")
+    return True
 
 
 def create_task(
     title,
+    /,
+    *,
     should_begin=False,
     dartboard_title=None,
     status_title=None,
@@ -558,20 +607,24 @@ def create_task(
         kind=OperationKind.CREATE,
         data=task_create,
     )
-    dart.transact(TransactionKind.TASK_CREATE, [task_create_op])
-
-    print(
-        f"Created task {task_create.title} at {_get_task_url(config.host, task_create.duid)}"
+    response = dart.transact(TransactionKind.TASK_CREATE, [task_create_op])
+    task = _parse_transaction_response_and_maybe_exit(
+        response, OperationModelKind.TASK, task_create.duid
     )
+
+    _log(f"Created task {task.title} at {_get_task_url(config.host, task.duid)}")
 
     if should_begin:
         _begin_task(config, session, user["email"], lambda: task_create)
 
-    print("Done.")
+    _log("Done.")
+    return task
 
 
 def update_task(
     duid,
+    /,
+    *,
     title=None,
     dartboard_title=None,
     status_title=None,
@@ -591,8 +644,8 @@ def update_task(
     user_duid = user["duid"]
 
     tasks = user_bundle["tasks"]
-    task = next((e for e in tasks if e["duid"] == duid), None)
-    if task is None:
+    old_task = next((e for e in tasks if e["duid"] == duid), None)
+    if old_task is None:
         sys.exit(f"No task found with DUID '{duid}'.")
 
     task_update_kwargs = {"duid": duid}
@@ -614,7 +667,7 @@ def update_task(
         if dartboard is None:
             sys.exit(f"No dartboard found with title '{dartboard_title}'.")
         dartboard_duid = dartboard["duid"]
-        if dartboard_duid != task["dartboardDuid"]:
+        if dartboard_duid != old_task["dartboardDuid"]:
             task_update_kwargs["dartboard_duid"] = dartboard_duid
 
     statuses = user_bundle["statuses"]
@@ -626,7 +679,7 @@ def update_task(
         if status is None:
             sys.exit(f"No status found with title '{status_title}'.")
         status_duid = status["duid"]
-        if status_duid != task["statusDuid"]:
+        if status_duid != old_task["statusDuid"]:
             task_update_kwargs["status_duid"] = status_duid
 
     users = user_bundle["users"]
@@ -641,14 +694,14 @@ def update_task(
             assignee_duids.append(user_emails_to_duids[assignee_email_norm])
             subscriber_duids.append(user_emails_to_duids[assignee_email_norm])
         assignee_duids = sorted(set(assignee_duids))
-        if assignee_duids != task["assigneeDuids"]:
+        if assignee_duids != old_task["assigneeDuids"]:
             task_update_kwargs["assignee_duids"] = assignee_duids
 
     # TODO do add to list operation rather than replace
     subscriber_duids = list(
-        set(task["subscriberDuids"]) | set(subscriber_duids) | {user_duid}
+        set(old_task["subscriberDuids"]) | set(subscriber_duids) | {user_duid}
     )
-    if subscriber_duids != task["subscriberDuids"]:
+    if subscriber_duids != old_task["subscriberDuids"]:
         task_update_kwargs["subscriber_duids"] = subscriber_duids
 
     tags = user_bundle["tags"]
@@ -665,12 +718,12 @@ def update_task(
     # TODO add a way for optional stuff to be removed
     if priority_int is not None:
         priority = _PRIORITY_MAP[priority_int]
-        if priority != task["priority"]:
+        if priority != old_task["priority"]:
             task_update_kwargs["priority"] = priority
 
     if size_int is not None:
         size = size_int
-        if size != task["size"]:
+        if size != old_task["size"]:
             task_update_kwargs["size"] = size
 
     if due_at_str is not None:
@@ -681,7 +734,7 @@ def update_task(
             hour=9, minute=0, second=0, microsecond=0, tzinfo=timezone.utc
         )
         due_at = due_at.isoformat()[:-6] + ".000Z"
-        if due_at != task["dueAt"]:
+        if due_at != old_task["dueAt"]:
             task_update_kwargs["due_at"] = due_at
 
     task_update = TaskUpdate(**task_update_kwargs)
@@ -690,11 +743,14 @@ def update_task(
         kind=OperationKind.UPDATE,
         data=task_update,
     )
-    dart.transact(TransactionKind.TASK_UPDATE, [task_update_op])
+    response = dart.transact(TransactionKind.TASK_UPDATE, [task_update_op])
+    task = _parse_transaction_response_and_maybe_exit(
+        response, OperationModelKind.TASK, task_update.duid
+    )
 
-    new_title = task_update.title or task["title"]
-    print(f"Updated task {new_title} at {_get_task_url(config.host, task_update.duid)}")
-    print("Done.")
+    _log(f"Updated task {task.title} at {_get_task_url(config.host, task.duid)}")
+    _log("Done.")
+    return task
 
 
 def _add_standard_task_arguments(parser):
@@ -755,12 +811,18 @@ def cli():
     set_host_parser.set_defaults(func=set_host)
 
     login_parser = subparsers.add_parser(_LOGIN_CMD, aliases="l", help="login")
+    login_parser.add_argument(
+        "-e", "--email", dest="email", help="email to log in with"
+    )
+    login_parser.add_argument(
+        "-p", "--password", dest="password", help="password to log in with"
+    )
     login_parser.set_defaults(func=login)
 
     create_task_parser = subparsers.add_parser(
         _CREATE_TASK_CMD, aliases="c", help="create a new task"
     )
-    create_task_parser.add_argument("title", help="the title of the task")
+    create_task_parser.add_argument("title", help="title of the task")
     create_task_parser.add_argument(
         "-b",
         "--begin",
@@ -774,7 +836,7 @@ def cli():
     update_task_parser = subparsers.add_parser(
         _UPDATE_TASK_CMD, aliases="u", help="update an existing task"
     )
-    update_task_parser.add_argument("duid", help="the Dart ID (DUID) of the task")
+    update_task_parser.add_argument("duid", help="Dart ID (DUID) of the task")
     update_task_parser.add_argument("-e", "--title", dest="title", help="task title")
     _add_standard_task_arguments(update_task_parser)
     update_task_parser.set_defaults(func=update_task)
@@ -786,8 +848,8 @@ def cli():
 
     args = vars(parser.parse_args())
     func = args.pop("func")
-    func(**args)
+    return func(**args)
 
 
-if __name__ == "__main__":
+if _is_cli:
     cli()

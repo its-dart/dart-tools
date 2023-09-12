@@ -25,38 +25,45 @@ dart login
 ```
 
 
-## Usage
+## Using the CLI
 
-### As a CLI
-
-In the terminal, see the help message with
+As an example, start off by logging in with
 ```bash
-dart --help
+dart login
 ```
 
-Create a task with
+Then, you can create a new task with
 ```bash
-dart createtask "new task"
+dart createtask "Update the landing page" -p0 --tag marketing
 ```
+which will make a new task called 'Update the landing page' with priority 'Critical' (i.e. p0) and with the 'marketing' tag.
+You can explore all of these options and many more with `dart --help` or, for example, `dart createtask --help`.
 
-Begin work on a task with
+Another common workflow is to updating a preexisting task. To do this, run something like
 ```bash
-dart begintask
+dart updatetask DUID -s Done
 ```
+where `DUID` is the ID of an existing task. This command will mark the referenced task 'Done'.
 
-### As a Python Library
 
-In Python, run
+## Using the Python Library
+
+In Python, run something like
 ```python
-from dart import login, create_task, begin_task
+import os
+from dart import is_logged_in, login, create_task, update_task
 
-# only needed one time
-login()
+# login only if needed, based on information stored in environment variables
+if not is_logged_in():
+  login(email=os.environ["DART_EMAIL"], password=os.environ["DART_PASSWORD"])
 
-create_task("new task")
+# create a new task called 'Update the landing page' with priority 'Critical' (i.e. p0) and with the 'marketing' tag
+new_task = create_task("Update the landing page", priority=0, tag_titles=["marketing"])
 
-begin_task()
+# update the task to be 'Done'
+update_task(new_task.duid, status_title="Done")
 ```
+
 
 ## Help and Resources
 
