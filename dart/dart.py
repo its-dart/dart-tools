@@ -78,7 +78,7 @@ _COMPLETED_STATUS_KINDS = {"Finished", "Canceled"}
 
 _VERSION = version("dart-tools")
 
-_is_cli = __name__ == "__main__"
+_is_cli = False
 
 
 # TODO dedupe these functions with other usages elsewhere
@@ -221,7 +221,7 @@ class Dart(Client):
             headers=self._session.get_headers(),
         )
 
-    def transact(self, kind: TransactionKind, operations: list[Operation]):
+    def transact(self, operations: list[Operation], kind: TransactionKind):
         transaction = Transaction(
             duid=_make_duid(),
             kind=kind,
@@ -352,7 +352,7 @@ def _parse_transaction_response_and_maybe_exit(response, model_kind, duid):
         or not response.results[0].success
     ):
         _unknown_failure_exit()
-    models = getattr(response.results[0].models, model_kind)
+    models = getattr(response.results[0].models, f"{model_kind}s")
     model = next((e for e in models if e.duid == duid), None)
     if model is None:
         _unknown_failure_exit()
@@ -490,7 +490,6 @@ def begin_task():
 
 def create_task(
     title,
-    /,
     *,
     should_begin=False,
     dartboard_title=None,
@@ -607,7 +606,7 @@ def create_task(
         kind=OperationKind.CREATE,
         data=task_create,
     )
-    response = dart.transact(TransactionKind.TASK_CREATE, [task_create_op])
+    response = dart.transact([task_create_op], TransactionKind.TASK_CREATE)
     task = _parse_transaction_response_and_maybe_exit(
         response, OperationModelKind.TASK, task_create.duid
     )
@@ -623,7 +622,6 @@ def create_task(
 
 def update_task(
     duid,
-    /,
     *,
     title=None,
     dartboard_title=None,
@@ -743,7 +741,7 @@ def update_task(
         kind=OperationKind.UPDATE,
         data=task_update,
     )
-    response = dart.transact(TransactionKind.TASK_UPDATE, [task_update_op])
+    response = dart.transact([task_update_op], TransactionKind.TASK_UPDATE)
     task = _parse_transaction_response_and_maybe_exit(
         response, OperationModelKind.TASK, task_update.duid
     )
@@ -790,6 +788,8 @@ def _add_standard_task_arguments(parser):
 
 def cli():
     signal.signal(signal.SIGINT, _exit_gracefully)
+    global _is_cli
+    _is_cli = True
 
     print_version_update_message_maybe()
 
@@ -848,8 +848,4 @@ def cli():
 
     args = vars(parser.parse_args())
     func = args.pop("func")
-    return func(**args)
-
-
-if _is_cli:
-    cli()
+    func(**args)
