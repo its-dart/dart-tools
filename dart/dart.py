@@ -91,7 +91,7 @@ def _run_cmd(cmd):
 
 
 def _get_task_url(host, duid):
-    return f"{host}/search?t={duid}"
+    return f"{host}/t/{duid}"
 
 
 def _suppress_exception(fn):
