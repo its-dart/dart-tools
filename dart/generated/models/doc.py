@@ -28,6 +28,7 @@ class Doc:
         order (str):
         title (str):
         text (DocText):
+        edited_by_ai (bool):
         editor_duids (List[str]):
         subscriber_duids (List[str]):
         icon_kind (IconKind): * `None` - NONE
@@ -60,6 +61,7 @@ class Doc:
             * `Light Gray` - LIGHT_GRAY
         updated_by_client_duid (Union[Unset, None, str]):
         drafter_duid (Optional[str]):
+        recommendation_duid (Optional[str]):
     """
 
     duid: str
@@ -70,12 +72,14 @@ class Doc:
     order: str
     title: str
     text: "DocText"
+    edited_by_ai: bool
     editor_duids: List[str]
     subscriber_duids: List[str]
     icon_kind: IconKind
     icon_name_or_emoji: str
     color_name: ColorName
     drafter_duid: Optional[str]
+    recommendation_duid: Optional[str]
     updated_by_client_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -91,6 +95,7 @@ class Doc:
         title = self.title
         text = self.text.to_dict()
 
+        edited_by_ai = self.edited_by_ai
         editor_duids = self.editor_duids
 
         subscriber_duids = self.subscriber_duids
@@ -102,6 +107,7 @@ class Doc:
 
         updated_by_client_duid = self.updated_by_client_duid
         drafter_duid = self.drafter_duid
+        recommendation_duid = self.recommendation_duid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -115,12 +121,14 @@ class Doc:
                 "order": order,
                 "title": title,
                 "text": text,
+                "editedByAi": edited_by_ai,
                 "editorDuids": editor_duids,
                 "subscriberDuids": subscriber_duids,
                 "iconKind": icon_kind,
                 "iconNameOrEmoji": icon_name_or_emoji,
                 "colorName": color_name,
                 "drafterDuid": drafter_duid,
+                "recommendationDuid": recommendation_duid,
             }
         )
         if updated_by_client_duid is not UNSET:
@@ -149,6 +157,8 @@ class Doc:
 
         text = DocText.from_dict(d.pop("text"))
 
+        edited_by_ai = d.pop("editedByAi")
+
         editor_duids = cast(List[str], d.pop("editorDuids"))
 
         subscriber_duids = cast(List[str], d.pop("subscriberDuids"))
@@ -163,6 +173,8 @@ class Doc:
 
         drafter_duid = d.pop("drafterDuid")
 
+        recommendation_duid = d.pop("recommendationDuid")
+
         doc = cls(
             duid=duid,
             created_at=created_at,
@@ -172,6 +184,7 @@ class Doc:
             order=order,
             title=title,
             text=text,
+            edited_by_ai=edited_by_ai,
             editor_duids=editor_duids,
             subscriber_duids=subscriber_duids,
             icon_kind=icon_kind,
@@ -179,6 +192,7 @@ class Doc:
             color_name=color_name,
             updated_by_client_duid=updated_by_client_duid,
             drafter_duid=drafter_duid,
+            recommendation_duid=recommendation_duid,
         )
 
         doc.additional_properties = d

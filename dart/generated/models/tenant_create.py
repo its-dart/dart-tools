@@ -17,7 +17,10 @@ class TenantCreate:
         multiple_assignees_enabled (Union[Unset, bool]):
         priority_enabled (Union[Unset, bool]):
         due_date_enabled (Union[Unset, bool]):
+        start_date_enabled (Union[Unset, bool]):
         size_enabled (Union[Unset, bool]):
+        ai_assignment_enabled (Union[Unset, bool]):
+        email_integration_enabled (Union[Unset, bool]):
         copy_parent_fields_on_create (Union[Unset, bool]):
         webhook_enabled (Union[Unset, bool]):
         webhook_secret (Union[Unset, str]):
@@ -29,7 +32,10 @@ class TenantCreate:
     multiple_assignees_enabled: Union[Unset, bool] = UNSET
     priority_enabled: Union[Unset, bool] = UNSET
     due_date_enabled: Union[Unset, bool] = UNSET
+    start_date_enabled: Union[Unset, bool] = UNSET
     size_enabled: Union[Unset, bool] = UNSET
+    ai_assignment_enabled: Union[Unset, bool] = UNSET
+    email_integration_enabled: Union[Unset, bool] = UNSET
     copy_parent_fields_on_create: Union[Unset, bool] = UNSET
     webhook_enabled: Union[Unset, bool] = UNSET
     webhook_secret: Union[Unset, str] = UNSET
@@ -42,7 +48,10 @@ class TenantCreate:
         multiple_assignees_enabled = self.multiple_assignees_enabled
         priority_enabled = self.priority_enabled
         due_date_enabled = self.due_date_enabled
+        start_date_enabled = self.start_date_enabled
         size_enabled = self.size_enabled
+        ai_assignment_enabled = self.ai_assignment_enabled
+        email_integration_enabled = self.email_integration_enabled
         copy_parent_fields_on_create = self.copy_parent_fields_on_create
         webhook_enabled = self.webhook_enabled
         webhook_secret = self.webhook_secret
@@ -63,8 +72,14 @@ class TenantCreate:
             field_dict["priorityEnabled"] = priority_enabled
         if due_date_enabled is not UNSET:
             field_dict["dueDateEnabled"] = due_date_enabled
+        if start_date_enabled is not UNSET:
+            field_dict["startDateEnabled"] = start_date_enabled
         if size_enabled is not UNSET:
             field_dict["sizeEnabled"] = size_enabled
+        if ai_assignment_enabled is not UNSET:
+            field_dict["aiAssignmentEnabled"] = ai_assignment_enabled
+        if email_integration_enabled is not UNSET:
+            field_dict["emailIntegrationEnabled"] = email_integration_enabled
         if copy_parent_fields_on_create is not UNSET:
             field_dict["copyParentFieldsOnCreate"] = copy_parent_fields_on_create
         if webhook_enabled is not UNSET:
@@ -89,7 +104,13 @@ class TenantCreate:
 
         due_date_enabled = d.pop("dueDateEnabled", UNSET)
 
+        start_date_enabled = d.pop("startDateEnabled", UNSET)
+
         size_enabled = d.pop("sizeEnabled", UNSET)
+
+        ai_assignment_enabled = d.pop("aiAssignmentEnabled", UNSET)
+
+        email_integration_enabled = d.pop("emailIntegrationEnabled", UNSET)
 
         copy_parent_fields_on_create = d.pop("copyParentFieldsOnCreate", UNSET)
 
@@ -105,7 +126,10 @@ class TenantCreate:
             multiple_assignees_enabled=multiple_assignees_enabled,
             priority_enabled=priority_enabled,
             due_date_enabled=due_date_enabled,
+            start_date_enabled=start_date_enabled,
             size_enabled=size_enabled,
+            ai_assignment_enabled=ai_assignment_enabled,
+            email_integration_enabled=email_integration_enabled,
             copy_parent_fields_on_create=copy_parent_fields_on_create,
             webhook_enabled=webhook_enabled,
             webhook_secret=webhook_secret,

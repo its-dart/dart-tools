@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar
+from typing import Any, Dict, List, Optional, Type, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -41,6 +41,7 @@ class TaskAttachment:
             * `Dark Gray` - DARK_GRAY
             * `Light Brown` - LIGHT_BROWN
             * `Light Gray` - LIGHT_GRAY
+        recommendation_duid (Optional[str]):
     """
 
     duid: str
@@ -49,6 +50,7 @@ class TaskAttachment:
     kind: str
     file_url: str
     color_name: ColorName
+    recommendation_duid: Optional[str]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -58,6 +60,8 @@ class TaskAttachment:
         kind = self.kind
         file_url = self.file_url
         color_name = self.color_name.value
+
+        recommendation_duid = self.recommendation_duid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -69,6 +73,7 @@ class TaskAttachment:
                 "kind": kind,
                 "fileUrl": file_url,
                 "colorName": color_name,
+                "recommendationDuid": recommendation_duid,
             }
         )
 
@@ -89,6 +94,8 @@ class TaskAttachment:
 
         color_name = ColorName(d.pop("colorName"))
 
+        recommendation_duid = d.pop("recommendationDuid")
+
         task_attachment = cls(
             duid=duid,
             order=order,
@@ -96,6 +103,7 @@ class TaskAttachment:
             kind=kind,
             file_url=file_url,
             color_name=color_name,
+            recommendation_duid=recommendation_duid,
         )
 
         task_attachment.additional_properties = d

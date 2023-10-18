@@ -19,6 +19,7 @@ class CommentUpdate:
     """
     Attributes:
         duid (str):
+        authored_by_ai (Union[Unset, bool]):
         author_duid (Union[Unset, str]):
         task_duid (Union[Unset, str]):
         root_duid (Union[Unset, None, str]):
@@ -27,6 +28,7 @@ class CommentUpdate:
     """
 
     duid: str
+    authored_by_ai: Union[Unset, bool] = UNSET
     author_duid: Union[Unset, str] = UNSET
     task_duid: Union[Unset, str] = UNSET
     root_duid: Union[Unset, None, str] = UNSET
@@ -36,6 +38,7 @@ class CommentUpdate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+        authored_by_ai = self.authored_by_ai
         author_duid = self.author_duid
         task_duid = self.task_duid
         root_duid = self.root_duid
@@ -54,6 +57,8 @@ class CommentUpdate:
                 "duid": duid,
             }
         )
+        if authored_by_ai is not UNSET:
+            field_dict["authoredByAi"] = authored_by_ai
         if author_duid is not UNSET:
             field_dict["authorDuid"] = author_duid
         if task_duid is not UNSET:
@@ -73,6 +78,8 @@ class CommentUpdate:
 
         d = src_dict.copy()
         duid = d.pop("duid")
+
+        authored_by_ai = d.pop("authoredByAi", UNSET)
 
         author_duid = d.pop("authorDuid", UNSET)
 
@@ -98,6 +105,7 @@ class CommentUpdate:
 
         comment_update = cls(
             duid=duid,
+            authored_by_ai=authored_by_ai,
             author_duid=author_duid,
             task_duid=task_duid,
             root_duid=root_duid,

@@ -18,6 +18,7 @@ class TaskSourceType(str, Enum):
     IMPORT = "Import"
     ONBOARDING = "Onboarding"
     RECOMMENDATION = "Recommendation"
+    RECURRENCE = "Recurrence"
     SLACK = "Slack"
     TEMPLATE = "Template"
     UNKNOWN = "Unknown"

@@ -24,12 +24,15 @@ class DocCreate:
         order (str):
         source_user (Union[Unset, None, str]):
         source_type (Union[Unset, DocSourceType]): * `Unknown` - UNKNOWN
+            * `Onboarding` - ONBOARDING
             * `Recommendation` - RECOMMENDATION
             * `Application` - APPLICATION Default: DocSourceType.UNKNOWN.
         drafter_duid (Union[Unset, None, str]):
         in_trash (Union[Unset, bool]):
         title (Union[Unset, str]):
         text (Union[Unset, DocCreateText]):
+        edited_by_ai (Union[Unset, bool]):
+        recommendation_duid (Union[Unset, None, str]):
         editor_duids (Union[Unset, List[str]]):
         subscriber_duids (Union[Unset, List[str]]):
         icon_kind (Union[Unset, IconKind]): * `None` - NONE
@@ -71,6 +74,8 @@ class DocCreate:
     in_trash: Union[Unset, bool] = UNSET
     title: Union[Unset, str] = UNSET
     text: Union[Unset, "DocCreateText"] = UNSET
+    edited_by_ai: Union[Unset, bool] = UNSET
+    recommendation_duid: Union[Unset, None, str] = UNSET
     editor_duids: Union[Unset, List[str]] = UNSET
     subscriber_duids: Union[Unset, List[str]] = UNSET
     icon_kind: Union[Unset, IconKind] = UNSET
@@ -94,6 +99,8 @@ class DocCreate:
         if not isinstance(self.text, Unset):
             text = self.text.to_dict()
 
+        edited_by_ai = self.edited_by_ai
+        recommendation_duid = self.recommendation_duid
         editor_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.editor_duids, Unset):
             editor_duids = self.editor_duids
@@ -132,6 +139,10 @@ class DocCreate:
             field_dict["title"] = title
         if text is not UNSET:
             field_dict["text"] = text
+        if edited_by_ai is not UNSET:
+            field_dict["editedByAi"] = edited_by_ai
+        if recommendation_duid is not UNSET:
+            field_dict["recommendationDuid"] = recommendation_duid
         if editor_duids is not UNSET:
             field_dict["editorDuids"] = editor_duids
         if subscriber_duids is not UNSET:
@@ -178,6 +189,10 @@ class DocCreate:
         else:
             text = DocCreateText.from_dict(_text)
 
+        edited_by_ai = d.pop("editedByAi", UNSET)
+
+        recommendation_duid = d.pop("recommendationDuid", UNSET)
+
         editor_duids = cast(List[str], d.pop("editorDuids", UNSET))
 
         subscriber_duids = cast(List[str], d.pop("subscriberDuids", UNSET))
@@ -208,6 +223,8 @@ class DocCreate:
             in_trash=in_trash,
             title=title,
             text=text,
+            edited_by_ai=edited_by_ai,
+            recommendation_duid=recommendation_duid,
             editor_duids=editor_duids,
             subscriber_duids=subscriber_duids,
             icon_kind=icon_kind,

@@ -3,6 +3,7 @@ from enum import Enum
 
 class DocSourceType(str, Enum):
     APPLICATION = "Application"
+    ONBOARDING = "Onboarding"
     RECOMMENDATION = "Recommendation"
     UNKNOWN = "Unknown"
 

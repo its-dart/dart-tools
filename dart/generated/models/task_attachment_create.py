@@ -43,6 +43,7 @@ class TaskAttachmentCreate:
             * `Dark Gray` - DARK_GRAY
             * `Light Brown` - LIGHT_BROWN
             * `Light Gray` - LIGHT_GRAY
+        recommendation_duid (Union[Unset, None, str]):
     """
 
     duid: str
@@ -52,6 +53,7 @@ class TaskAttachmentCreate:
     kind: str
     file: str
     color_name: Union[Unset, ColorName] = UNSET
+    recommendation_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -64,6 +66,8 @@ class TaskAttachmentCreate:
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value
+
+        recommendation_duid = self.recommendation_duid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -79,6 +83,8 @@ class TaskAttachmentCreate:
         )
         if color_name is not UNSET:
             field_dict["colorName"] = color_name
+        if recommendation_duid is not UNSET:
+            field_dict["recommendationDuid"] = recommendation_duid
 
         return field_dict
 
@@ -104,6 +110,8 @@ class TaskAttachmentCreate:
         else:
             color_name = ColorName(_color_name)
 
+        recommendation_duid = d.pop("recommendationDuid", UNSET)
+
         task_attachment_create = cls(
             duid=duid,
             task_duid=task_duid,
@@ -112,6 +120,7 @@ class TaskAttachmentCreate:
             kind=kind,
             file=file,
             color_name=color_name,
+            recommendation_duid=recommendation_duid,
         )
 
         task_attachment_create.additional_properties = d

@@ -22,6 +22,7 @@ class Comment:
         duid (str):
         updated_at (datetime.datetime):
         task_duid (str):
+        authored_by_ai (bool):
         author_duid (str):
         text (CommentText):
         reactions (List['CommentReaction']):
@@ -35,6 +36,7 @@ class Comment:
     duid: str
     updated_at: datetime.datetime
     task_duid: str
+    authored_by_ai: bool
     author_duid: str
     text: "CommentText"
     reactions: List["CommentReaction"]
@@ -50,6 +52,7 @@ class Comment:
         updated_at = self.updated_at.isoformat()
 
         task_duid = self.task_duid
+        authored_by_ai = self.authored_by_ai
         author_duid = self.author_duid
         text = self.text.to_dict()
 
@@ -72,6 +75,7 @@ class Comment:
                 "duid": duid,
                 "updatedAt": updated_at,
                 "taskDuid": task_duid,
+                "authoredByAi": authored_by_ai,
                 "authorDuid": author_duid,
                 "text": text,
                 "reactions": reactions,
@@ -97,6 +101,8 @@ class Comment:
         updated_at = isoparse(d.pop("updatedAt"))
 
         task_duid = d.pop("taskDuid")
+
+        authored_by_ai = d.pop("authoredByAi")
 
         author_duid = d.pop("authorDuid")
 
@@ -128,6 +134,7 @@ class Comment:
             duid=duid,
             updated_at=updated_at,
             task_duid=task_duid,
+            authored_by_ai=authored_by_ai,
             author_duid=author_duid,
             text=text,
             reactions=reactions,

@@ -21,6 +21,7 @@ class CommentCreate:
         duid (str):
         author_duid (str):
         task_duid (str):
+        authored_by_ai (Union[Unset, bool]):
         root_duid (Union[Unset, None, str]):
         text (Union[Unset, CommentCreateText]):
         published_at (Union[Unset, None, datetime.datetime]):
@@ -29,6 +30,7 @@ class CommentCreate:
     duid: str
     author_duid: str
     task_duid: str
+    authored_by_ai: Union[Unset, bool] = UNSET
     root_duid: Union[Unset, None, str] = UNSET
     text: Union[Unset, "CommentCreateText"] = UNSET
     published_at: Union[Unset, None, datetime.datetime] = UNSET
@@ -38,6 +40,7 @@ class CommentCreate:
         duid = self.duid
         author_duid = self.author_duid
         task_duid = self.task_duid
+        authored_by_ai = self.authored_by_ai
         root_duid = self.root_duid
         text: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.text, Unset):
@@ -56,6 +59,8 @@ class CommentCreate:
                 "taskDuid": task_duid,
             }
         )
+        if authored_by_ai is not UNSET:
+            field_dict["authoredByAi"] = authored_by_ai
         if root_duid is not UNSET:
             field_dict["rootDuid"] = root_duid
         if text is not UNSET:
@@ -75,6 +80,8 @@ class CommentCreate:
         author_duid = d.pop("authorDuid")
 
         task_duid = d.pop("taskDuid")
+
+        authored_by_ai = d.pop("authoredByAi", UNSET)
 
         root_duid = d.pop("rootDuid", UNSET)
 
@@ -98,6 +105,7 @@ class CommentCreate:
             duid=duid,
             author_duid=author_duid,
             task_duid=task_duid,
+            authored_by_ai=authored_by_ai,
             root_duid=root_duid,
             text=text,
             published_at=published_at,

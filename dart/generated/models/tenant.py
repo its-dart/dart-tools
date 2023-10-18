@@ -31,7 +31,10 @@ class Tenant:
         multiple_assignees_enabled (bool):
         priority_enabled (bool):
         due_date_enabled (bool):
+        start_date_enabled (bool):
         size_enabled (bool):
+        ai_assignment_enabled (bool):
+        email_integration_enabled (bool):
         copy_parent_fields_on_create (bool):
         webhook_enabled (bool):
         webhook_secret (str):
@@ -53,7 +56,10 @@ class Tenant:
     multiple_assignees_enabled: bool
     priority_enabled: bool
     due_date_enabled: bool
+    start_date_enabled: bool
     size_enabled: bool
+    ai_assignment_enabled: bool
+    email_integration_enabled: bool
     copy_parent_fields_on_create: bool
     webhook_enabled: bool
     webhook_secret: str
@@ -78,7 +84,10 @@ class Tenant:
         multiple_assignees_enabled = self.multiple_assignees_enabled
         priority_enabled = self.priority_enabled
         due_date_enabled = self.due_date_enabled
+        start_date_enabled = self.start_date_enabled
         size_enabled = self.size_enabled
+        ai_assignment_enabled = self.ai_assignment_enabled
+        email_integration_enabled = self.email_integration_enabled
         copy_parent_fields_on_create = self.copy_parent_fields_on_create
         webhook_enabled = self.webhook_enabled
         webhook_secret = self.webhook_secret
@@ -107,7 +116,10 @@ class Tenant:
                 "multipleAssigneesEnabled": multiple_assignees_enabled,
                 "priorityEnabled": priority_enabled,
                 "dueDateEnabled": due_date_enabled,
+                "startDateEnabled": start_date_enabled,
                 "sizeEnabled": size_enabled,
+                "aiAssignmentEnabled": ai_assignment_enabled,
+                "emailIntegrationEnabled": email_integration_enabled,
                 "copyParentFieldsOnCreate": copy_parent_fields_on_create,
                 "webhookEnabled": webhook_enabled,
                 "webhookSecret": webhook_secret,
@@ -151,7 +163,13 @@ class Tenant:
 
         due_date_enabled = d.pop("dueDateEnabled")
 
+        start_date_enabled = d.pop("startDateEnabled")
+
         size_enabled = d.pop("sizeEnabled")
+
+        ai_assignment_enabled = d.pop("aiAssignmentEnabled")
+
+        email_integration_enabled = d.pop("emailIntegrationEnabled")
 
         copy_parent_fields_on_create = d.pop("copyParentFieldsOnCreate")
 
@@ -208,7 +226,10 @@ class Tenant:
             multiple_assignees_enabled=multiple_assignees_enabled,
             priority_enabled=priority_enabled,
             due_date_enabled=due_date_enabled,
+            start_date_enabled=start_date_enabled,
             size_enabled=size_enabled,
+            ai_assignment_enabled=ai_assignment_enabled,
+            email_integration_enabled=email_integration_enabled,
             copy_parent_fields_on_create=copy_parent_fields_on_create,
             webhook_enabled=webhook_enabled,
             webhook_secret=webhook_secret,

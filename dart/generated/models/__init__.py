@@ -100,6 +100,7 @@ from .task_attachment_create import TaskAttachmentCreate
 from .task_attachment_update import TaskAttachmentUpdate
 from .task_create import TaskCreate
 from .task_create_description import TaskCreateDescription
+from .task_create_recurrence import TaskCreateRecurrence
 from .task_description import TaskDescription
 from .task_doc_relationship import TaskDocRelationship
 from .task_doc_relationship_create import TaskDocRelationshipCreate
@@ -113,9 +114,11 @@ from .task_notion_document import TaskNotionDocument
 from .task_notion_document_block_children_map import TaskNotionDocumentBlockChildrenMap
 from .task_notion_document_block_map import TaskNotionDocumentBlockMap
 from .task_notion_document_page_map import TaskNotionDocumentPageMap
+from .task_recurrence import TaskRecurrence
 from .task_source_type import TaskSourceType
 from .task_update import TaskUpdate
 from .task_update_description import TaskUpdateDescription
+from .task_update_recurrence import TaskUpdateRecurrence
 from .tenant import Tenant
 from .tenant_create import TenantCreate
 from .tenant_entitlement_overrides import TenantEntitlementOverrides
@@ -240,6 +243,7 @@ __all__ = (
     "TaskAttachmentUpdate",
     "TaskCreate",
     "TaskCreateDescription",
+    "TaskCreateRecurrence",
     "TaskDescription",
     "TaskDocRelationship",
     "TaskDocRelationshipCreate",
@@ -253,9 +257,11 @@ __all__ = (
     "TaskNotionDocumentBlockChildrenMap",
     "TaskNotionDocumentBlockMap",
     "TaskNotionDocumentPageMap",
+    "TaskRecurrence",
     "TaskSourceType",
     "TaskUpdate",
     "TaskUpdateDescription",
+    "TaskUpdateRecurrence",
     "Tenant",
     "TenantCreate",
     "TenantEntitlementOverrides",

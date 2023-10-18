@@ -15,6 +15,7 @@ if TYPE_CHECKING:
     from ..models.task_description import TaskDescription
     from ..models.task_link import TaskLink
     from ..models.task_notion_document import TaskNotionDocument
+    from ..models.task_recurrence import TaskRecurrence
 
 
 T = TypeVar("T", bound="Task")
@@ -33,6 +34,7 @@ class Task:
         title (str):
         description (TaskDescription):
         status_duid (str):
+        assigned_to_ai (bool):
         assignee_duids (List[str]):
         subscriber_duids (List[str]):
         tag_duids (List[str]):
@@ -48,8 +50,11 @@ class Task:
             * `Medium` - MEDIUM
             * `Low` - LOW
         size (Optional[int]):
+        start_at (Optional[datetime.datetime]):
         due_at (Optional[datetime.datetime]):
         remind_at (Optional[datetime.datetime]):
+        recurrence (Optional[TaskRecurrence]):
+        recurrs_next_at (Optional[datetime.datetime]):
         notion_document (Optional[TaskNotionDocument]):
     """
 
@@ -62,6 +67,7 @@ class Task:
     title: str
     description: "TaskDescription"
     status_duid: str
+    assigned_to_ai: bool
     assignee_duids: List[str]
     subscriber_duids: List[str]
     tag_duids: List[str]
@@ -72,8 +78,11 @@ class Task:
     recommendation_status: Optional[RecommendationStatus]
     priority: Optional[Priority]
     size: Optional[int]
+    start_at: Optional[datetime.datetime]
     due_at: Optional[datetime.datetime]
     remind_at: Optional[datetime.datetime]
+    recurrence: Optional["TaskRecurrence"]
+    recurrs_next_at: Optional[datetime.datetime]
     notion_document: Optional["TaskNotionDocument"]
     updated_by_client_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -91,6 +100,7 @@ class Task:
         description = self.description.to_dict()
 
         status_duid = self.status_duid
+        assigned_to_ai = self.assigned_to_ai
         assignee_duids = self.assignee_duids
 
         subscriber_duids = self.subscriber_duids
@@ -122,9 +132,15 @@ class Task:
         priority = self.priority.value if self.priority else None
 
         size = self.size
+        start_at = self.start_at.isoformat() if self.start_at else None
+
         due_at = self.due_at.isoformat() if self.due_at else None
 
         remind_at = self.remind_at.isoformat() if self.remind_at else None
+
+        recurrence = self.recurrence.to_dict() if self.recurrence else None
+
+        recurrs_next_at = self.recurrs_next_at.isoformat() if self.recurrs_next_at else None
 
         notion_document = self.notion_document.to_dict() if self.notion_document else None
 
@@ -141,6 +157,7 @@ class Task:
                 "title": title,
                 "description": description,
                 "statusDuid": status_duid,
+                "assignedToAi": assigned_to_ai,
                 "assigneeDuids": assignee_duids,
                 "subscriberDuids": subscriber_duids,
                 "tagDuids": tag_duids,
@@ -151,8 +168,11 @@ class Task:
                 "recommendationStatus": recommendation_status,
                 "priority": priority,
                 "size": size,
+                "startAt": start_at,
                 "dueAt": due_at,
                 "remindAt": remind_at,
+                "recurrence": recurrence,
+                "recurrsNextAt": recurrs_next_at,
                 "notionDocument": notion_document,
             }
         )
@@ -168,6 +188,7 @@ class Task:
         from ..models.task_description import TaskDescription
         from ..models.task_link import TaskLink
         from ..models.task_notion_document import TaskNotionDocument
+        from ..models.task_recurrence import TaskRecurrence
 
         d = src_dict.copy()
         duid = d.pop("duid")
@@ -187,6 +208,8 @@ class Task:
         description = TaskDescription.from_dict(d.pop("description"))
 
         status_duid = d.pop("statusDuid")
+
+        assigned_to_ai = d.pop("assignedToAi")
 
         assignee_duids = cast(List[str], d.pop("assigneeDuids"))
 
@@ -235,6 +258,13 @@ class Task:
 
         size = d.pop("size")
 
+        _start_at = d.pop("startAt")
+        start_at: Optional[datetime.datetime]
+        if _start_at is None:
+            start_at = None
+        else:
+            start_at = isoparse(_start_at)
+
         _due_at = d.pop("dueAt")
         due_at: Optional[datetime.datetime]
         if _due_at is None:
@@ -248,6 +278,20 @@ class Task:
             remind_at = None
         else:
             remind_at = isoparse(_remind_at)
+
+        _recurrence = d.pop("recurrence")
+        recurrence: Optional[TaskRecurrence]
+        if _recurrence is None:
+            recurrence = None
+        else:
+            recurrence = TaskRecurrence.from_dict(_recurrence)
+
+        _recurrs_next_at = d.pop("recurrsNextAt")
+        recurrs_next_at: Optional[datetime.datetime]
+        if _recurrs_next_at is None:
+            recurrs_next_at = None
+        else:
+            recurrs_next_at = isoparse(_recurrs_next_at)
 
         _notion_document = d.pop("notionDocument")
         notion_document: Optional[TaskNotionDocument]
@@ -266,6 +310,7 @@ class Task:
             title=title,
             description=description,
             status_duid=status_duid,
+            assigned_to_ai=assigned_to_ai,
             assignee_duids=assignee_duids,
             subscriber_duids=subscriber_duids,
             tag_duids=tag_duids,
@@ -277,8 +322,11 @@ class Task:
             recommendation_status=recommendation_status,
             priority=priority,
             size=size,
+            start_at=start_at,
             due_at=due_at,
             remind_at=remind_at,
+            recurrence=recurrence,
+            recurrs_next_at=recurrs_next_at,
             notion_document=notion_document,
         )
 
