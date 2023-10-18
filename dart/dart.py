@@ -258,8 +258,8 @@ class _Git:
     @staticmethod
     def make_task_name(email, task):
         username = _Git._format_for_branch(email.split("@")[0])
-        title = _Git._format_for_branch(task["title"])
-        long = f"{username}/{task['duid']}-{title}"
+        title = _Git._format_for_branch(task.title)
+        long = f"{username}/{task.duid}-{title}"
         if len(long) <= 60:
             return long
         for i in range(1, 11):
@@ -431,14 +431,14 @@ def _begin_task(config, session, user_email, get_task):
 
     task = get_task()
 
-    response = session.post(_COPY_BRANCH_URL_FRAG, json={"duid": task["duid"]})
+    response = session.post(_COPY_BRANCH_URL_FRAG, json={"duid": task.duid})
     _check_request_response_and_maybe_exit(response)
 
     branch_name = _Git.make_task_name(user_email, task)
     _Git.checkout_branch(branch_name)
 
     _log(
-        f"Started work on\n\n  {task['title']}\n  {_get_task_url(config.host, task['duid'])}\n"
+        f"Started work on\n\n  {task.title}\n  {_get_task_url(config.host, task.duid)}\n"
     )
     return True
 
@@ -474,13 +474,15 @@ def begin_task():
         if len(filtered_tasks) == 0:
             sys.exit("No active, incomplete tasks found.")
 
-        return filtered_tasks[
-            pick(
-                [e["title"] for e in filtered_tasks],
-                "Which of your active, incomplete tasks are you beginning work on?",
-                "→",
-            )[1]
-        ]
+        return TaskCreate.from_dict(
+            filtered_tasks[
+                pick(
+                    [e["title"] for e in filtered_tasks],
+                    "Which of your active, incomplete tasks are you beginning work on?",
+                    "→",
+                )[1]
+            ]
+        )
 
     _begin_task(config, session, user["email"], _get_task)
 
