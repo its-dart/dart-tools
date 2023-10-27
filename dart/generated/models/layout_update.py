@@ -24,6 +24,7 @@ class LayoutUpdate:
         kind (Union[Unset, LayoutKind]): * `list` - LIST
             * `board` - BOARD
             * `calendar` - CALENDAR
+            * `roadmap` - ROADMAP
         kind_config_map (Union[Unset, LayoutUpdateKindConfigMap]):
         filter_group (Union[Unset, LayoutUpdateFilterGroup]):
         sorts (Union[Unset, LayoutUpdateSorts]):

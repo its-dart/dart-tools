@@ -15,6 +15,7 @@ class StatusUpdate:
     """
     Attributes:
         duid (str):
+        property_duid (Union[Unset, str]):
         kind (Union[Unset, StatusKind]): * `Unstarted` - UNSTARTED
             * `Started` - STARTED
             * `Blocked` - BLOCKED
@@ -50,6 +51,7 @@ class StatusUpdate:
     """
 
     duid: str
+    property_duid: Union[Unset, str] = UNSET
     kind: Union[Unset, StatusKind] = UNSET
     order: Union[Unset, str] = UNSET
     title: Union[Unset, str] = UNSET
@@ -59,6 +61,7 @@ class StatusUpdate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+        property_duid = self.property_duid
         kind: Union[Unset, str] = UNSET
         if not isinstance(self.kind, Unset):
             kind = self.kind.value
@@ -78,6 +81,8 @@ class StatusUpdate:
                 "duid": duid,
             }
         )
+        if property_duid is not UNSET:
+            field_dict["propertyDuid"] = property_duid
         if kind is not UNSET:
             field_dict["kind"] = kind
         if order is not UNSET:
@@ -95,6 +100,8 @@ class StatusUpdate:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         duid = d.pop("duid")
+
+        property_duid = d.pop("propertyDuid", UNSET)
 
         _kind = d.pop("kind", UNSET)
         kind: Union[Unset, StatusKind]
@@ -118,6 +125,7 @@ class StatusUpdate:
 
         status_update = cls(
             duid=duid,
+            property_duid=property_duid,
             kind=kind,
             order=order,
             title=title,

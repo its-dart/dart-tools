@@ -28,11 +28,6 @@ class Tenant:
             * `Premium` - PREMIUM
         entitlement_overrides (TenantEntitlementOverrides):
         backlog_enabled (bool):
-        multiple_assignees_enabled (bool):
-        priority_enabled (bool):
-        due_date_enabled (bool):
-        start_date_enabled (bool):
-        size_enabled (bool):
         ai_assignment_enabled (bool):
         email_integration_enabled (bool):
         copy_parent_fields_on_create (bool):
@@ -53,11 +48,6 @@ class Tenant:
     subscription: Subscription
     entitlement_overrides: "TenantEntitlementOverrides"
     backlog_enabled: bool
-    multiple_assignees_enabled: bool
-    priority_enabled: bool
-    due_date_enabled: bool
-    start_date_enabled: bool
-    size_enabled: bool
     ai_assignment_enabled: bool
     email_integration_enabled: bool
     copy_parent_fields_on_create: bool
@@ -81,11 +71,6 @@ class Tenant:
         entitlement_overrides = self.entitlement_overrides.to_dict()
 
         backlog_enabled = self.backlog_enabled
-        multiple_assignees_enabled = self.multiple_assignees_enabled
-        priority_enabled = self.priority_enabled
-        due_date_enabled = self.due_date_enabled
-        start_date_enabled = self.start_date_enabled
-        size_enabled = self.size_enabled
         ai_assignment_enabled = self.ai_assignment_enabled
         email_integration_enabled = self.email_integration_enabled
         copy_parent_fields_on_create = self.copy_parent_fields_on_create
@@ -113,11 +98,6 @@ class Tenant:
                 "subscription": subscription,
                 "entitlementOverrides": entitlement_overrides,
                 "backlogEnabled": backlog_enabled,
-                "multipleAssigneesEnabled": multiple_assignees_enabled,
-                "priorityEnabled": priority_enabled,
-                "dueDateEnabled": due_date_enabled,
-                "startDateEnabled": start_date_enabled,
-                "sizeEnabled": size_enabled,
                 "aiAssignmentEnabled": ai_assignment_enabled,
                 "emailIntegrationEnabled": email_integration_enabled,
                 "copyParentFieldsOnCreate": copy_parent_fields_on_create,
@@ -156,16 +136,6 @@ class Tenant:
         entitlement_overrides = TenantEntitlementOverrides.from_dict(d.pop("entitlementOverrides"))
 
         backlog_enabled = d.pop("backlogEnabled")
-
-        multiple_assignees_enabled = d.pop("multipleAssigneesEnabled")
-
-        priority_enabled = d.pop("priorityEnabled")
-
-        due_date_enabled = d.pop("dueDateEnabled")
-
-        start_date_enabled = d.pop("startDateEnabled")
-
-        size_enabled = d.pop("sizeEnabled")
 
         ai_assignment_enabled = d.pop("aiAssignmentEnabled")
 
@@ -223,11 +193,6 @@ class Tenant:
             subscription=subscription,
             entitlement_overrides=entitlement_overrides,
             backlog_enabled=backlog_enabled,
-            multiple_assignees_enabled=multiple_assignees_enabled,
-            priority_enabled=priority_enabled,
-            due_date_enabled=due_date_enabled,
-            start_date_enabled=start_date_enabled,
-            size_enabled=size_enabled,
             ai_assignment_enabled=ai_assignment_enabled,
             email_integration_enabled=email_integration_enabled,
             copy_parent_fields_on_create=copy_parent_fields_on_create,

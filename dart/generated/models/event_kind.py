@@ -64,6 +64,7 @@ class EventKind(str, Enum):
     WORKSPACEJOIN = "workspace/join"
     WORKSPACELEAVE = "workspace/leave"
     WORKSPACEUPDATE_OTHER = "workspace/update_other"
+    WORKSPACEUPDATE_PROPERTY = "workspace/update_property"
     WORKSPACEUPDATE_STATUS = "workspace/update_status"
     WORKSPACEUPGRADE = "workspace/upgrade"
 

@@ -1,79 +1,69 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.color_name import ColorName
-from ..models.status_kind import StatusKind
+from ..models.property_kind import PropertyKind
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Status")
+if TYPE_CHECKING:
+    from ..models.property_adtl import PropertyAdtl
+
+
+T = TypeVar("T", bound="Property")
 
 
 @_attrs_define
-class Status:
+class Property:
     """
     Attributes:
         duid (str):
-        property_duid (str):
-        kind (StatusKind): * `Unstarted` - UNSTARTED
-            * `Started` - STARTED
-            * `Blocked` - BLOCKED
-            * `Finished` - FINISHED
-            * `Canceled` - CANCELED
-        locked (bool):
+        kind (PropertyKind): * `Default: Status` - DEFAULT_STATUS
+            * `Default: Assignee` - DEFAULT_ASSIGNEE
+            * `Default: Dates` - DEFAULT_DATES
+            * `Default: Priority` - DEFAULT_PRIORITY
+            * `Default: Tags` - DEFAULT_TAGS
+            * `Default: Size` - DEFAULT_SIZE
+            * `Default: Created` - DEFAULT_CREATED_AT
+            * `Default: Created by` - DEFAULT_CREATED_BY
+            * `Default: Last updated` - DEFAULT_UPDATED_AT
+            * `Default: Last updated by` - DEFAULT_UPDATED_BY
+            * `Text` - TEXT
+            * `Number` - NUMBER
+            * `Checkbox` - CHECKBOX
+            * `Select` - SELECT
+            * `Multiselect` - MULTISELECT
+            * `Status` - STATUS
+            * `User` - USER
+            * `Dates` - DATES
         order (str):
+        hidden (bool):
         title (str):
-        color_name (ColorName): * `Red` - RED
-            * `Dark Blue` - DARK_BLUE
-            * `Dark Orange` - DARK_ORANGE
-            * `Dark Green` - DARK_GREEN
-            * `Purple` - PURPLE
-            * `Dark Teal` - DARK_TEAL
-            * `Pink` - PINK
-            * `Orange` - ORANGE
-            * `Green` - GREEN
-            * `Yellow` - YELLOW
-            * `Brown` - BROWN
-            * `Dark Red` - DARK_RED
-            * `Flat Green` - FLAT_GREEN
-            * `Red Orange` - RED_ORANGE
-            * `Teal` - TEAL
-            * `Light Green` - LIGHT_GREEN
-            * `Light Blue` - LIGHT_BLUE
-            * `Light Purple` - LIGHT_PURPLE
-            * `Light Orange` - LIGHT_ORANGE
-            * `Light Pink` - LIGHT_PINK
-            * `Tan` - TAN
-            * `Dark Gray` - DARK_GRAY
-            * `Light Brown` - LIGHT_BROWN
-            * `Light Gray` - LIGHT_GRAY
         description (str):
+        adtl (PropertyAdtl):
         updated_by_client_duid (Union[Unset, None, str]):
     """
 
     duid: str
-    property_duid: str
-    kind: StatusKind
-    locked: bool
+    kind: PropertyKind
     order: str
+    hidden: bool
     title: str
-    color_name: ColorName
     description: str
+    adtl: "PropertyAdtl"
     updated_by_client_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
-        property_duid = self.property_duid
         kind = self.kind.value
 
-        locked = self.locked
         order = self.order
+        hidden = self.hidden
         title = self.title
-        color_name = self.color_name.value
-
         description = self.description
+        adtl = self.adtl.to_dict()
+
         updated_by_client_duid = self.updated_by_client_duid
 
         field_dict: Dict[str, Any] = {}
@@ -81,13 +71,12 @@ class Status:
         field_dict.update(
             {
                 "duid": duid,
-                "propertyDuid": property_duid,
                 "kind": kind,
-                "locked": locked,
                 "order": order,
+                "hidden": hidden,
                 "title": title,
-                "colorName": color_name,
                 "description": description,
+                "adtl": adtl,
             }
         )
         if updated_by_client_duid is not UNSET:
@@ -97,39 +86,38 @@ class Status:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.property_adtl import PropertyAdtl
+
         d = src_dict.copy()
         duid = d.pop("duid")
 
-        property_duid = d.pop("propertyDuid")
-
-        kind = StatusKind(d.pop("kind"))
-
-        locked = d.pop("locked")
+        kind = PropertyKind(d.pop("kind"))
 
         order = d.pop("order")
 
-        title = d.pop("title")
+        hidden = d.pop("hidden")
 
-        color_name = ColorName(d.pop("colorName"))
+        title = d.pop("title")
 
         description = d.pop("description")
 
+        adtl = PropertyAdtl.from_dict(d.pop("adtl"))
+
         updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
 
-        status = cls(
+        property_ = cls(
             duid=duid,
-            property_duid=property_duid,
             kind=kind,
-            locked=locked,
             order=order,
+            hidden=hidden,
             title=title,
-            color_name=color_name,
             description=description,
+            adtl=adtl,
             updated_by_client_duid=updated_by_client_duid,
         )
 
-        status.additional_properties = d
-        return status
+        property_.additional_properties = d
+        return property_
 
     @property
     def additional_keys(self) -> List[str]:

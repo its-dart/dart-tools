@@ -36,6 +36,12 @@ class Transaction:
             * `layout_create` - LAYOUT_CREATE
             * `layout_delete` - LAYOUT_DELETE
             * `layout_update` - LAYOUT_UPDATE
+            * `option_create` - OPTION_CREATE
+            * `option_delete` - OPTION_DELETE
+            * `option_update` - OPTION_UPDATE
+            * `property_create` - PROPERTY_CREATE
+            * `property_update` - PROPERTY_UPDATE
+            * `property_delete` - PROPERTY_DELETE
             * `relationship_create` - RELATIONSHIP_CREATE
             * `relationship_update` - RELATIONSHIP_UPDATE
             * `relationship_delete` - RELATIONSHIP_DELETE
@@ -46,9 +52,6 @@ class Transaction:
             * `status_create` - STATUS_CREATE
             * `status_delete` - STATUS_DELETE
             * `status_update` - STATUS_UPDATE
-            * `tag_create` - TAG_CREATE
-            * `tag_delete` - TAG_DELETE
-            * `tag_update` - TAG_UPDATE
             * `task_complete` - TASK_COMPLETE
             * `task_create` - TASK_CREATE
             * `task_delete` - TASK_DELETE

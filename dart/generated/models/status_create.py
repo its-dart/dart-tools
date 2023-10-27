@@ -15,6 +15,7 @@ class StatusCreate:
     """
     Attributes:
         duid (str):
+        property_duid (str):
         kind (StatusKind): * `Unstarted` - UNSTARTED
             * `Started` - STARTED
             * `Blocked` - BLOCKED
@@ -50,6 +51,7 @@ class StatusCreate:
     """
 
     duid: str
+    property_duid: str
     kind: StatusKind
     order: str
     title: Union[Unset, str] = UNSET
@@ -59,6 +61,7 @@ class StatusCreate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+        property_duid = self.property_duid
         kind = self.kind.value
 
         order = self.order
@@ -74,6 +77,7 @@ class StatusCreate:
         field_dict.update(
             {
                 "duid": duid,
+                "propertyDuid": property_duid,
                 "kind": kind,
                 "order": order,
             }
@@ -92,6 +96,8 @@ class StatusCreate:
         d = src_dict.copy()
         duid = d.pop("duid")
 
+        property_duid = d.pop("propertyDuid")
+
         kind = StatusKind(d.pop("kind"))
 
         order = d.pop("order")
@@ -109,6 +115,7 @@ class StatusCreate:
 
         status_create = cls(
             duid=duid,
+            property_duid=property_duid,
             kind=kind,
             order=order,
             title=title,

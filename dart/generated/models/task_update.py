@@ -43,7 +43,9 @@ class TaskUpdate:
             * `AppRelationship` - APP_RELATIONSHIP
             * `AppEnter` - APP_ENTER
             * `AppReplicate` - APP_REPLICATE
-            * `AppPaste` - APP_PASTE Default: TaskSourceType.UNKNOWN.
+            * `AppPaste` - APP_PASTE
+            * `AppRoadmapList` - APP_ROADMAP_LIST
+            * `AppRoadmapTimeline` - APP_ROADMAP_TIMELINE Default: TaskSourceType.UNKNOWN.
         drafter_duid (Union[Unset, None, str]):
         in_trash (Union[Unset, bool]):
         recommendation_status (Union[Unset, None, RecommendationStatus]): * `Accepted` - ACCEPTED

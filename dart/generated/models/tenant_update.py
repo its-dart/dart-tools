@@ -14,11 +14,6 @@ class TenantUpdate:
     Attributes:
         name (Union[Unset, str]):
         backlog_enabled (Union[Unset, bool]):
-        multiple_assignees_enabled (Union[Unset, bool]):
-        priority_enabled (Union[Unset, bool]):
-        due_date_enabled (Union[Unset, bool]):
-        start_date_enabled (Union[Unset, bool]):
-        size_enabled (Union[Unset, bool]):
         ai_assignment_enabled (Union[Unset, bool]):
         email_integration_enabled (Union[Unset, bool]):
         copy_parent_fields_on_create (Union[Unset, bool]):
@@ -29,11 +24,6 @@ class TenantUpdate:
 
     name: Union[Unset, str] = UNSET
     backlog_enabled: Union[Unset, bool] = UNSET
-    multiple_assignees_enabled: Union[Unset, bool] = UNSET
-    priority_enabled: Union[Unset, bool] = UNSET
-    due_date_enabled: Union[Unset, bool] = UNSET
-    start_date_enabled: Union[Unset, bool] = UNSET
-    size_enabled: Union[Unset, bool] = UNSET
     ai_assignment_enabled: Union[Unset, bool] = UNSET
     email_integration_enabled: Union[Unset, bool] = UNSET
     copy_parent_fields_on_create: Union[Unset, bool] = UNSET
@@ -45,11 +35,6 @@ class TenantUpdate:
     def to_dict(self) -> Dict[str, Any]:
         name = self.name
         backlog_enabled = self.backlog_enabled
-        multiple_assignees_enabled = self.multiple_assignees_enabled
-        priority_enabled = self.priority_enabled
-        due_date_enabled = self.due_date_enabled
-        start_date_enabled = self.start_date_enabled
-        size_enabled = self.size_enabled
         ai_assignment_enabled = self.ai_assignment_enabled
         email_integration_enabled = self.email_integration_enabled
         copy_parent_fields_on_create = self.copy_parent_fields_on_create
@@ -64,16 +49,6 @@ class TenantUpdate:
             field_dict["name"] = name
         if backlog_enabled is not UNSET:
             field_dict["backlogEnabled"] = backlog_enabled
-        if multiple_assignees_enabled is not UNSET:
-            field_dict["multipleAssigneesEnabled"] = multiple_assignees_enabled
-        if priority_enabled is not UNSET:
-            field_dict["priorityEnabled"] = priority_enabled
-        if due_date_enabled is not UNSET:
-            field_dict["dueDateEnabled"] = due_date_enabled
-        if start_date_enabled is not UNSET:
-            field_dict["startDateEnabled"] = start_date_enabled
-        if size_enabled is not UNSET:
-            field_dict["sizeEnabled"] = size_enabled
         if ai_assignment_enabled is not UNSET:
             field_dict["aiAssignmentEnabled"] = ai_assignment_enabled
         if email_integration_enabled is not UNSET:
@@ -96,16 +71,6 @@ class TenantUpdate:
 
         backlog_enabled = d.pop("backlogEnabled", UNSET)
 
-        multiple_assignees_enabled = d.pop("multipleAssigneesEnabled", UNSET)
-
-        priority_enabled = d.pop("priorityEnabled", UNSET)
-
-        due_date_enabled = d.pop("dueDateEnabled", UNSET)
-
-        start_date_enabled = d.pop("startDateEnabled", UNSET)
-
-        size_enabled = d.pop("sizeEnabled", UNSET)
-
         ai_assignment_enabled = d.pop("aiAssignmentEnabled", UNSET)
 
         email_integration_enabled = d.pop("emailIntegrationEnabled", UNSET)
@@ -121,11 +86,6 @@ class TenantUpdate:
         tenant_update = cls(
             name=name,
             backlog_enabled=backlog_enabled,
-            multiple_assignees_enabled=multiple_assignees_enabled,
-            priority_enabled=priority_enabled,
-            due_date_enabled=due_date_enabled,
-            start_date_enabled=start_date_enabled,
-            size_enabled=size_enabled,
             ai_assignment_enabled=ai_assignment_enabled,
             email_integration_enabled=email_integration_enabled,
             copy_parent_fields_on_create=copy_parent_fields_on_create,

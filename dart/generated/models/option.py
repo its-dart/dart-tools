@@ -6,16 +6,17 @@ from attrs import field as _attrs_field
 from ..models.color_name import ColorName
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="TagCreate")
+T = TypeVar("T", bound="Option")
 
 
 @_attrs_define
-class TagCreate:
+class Option:
     """
     Attributes:
         duid (str):
+        property_duid (str):
         title (str):
-        color_name (Union[Unset, ColorName]): * `Red` - RED
+        color_name (ColorName): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
             * `Dark Green` - DARK_GREEN
@@ -39,30 +40,36 @@ class TagCreate:
             * `Dark Gray` - DARK_GRAY
             * `Light Brown` - LIGHT_BROWN
             * `Light Gray` - LIGHT_GRAY
+        updated_by_client_duid (Union[Unset, None, str]):
     """
 
     duid: str
+    property_duid: str
     title: str
-    color_name: Union[Unset, ColorName] = UNSET
+    color_name: ColorName
+    updated_by_client_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+        property_duid = self.property_duid
         title = self.title
-        color_name: Union[Unset, str] = UNSET
-        if not isinstance(self.color_name, Unset):
-            color_name = self.color_name.value
+        color_name = self.color_name.value
+
+        updated_by_client_duid = self.updated_by_client_duid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "duid": duid,
+                "propertyDuid": property_duid,
                 "title": title,
+                "colorName": color_name,
             }
         )
-        if color_name is not UNSET:
-            field_dict["colorName"] = color_name
+        if updated_by_client_duid is not UNSET:
+            field_dict["updatedByClientDuid"] = updated_by_client_duid
 
         return field_dict
 
@@ -71,23 +78,24 @@ class TagCreate:
         d = src_dict.copy()
         duid = d.pop("duid")
 
+        property_duid = d.pop("propertyDuid")
+
         title = d.pop("title")
 
-        _color_name = d.pop("colorName", UNSET)
-        color_name: Union[Unset, ColorName]
-        if isinstance(_color_name, Unset):
-            color_name = UNSET
-        else:
-            color_name = ColorName(_color_name)
+        color_name = ColorName(d.pop("colorName"))
 
-        tag_create = cls(
+        updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
+
+        option = cls(
             duid=duid,
+            property_duid=property_duid,
             title=title,
             color_name=color_name,
+            updated_by_client_duid=updated_by_client_duid,
         )
 
-        tag_create.additional_properties = d
-        return tag_create
+        option.additional_properties = d
+        return option
 
     @property
     def additional_keys(self) -> List[str]:

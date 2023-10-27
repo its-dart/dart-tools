@@ -6,15 +6,16 @@ from attrs import field as _attrs_field
 from ..models.color_name import ColorName
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="TagUpdate")
+T = TypeVar("T", bound="OptionCreate")
 
 
 @_attrs_define
-class TagUpdate:
+class OptionCreate:
     """
     Attributes:
         duid (str):
-        title (Union[Unset, str]):
+        property_duid (str):
+        title (str):
         color_name (Union[Unset, ColorName]): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -42,12 +43,14 @@ class TagUpdate:
     """
 
     duid: str
-    title: Union[Unset, str] = UNSET
+    property_duid: str
+    title: str
     color_name: Union[Unset, ColorName] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+        property_duid = self.property_duid
         title = self.title
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
@@ -58,10 +61,10 @@ class TagUpdate:
         field_dict.update(
             {
                 "duid": duid,
+                "propertyDuid": property_duid,
+                "title": title,
             }
         )
-        if title is not UNSET:
-            field_dict["title"] = title
         if color_name is not UNSET:
             field_dict["colorName"] = color_name
 
@@ -72,7 +75,9 @@ class TagUpdate:
         d = src_dict.copy()
         duid = d.pop("duid")
 
-        title = d.pop("title", UNSET)
+        property_duid = d.pop("propertyDuid")
+
+        title = d.pop("title")
 
         _color_name = d.pop("colorName", UNSET)
         color_name: Union[Unset, ColorName]
@@ -81,14 +86,15 @@ class TagUpdate:
         else:
             color_name = ColorName(_color_name)
 
-        tag_update = cls(
+        option_create = cls(
             duid=duid,
+            property_duid=property_duid,
             title=title,
             color_name=color_name,
         )
 
-        tag_update.additional_properties = d
-        return tag_update
+        option_create.additional_properties = d
+        return option_create
 
     @property
     def additional_keys(self) -> List[str]:

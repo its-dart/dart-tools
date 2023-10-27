@@ -10,6 +10,8 @@ class TaskSourceType(str, Enum):
     APPQUICKADD = "AppQuickAdd"
     APPRELATIONSHIP = "AppRelationship"
     APPREPLICATE = "AppReplicate"
+    APPROADMAPLIST = "AppRoadmapList"
+    APPROADMAPTIMELINE = "AppRoadmapTimeline"
     APPSUBTASK = "AppSubtask"
     APPTCM = "AppTcm"
     CHATGPT = "ChatGPT"

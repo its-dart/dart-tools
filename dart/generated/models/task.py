@@ -15,6 +15,7 @@ if TYPE_CHECKING:
     from ..models.task_description import TaskDescription
     from ..models.task_link import TaskLink
     from ..models.task_notion_document import TaskNotionDocument
+    from ..models.task_properties import TaskProperties
     from ..models.task_recurrence import TaskRecurrence
 
 
@@ -41,6 +42,7 @@ class Task:
         links (List['TaskLink']):
         attachments (List['TaskAttachment']):
         relationships (List['Relationship']):
+        properties (TaskProperties):
         updated_by_client_duid (Union[Unset, None, str]):
         drafter_duid (Optional[str]):
         recommendation_status (Optional[RecommendationStatus]): * `Accepted` - ACCEPTED
@@ -74,6 +76,7 @@ class Task:
     links: List["TaskLink"]
     attachments: List["TaskAttachment"]
     relationships: List["Relationship"]
+    properties: "TaskProperties"
     drafter_duid: Optional[str]
     recommendation_status: Optional[RecommendationStatus]
     priority: Optional[Priority]
@@ -125,6 +128,8 @@ class Task:
 
             relationships.append(relationships_item)
 
+        properties = self.properties.to_dict()
+
         updated_by_client_duid = self.updated_by_client_duid
         drafter_duid = self.drafter_duid
         recommendation_status = self.recommendation_status.value if self.recommendation_status else None
@@ -164,6 +169,7 @@ class Task:
                 "links": links,
                 "attachments": attachments,
                 "relationships": relationships,
+                "properties": properties,
                 "drafterDuid": drafter_duid,
                 "recommendationStatus": recommendation_status,
                 "priority": priority,
@@ -188,6 +194,7 @@ class Task:
         from ..models.task_description import TaskDescription
         from ..models.task_link import TaskLink
         from ..models.task_notion_document import TaskNotionDocument
+        from ..models.task_properties import TaskProperties
         from ..models.task_recurrence import TaskRecurrence
 
         d = src_dict.copy()
@@ -237,6 +244,8 @@ class Task:
             relationships_item = Relationship.from_dict(relationships_item_data)
 
             relationships.append(relationships_item)
+
+        properties = TaskProperties.from_dict(d.pop("properties"))
 
         updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
 
@@ -317,6 +326,7 @@ class Task:
             links=links,
             attachments=attachments,
             relationships=relationships,
+            properties=properties,
             updated_by_client_duid=updated_by_client_duid,
             drafter_duid=drafter_duid,
             recommendation_status=recommendation_status,

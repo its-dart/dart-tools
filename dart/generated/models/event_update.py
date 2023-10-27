@@ -44,6 +44,7 @@ class EventUpdate:
             * `workspace/invite` - WORKSPACE_INVITE
             * `workspace/join` - WORKSPACE_JOIN
             * `workspace/leave` - WORKSPACE_LEAVE
+            * `workspace/update_property` - WORKSPACE_UPDATE_PROPERTY
             * `workspace/update_status` - WORKSPACE_UPDATE_STATUS
             * `workspace/update_other` - WORKSPACE_UPDATE_OTHER
             * `workspace/create` - WORKSPACE_CREATE

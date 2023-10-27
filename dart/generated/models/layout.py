@@ -24,6 +24,7 @@ class Layout:
         kind (LayoutKind): * `list` - LIST
             * `board` - BOARD
             * `calendar` - CALENDAR
+            * `roadmap` - ROADMAP
         kind_config_map (LayoutKindConfigMap):
         filter_group (FilterGroup):
         sorts (List['Sort']):

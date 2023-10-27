@@ -66,7 +66,17 @@ from .notion_integration_tenant_extension_status import NotionIntegrationTenantE
 from .operation import Operation
 from .operation_kind import OperationKind
 from .operation_model_kind import OperationModelKind
+from .option import Option
+from .option_create import OptionCreate
+from .option_update import OptionUpdate
 from .priority import Priority
+from .property_ import Property
+from .property_adtl import PropertyAdtl
+from .property_create import PropertyCreate
+from .property_create_adtl import PropertyCreateAdtl
+from .property_kind import PropertyKind
+from .property_update import PropertyUpdate
+from .property_update_adtl import PropertyUpdateAdtl
 from .recommendation_status import RecommendationStatus
 from .relationship import Relationship
 from .relationship_create import RelationshipCreate
@@ -91,9 +101,6 @@ from .status_update import StatusUpdate
 from .subscription import Subscription
 from .subtask_display_mode import SubtaskDisplayMode
 from .summary_statistic_kind import SummaryStatisticKind
-from .tag import Tag
-from .tag_create import TagCreate
-from .tag_update import TagUpdate
 from .task import Task
 from .task_attachment import TaskAttachment
 from .task_attachment_create import TaskAttachmentCreate
@@ -114,6 +121,7 @@ from .task_notion_document import TaskNotionDocument
 from .task_notion_document_block_children_map import TaskNotionDocumentBlockChildrenMap
 from .task_notion_document_block_map import TaskNotionDocumentBlockMap
 from .task_notion_document_page_map import TaskNotionDocumentPageMap
+from .task_properties import TaskProperties
 from .task_recurrence import TaskRecurrence
 from .task_source_type import TaskSourceType
 from .task_update import TaskUpdate
@@ -209,7 +217,17 @@ __all__ = (
     "Operation",
     "OperationKind",
     "OperationModelKind",
+    "Option",
+    "OptionCreate",
+    "OptionUpdate",
     "Priority",
+    "Property",
+    "PropertyAdtl",
+    "PropertyCreate",
+    "PropertyCreateAdtl",
+    "PropertyKind",
+    "PropertyUpdate",
+    "PropertyUpdateAdtl",
     "RecommendationStatus",
     "Relationship",
     "RelationshipCreate",
@@ -234,9 +252,6 @@ __all__ = (
     "Subscription",
     "SubtaskDisplayMode",
     "SummaryStatisticKind",
-    "Tag",
-    "TagCreate",
-    "TagUpdate",
     "Task",
     "TaskAttachment",
     "TaskAttachmentCreate",
@@ -257,6 +272,7 @@ __all__ = (
     "TaskNotionDocumentBlockChildrenMap",
     "TaskNotionDocumentBlockMap",
     "TaskNotionDocumentPageMap",
+    "TaskProperties",
     "TaskRecurrence",
     "TaskSourceType",
     "TaskUpdate",

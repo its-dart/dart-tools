@@ -6,16 +6,17 @@ from attrs import field as _attrs_field
 from ..models.color_name import ColorName
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Tag")
+T = TypeVar("T", bound="OptionUpdate")
 
 
 @_attrs_define
-class Tag:
+class OptionUpdate:
     """
     Attributes:
         duid (str):
-        title (str):
-        color_name (ColorName): * `Red` - RED
+        property_duid (Union[Unset, str]):
+        title (Union[Unset, str]):
+        color_name (Union[Unset, ColorName]): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
             * `Dark Green` - DARK_GREEN
@@ -39,33 +40,35 @@ class Tag:
             * `Dark Gray` - DARK_GRAY
             * `Light Brown` - LIGHT_BROWN
             * `Light Gray` - LIGHT_GRAY
-        updated_by_client_duid (Union[Unset, None, str]):
     """
 
     duid: str
-    title: str
-    color_name: ColorName
-    updated_by_client_duid: Union[Unset, None, str] = UNSET
+    property_duid: Union[Unset, str] = UNSET
+    title: Union[Unset, str] = UNSET
+    color_name: Union[Unset, ColorName] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+        property_duid = self.property_duid
         title = self.title
-        color_name = self.color_name.value
-
-        updated_by_client_duid = self.updated_by_client_duid
+        color_name: Union[Unset, str] = UNSET
+        if not isinstance(self.color_name, Unset):
+            color_name = self.color_name.value
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "duid": duid,
-                "title": title,
-                "colorName": color_name,
             }
         )
-        if updated_by_client_duid is not UNSET:
-            field_dict["updatedByClientDuid"] = updated_by_client_duid
+        if property_duid is not UNSET:
+            field_dict["propertyDuid"] = property_duid
+        if title is not UNSET:
+            field_dict["title"] = title
+        if color_name is not UNSET:
+            field_dict["colorName"] = color_name
 
         return field_dict
 
@@ -74,21 +77,26 @@ class Tag:
         d = src_dict.copy()
         duid = d.pop("duid")
 
-        title = d.pop("title")
+        property_duid = d.pop("propertyDuid", UNSET)
 
-        color_name = ColorName(d.pop("colorName"))
+        title = d.pop("title", UNSET)
 
-        updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
+        _color_name = d.pop("colorName", UNSET)
+        color_name: Union[Unset, ColorName]
+        if isinstance(_color_name, Unset):
+            color_name = UNSET
+        else:
+            color_name = ColorName(_color_name)
 
-        tag = cls(
+        option_update = cls(
             duid=duid,
+            property_duid=property_duid,
             title=title,
             color_name=color_name,
-            updated_by_client_duid=updated_by_client_duid,
         )
 
-        tag.additional_properties = d
-        return tag
+        option_update.additional_properties = d
+        return option_update
 
     @property
     def additional_keys(self) -> List[str]:

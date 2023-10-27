@@ -24,6 +24,7 @@ class LayoutCreate:
         kind (Union[Unset, LayoutKind]): * `list` - LIST
             * `board` - BOARD
             * `calendar` - CALENDAR
+            * `roadmap` - ROADMAP
         kind_config_map (Union[Unset, LayoutCreateKindConfigMap]):
         filter_group (Union[Unset, LayoutCreateFilterGroup]):
         sorts (Union[Unset, LayoutCreateSorts]):

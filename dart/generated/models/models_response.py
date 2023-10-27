@@ -14,11 +14,12 @@ if TYPE_CHECKING:
     from ..models.event_subscription import EventSubscription
     from ..models.folder import Folder
     from ..models.layout import Layout
+    from ..models.option import Option
+    from ..models.property_ import Property
     from ..models.relationship import Relationship
     from ..models.relationship_kind import RelationshipKind
     from ..models.space import Space
     from ..models.status import Status
-    from ..models.tag import Tag
     from ..models.task import Task
     from ..models.task_attachment import TaskAttachment
     from ..models.task_doc_relationship import TaskDocRelationship
@@ -53,11 +54,12 @@ class ModelsResponse:
             folders (Union[Unset, List['Folder']]):
             layouts (Union[Unset, List['Layout']]):
             event_subscriptions (Union[Unset, List['EventSubscription']]):
+            options (Union[Unset, List['Option']]):
+            properties (Union[Unset, List['Property']]):
             relationships (Union[Unset, List['Relationship']]):
             relationship_kinds (Union[Unset, List['RelationshipKind']]):
             spaces (Union[Unset, List['Space']]):
             statuses (Union[Unset, List['Status']]):
-            tags (Union[Unset, List['Tag']]):
             tasks (Union[Unset, List['Task']]):
             attachments (Union[Unset, List['TaskAttachment']]):
             task_doc_relationships (Union[Unset, List['TaskDocRelationship']]):
@@ -76,11 +78,12 @@ class ModelsResponse:
     folders: Union[Unset, List["Folder"]] = UNSET
     layouts: Union[Unset, List["Layout"]] = UNSET
     event_subscriptions: Union[Unset, List["EventSubscription"]] = UNSET
+    options: Union[Unset, List["Option"]] = UNSET
+    properties: Union[Unset, List["Property"]] = UNSET
     relationships: Union[Unset, List["Relationship"]] = UNSET
     relationship_kinds: Union[Unset, List["RelationshipKind"]] = UNSET
     spaces: Union[Unset, List["Space"]] = UNSET
     statuses: Union[Unset, List["Status"]] = UNSET
-    tags: Union[Unset, List["Tag"]] = UNSET
     tasks: Union[Unset, List["Task"]] = UNSET
     attachments: Union[Unset, List["TaskAttachment"]] = UNSET
     task_doc_relationships: Union[Unset, List["TaskDocRelationship"]] = UNSET
@@ -156,6 +159,22 @@ class ModelsResponse:
 
                 event_subscriptions.append(event_subscriptions_item)
 
+        options: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.options, Unset):
+            options = []
+            for options_item_data in self.options:
+                options_item = options_item_data.to_dict()
+
+                options.append(options_item)
+
+        properties: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.properties, Unset):
+            properties = []
+            for properties_item_data in self.properties:
+                properties_item = properties_item_data.to_dict()
+
+                properties.append(properties_item)
+
         relationships: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.relationships, Unset):
             relationships = []
@@ -187,14 +206,6 @@ class ModelsResponse:
                 statuses_item = statuses_item_data.to_dict()
 
                 statuses.append(statuses_item)
-
-        tags: Union[Unset, List[Dict[str, Any]]] = UNSET
-        if not isinstance(self.tags, Unset):
-            tags = []
-            for tags_item_data in self.tags:
-                tags_item = tags_item_data.to_dict()
-
-                tags.append(tags_item)
 
         tasks: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.tasks, Unset):
@@ -279,6 +290,10 @@ class ModelsResponse:
             field_dict["layouts"] = layouts
         if event_subscriptions is not UNSET:
             field_dict["eventSubscriptions"] = event_subscriptions
+        if options is not UNSET:
+            field_dict["options"] = options
+        if properties is not UNSET:
+            field_dict["properties"] = properties
         if relationships is not UNSET:
             field_dict["relationships"] = relationships
         if relationship_kinds is not UNSET:
@@ -287,8 +302,6 @@ class ModelsResponse:
             field_dict["spaces"] = spaces
         if statuses is not UNSET:
             field_dict["statuses"] = statuses
-        if tags is not UNSET:
-            field_dict["tags"] = tags
         if tasks is not UNSET:
             field_dict["tasks"] = tasks
         if attachments is not UNSET:
@@ -318,11 +331,12 @@ class ModelsResponse:
         from ..models.event_subscription import EventSubscription
         from ..models.folder import Folder
         from ..models.layout import Layout
+        from ..models.option import Option
+        from ..models.property_ import Property
         from ..models.relationship import Relationship
         from ..models.relationship_kind import RelationshipKind
         from ..models.space import Space
         from ..models.status import Status
-        from ..models.tag import Tag
         from ..models.task import Task
         from ..models.task_attachment import TaskAttachment
         from ..models.task_doc_relationship import TaskDocRelationship
@@ -389,6 +403,20 @@ class ModelsResponse:
 
             event_subscriptions.append(event_subscriptions_item)
 
+        options = []
+        _options = d.pop("options", UNSET)
+        for options_item_data in _options or []:
+            options_item = Option.from_dict(options_item_data)
+
+            options.append(options_item)
+
+        properties = []
+        _properties = d.pop("properties", UNSET)
+        for properties_item_data in _properties or []:
+            properties_item = Property.from_dict(properties_item_data)
+
+            properties.append(properties_item)
+
         relationships = []
         _relationships = d.pop("relationships", UNSET)
         for relationships_item_data in _relationships or []:
@@ -416,13 +444,6 @@ class ModelsResponse:
             statuses_item = Status.from_dict(statuses_item_data)
 
             statuses.append(statuses_item)
-
-        tags = []
-        _tags = d.pop("tags", UNSET)
-        for tags_item_data in _tags or []:
-            tags_item = Tag.from_dict(tags_item_data)
-
-            tags.append(tags_item)
 
         tasks = []
         _tasks = d.pop("tasks", UNSET)
@@ -489,11 +510,12 @@ class ModelsResponse:
             folders=folders,
             layouts=layouts,
             event_subscriptions=event_subscriptions,
+            options=options,
+            properties=properties,
             relationships=relationships,
             relationship_kinds=relationship_kinds,
             spaces=spaces,
             statuses=statuses,
-            tags=tags,
             tasks=tasks,
             attachments=attachments,
             task_doc_relationships=task_doc_relationships,

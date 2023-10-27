@@ -23,6 +23,10 @@ if TYPE_CHECKING:
     from ..models.folder_update import FolderUpdate
     from ..models.layout_create import LayoutCreate
     from ..models.layout_update import LayoutUpdate
+    from ..models.option_create import OptionCreate
+    from ..models.option_update import OptionUpdate
+    from ..models.property_create import PropertyCreate
+    from ..models.property_update import PropertyUpdate
     from ..models.relationship_create import RelationshipCreate
     from ..models.relationship_kind_create import RelationshipKindCreate
     from ..models.relationship_kind_update import RelationshipKindUpdate
@@ -31,8 +35,6 @@ if TYPE_CHECKING:
     from ..models.space_update import SpaceUpdate
     from ..models.status_create import StatusCreate
     from ..models.status_update import StatusUpdate
-    from ..models.tag_create import TagCreate
-    from ..models.tag_update import TagUpdate
     from ..models.task_attachment_create import TaskAttachmentCreate
     from ..models.task_attachment_update import TaskAttachmentUpdate
     from ..models.task_create import TaskCreate
@@ -71,11 +73,12 @@ class Operation:
             * `folder` - FOLDER
             * `layout` - LAYOUT
             * `event_subscription` - EVENT_SUBSCRIPTION
+            * `option` - OPTION
+            * `property` - PROPERTY
             * `relationship` - RELATIONSHIP
             * `relationship_kind` - RELATIONSHIP_KIND
             * `space` - SPACE
             * `status` - STATUS
-            * `tag` - TAG
             * `task` - TASK
             * `task_attachment` - TASK_ATTACHMENT
             * `task_doc_relationship` - TASK_DOC_RELATIONSHIP
@@ -87,11 +90,12 @@ class Operation:
         data (Union['CommentCreate', 'CommentReactionCreate', 'CommentReactionUpdate', 'CommentUpdate',
             'DartboardCreate', 'DartboardUpdate', 'DocCreate', 'DocUpdate', 'EventCreate', 'EventSubscriptionCreate',
             'EventSubscriptionUpdate', 'EventUpdate', 'FolderCreate', 'FolderUpdate', 'LayoutCreate', 'LayoutUpdate',
-            'RelationshipCreate', 'RelationshipKindCreate', 'RelationshipKindUpdate', 'RelationshipUpdate', 'SpaceCreate',
-            'SpaceUpdate', 'StatusCreate', 'StatusUpdate', 'TagCreate', 'TagUpdate', 'TaskAttachmentCreate',
-            'TaskAttachmentUpdate', 'TaskCreate', 'TaskDocRelationshipCreate', 'TaskDocRelationshipUpdate',
-            'TaskLinkCreate', 'TaskLinkUpdate', 'TaskUpdate', 'TenantCreate', 'TenantUpdate', 'UserCreate',
-            'UserDartboardLayoutCreate', 'UserDartboardLayoutUpdate', 'UserUpdate', 'ViewCreate', 'ViewUpdate']):
+            'OptionCreate', 'OptionUpdate', 'PropertyCreate', 'PropertyUpdate', 'RelationshipCreate',
+            'RelationshipKindCreate', 'RelationshipKindUpdate', 'RelationshipUpdate', 'SpaceCreate', 'SpaceUpdate',
+            'StatusCreate', 'StatusUpdate', 'TaskAttachmentCreate', 'TaskAttachmentUpdate', 'TaskCreate',
+            'TaskDocRelationshipCreate', 'TaskDocRelationshipUpdate', 'TaskLinkCreate', 'TaskLinkUpdate', 'TaskUpdate',
+            'TenantCreate', 'TenantUpdate', 'UserCreate', 'UserDartboardLayoutCreate', 'UserDartboardLayoutUpdate',
+            'UserUpdate', 'ViewCreate', 'ViewUpdate']):
     """
 
     kind: OperationKind
@@ -113,6 +117,10 @@ class Operation:
         "FolderUpdate",
         "LayoutCreate",
         "LayoutUpdate",
+        "OptionCreate",
+        "OptionUpdate",
+        "PropertyCreate",
+        "PropertyUpdate",
         "RelationshipCreate",
         "RelationshipKindCreate",
         "RelationshipKindUpdate",
@@ -121,8 +129,6 @@ class Operation:
         "SpaceUpdate",
         "StatusCreate",
         "StatusUpdate",
-        "TagCreate",
-        "TagUpdate",
         "TaskAttachmentCreate",
         "TaskAttachmentUpdate",
         "TaskCreate",
@@ -159,6 +165,10 @@ class Operation:
         from ..models.folder_update import FolderUpdate
         from ..models.layout_create import LayoutCreate
         from ..models.layout_update import LayoutUpdate
+        from ..models.option_create import OptionCreate
+        from ..models.option_update import OptionUpdate
+        from ..models.property_create import PropertyCreate
+        from ..models.property_update import PropertyUpdate
         from ..models.relationship_create import RelationshipCreate
         from ..models.relationship_kind_create import RelationshipKindCreate
         from ..models.relationship_kind_update import RelationshipKindUpdate
@@ -167,8 +177,6 @@ class Operation:
         from ..models.space_update import SpaceUpdate
         from ..models.status_create import StatusCreate
         from ..models.status_update import StatusUpdate
-        from ..models.tag_create import TagCreate
-        from ..models.tag_update import TagUpdate
         from ..models.task_attachment_create import TaskAttachmentCreate
         from ..models.task_attachment_update import TaskAttachmentUpdate
         from ..models.task_create import TaskCreate
@@ -239,6 +247,18 @@ class Operation:
         elif isinstance(self.data, EventSubscriptionUpdate):
             data = self.data.to_dict()
 
+        elif isinstance(self.data, OptionCreate):
+            data = self.data.to_dict()
+
+        elif isinstance(self.data, OptionUpdate):
+            data = self.data.to_dict()
+
+        elif isinstance(self.data, PropertyCreate):
+            data = self.data.to_dict()
+
+        elif isinstance(self.data, PropertyUpdate):
+            data = self.data.to_dict()
+
         elif isinstance(self.data, RelationshipCreate):
             data = self.data.to_dict()
 
@@ -261,12 +281,6 @@ class Operation:
             data = self.data.to_dict()
 
         elif isinstance(self.data, StatusUpdate):
-            data = self.data.to_dict()
-
-        elif isinstance(self.data, TagCreate):
-            data = self.data.to_dict()
-
-        elif isinstance(self.data, TagUpdate):
             data = self.data.to_dict()
 
         elif isinstance(self.data, TaskCreate):
@@ -347,6 +361,10 @@ class Operation:
         from ..models.folder_update import FolderUpdate
         from ..models.layout_create import LayoutCreate
         from ..models.layout_update import LayoutUpdate
+        from ..models.option_create import OptionCreate
+        from ..models.option_update import OptionUpdate
+        from ..models.property_create import PropertyCreate
+        from ..models.property_update import PropertyUpdate
         from ..models.relationship_create import RelationshipCreate
         from ..models.relationship_kind_create import RelationshipKindCreate
         from ..models.relationship_kind_update import RelationshipKindUpdate
@@ -355,8 +373,6 @@ class Operation:
         from ..models.space_update import SpaceUpdate
         from ..models.status_create import StatusCreate
         from ..models.status_update import StatusUpdate
-        from ..models.tag_create import TagCreate
-        from ..models.tag_update import TagUpdate
         from ..models.task_attachment_create import TaskAttachmentCreate
         from ..models.task_attachment_update import TaskAttachmentUpdate
         from ..models.task_create import TaskCreate
@@ -398,6 +414,10 @@ class Operation:
             "FolderUpdate",
             "LayoutCreate",
             "LayoutUpdate",
+            "OptionCreate",
+            "OptionUpdate",
+            "PropertyCreate",
+            "PropertyUpdate",
             "RelationshipCreate",
             "RelationshipKindCreate",
             "RelationshipKindUpdate",
@@ -406,8 +426,6 @@ class Operation:
             "SpaceUpdate",
             "StatusCreate",
             "StatusUpdate",
-            "TagCreate",
-            "TagUpdate",
             "TaskAttachmentCreate",
             "TaskAttachmentUpdate",
             "TaskCreate",
@@ -556,7 +574,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_16 = RelationshipCreate.from_dict(data)
+                componentsschemas_operation_model_data_type_16 = OptionCreate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_16
             except:  # noqa: E722
@@ -564,7 +582,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_17 = RelationshipUpdate.from_dict(data)
+                componentsschemas_operation_model_data_type_17 = OptionUpdate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_17
             except:  # noqa: E722
@@ -572,7 +590,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_18 = RelationshipKindCreate.from_dict(data)
+                componentsschemas_operation_model_data_type_18 = PropertyCreate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_18
             except:  # noqa: E722
@@ -580,7 +598,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_19 = RelationshipKindUpdate.from_dict(data)
+                componentsschemas_operation_model_data_type_19 = PropertyUpdate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_19
             except:  # noqa: E722
@@ -588,7 +606,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_20 = SpaceCreate.from_dict(data)
+                componentsschemas_operation_model_data_type_20 = RelationshipCreate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_20
             except:  # noqa: E722
@@ -596,7 +614,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_21 = SpaceUpdate.from_dict(data)
+                componentsschemas_operation_model_data_type_21 = RelationshipUpdate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_21
             except:  # noqa: E722
@@ -604,7 +622,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_22 = StatusCreate.from_dict(data)
+                componentsschemas_operation_model_data_type_22 = RelationshipKindCreate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_22
             except:  # noqa: E722
@@ -612,7 +630,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_23 = StatusUpdate.from_dict(data)
+                componentsschemas_operation_model_data_type_23 = RelationshipKindUpdate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_23
             except:  # noqa: E722
@@ -620,7 +638,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_24 = TagCreate.from_dict(data)
+                componentsschemas_operation_model_data_type_24 = SpaceCreate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_24
             except:  # noqa: E722
@@ -628,7 +646,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_25 = TagUpdate.from_dict(data)
+                componentsschemas_operation_model_data_type_25 = SpaceUpdate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_25
             except:  # noqa: E722
@@ -636,7 +654,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_26 = TaskCreate.from_dict(data)
+                componentsschemas_operation_model_data_type_26 = StatusCreate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_26
             except:  # noqa: E722
@@ -644,7 +662,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_27 = TaskUpdate.from_dict(data)
+                componentsschemas_operation_model_data_type_27 = StatusUpdate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_27
             except:  # noqa: E722
@@ -652,7 +670,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_28 = TaskAttachmentCreate.from_dict(data)
+                componentsschemas_operation_model_data_type_28 = TaskCreate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_28
             except:  # noqa: E722
@@ -660,7 +678,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_29 = TaskAttachmentUpdate.from_dict(data)
+                componentsschemas_operation_model_data_type_29 = TaskUpdate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_29
             except:  # noqa: E722
@@ -668,7 +686,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_30 = TaskDocRelationshipCreate.from_dict(data)
+                componentsschemas_operation_model_data_type_30 = TaskAttachmentCreate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_30
             except:  # noqa: E722
@@ -676,7 +694,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_31 = TaskDocRelationshipUpdate.from_dict(data)
+                componentsschemas_operation_model_data_type_31 = TaskAttachmentUpdate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_31
             except:  # noqa: E722
@@ -684,7 +702,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_32 = TaskLinkCreate.from_dict(data)
+                componentsschemas_operation_model_data_type_32 = TaskDocRelationshipCreate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_32
             except:  # noqa: E722
@@ -692,7 +710,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_33 = TaskLinkUpdate.from_dict(data)
+                componentsschemas_operation_model_data_type_33 = TaskDocRelationshipUpdate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_33
             except:  # noqa: E722
@@ -700,7 +718,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_34 = TenantCreate.from_dict(data)
+                componentsschemas_operation_model_data_type_34 = TaskLinkCreate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_34
             except:  # noqa: E722
@@ -708,7 +726,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_35 = TenantUpdate.from_dict(data)
+                componentsschemas_operation_model_data_type_35 = TaskLinkUpdate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_35
             except:  # noqa: E722
@@ -716,7 +734,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_36 = UserCreate.from_dict(data)
+                componentsschemas_operation_model_data_type_36 = TenantCreate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_36
             except:  # noqa: E722
@@ -724,7 +742,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_37 = UserUpdate.from_dict(data)
+                componentsschemas_operation_model_data_type_37 = TenantUpdate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_37
             except:  # noqa: E722
@@ -732,7 +750,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_38 = UserDartboardLayoutCreate.from_dict(data)
+                componentsschemas_operation_model_data_type_38 = UserCreate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_38
             except:  # noqa: E722
@@ -740,7 +758,7 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_39 = UserDartboardLayoutUpdate.from_dict(data)
+                componentsschemas_operation_model_data_type_39 = UserUpdate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_39
             except:  # noqa: E722
@@ -748,16 +766,32 @@ class Operation:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_operation_model_data_type_40 = ViewCreate.from_dict(data)
+                componentsschemas_operation_model_data_type_40 = UserDartboardLayoutCreate.from_dict(data)
 
                 return componentsschemas_operation_model_data_type_40
             except:  # noqa: E722
                 pass
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                componentsschemas_operation_model_data_type_41 = UserDartboardLayoutUpdate.from_dict(data)
+
+                return componentsschemas_operation_model_data_type_41
+            except:  # noqa: E722
+                pass
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                componentsschemas_operation_model_data_type_42 = ViewCreate.from_dict(data)
+
+                return componentsschemas_operation_model_data_type_42
+            except:  # noqa: E722
+                pass
             if not isinstance(data, dict):
                 raise TypeError()
-            componentsschemas_operation_model_data_type_41 = ViewUpdate.from_dict(data)
+            componentsschemas_operation_model_data_type_43 = ViewUpdate.from_dict(data)
 
-            return componentsschemas_operation_model_data_type_41
+            return componentsschemas_operation_model_data_type_43
 
         data = _parse_data(d.pop("data"))
 
