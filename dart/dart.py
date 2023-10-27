@@ -452,8 +452,13 @@ def begin_task():
 
     def _get_task():
         user_duid = user["duid"]
+        team_space_duid = next(
+            e["duid"] for e in user_bundle["spaces"] if e["kind"] == "Workspace"
+        )
         active_duid = next(
-            e["duid"] for e in user_bundle["dartboards"] if e["kind"] == "Active"
+            e["duid"]
+            for e in user_bundle["dartboards"]
+            if e["spaceDuid"] == team_space_duid and e["kind"] == "Active"
         )
         unterm_status_duids = {
             e["duid"]
