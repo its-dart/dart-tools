@@ -24,11 +24,15 @@ import requests
 
 from .generated import Client
 from .generated.models import (
+    DartboardKind,
     Operation,
     OperationKind,
     OperationModelKind,
     Priority,
+    PropertyKind,
     RequestBody,
+    SpaceKind,
+    StatusKind,
     TaskCreate,
     TaskSourceType,
     TaskUpdate,
@@ -238,6 +242,68 @@ class Dart(Client):
         )
 
 
+class UserBundle:
+    def __init__(self, session):
+        _log("Loading active tasks")
+        response = session.get(_CURRENT_USER_URL_FRAG)
+        _check_request_response_and_maybe_exit(response)
+        self._raw = response.json()
+        if not self.is_logged_in:
+            _auth_failure_exit()
+
+    @property
+    def is_logged_in(self):
+        return self._raw["isLoggedIn"]
+
+    @property
+    def user(self):
+        return self._raw["user"]
+
+    @property
+    def users(self):
+        return self._raw["users"]
+
+    @property
+    def properties(self):
+        return self._raw["properties"]
+
+    @property
+    def default_statuses(self):
+        default_status_property_duid = next(
+            e["duid"]
+            for e in self.properties
+            if e["kind"] == PropertyKind.DEFAULT_STATUS
+        )
+        return [
+            e
+            for e in self._raw["statuses"]
+            if e["propertyDuid"] == default_status_property_duid
+        ]
+
+    @property
+    def default_tags(self):
+        default_tags_property_duid = next(
+            e["duid"] for e in self.properties if e["kind"] == PropertyKind.DEFAULT_TAGS
+        )
+        return [
+            e
+            for e in self._raw["options"]
+            if e["propertyDuid"] == default_tags_property_duid
+        ]
+
+    @property
+    def spaces(self):
+        return self._raw["spaces"]
+
+    @property
+    def dartboards(self):
+        return self._raw["dartboards"]
+
+    @property
+    def tasks(self):
+        return self._raw["tasks"]
+
+
 class _Git:
     @staticmethod
     def _cmd_succeeds(cmd):
@@ -414,16 +480,6 @@ def login(*, email=None, password=None):
     return True
 
 
-def _get_full_user_bundle(session):
-    _log("Loading active tasks")
-    response = session.get(_CURRENT_USER_URL_FRAG)
-    _check_request_response_and_maybe_exit(response)
-    bundle = response.json()
-    if not bundle["isLoggedIn"]:
-        _auth_failure_exit()
-    return bundle
-
-
 def _begin_task(config, session, user_email, get_task):
     _Git.ensure_in_repo()
     _Git.ensure_no_unstaged_changes()
@@ -447,27 +503,27 @@ def begin_task():
     config = _Config()
     session = _Session(config)
 
-    user_bundle = _get_full_user_bundle(session)
-    user = user_bundle["user"]
+    user_bundle = UserBundle(session)
+    user = user_bundle.user
 
     def _get_task():
         user_duid = user["duid"]
         team_space_duid = next(
-            e["duid"] for e in user_bundle["spaces"] if e["kind"] == "Workspace"
+            e["duid"] for e in user_bundle.spaces if e["kind"] == SpaceKind.WORKSPACE
         )
         active_duid = next(
             e["duid"]
-            for e in user_bundle["dartboards"]
-            if e["spaceDuid"] == team_space_duid and e["kind"] == "Active"
+            for e in user_bundle.dartboards
+            if e["spaceDuid"] == team_space_duid and e["kind"] == DartboardKind.ACTIVE
         )
         unterm_status_duids = {
             e["duid"]
-            for e in user_bundle["statuses"]
+            for e in user_bundle.default_statuses
             if e["kind"] not in _COMPLETED_STATUS_KINDS
         }
         filtered_tasks = [
             e
-            for e in user_bundle["tasks"]
+            for e in user_bundle.tasks
             if not e["inTrash"]
             and e["dartboardDuid"] == active_duid
             and user_duid in e["assigneeDuids"]
@@ -511,12 +567,12 @@ def create_task(
     session = _Session(config)
     dart = Dart(session)
 
-    user_bundle = _get_full_user_bundle(session)
+    user_bundle = UserBundle(session)
 
-    user = user_bundle["user"]
+    user = user_bundle.user
     user_duid = user["duid"]
 
-    dartboards = user_bundle["dartboards"]
+    dartboards = user_bundle.dartboards
     if dartboard_title is not None:
         dartboard_title_norm = dartboard_title.strip().lower()
         dartboard = next(
@@ -530,16 +586,16 @@ def create_task(
         if dartboard is None:
             sys.exit(f"No dartboard found with title '{dartboard_title}'.")
     else:
-        dartboard = next(e for e in dartboards if e["kind"] == "Active")
+        dartboard = next(e for e in dartboards if e["kind"] == DartboardKind.ACTIVE)
     dartboard_duid = dartboard["duid"]
 
     orders = [
-        e["order"] for e in user_bundle["tasks"] if e["dartboardDuid"] == dartboard_duid
+        e["order"] for e in user_bundle.tasks if e["dartboardDuid"] == dartboard_duid
     ]
     first_order = min(orders) if len(orders) > 0 else None
     order = get_orders_between(None, first_order, 1)[0]
 
-    statuses = user_bundle["statuses"]
+    statuses = user_bundle.default_statuses
     if status_title is not None:
         status_title_norm = status_title.strip().lower()
         status = next(
@@ -548,10 +604,12 @@ def create_task(
         if status is None:
             sys.exit(f"No status found with title '{status_title}'.")
     else:
-        status = next(e for e in statuses if e["kind"] == "Unstarted" and e["locked"])
+        status = next(
+            e for e in statuses if e["kind"] == StatusKind.UNSTARTED and e["locked"]
+        )
     status_duid = status["duid"]
 
-    users = user_bundle["users"]
+    users = user_bundle.users
     user_emails_to_duids = {e["email"]: e["duid"] for e in users}
     assignee_duids = []
     subscriber_duids = []
@@ -568,7 +626,7 @@ def create_task(
     subscriber_duids.append(user_duid)
     subscriber_duids = list(set(subscriber_duids))
 
-    tags = user_bundle["tags"]
+    tags = user_bundle.default_tags
     tag_titles_to_duids = {e["title"]: e["duid"] for e in tags}
     tag_duids = []
     if tag_titles is not None:
@@ -643,12 +701,12 @@ def update_task(
     session = _Session(config)
     dart = Dart(session)
 
-    user_bundle = _get_full_user_bundle(session)
+    user_bundle = UserBundle(session)
 
-    user = user_bundle["user"]
+    user = user_bundle.user
     user_duid = user["duid"]
 
-    tasks = user_bundle["tasks"]
+    tasks = user_bundle.tasks
     old_task = next((e for e in tasks if e["duid"] == duid), None)
     if old_task is None:
         sys.exit(f"No task found with DUID '{duid}'.")
@@ -658,7 +716,7 @@ def update_task(
     if title is not None:
         task_update_kwargs["title"] = title
 
-    dartboards = user_bundle["dartboards"]
+    dartboards = user_bundle.dartboards
     if dartboard_title is not None:
         dartboard_title_norm = dartboard_title.strip().lower()
         dartboard = next(
@@ -675,7 +733,7 @@ def update_task(
         if dartboard_duid != old_task["dartboardDuid"]:
             task_update_kwargs["dartboard_duid"] = dartboard_duid
 
-    statuses = user_bundle["statuses"]
+    statuses = user_bundle.default_statuses
     if status_title is not None:
         status_title_norm = status_title.strip().lower()
         status = next(
@@ -687,7 +745,7 @@ def update_task(
         if status_duid != old_task["statusDuid"]:
             task_update_kwargs["status_duid"] = status_duid
 
-    users = user_bundle["users"]
+    users = user_bundle.users
     user_emails_to_duids = {e["email"]: e["duid"] for e in users}
     subscriber_duids = []
     if assignee_emails is not None:
@@ -709,7 +767,7 @@ def update_task(
     if subscriber_duids != old_task["subscriberDuids"]:
         task_update_kwargs["subscriber_duids"] = subscriber_duids
 
-    tags = user_bundle["tags"]
+    tags = user_bundle.default_tags
     tag_titles_to_duids = {e["title"]: e["duid"] for e in tags}
     if tag_titles is not None:
         tag_duids = []
