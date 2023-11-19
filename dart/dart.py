@@ -17,6 +17,7 @@ from collections import defaultdict
 from datetime import timezone
 from getpass import getpass
 from importlib.metadata import version
+from typing import Literal, NoReturn
 
 import dateparser
 from pick import pick
@@ -33,6 +34,7 @@ from .generated.models import (
     RequestBody,
     SpaceKind,
     StatusKind,
+    Task,
     TaskCreate,
     TaskSourceType,
     TaskUpdate,
@@ -397,7 +399,7 @@ def _auth_failure_exit():
     sys.exit(f"Not logged in, run\n\n{_PROG} {_LOGIN_CMD}\n\nto log in.")
 
 
-def _unknown_failure_exit():
+def _unknown_failure_exit() -> NoReturn:
     sys.exit(f"Not logged in, run\n\n{_PROG} {_LOGIN_CMD}\n\nto log in.")
 
 
@@ -410,7 +412,10 @@ def _check_request_response_and_maybe_exit(response):
         _unknown_failure_exit()
 
 
-def _parse_transaction_response_and_maybe_exit(response, model_kind, duid):
+# TODO remove temporary task-only typing
+def _parse_transaction_response_and_maybe_exit(
+    response, model_kind: Literal[OperationModelKind.TASK], duid
+) -> Task:
     if (
         response is None
         or not hasattr(response, "results")
@@ -535,15 +540,13 @@ def begin_task():
         if len(filtered_tasks) == 0:
             sys.exit("No active, incomplete tasks found.")
 
-        return TaskCreate.from_dict(
-            filtered_tasks[
-                pick(
-                    [e["title"] for e in filtered_tasks],
-                    "Which of your active, incomplete tasks are you beginning work on?",
-                    "→",
-                )[1]
-            ]
-        )
+        picked_idx = pick(
+            [e["title"] for e in filtered_tasks],
+            "Which of your active, incomplete tasks are you beginning work on?",
+            "→",
+        )[1]
+        assert isinstance(picked_idx, int)
+        return TaskCreate.from_dict(filtered_tasks[picked_idx])
 
     _begin_task(config, session, user["email"], _get_task)
 
