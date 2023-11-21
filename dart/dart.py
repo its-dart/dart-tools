@@ -72,7 +72,7 @@ _HOSTS_KEY = "hosts"
 _CSRF_TOKEN_KEY = "csrfToken"
 _SESSION_ID_KEY = "sessionId"
 
-_DUID_CHARS = string.ascii_lowercase + string.ascii_uppercase + string.digits + "-_"
+_DUID_CHARS = string.ascii_lowercase + string.ascii_uppercase + string.digits
 _PRIORITY_MAP = {
     0: Priority.CRITICAL,
     1: Priority.HIGH,
