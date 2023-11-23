@@ -60,7 +60,7 @@ _BEGIN_TASK_CMD = "begintask"
 _ROOT_API_URL_FRAG = "/api/v0"
 _CSRF_URL_FRAG = _ROOT_API_URL_FRAG + "/csrf-token"
 _LOGIN_URL_FRAG = _ROOT_API_URL_FRAG + "/login"
-_CURRENT_USER_URL_FRAG = _ROOT_API_URL_FRAG + "/current-user"
+_CURRENT_USER_URL_FRAG = _ROOT_API_URL_FRAG + "/user-data?mode=auto"
 _COPY_BRANCH_URL_FRAG = _ROOT_API_URL_FRAG + "/vcs/copy-branch-link"
 
 _CONFIG_FPATH = os.path.expanduser("~/.dart-tools")
