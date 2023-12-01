@@ -7,14 +7,14 @@
 import json
 
 from dart import is_signature_correct
-from flask import Flask, jsonify, request
+from flask import Flask, Response, jsonify, request
 
 
 app = Flask(__name__)
 
 
 @app.route("/", methods=["POST"])
-def webhook():
+def webhook() -> Response:
     payload = request.data
 
     # Parse the event
