@@ -1,7 +1,9 @@
+import datetime
 from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from dateutil.parser import isoparse
 
 from ..models.layout_kind import LayoutKind
 from ..models.summary_statistic_kind import SummaryStatisticKind
@@ -21,6 +23,8 @@ class Layout:
     """
     Attributes:
         duid (str):
+        created_at (datetime.datetime):
+        updated_at (datetime.datetime):
         kind (LayoutKind): * `list` - LIST
             * `board` - BOARD
             * `calendar` - CALENDAR
@@ -39,6 +43,8 @@ class Layout:
     """
 
     duid: str
+    created_at: datetime.datetime
+    updated_at: datetime.datetime
     kind: LayoutKind
     kind_config_map: "LayoutKindConfigMap"
     filter_group: "FilterGroup"
@@ -49,6 +55,10 @@ class Layout:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+        created_at = self.created_at.isoformat()
+
+        updated_at = self.updated_at.isoformat()
+
         kind = self.kind.value
 
         kind_config_map = self.kind_config_map.to_dict()
@@ -70,6 +80,8 @@ class Layout:
         field_dict.update(
             {
                 "duid": duid,
+                "createdAt": created_at,
+                "updatedAt": updated_at,
                 "kind": kind,
                 "kindConfigMap": kind_config_map,
                 "filterGroup": filter_group,
@@ -91,6 +103,10 @@ class Layout:
         d = src_dict.copy()
         duid = d.pop("duid")
 
+        created_at = isoparse(d.pop("createdAt"))
+
+        updated_at = isoparse(d.pop("updatedAt"))
+
         kind = LayoutKind(d.pop("kind"))
 
         kind_config_map = LayoutKindConfigMap.from_dict(d.pop("kindConfigMap"))
@@ -110,6 +126,8 @@ class Layout:
 
         layout = cls(
             duid=duid,
+            created_at=created_at,
+            updated_at=updated_at,
             kind=kind,
             kind_config_map=kind_config_map,
             filter_group=filter_group,

@@ -13,6 +13,8 @@ if TYPE_CHECKING:
     from ..models.event import Event
     from ..models.event_subscription import EventSubscription
     from ..models.folder import Folder
+    from ..models.form import Form
+    from ..models.form_field import FormField
     from ..models.layout import Layout
     from ..models.option import Option
     from ..models.property_ import Property
@@ -52,6 +54,8 @@ class ModelsResponse:
             docs (Union[Unset, List['Doc']]):
             events (Union[Unset, List['Event']]):
             folders (Union[Unset, List['Folder']]):
+            forms (Union[Unset, List['Form']]):
+            form_fields (Union[Unset, List['FormField']]):
             layouts (Union[Unset, List['Layout']]):
             event_subscriptions (Union[Unset, List['EventSubscription']]):
             options (Union[Unset, List['Option']]):
@@ -76,6 +80,8 @@ class ModelsResponse:
     docs: Union[Unset, List["Doc"]] = UNSET
     events: Union[Unset, List["Event"]] = UNSET
     folders: Union[Unset, List["Folder"]] = UNSET
+    forms: Union[Unset, List["Form"]] = UNSET
+    form_fields: Union[Unset, List["FormField"]] = UNSET
     layouts: Union[Unset, List["Layout"]] = UNSET
     event_subscriptions: Union[Unset, List["EventSubscription"]] = UNSET
     options: Union[Unset, List["Option"]] = UNSET
@@ -142,6 +148,22 @@ class ModelsResponse:
                 folders_item = folders_item_data.to_dict()
 
                 folders.append(folders_item)
+
+        forms: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.forms, Unset):
+            forms = []
+            for forms_item_data in self.forms:
+                forms_item = forms_item_data.to_dict()
+
+                forms.append(forms_item)
+
+        form_fields: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.form_fields, Unset):
+            form_fields = []
+            for form_fields_item_data in self.form_fields:
+                form_fields_item = form_fields_item_data.to_dict()
+
+                form_fields.append(form_fields_item)
 
         layouts: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.layouts, Unset):
@@ -286,6 +308,10 @@ class ModelsResponse:
             field_dict["events"] = events
         if folders is not UNSET:
             field_dict["folders"] = folders
+        if forms is not UNSET:
+            field_dict["forms"] = forms
+        if form_fields is not UNSET:
+            field_dict["formFields"] = form_fields
         if layouts is not UNSET:
             field_dict["layouts"] = layouts
         if event_subscriptions is not UNSET:
@@ -330,6 +356,8 @@ class ModelsResponse:
         from ..models.event import Event
         from ..models.event_subscription import EventSubscription
         from ..models.folder import Folder
+        from ..models.form import Form
+        from ..models.form_field import FormField
         from ..models.layout import Layout
         from ..models.option import Option
         from ..models.property_ import Property
@@ -388,6 +416,20 @@ class ModelsResponse:
             folders_item = Folder.from_dict(folders_item_data)
 
             folders.append(folders_item)
+
+        forms = []
+        _forms = d.pop("forms", UNSET)
+        for forms_item_data in _forms or []:
+            forms_item = Form.from_dict(forms_item_data)
+
+            forms.append(forms_item)
+
+        form_fields = []
+        _form_fields = d.pop("formFields", UNSET)
+        for form_fields_item_data in _form_fields or []:
+            form_fields_item = FormField.from_dict(form_fields_item_data)
+
+            form_fields.append(form_fields_item)
 
         layouts = []
         _layouts = d.pop("layouts", UNSET)
@@ -508,6 +550,8 @@ class ModelsResponse:
             docs=docs,
             events=events,
             folders=folders,
+            forms=forms,
+            form_fields=form_fields,
             layouts=layouts,
             event_subscriptions=event_subscriptions,
             options=options,

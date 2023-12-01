@@ -44,6 +44,15 @@ from .folder import Folder
 from .folder_create import FolderCreate
 from .folder_kind import FolderKind
 from .folder_update import FolderUpdate
+from .form import Form
+from .form_create import FormCreate
+from .form_field import FormField
+from .form_field_create import FormFieldCreate
+from .form_field_create_default import FormFieldCreateDefault
+from .form_field_default import FormFieldDefault
+from .form_field_update import FormFieldUpdate
+from .form_field_update_default import FormFieldUpdateDefault
+from .form_update import FormUpdate
 from .github_integration import GithubIntegration
 from .github_integration_tenant_extension_status import GithubIntegrationTenantExtensionStatus
 from .google_data import GoogleData
@@ -107,6 +116,7 @@ from .task_attachment_create import TaskAttachmentCreate
 from .task_attachment_update import TaskAttachmentUpdate
 from .task_create import TaskCreate
 from .task_create_description import TaskCreateDescription
+from .task_create_properties import TaskCreateProperties
 from .task_create_recurrence import TaskCreateRecurrence
 from .task_description import TaskDescription
 from .task_doc_relationship import TaskDocRelationship
@@ -126,6 +136,7 @@ from .task_recurrence import TaskRecurrence
 from .task_source_type import TaskSourceType
 from .task_update import TaskUpdate
 from .task_update_description import TaskUpdateDescription
+from .task_update_properties import TaskUpdateProperties
 from .task_update_recurrence import TaskUpdateRecurrence
 from .tenant import Tenant
 from .tenant_create import TenantCreate
@@ -140,6 +151,7 @@ from .user_create import UserCreate
 from .user_dartboard_layout import UserDartboardLayout
 from .user_dartboard_layout_create import UserDartboardLayoutCreate
 from .user_dartboard_layout_update import UserDartboardLayoutUpdate
+from .user_role import UserRole
 from .user_status import UserStatus
 from .user_update import UserUpdate
 from .validation_error_response import ValidationErrorResponse
@@ -195,6 +207,15 @@ __all__ = (
     "FolderCreate",
     "FolderKind",
     "FolderUpdate",
+    "Form",
+    "FormCreate",
+    "FormField",
+    "FormFieldCreate",
+    "FormFieldCreateDefault",
+    "FormFieldDefault",
+    "FormFieldUpdate",
+    "FormFieldUpdateDefault",
+    "FormUpdate",
     "GithubIntegration",
     "GithubIntegrationTenantExtensionStatus",
     "GoogleData",
@@ -258,6 +279,7 @@ __all__ = (
     "TaskAttachmentUpdate",
     "TaskCreate",
     "TaskCreateDescription",
+    "TaskCreateProperties",
     "TaskCreateRecurrence",
     "TaskDescription",
     "TaskDocRelationship",
@@ -277,6 +299,7 @@ __all__ = (
     "TaskSourceType",
     "TaskUpdate",
     "TaskUpdateDescription",
+    "TaskUpdateProperties",
     "TaskUpdateRecurrence",
     "Tenant",
     "TenantCreate",
@@ -291,6 +314,7 @@ __all__ = (
     "UserDartboardLayout",
     "UserDartboardLayoutCreate",
     "UserDartboardLayoutUpdate",
+    "UserRole",
     "UserStatus",
     "UserUpdate",
     "ValidationErrorResponse",

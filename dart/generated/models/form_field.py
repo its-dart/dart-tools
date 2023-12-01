@@ -3,69 +3,50 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.property_kind import PropertyKind
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.property_adtl import PropertyAdtl
+    from ..models.form_field_default import FormFieldDefault
 
 
-T = TypeVar("T", bound="Property")
+T = TypeVar("T", bound="FormField")
 
 
 @_attrs_define
-class Property:
+class FormField:
     """
     Attributes:
         duid (str):
-        kind (PropertyKind): * `Default: Title` - DEFAULT_TITLE
-            * `Default: Description` - DEFAULT_DESCRIPTION
-            * `Default: Dartboard` - DEFAULT_DARTBOARD
-            * `Default: Status` - DEFAULT_STATUS
-            * `Default: Assignee` - DEFAULT_ASSIGNEE
-            * `Default: Dates` - DEFAULT_DATES
-            * `Default: Priority` - DEFAULT_PRIORITY
-            * `Default: Tags` - DEFAULT_TAGS
-            * `Default: Size` - DEFAULT_SIZE
-            * `Default: Created` - DEFAULT_CREATED_AT
-            * `Default: Created by` - DEFAULT_CREATED_BY
-            * `Default: Last updated` - DEFAULT_UPDATED_AT
-            * `Default: Last updated by` - DEFAULT_UPDATED_BY
-            * `Text` - TEXT
-            * `Number` - NUMBER
-            * `Checkbox` - CHECKBOX
-            * `Select` - SELECT
-            * `Multiselect` - MULTISELECT
-            * `Status` - STATUS
-            * `User` - USER
-            * `Dates` - DATES
+        form_duid (str):
+        property_duid (str):
+        locked (bool):
         order (str):
         hidden (bool):
-        title (str):
-        description (str):
-        adtl (PropertyAdtl):
+        label (str):
+        default (FormFieldDefault):
         updated_by_client_duid (Union[Unset, None, str]):
     """
 
     duid: str
-    kind: PropertyKind
+    form_duid: str
+    property_duid: str
+    locked: bool
     order: str
     hidden: bool
-    title: str
-    description: str
-    adtl: "PropertyAdtl"
+    label: str
+    default: "FormFieldDefault"
     updated_by_client_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
-        kind = self.kind.value
-
+        form_duid = self.form_duid
+        property_duid = self.property_duid
+        locked = self.locked
         order = self.order
         hidden = self.hidden
-        title = self.title
-        description = self.description
-        adtl = self.adtl.to_dict()
+        label = self.label
+        default = self.default.to_dict()
 
         updated_by_client_duid = self.updated_by_client_duid
 
@@ -74,12 +55,13 @@ class Property:
         field_dict.update(
             {
                 "duid": duid,
-                "kind": kind,
+                "formDuid": form_duid,
+                "propertyDuid": property_duid,
+                "locked": locked,
                 "order": order,
                 "hidden": hidden,
-                "title": title,
-                "description": description,
-                "adtl": adtl,
+                "label": label,
+                "default": default,
             }
         )
         if updated_by_client_duid is not UNSET:
@@ -89,38 +71,41 @@ class Property:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.property_adtl import PropertyAdtl
+        from ..models.form_field_default import FormFieldDefault
 
         d = src_dict.copy()
         duid = d.pop("duid")
 
-        kind = PropertyKind(d.pop("kind"))
+        form_duid = d.pop("formDuid")
+
+        property_duid = d.pop("propertyDuid")
+
+        locked = d.pop("locked")
 
         order = d.pop("order")
 
         hidden = d.pop("hidden")
 
-        title = d.pop("title")
+        label = d.pop("label")
 
-        description = d.pop("description")
-
-        adtl = PropertyAdtl.from_dict(d.pop("adtl"))
+        default = FormFieldDefault.from_dict(d.pop("default"))
 
         updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
 
-        property_ = cls(
+        form_field = cls(
             duid=duid,
-            kind=kind,
+            form_duid=form_duid,
+            property_duid=property_duid,
+            locked=locked,
             order=order,
             hidden=hidden,
-            title=title,
-            description=description,
-            adtl=adtl,
+            label=label,
+            default=default,
             updated_by_client_duid=updated_by_client_duid,
         )
 
-        property_.additional_properties = d
-        return property_
+        form_field.additional_properties = d
+        return form_field
 
     @property
     def additional_keys(self) -> List[str]:

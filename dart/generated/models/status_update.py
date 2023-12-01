@@ -21,6 +21,7 @@ class StatusUpdate:
             * `Blocked` - BLOCKED
             * `Finished` - FINISHED
             * `Canceled` - CANCELED
+        locked (Union[Unset, bool]):
         order (Union[Unset, str]):
         title (Union[Unset, str]):
         color_name (Union[Unset, ColorName]): * `Red` - RED
@@ -53,6 +54,7 @@ class StatusUpdate:
     duid: str
     property_duid: Union[Unset, str] = UNSET
     kind: Union[Unset, StatusKind] = UNSET
+    locked: Union[Unset, bool] = UNSET
     order: Union[Unset, str] = UNSET
     title: Union[Unset, str] = UNSET
     color_name: Union[Unset, ColorName] = UNSET
@@ -66,6 +68,7 @@ class StatusUpdate:
         if not isinstance(self.kind, Unset):
             kind = self.kind.value
 
+        locked = self.locked
         order = self.order
         title = self.title
         color_name: Union[Unset, str] = UNSET
@@ -85,6 +88,8 @@ class StatusUpdate:
             field_dict["propertyDuid"] = property_duid
         if kind is not UNSET:
             field_dict["kind"] = kind
+        if locked is not UNSET:
+            field_dict["locked"] = locked
         if order is not UNSET:
             field_dict["order"] = order
         if title is not UNSET:
@@ -110,6 +115,8 @@ class StatusUpdate:
         else:
             kind = StatusKind(_kind)
 
+        locked = d.pop("locked", UNSET)
+
         order = d.pop("order", UNSET)
 
         title = d.pop("title", UNSET)
@@ -127,6 +134,7 @@ class StatusUpdate:
             duid=duid,
             property_duid=property_duid,
             kind=kind,
+            locked=locked,
             order=order,
             title=title,
             color_name=color_name,

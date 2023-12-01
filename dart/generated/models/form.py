@@ -4,27 +4,27 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.color_name import ColorName
-from ..models.status_kind import StatusKind
+from ..models.icon_kind import IconKind
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="StatusCreate")
+T = TypeVar("T", bound="Form")
 
 
 @_attrs_define
-class StatusCreate:
+class Form:
     """
     Attributes:
         duid (str):
-        property_duid (str):
-        kind (StatusKind): * `Unstarted` - UNSTARTED
-            * `Started` - STARTED
-            * `Blocked` - BLOCKED
-            * `Finished` - FINISHED
-            * `Canceled` - CANCELED
+        hidden (bool):
+        public (bool):
         order (str):
-        locked (Union[Unset, bool]):
-        title (Union[Unset, str]):
-        color_name (Union[Unset, ColorName]): * `Red` - RED
+        title (str):
+        description (str):
+        icon_kind (IconKind): * `None` - NONE
+            * `Icon` - ICON
+            * `Emoji` - EMOJI
+        icon_name_or_emoji (str):
+        color_name (ColorName): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
             * `Dark Green` - DARK_GREEN
@@ -48,51 +48,52 @@ class StatusCreate:
             * `Dark Gray` - DARK_GRAY
             * `Light Brown` - LIGHT_BROWN
             * `Light Gray` - LIGHT_GRAY
-        description (Union[Unset, str]):
+        updated_by_client_duid (Union[Unset, None, str]):
     """
 
     duid: str
-    property_duid: str
-    kind: StatusKind
+    hidden: bool
+    public: bool
     order: str
-    locked: Union[Unset, bool] = UNSET
-    title: Union[Unset, str] = UNSET
-    color_name: Union[Unset, ColorName] = UNSET
-    description: Union[Unset, str] = UNSET
+    title: str
+    description: str
+    icon_kind: IconKind
+    icon_name_or_emoji: str
+    color_name: ColorName
+    updated_by_client_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
-        property_duid = self.property_duid
-        kind = self.kind.value
-
+        hidden = self.hidden
+        public = self.public
         order = self.order
-        locked = self.locked
         title = self.title
-        color_name: Union[Unset, str] = UNSET
-        if not isinstance(self.color_name, Unset):
-            color_name = self.color_name.value
-
         description = self.description
+        icon_kind = self.icon_kind.value
+
+        icon_name_or_emoji = self.icon_name_or_emoji
+        color_name = self.color_name.value
+
+        updated_by_client_duid = self.updated_by_client_duid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "duid": duid,
-                "propertyDuid": property_duid,
-                "kind": kind,
+                "hidden": hidden,
+                "public": public,
                 "order": order,
+                "title": title,
+                "description": description,
+                "iconKind": icon_kind,
+                "iconNameOrEmoji": icon_name_or_emoji,
+                "colorName": color_name,
             }
         )
-        if locked is not UNSET:
-            field_dict["locked"] = locked
-        if title is not UNSET:
-            field_dict["title"] = title
-        if color_name is not UNSET:
-            field_dict["colorName"] = color_name
-        if description is not UNSET:
-            field_dict["description"] = description
+        if updated_by_client_duid is not UNSET:
+            field_dict["updatedByClientDuid"] = updated_by_client_duid
 
         return field_dict
 
@@ -101,38 +102,39 @@ class StatusCreate:
         d = src_dict.copy()
         duid = d.pop("duid")
 
-        property_duid = d.pop("propertyDuid")
+        hidden = d.pop("hidden")
 
-        kind = StatusKind(d.pop("kind"))
+        public = d.pop("public")
 
         order = d.pop("order")
 
-        locked = d.pop("locked", UNSET)
+        title = d.pop("title")
 
-        title = d.pop("title", UNSET)
+        description = d.pop("description")
 
-        _color_name = d.pop("colorName", UNSET)
-        color_name: Union[Unset, ColorName]
-        if isinstance(_color_name, Unset):
-            color_name = UNSET
-        else:
-            color_name = ColorName(_color_name)
+        icon_kind = IconKind(d.pop("iconKind"))
 
-        description = d.pop("description", UNSET)
+        icon_name_or_emoji = d.pop("iconNameOrEmoji")
 
-        status_create = cls(
+        color_name = ColorName(d.pop("colorName"))
+
+        updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
+
+        form = cls(
             duid=duid,
-            property_duid=property_duid,
-            kind=kind,
+            hidden=hidden,
+            public=public,
             order=order,
-            locked=locked,
             title=title,
-            color_name=color_name,
             description=description,
+            icon_kind=icon_kind,
+            icon_name_or_emoji=icon_name_or_emoji,
+            color_name=color_name,
+            updated_by_client_duid=updated_by_client_duid,
         )
 
-        status_create.additional_properties = d
-        return status_create
+        form.additional_properties = d
+        return form
 
     @property
     def additional_keys(self) -> List[str]:

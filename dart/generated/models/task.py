@@ -44,9 +44,12 @@ class Task:
         relationships (List['Relationship']):
         properties (TaskProperties):
         updated_by_client_duid (Union[Unset, None, str]):
+        created_by_duid (Optional[str]):
+        updated_by_duid (Optional[str]):
         drafter_duid (Optional[str]):
         recommendation_status (Optional[RecommendationStatus]): * `Accepted` - ACCEPTED
             * `Declined` - DECLINED
+        notion_document (Optional[TaskNotionDocument]):
         priority (Optional[Priority]): * `Critical` - CRITICAL
             * `High` - HIGH
             * `Medium` - MEDIUM
@@ -57,7 +60,6 @@ class Task:
         remind_at (Optional[datetime.datetime]):
         recurrence (Optional[TaskRecurrence]):
         recurrs_next_at (Optional[datetime.datetime]):
-        notion_document (Optional[TaskNotionDocument]):
     """
 
     duid: str
@@ -77,8 +79,11 @@ class Task:
     attachments: List["TaskAttachment"]
     relationships: List["Relationship"]
     properties: "TaskProperties"
+    created_by_duid: Optional[str]
+    updated_by_duid: Optional[str]
     drafter_duid: Optional[str]
     recommendation_status: Optional[RecommendationStatus]
+    notion_document: Optional["TaskNotionDocument"]
     priority: Optional[Priority]
     size: Optional[int]
     start_at: Optional[datetime.datetime]
@@ -86,7 +91,6 @@ class Task:
     remind_at: Optional[datetime.datetime]
     recurrence: Optional["TaskRecurrence"]
     recurrs_next_at: Optional[datetime.datetime]
-    notion_document: Optional["TaskNotionDocument"]
     updated_by_client_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -131,8 +135,12 @@ class Task:
         properties = self.properties.to_dict()
 
         updated_by_client_duid = self.updated_by_client_duid
+        created_by_duid = self.created_by_duid
+        updated_by_duid = self.updated_by_duid
         drafter_duid = self.drafter_duid
         recommendation_status = self.recommendation_status.value if self.recommendation_status else None
+
+        notion_document = self.notion_document.to_dict() if self.notion_document else None
 
         priority = self.priority.value if self.priority else None
 
@@ -146,8 +154,6 @@ class Task:
         recurrence = self.recurrence.to_dict() if self.recurrence else None
 
         recurrs_next_at = self.recurrs_next_at.isoformat() if self.recurrs_next_at else None
-
-        notion_document = self.notion_document.to_dict() if self.notion_document else None
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -170,8 +176,11 @@ class Task:
                 "attachments": attachments,
                 "relationships": relationships,
                 "properties": properties,
+                "createdByDuid": created_by_duid,
+                "updatedByDuid": updated_by_duid,
                 "drafterDuid": drafter_duid,
                 "recommendationStatus": recommendation_status,
+                "notionDocument": notion_document,
                 "priority": priority,
                 "size": size,
                 "startAt": start_at,
@@ -179,7 +188,6 @@ class Task:
                 "remindAt": remind_at,
                 "recurrence": recurrence,
                 "recurrsNextAt": recurrs_next_at,
-                "notionDocument": notion_document,
             }
         )
         if updated_by_client_duid is not UNSET:
@@ -249,6 +257,10 @@ class Task:
 
         updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
 
+        created_by_duid = d.pop("createdByDuid")
+
+        updated_by_duid = d.pop("updatedByDuid")
+
         drafter_duid = d.pop("drafterDuid")
 
         _recommendation_status = d.pop("recommendationStatus")
@@ -257,6 +269,13 @@ class Task:
             recommendation_status = None
         else:
             recommendation_status = RecommendationStatus(_recommendation_status)
+
+        _notion_document = d.pop("notionDocument")
+        notion_document: Optional[TaskNotionDocument]
+        if _notion_document is None:
+            notion_document = None
+        else:
+            notion_document = TaskNotionDocument.from_dict(_notion_document)
 
         _priority = d.pop("priority")
         priority: Optional[Priority]
@@ -302,13 +321,6 @@ class Task:
         else:
             recurrs_next_at = isoparse(_recurrs_next_at)
 
-        _notion_document = d.pop("notionDocument")
-        notion_document: Optional[TaskNotionDocument]
-        if _notion_document is None:
-            notion_document = None
-        else:
-            notion_document = TaskNotionDocument.from_dict(_notion_document)
-
         task = cls(
             duid=duid,
             created_at=created_at,
@@ -328,8 +340,11 @@ class Task:
             relationships=relationships,
             properties=properties,
             updated_by_client_duid=updated_by_client_duid,
+            created_by_duid=created_by_duid,
+            updated_by_duid=updated_by_duid,
             drafter_duid=drafter_duid,
             recommendation_status=recommendation_status,
+            notion_document=notion_document,
             priority=priority,
             size=size,
             start_at=start_at,
@@ -337,7 +352,6 @@ class Task:
             remind_at=remind_at,
             recurrence=recurrence,
             recurrs_next_at=recurrs_next_at,
-            notion_document=notion_document,
         )
 
         task.additional_properties = d

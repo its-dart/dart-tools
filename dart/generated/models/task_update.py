@@ -12,6 +12,7 @@ from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.task_update_description import TaskUpdateDescription
+    from ..models.task_update_properties import TaskUpdateProperties
     from ..models.task_update_recurrence import TaskUpdateRecurrence
 
 
@@ -23,7 +24,6 @@ class TaskUpdate:
     """
     Attributes:
         duid (str):
-        source_user (Union[Unset, None, str]):
         source_type (Union[Unset, TaskSourceType]): * `Unknown` - UNKNOWN
             * `Import` - IMPORT
             * `Onboarding` - ONBOARDING
@@ -37,6 +37,7 @@ class TaskUpdate:
             * `CLI` - CLI
             * `Application` - APPLICATION
             * `AppTcm` - APP_TCM
+            * `AppInternalForm` - APP_INTERNAL_FORM
             * `AppQuickAdd` - APP_QUICK_ADD
             * `AppBoard` - APP_BOARD
             * `AppSubtask` - APP_SUBTASK
@@ -45,7 +46,11 @@ class TaskUpdate:
             * `AppReplicate` - APP_REPLICATE
             * `AppPaste` - APP_PASTE
             * `AppRoadmapList` - APP_ROADMAP_LIST
-            * `AppRoadmapTimeline` - APP_ROADMAP_TIMELINE Default: TaskSourceType.UNKNOWN.
+            * `AppRoadmapTimeline` - APP_ROADMAP_TIMELINE
+            * `ExternalForm` - EXTERNAL_FORM Default: TaskSourceType.UNKNOWN.
+        source_form_duid (Union[Unset, None, str]):
+        created_by_duid (Union[Unset, None, str]):
+        updated_by_duid (Union[Unset, None, str]):
         drafter_duid (Union[Unset, None, str]):
         in_trash (Union[Unset, bool]):
         recommendation_status (Union[Unset, None, RecommendationStatus]): * `Accepted` - ACCEPTED
@@ -69,11 +74,14 @@ class TaskUpdate:
         remind_at (Union[Unset, None, datetime.datetime]):
         recurrence (Union[Unset, None, TaskUpdateRecurrence]):
         recurrs_next_at (Union[Unset, None, datetime.datetime]):
+        properties (Union[Unset, TaskUpdateProperties]):
     """
 
     duid: str
-    source_user: Union[Unset, None, str] = UNSET
     source_type: Union[Unset, TaskSourceType] = TaskSourceType.UNKNOWN
+    source_form_duid: Union[Unset, None, str] = UNSET
+    created_by_duid: Union[Unset, None, str] = UNSET
+    updated_by_duid: Union[Unset, None, str] = UNSET
     drafter_duid: Union[Unset, None, str] = UNSET
     in_trash: Union[Unset, bool] = UNSET
     recommendation_status: Union[Unset, None, RecommendationStatus] = UNSET
@@ -93,15 +101,18 @@ class TaskUpdate:
     remind_at: Union[Unset, None, datetime.datetime] = UNSET
     recurrence: Union[Unset, None, "TaskUpdateRecurrence"] = UNSET
     recurrs_next_at: Union[Unset, None, datetime.datetime] = UNSET
+    properties: Union[Unset, "TaskUpdateProperties"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
-        source_user = self.source_user
         source_type: Union[Unset, str] = UNSET
         if not isinstance(self.source_type, Unset):
             source_type = self.source_type.value
 
+        source_form_duid = self.source_form_duid
+        created_by_duid = self.created_by_duid
+        updated_by_duid = self.updated_by_duid
         drafter_duid = self.drafter_duid
         in_trash = self.in_trash
         recommendation_status: Union[Unset, None, str] = UNSET
@@ -154,6 +165,10 @@ class TaskUpdate:
         if not isinstance(self.recurrs_next_at, Unset):
             recurrs_next_at = self.recurrs_next_at.isoformat() if self.recurrs_next_at else None
 
+        properties: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.properties, Unset):
+            properties = self.properties.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -161,10 +176,14 @@ class TaskUpdate:
                 "duid": duid,
             }
         )
-        if source_user is not UNSET:
-            field_dict["sourceUser"] = source_user
         if source_type is not UNSET:
             field_dict["sourceType"] = source_type
+        if source_form_duid is not UNSET:
+            field_dict["sourceFormDuid"] = source_form_duid
+        if created_by_duid is not UNSET:
+            field_dict["createdByDuid"] = created_by_duid
+        if updated_by_duid is not UNSET:
+            field_dict["updatedByDuid"] = updated_by_duid
         if drafter_duid is not UNSET:
             field_dict["drafterDuid"] = drafter_duid
         if in_trash is not UNSET:
@@ -203,18 +222,19 @@ class TaskUpdate:
             field_dict["recurrence"] = recurrence
         if recurrs_next_at is not UNSET:
             field_dict["recurrsNextAt"] = recurrs_next_at
+        if properties is not UNSET:
+            field_dict["properties"] = properties
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.task_update_description import TaskUpdateDescription
+        from ..models.task_update_properties import TaskUpdateProperties
         from ..models.task_update_recurrence import TaskUpdateRecurrence
 
         d = src_dict.copy()
         duid = d.pop("duid")
-
-        source_user = d.pop("sourceUser", UNSET)
 
         _source_type = d.pop("sourceType", UNSET)
         source_type: Union[Unset, TaskSourceType]
@@ -222,6 +242,12 @@ class TaskUpdate:
             source_type = UNSET
         else:
             source_type = TaskSourceType(_source_type)
+
+        source_form_duid = d.pop("sourceFormDuid", UNSET)
+
+        created_by_duid = d.pop("createdByDuid", UNSET)
+
+        updated_by_duid = d.pop("updatedByDuid", UNSET)
 
         drafter_duid = d.pop("drafterDuid", UNSET)
 
@@ -315,10 +341,19 @@ class TaskUpdate:
         else:
             recurrs_next_at = isoparse(_recurrs_next_at)
 
+        _properties = d.pop("properties", UNSET)
+        properties: Union[Unset, TaskUpdateProperties]
+        if isinstance(_properties, Unset):
+            properties = UNSET
+        else:
+            properties = TaskUpdateProperties.from_dict(_properties)
+
         task_update = cls(
             duid=duid,
-            source_user=source_user,
             source_type=source_type,
+            source_form_duid=source_form_duid,
+            created_by_duid=created_by_duid,
+            updated_by_duid=updated_by_duid,
             drafter_duid=drafter_duid,
             in_trash=in_trash,
             recommendation_status=recommendation_status,
@@ -338,6 +373,7 @@ class TaskUpdate:
             remind_at=remind_at,
             recurrence=recurrence,
             recurrs_next_at=recurrs_next_at,
+            properties=properties,
         )
 
         task_update.additional_properties = d

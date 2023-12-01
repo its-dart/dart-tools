@@ -9,6 +9,8 @@ class OperationModelKind(str, Enum):
     EVENT = "event"
     EVENT_SUBSCRIPTION = "event_subscription"
     FOLDER = "folder"
+    FORM = "form"
+    FORM_FIELD = "form_field"
     LAYOUT = "layout"
     OPTION = "option"
     PROPERTY = "property"

@@ -33,6 +33,9 @@ class Transaction:
             * `folder_create` - FOLDER_CREATE
             * `folder_delete` - FOLDER_DELETE
             * `folder_update` - FOLDER_UPDATE
+            * `form_create` - FORM_CREATE
+            * `form_delete` - FORM_DELETE
+            * `form_update` - FORM_UPDATE
             * `layout_create` - LAYOUT_CREATE
             * `layout_delete` - LAYOUT_DELETE
             * `layout_update` - LAYOUT_UPDATE

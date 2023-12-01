@@ -1,15 +1,13 @@
 # TODO dedupe with the other order manager
 from random import choices
 
+from .exception import OrderException
+
 
 _MIN_ORD = 1
 _MAX_ORD = 256
 
 _ORDER_CHARS = [chr(e) for e in range(_MIN_ORD, _MAX_ORD)]
-
-
-class OrderException(Exception):
-    pass
 
 
 def _make_order_suffix():

@@ -20,6 +20,7 @@ class Comment:
     """
     Attributes:
         duid (str):
+        created_at (datetime.datetime):
         updated_at (datetime.datetime):
         task_duid (str):
         authored_by_ai (bool):
@@ -34,6 +35,7 @@ class Comment:
     """
 
     duid: str
+    created_at: datetime.datetime
     updated_at: datetime.datetime
     task_duid: str
     authored_by_ai: bool
@@ -49,6 +51,8 @@ class Comment:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+        created_at = self.created_at.isoformat()
+
         updated_at = self.updated_at.isoformat()
 
         task_duid = self.task_duid
@@ -73,6 +77,7 @@ class Comment:
         field_dict.update(
             {
                 "duid": duid,
+                "createdAt": created_at,
                 "updatedAt": updated_at,
                 "taskDuid": task_duid,
                 "authoredByAi": authored_by_ai,
@@ -97,6 +102,8 @@ class Comment:
 
         d = src_dict.copy()
         duid = d.pop("duid")
+
+        created_at = isoparse(d.pop("createdAt"))
 
         updated_at = isoparse(d.pop("updatedAt"))
 
@@ -132,6 +139,7 @@ class Comment:
 
         comment = cls(
             duid=duid,
+            created_at=created_at,
             updated_at=updated_at,
             task_duid=task_duid,
             authored_by_ai=authored_by_ai,

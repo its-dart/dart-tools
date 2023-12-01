@@ -5,6 +5,7 @@ from attrs import field as _attrs_field
 
 from ..models.color_name import ColorName
 from ..models.theme import Theme
+from ..models.user_role import UserRole
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="UserUpdate")
@@ -15,6 +16,9 @@ class UserUpdate:
     """
     Attributes:
         duid (str):
+        role (Union[Unset, UserRole]): * `Admin` - ADMIN
+            * `Member` - MEMBER
+            * `Guest` - GUEST
         name (Union[Unset, str]):
         theme (Union[Unset, Theme]): * `System Default` - SYSTEM_DEFAULT
             * `Light` - LIGHT
@@ -50,6 +54,7 @@ class UserUpdate:
     """
 
     duid: str
+    role: Union[Unset, UserRole] = UNSET
     name: Union[Unset, str] = UNSET
     theme: Union[Unset, Theme] = UNSET
     color_name: Union[Unset, ColorName] = UNSET
@@ -61,6 +66,10 @@ class UserUpdate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+        role: Union[Unset, str] = UNSET
+        if not isinstance(self.role, Unset):
+            role = self.role.value
+
         name = self.name
         theme: Union[Unset, str] = UNSET
         if not isinstance(self.theme, Unset):
@@ -82,6 +91,8 @@ class UserUpdate:
                 "duid": duid,
             }
         )
+        if role is not UNSET:
+            field_dict["role"] = role
         if name is not UNSET:
             field_dict["name"] = name
         if theme is not UNSET:
@@ -103,6 +114,13 @@ class UserUpdate:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         duid = d.pop("duid")
+
+        _role = d.pop("role", UNSET)
+        role: Union[Unset, UserRole]
+        if isinstance(_role, Unset):
+            role = UNSET
+        else:
+            role = UserRole(_role)
 
         name = d.pop("name", UNSET)
 
@@ -130,6 +148,7 @@ class UserUpdate:
 
         user_update = cls(
             duid=duid,
+            role=role,
             name=name,
             theme=theme,
             color_name=color_name,
