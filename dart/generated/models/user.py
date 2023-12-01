@@ -5,6 +5,7 @@ from attrs import field as _attrs_field
 
 from ..models.color_name import ColorName
 from ..models.theme import Theme
+from ..models.user_role import UserRole
 from ..models.user_status import UserStatus
 from ..types import UNSET, Unset
 
@@ -25,6 +26,9 @@ class User:
             * `PendingEmailVerification` - PENDING_EMAIL_VERIFICATION
             * `Active` - ACTIVE
             * `Deactivated` - DEACTIVATED
+        role (UserRole): * `Admin` - ADMIN
+            * `Member` - MEMBER
+            * `Guest` - GUEST
         email (str):
         name (str):
         abrev (str):
@@ -63,6 +67,7 @@ class User:
 
     duid: str
     status: UserStatus
+    role: UserRole
     email: str
     name: str
     abrev: str
@@ -77,6 +82,8 @@ class User:
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
         status = self.status.value
+
+        role = self.role.value
 
         email = self.email
         name = self.name
@@ -96,6 +103,7 @@ class User:
             {
                 "duid": duid,
                 "status": status,
+                "role": role,
                 "email": email,
                 "name": name,
                 "abrev": abrev,
@@ -119,6 +127,8 @@ class User:
         duid = d.pop("duid")
 
         status = UserStatus(d.pop("status"))
+
+        role = UserRole(d.pop("role"))
 
         email = d.pop("email")
 
@@ -146,6 +156,7 @@ class User:
         user = cls(
             duid=duid,
             status=status,
+            role=role,
             email=email,
             name=name,
             abrev=abrev,

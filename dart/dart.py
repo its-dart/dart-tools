@@ -23,6 +23,7 @@ import dateparser
 from pick import pick
 import requests
 
+from .exception import DartException
 from .generated import Client
 from .generated.models import (
     DartboardKind,
@@ -32,6 +33,7 @@ from .generated.models import (
     Priority,
     PropertyKind,
     RequestBody,
+    Space,
     SpaceKind,
     StatusKind,
     Task,
@@ -62,6 +64,7 @@ _CSRF_URL_FRAG = _ROOT_API_URL_FRAG + "/csrf-token"
 _LOGIN_URL_FRAG = _ROOT_API_URL_FRAG + "/login"
 _CURRENT_USER_URL_FRAG = _ROOT_API_URL_FRAG + "/user-data?mode=auto"
 _COPY_BRANCH_URL_FRAG = _ROOT_API_URL_FRAG + "/vcs/copy-branch-link"
+_REPLICATE_SPACE_URL_FRAG_FMT = _ROOT_API_URL_FRAG + "/spaces/replicate/{duid}"
 
 _CONFIG_FPATH = os.path.expanduser("~/.dart-tools")
 _CSRF_TOKEN_COOKIE = "csrftoken"
@@ -96,6 +99,10 @@ def _run_cmd(cmd):
     return subprocess.check_output(cmd, shell=True).decode()
 
 
+def _get_space_url(host, duid):
+    return f"{host}/s/{duid}"
+
+
 def _get_task_url(host, duid):
     return f"{host}/t/{duid}"
 
@@ -111,8 +118,14 @@ def _suppress_exception(fn):
     return wrapper
 
 
+def _dart_exit(message):
+    if _is_cli:
+        sys.exit(message)
+    raise DartException(message)
+
+
 def _exit_gracefully(_signal_received, _frame) -> None:
-    sys.exit("Quitting.")
+    _dart_exit("Quitting.")
 
 
 def _log(s):
@@ -343,13 +356,13 @@ class _Git:
     def ensure_in_repo():
         if _Git._cmd_succeeds("git rev-parse --is-inside-work-tree"):
             return
-        sys.exit("You are not in a git repo.")
+        _dart_exit("You are not in a git repo.")
 
     @staticmethod
     def ensure_no_unstaged_changes():
         if _run_cmd("git status --porcelain") == "":
             return
-        sys.exit("You have uncommitted changes. Please commit or stash them.")
+        _dart_exit("You have uncommitted changes. Please commit or stash them.")
 
     @staticmethod
     def ensure_on_main_or_intended():
@@ -396,11 +409,11 @@ def set_host(host):
 
 
 def _auth_failure_exit():
-    sys.exit(f"Not logged in, run\n\n{_PROG} {_LOGIN_CMD}\n\nto log in.")
+    _dart_exit(f"Not logged in, run\n\n{_PROG} {_LOGIN_CMD}\n\nto log in.")
 
 
 def _unknown_failure_exit() -> NoReturn:
-    sys.exit(f"Not logged in, run\n\n{_PROG} {_LOGIN_CMD}\n\nto log in.")
+    _dart_exit(f"Not logged in, run\n\n{_PROG} {_LOGIN_CMD}\n\nto log in.")
 
 
 def _check_request_response_and_maybe_exit(response):
@@ -475,7 +488,7 @@ def login(*, email=None, password=None):
 
     result = session.post(_LOGIN_URL_FRAG, json={"email": email, "password": password})
     if result.status_code in {401, 403}:
-        sys.exit("Invalid login information.")
+        _dart_exit("Invalid login information.")
     _check_request_response_and_maybe_exit(result)
 
     cookies = result.cookies.get_dict()
@@ -538,7 +551,7 @@ def begin_task():
         filtered_tasks.sort(key=lambda e: e["order"])
 
         if len(filtered_tasks) == 0:
-            sys.exit("No active, incomplete tasks found.")
+            _dart_exit("No active, incomplete tasks found.")
 
         picked_idx = pick(
             [e["title"] for e in filtered_tasks],
@@ -587,7 +600,7 @@ def create_task(
             None,
         )
         if dartboard is None:
-            sys.exit(f"No dartboard found with title '{dartboard_title}'.")
+            _dart_exit(f"No dartboard found with title '{dartboard_title}'.")
     else:
         dartboard = next(e for e in dartboards if e["kind"] == DartboardKind.ACTIVE)
     dartboard_duid = dartboard["duid"]
@@ -605,7 +618,7 @@ def create_task(
             (e for e in statuses if e["title"].lower() == status_title_norm), None
         )
         if status is None:
-            sys.exit(f"No status found with title '{status_title}'.")
+            _dart_exit(f"No status found with title '{status_title}'.")
     else:
         status = next(
             e for e in statuses if e["kind"] == StatusKind.UNSTARTED and e["locked"]
@@ -620,7 +633,7 @@ def create_task(
         for assignee_email in assignee_emails:
             assignee_email_norm = assignee_email.strip().lower()
             if assignee_email_norm not in user_emails_to_duids:
-                sys.exit(f"No user found with email '{assignee_email}'.")
+                _dart_exit(f"No user found with email '{assignee_email}'.")
             assignee_duids.append(user_emails_to_duids[assignee_email_norm])
             subscriber_duids.append(user_emails_to_duids[assignee_email_norm])
     else:
@@ -636,7 +649,7 @@ def create_task(
         for tag_title in tag_titles:
             tag_title_norm = tag_title.strip().lower()
             if tag_title_norm not in tag_titles_to_duids:
-                sys.exit(f"No tag found with title '{tag_title}'.")
+                _dart_exit(f"No tag found with title '{tag_title}'.")
             tag_duids.append(tag_titles_to_duids[tag_title_norm])
 
     priority = None
@@ -649,7 +662,7 @@ def create_task(
     if due_at_str is not None:
         due_at = dateparser.parse(due_at_str)
         if due_at is None:
-            sys.exit(f"Could not parse due date '{due_at_str}'.")
+            _dart_exit(f"Could not parse due date '{due_at_str}'.")
         due_at = due_at.replace(
             hour=9, minute=0, second=0, microsecond=0, tzinfo=timezone.utc
         )
@@ -712,7 +725,7 @@ def update_task(
     tasks = user_bundle.tasks
     old_task = next((e for e in tasks if e["duid"] == duid), None)
     if old_task is None:
-        sys.exit(f"No task found with DUID '{duid}'.")
+        _dart_exit(f"No task found with DUID '{duid}'.")
 
     task_update_kwargs = {"duid": duid}
 
@@ -731,7 +744,7 @@ def update_task(
             None,
         )
         if dartboard is None:
-            sys.exit(f"No dartboard found with title '{dartboard_title}'.")
+            _dart_exit(f"No dartboard found with title '{dartboard_title}'.")
         dartboard_duid = dartboard["duid"]
         if dartboard_duid != old_task["dartboardDuid"]:
             task_update_kwargs["dartboard_duid"] = dartboard_duid
@@ -743,7 +756,7 @@ def update_task(
             (e for e in statuses if e["title"].lower() == status_title_norm), None
         )
         if status is None:
-            sys.exit(f"No status found with title '{status_title}'.")
+            _dart_exit(f"No status found with title '{status_title}'.")
         status_duid = status["duid"]
         if status_duid != old_task["statusDuid"]:
             task_update_kwargs["status_duid"] = status_duid
@@ -756,7 +769,7 @@ def update_task(
         for assignee_email in assignee_emails:
             assignee_email_norm = assignee_email.strip().lower()
             if assignee_email_norm not in user_emails_to_duids:
-                sys.exit(f"No user found with email '{assignee_email}'.")
+                _dart_exit(f"No user found with email '{assignee_email}'.")
             assignee_duids.append(user_emails_to_duids[assignee_email_norm])
             subscriber_duids.append(user_emails_to_duids[assignee_email_norm])
         assignee_duids = sorted(set(assignee_duids))
@@ -777,7 +790,7 @@ def update_task(
         for tag_title in tag_titles:
             tag_title_norm = tag_title.strip().lower()
             if tag_title_norm not in tag_titles_to_duids:
-                sys.exit(f"No tag found with title '{tag_title}'.")
+                _dart_exit(f"No tag found with title '{tag_title}'.")
             tag_duids.append(tag_titles_to_duids[tag_title_norm])
         task_update_kwargs["tag_duids"] = tag_duids
 
@@ -795,7 +808,7 @@ def update_task(
     if due_at_str is not None:
         due_at = dateparser.parse(due_at_str)
         if due_at is None:
-            sys.exit(f"Could not parse due date '{due_at_str}'.")
+            _dart_exit(f"Could not parse due date '{due_at_str}'.")
         due_at = due_at.replace(
             hour=9, minute=0, second=0, microsecond=0, tzinfo=timezone.utc
         )
@@ -817,6 +830,21 @@ def update_task(
     _log(f"Updated task {task.title} at {_get_task_url(config.host, task.duid)}")
     _log("Done.")
     return task
+
+
+def replicate_space(duid):
+    config = _Config()
+    session = _Session(config)
+
+    response = session.post(_REPLICATE_SPACE_URL_FRAG_FMT.format(duid=duid))
+    print()
+    _check_request_response_and_maybe_exit(response)
+
+    space = Space.from_dict(response.json()["item"])
+
+    _log(f"Replicated space {space.title} at {_get_space_url(config.host, space.duid)}")
+    _log("Done.")
+    return space
 
 
 def _add_standard_task_arguments(parser):

@@ -49,17 +49,17 @@ In Python, you can run something like
 import os
 from dart import is_logged_in, login, create_task, update_task
 
-# login based on information stored in environment variables, but only if needed
+# Login based on information stored in environment variables, but only if needed
 if not is_logged_in():
     login(email=os.environ["DART_EMAIL"], password=os.environ["DART_PASSWORD"])
 
-# create a new task called 'Update the landing page'
-# with priority 'Critical' (i.e. p0) and with the 'marketing' tag
+# Create a new task called 'Update the landing page'
+# With priority 'Critical' (i.e. p0) and with the 'marketing' tag
 new_task = create_task(
     "Update the landing page", priority_int=0, tag_titles=["marketing"]
 )
 
-# update the task to be 'Done'
+# Update the task to be 'Done'
 update_task(new_task.duid, status_title="Done")
 ```
 
@@ -83,10 +83,10 @@ from dart import (
     TransactionKind,
 )
 
-# initialize the inner client
+# Initialize the inner client
 dart = Dart()
 
-# prepare the update operation
+# Prepare the update operation
 task_update = TaskUpdate(
     duid="[DUID]",
     size=5,
@@ -97,7 +97,7 @@ task_update_op = Operation(
     data=task_update,
 )
 
-# call the operation transactionally to preform the update
+# Call the operation transactionally to preform the update
 response = dart.transact([task_update_op], TransactionKind.TASK_UPDATE)
 ```
 
