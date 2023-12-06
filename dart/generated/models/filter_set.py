@@ -29,6 +29,8 @@ class FilterSet:
             * `is before` - IS_BEFORE
             * `is after` - IS_AFTER
             * `is between` - IS_BETWEEN
+            * `is checked` - IS_CHECKED
+            * `is unchecked` - IS_UNCHECKED
         connector (FilterConnector): * `or` - OR
             * `and` - AND
         values (List[Any]):
