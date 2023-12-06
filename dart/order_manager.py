@@ -48,9 +48,11 @@ def _get_orders_between_recursive(start: str, end: str, count: int):
 
 
 def get_orders_between(start: str | None, end: str | None, count: int = 1):
-    if count <= 0 or (bool(start) and bool(end) and start >= end):
+    if count <= 0:
+        return []
+    if bool(start) and bool(end) and start >= end:
         print(f"invalid request for {count} values between {start} and {end}")
-        return [start or ""] * count
+        return [start] * count
     return [
         e + _make_order_suffix()
         for e in _get_orders_between_recursive(start or "", end or "", count)
