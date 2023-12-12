@@ -44,14 +44,12 @@ This command will mark the referenced task 'Done'. Here `[DUID]` is meant to be 
 
 ## Using the Python Library
 
-In Python, you can run something like
+Some auth mechanism must be set up, usually the `DART_TOKEN` environment variable. Run `dart login` in the terminal for an interactive process, or visit [your Dart profile](https://app.itsdart.com/?settings=profile) and copy the token into the `DART_TOKEN` environment variable.
+
+Then, you can run something like
 ```python
 import os
-from dart import is_logged_in, login, create_task, update_task
-
-# Login based on information stored in environment variables, but only if needed
-if not is_logged_in():
-    login(email=os.environ["DART_EMAIL"], password=os.environ["DART_PASSWORD"])
+from dart import create_task, update_task
 
 # Create a new task called 'Update the landing page'
 # With priority 'Critical' (i.e. p0) and with the 'marketing' tag
