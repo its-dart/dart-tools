@@ -16,8 +16,10 @@ class Folder:
     """
     Attributes:
         duid (str):
+        space_duid (str):
         kind (FolderKind): * `Other` - OTHER
             * `Default` - DEFAULT
+            * `Reports` - REPORTS
         accessible_by_team (bool):
         accessible_by_user_duids (List[str]):
         order (str):
@@ -55,6 +57,7 @@ class Folder:
     """
 
     duid: str
+    space_duid: str
     kind: FolderKind
     accessible_by_team: bool
     accessible_by_user_duids: List[str]
@@ -69,6 +72,7 @@ class Folder:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+        space_duid = self.space_duid
         kind = self.kind.value
 
         accessible_by_team = self.accessible_by_team
@@ -89,6 +93,7 @@ class Folder:
         field_dict.update(
             {
                 "duid": duid,
+                "spaceDuid": space_duid,
                 "kind": kind,
                 "accessibleByTeam": accessible_by_team,
                 "accessibleByUserDuids": accessible_by_user_duids,
@@ -109,6 +114,8 @@ class Folder:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         duid = d.pop("duid")
+
+        space_duid = d.pop("spaceDuid")
 
         kind = FolderKind(d.pop("kind"))
 
@@ -132,6 +139,7 @@ class Folder:
 
         folder = cls(
             duid=duid,
+            space_duid=space_duid,
             kind=kind,
             accessible_by_team=accessible_by_team,
             accessible_by_user_duids=accessible_by_user_duids,

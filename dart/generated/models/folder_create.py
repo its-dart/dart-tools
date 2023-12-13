@@ -4,6 +4,7 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.color_name import ColorName
+from ..models.folder_kind import FolderKind
 from ..models.icon_kind import IconKind
 from ..types import UNSET, Unset
 
@@ -15,7 +16,11 @@ class FolderCreate:
     """
     Attributes:
         duid (str):
+        space_duid (str):
         order (str):
+        kind (Union[Unset, FolderKind]): * `Other` - OTHER
+            * `Default` - DEFAULT
+            * `Reports` - REPORTS
         accessible_by_team (Union[Unset, bool]):
         accessible_by_user_duids (Union[Unset, List[str]]):
         title (Union[Unset, str]):
@@ -51,7 +56,9 @@ class FolderCreate:
     """
 
     duid: str
+    space_duid: str
     order: str
+    kind: Union[Unset, FolderKind] = UNSET
     accessible_by_team: Union[Unset, bool] = UNSET
     accessible_by_user_duids: Union[Unset, List[str]] = UNSET
     title: Union[Unset, str] = UNSET
@@ -63,7 +70,12 @@ class FolderCreate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+        space_duid = self.space_duid
         order = self.order
+        kind: Union[Unset, str] = UNSET
+        if not isinstance(self.kind, Unset):
+            kind = self.kind.value
+
         accessible_by_team = self.accessible_by_team
         accessible_by_user_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.accessible_by_user_duids, Unset):
@@ -85,9 +97,12 @@ class FolderCreate:
         field_dict.update(
             {
                 "duid": duid,
+                "spaceDuid": space_duid,
                 "order": order,
             }
         )
+        if kind is not UNSET:
+            field_dict["kind"] = kind
         if accessible_by_team is not UNSET:
             field_dict["accessibleByTeam"] = accessible_by_team
         if accessible_by_user_duids is not UNSET:
@@ -110,7 +125,16 @@ class FolderCreate:
         d = src_dict.copy()
         duid = d.pop("duid")
 
+        space_duid = d.pop("spaceDuid")
+
         order = d.pop("order")
+
+        _kind = d.pop("kind", UNSET)
+        kind: Union[Unset, FolderKind]
+        if isinstance(_kind, Unset):
+            kind = UNSET
+        else:
+            kind = FolderKind(_kind)
 
         accessible_by_team = d.pop("accessibleByTeam", UNSET)
 
@@ -138,7 +162,9 @@ class FolderCreate:
 
         folder_create = cls(
             duid=duid,
+            space_duid=space_duid,
             order=order,
+            kind=kind,
             accessible_by_team=accessible_by_team,
             accessible_by_user_duids=accessible_by_user_duids,
             title=title,

@@ -62,6 +62,7 @@ class User:
         is_admin (bool):
         updated_by_client_duid (Union[Unset, None, str]):
         image_url (Optional[str]):
+        auth_token (Optional[str]):
         google_data (Optional[GoogleData]):
     """
 
@@ -75,6 +76,7 @@ class User:
     color_name: ColorName
     is_admin: bool
     image_url: Optional[str]
+    auth_token: Optional[str]
     google_data: Optional["GoogleData"]
     updated_by_client_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -95,6 +97,7 @@ class User:
         is_admin = self.is_admin
         updated_by_client_duid = self.updated_by_client_duid
         image_url = self.image_url
+        auth_token = self.auth_token
         google_data = self.google_data.to_dict() if self.google_data else None
 
         field_dict: Dict[str, Any] = {}
@@ -111,6 +114,7 @@ class User:
                 "colorName": color_name,
                 "isAdmin": is_admin,
                 "imageUrl": image_url,
+                "authToken": auth_token,
                 "googleData": google_data,
             }
         )
@@ -146,6 +150,8 @@ class User:
 
         image_url = d.pop("imageUrl")
 
+        auth_token = d.pop("authToken")
+
         _google_data = d.pop("googleData")
         google_data: Optional[GoogleData]
         if _google_data is None:
@@ -165,6 +171,7 @@ class User:
             is_admin=is_admin,
             updated_by_client_duid=updated_by_client_duid,
             image_url=image_url,
+            auth_token=auth_token,
             google_data=google_data,
         )
 
