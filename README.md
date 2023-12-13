@@ -22,7 +22,7 @@ pip install dart-tools
 
 ## Using the CLI
 
-As an example, start off by logging in with
+Start off by setting up authentication with
 ```bash
 dart login
 ```
@@ -44,14 +44,15 @@ This command will mark the referenced task 'Done'. Here `[DUID]` is meant to be 
 
 ## Using the Python Library
 
-In Python, you can run something like
+First, set up authentication. Run `dart login` in the terminal for an interactive process, or visit [your Dart profile](https://app.itsdart.com/?settings=profile) and then run `dart.login(token)` or save the token into the `DART_TOKEN` environment variable.
+
+Then, you can run something like
 ```python
 import os
-from dart import is_logged_in, login, create_task, update_task
+from dart import create_task, is_logged_in, update_task
 
-# Login based on information stored in environment variables, but only if needed
-if not is_logged_in():
-    login(email=os.environ["DART_EMAIL"], password=os.environ["DART_PASSWORD"])
+# Check that auth is set up and stop if not, can remove this once everything is set up
+is_logged_in(should_raise=True)
 
 # Create a new task called 'Update the landing page'
 # With priority 'Critical' (i.e. p0) and with the 'marketing' tag

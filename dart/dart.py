@@ -15,13 +15,14 @@ import subprocess
 import sys
 from collections import defaultdict
 from datetime import timezone
-from getpass import getpass
 from importlib.metadata import version
 from typing import Literal, NoReturn
+from webbrowser import open_new_tab
 
 import dateparser
 from pick import pick
 import requests
+import platformdirs
 
 from .exception import DartException
 from .generated import Client
@@ -46,6 +47,7 @@ from .generated.models import (
 from .generated.api.transactions import transactions_create
 from .order_manager import get_orders_between
 
+_APP = "dart-tools"
 _PROG = "dart"
 
 _PROD_HOST = "https://app.itsdart.com"
@@ -59,21 +61,22 @@ _CREATE_TASK_CMD = "createtask"
 _UPDATE_TASK_CMD = "updatetask"
 _BEGIN_TASK_CMD = "begintask"
 
+_PROFILE_SETTINGS_URL_FRAG = "/?settings=profile"
 _ROOT_API_URL_FRAG = "/api/v0"
 _CSRF_URL_FRAG = _ROOT_API_URL_FRAG + "/csrf-token"
-_LOGIN_URL_FRAG = _ROOT_API_URL_FRAG + "/login"
-_CURRENT_USER_URL_FRAG = _ROOT_API_URL_FRAG + "/user-data?mode=auto"
+_USER_STATUS_URL_FRAG = _ROOT_API_URL_FRAG + "/user-status"
+_USER_DATA_URL_FRAG = _ROOT_API_URL_FRAG + "/user-data?mode=auto"
 _COPY_BRANCH_URL_FRAG = _ROOT_API_URL_FRAG + "/vcs/copy-branch-link"
 _REPLICATE_SPACE_URL_FRAG_FMT = _ROOT_API_URL_FRAG + "/spaces/replicate/{duid}"
 
-_CONFIG_FPATH = os.path.expanduser("~/.dart-tools")
+_AUTH_TOKEN_ENVVAR_KEY = "DART_TOKEN"
+_CONFIG_FPATH = platformdirs.user_config_path(_APP, roaming=False, ensure_exists=False)
 _CSRF_TOKEN_COOKIE = "csrftoken"
-_SESSION_ID_COOKIE = "sessionid"
 _CLIENT_DUID_KEY = "clientDuid"
 _HOST_KEY = "host"
 _HOSTS_KEY = "hosts"
+_AUTH_TOKEN_KEY = "authToken"
 _CSRF_TOKEN_KEY = "csrfToken"
-_SESSION_ID_KEY = "sessionId"
 
 _DUID_CHARS = string.ascii_lowercase + string.ascii_uppercase + string.digits
 _PRIORITY_MAP = {
@@ -85,7 +88,8 @@ _PRIORITY_MAP = {
 _SIZES = {1, 2, 3, 5, 8}
 _COMPLETED_STATUS_KINDS = {"Finished", "Canceled"}
 
-_VERSION = version("dart-tools")
+_VERSION = version(_APP)
+_AUTH_TOKEN_ENVVAR = os.environ.get(_AUTH_TOKEN_ENVVAR_KEY)
 
 _is_cli = False
 
@@ -179,8 +183,6 @@ class _Session:
         self._session = requests.Session()
         if (csrf_token := self._config.get(_CSRF_TOKEN_KEY)) is not None:
             self._session.cookies.set(_CSRF_TOKEN_COOKIE, csrf_token)
-        if (session_id := self._config.get(_SESSION_ID_KEY)) is not None:
-            self._session.cookies.set(_SESSION_ID_COOKIE, session_id)
 
     def get_base_url(self):
         return self._config.host
@@ -188,8 +190,11 @@ class _Session:
     def get_client_duid(self):
         return self._config.client_duid
 
-    def get_is_logged_in(self):
-        return self._config.get(_SESSION_ID_KEY) is not None
+    def get_auth_token(self):
+        result = self._config.get(_AUTH_TOKEN_KEY)
+        if result is not None:
+            return result
+        return _AUTH_TOKEN_ENVVAR
 
     def _refresh_csrf(self):
         response = self._session.get(self._config.host + _CSRF_URL_FRAG)
@@ -205,15 +210,17 @@ class _Session:
         return csrf_token
 
     def get_headers(self):
-        return {
-            "client-duid": self._config.client_duid,
+        result = {
             "Origin": self._config.host,
+            "client-duid": self.get_client_duid(),
             "x-csrftoken": self.get_csrf_token(),
         }
+        if (auth_token := self.get_auth_token()) is not None:
+            result["Authorization"] = f"Bearer {auth_token}"
+        return result
 
     def get_cookies(self):
         return {
-            _SESSION_ID_COOKIE: self._config.get(_SESSION_ID_KEY),
             _CSRF_TOKEN_COOKIE: self.get_csrf_token(),
         }
 
@@ -260,7 +267,7 @@ class Dart(Client):
 class UserBundle:
     def __init__(self, session):
         _log("Loading active tasks")
-        response = session.get(_CURRENT_USER_URL_FRAG)
+        response = session.get(_USER_DATA_URL_FRAG)
         _check_request_response_and_maybe_exit(response)
         self._raw = response.json()
         if not self.is_logged_in:
@@ -409,11 +416,11 @@ def set_host(host):
 
 
 def _auth_failure_exit():
-    _dart_exit(f"Not logged in, run\n\n{_PROG} {_LOGIN_CMD}\n\nto log in.")
+    _dart_exit(f"Not logged in, run\n\n  {_PROG} {_LOGIN_CMD}\n\nto log in.")
 
 
 def _unknown_failure_exit() -> NoReturn:
-    _dart_exit(f"Not logged in, run\n\n{_PROG} {_LOGIN_CMD}\n\nto log in.")
+    _dart_exit("Unknown failure, email\n\n  support@itsdart.com\n\nfor help.")
 
 
 def _check_request_response_and_maybe_exit(response):
@@ -467,32 +474,42 @@ def print_version_update_message_maybe():
     )
 
 
-def is_logged_in():
+def _get_is_logged_in(session):
+    response = session.get(_USER_STATUS_URL_FRAG)
+    return response.json().get("isLoggedIn", False)
+
+
+def is_logged_in(should_raise=False):
     config = _Config()
     session = _Session(config)
 
-    result = session.get_is_logged_in()
+    result = _get_is_logged_in(session)
+
+    if not result and should_raise:
+        _auth_failure_exit()
     _log(f"You are {'' if result else 'not '}logged in")
     return result
 
 
-def login(*, email=None, password=None):
+def login(token=None):
     config = _Config()
     session = _Session(config)
 
     _log("Log in to Dart")
-    if email is None:
-        email = input("Email: ")
-    if password is None:
-        password = getpass()
+    if token is None:
+        if not _is_cli:
+            _dart_exit("Login failed, token is required.")
+        _log(
+            "Dart is opening in your browser, log in if needed and copy your authentication token from the page"
+        )
+        open_new_tab(config.host + _PROFILE_SETTINGS_URL_FRAG)
+        token = input("Token: ")
 
-    result = session.post(_LOGIN_URL_FRAG, json={"email": email, "password": password})
-    if result.status_code in {401, 403}:
-        _dart_exit("Invalid login information.")
-    _check_request_response_and_maybe_exit(result)
+    config.set(_AUTH_TOKEN_KEY, token)
 
-    cookies = result.cookies.get_dict()
-    config.set(_SESSION_ID_KEY, cookies.get(_SESSION_ID_COOKIE))
+    worked = _get_is_logged_in(session)
+    if not worked:
+        _dart_exit("Invalid token.")
 
     _log("Logged in.")
     return True
@@ -837,7 +854,6 @@ def replicate_space(duid):
     session = _Session(config)
 
     response = session.post(_REPLICATE_SPACE_URL_FRAG_FMT.format(duid=duid))
-    print()
     _check_request_response_and_maybe_exit(response)
 
     space = Space.from_dict(response.json()["item"])
@@ -908,10 +924,7 @@ def cli():
 
     login_parser = subparsers.add_parser(_LOGIN_CMD, aliases="l", help="login")
     login_parser.add_argument(
-        "-e", "--email", dest="email", help="email to log in with"
-    )
-    login_parser.add_argument(
-        "-p", "--password", dest="password", help="password to log in with"
+        "-t", "--token", dest="token", help="your authentication token"
     )
     login_parser.set_defaults(func=login)
 

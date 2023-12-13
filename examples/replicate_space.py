@@ -1,19 +1,18 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os
 
-from dart import is_logged_in, login, replicate_space
+from dart import is_logged_in, replicate_space
+
+
+# The DART_TOKEN environment variable must be set to the value from
+# https://app.itsdart.com/?settings=profile at this point
+is_logged_in(should_raise=True)
 
 
 # You can get these IDs from the space's three dot menu > 'Copy ID'
 TEMPLATE_SPACE_ID_1 = "rWPeANfzSnJi"
 TEMPLATE_SPACE_ID_2 = "gJLw5RsKSjw8"
-
-
-# Login based on information stored in environment variables, but only if needed
-if not is_logged_in():
-    login(email=os.environ["DART_EMAIL"], password=os.environ["DART_PASSWORD"])
 
 
 # Conditionally replicate one of the template spaces, depending on the circumstances
