@@ -192,7 +192,7 @@ class _Session:
 
     def get_auth_token(self):
         result = self._config.get(_AUTH_TOKEN_KEY)
-        if result is None:
+        if result is not None:
             return result
         return _AUTH_TOKEN_ENVVAR
 
