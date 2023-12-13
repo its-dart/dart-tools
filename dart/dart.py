@@ -416,11 +416,11 @@ def set_host(host):
 
 
 def _auth_failure_exit():
-    _dart_exit(f"Not logged in, run\n\n{_PROG} {_LOGIN_CMD}\n\nto log in.")
+    _dart_exit(f"Not logged in, run\n\n  {_PROG} {_LOGIN_CMD}\n\nto log in.")
 
 
 def _unknown_failure_exit() -> NoReturn:
-    _dart_exit(f"Not logged in, run\n\n{_PROG} {_LOGIN_CMD}\n\nto log in.")
+    _dart_exit("Unknown failure, email\n\n  support@itsdart.com\n\nfor help.")
 
 
 def _check_request_response_and_maybe_exit(response):
@@ -479,12 +479,14 @@ def _get_is_logged_in(session):
     return response.json().get("isLoggedIn", False)
 
 
-def is_logged_in():
+def is_logged_in(should_raise=False):
     config = _Config()
     session = _Session(config)
 
     result = _get_is_logged_in(session)
 
+    if not result and should_raise:
+        _auth_failure_exit()
     _log(f"You are {'' if result else 'not '}logged in")
     return result
 

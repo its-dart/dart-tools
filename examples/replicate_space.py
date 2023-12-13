@@ -2,11 +2,12 @@
 # -*- coding: utf-8 -*-
 
 
-# Some auth mechanism must be set up at this point, usually the DART_TOKEN environment variable
-# Run `dart login` in the terminal for more info
+from dart import is_logged_in, replicate_space
 
 
-from dart import replicate_space
+# The DART_TOKEN environment variable must be set to the value from
+# https://app.itsdart.com/?settings=profile at this point
+is_logged_in(should_raise=True)
 
 
 # You can get these IDs from the space's three dot menu > 'Copy ID'
