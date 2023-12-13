@@ -22,6 +22,7 @@ from webbrowser import open_new_tab
 import dateparser
 from pick import pick
 import requests
+import platformdirs
 
 from .exception import DartException
 from .generated import Client
@@ -46,6 +47,7 @@ from .generated.models import (
 from .generated.api.transactions import transactions_create
 from .order_manager import get_orders_between
 
+_APP = "dart-tools"
 _PROG = "dart"
 
 _PROD_HOST = "https://app.itsdart.com"
@@ -68,7 +70,7 @@ _COPY_BRANCH_URL_FRAG = _ROOT_API_URL_FRAG + "/vcs/copy-branch-link"
 _REPLICATE_SPACE_URL_FRAG_FMT = _ROOT_API_URL_FRAG + "/spaces/replicate/{duid}"
 
 _AUTH_TOKEN_ENVVAR_KEY = "DART_TOKEN"
-_CONFIG_FPATH = os.path.expanduser("~/.dart-tools")
+_CONFIG_FPATH = platformdirs.user_config_path(_APP, roaming=False, ensure_exists=False)
 _CSRF_TOKEN_COOKIE = "csrftoken"
 _CLIENT_DUID_KEY = "clientDuid"
 _HOST_KEY = "host"
@@ -86,7 +88,7 @@ _PRIORITY_MAP = {
 _SIZES = {1, 2, 3, 5, 8}
 _COMPLETED_STATUS_KINDS = {"Finished", "Canceled"}
 
-_VERSION = version("dart-tools")
+_VERSION = version(_APP)
 _AUTH_TOKEN_ENVVAR = os.environ.get(_AUTH_TOKEN_ENVVAR_KEY)
 
 _is_cli = False
