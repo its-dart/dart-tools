@@ -24,6 +24,7 @@ class Tenant:
         duid (str):
         is_dart (bool):
         name (str):
+        timezone (str):
         subscription (Subscription): * `Personal` - PERSONAL
             * `Premium` - PREMIUM
         entitlement_overrides (TenantEntitlementOverrides):
@@ -45,6 +46,7 @@ class Tenant:
     duid: str
     is_dart: bool
     name: str
+    timezone: str
     subscription: Subscription
     entitlement_overrides: "TenantEntitlementOverrides"
     backlog_enabled: bool
@@ -66,6 +68,7 @@ class Tenant:
         duid = self.duid
         is_dart = self.is_dart
         name = self.name
+        timezone = self.timezone
         subscription = self.subscription.value
 
         entitlement_overrides = self.entitlement_overrides.to_dict()
@@ -95,6 +98,7 @@ class Tenant:
                 "duid": duid,
                 "isDart": is_dart,
                 "name": name,
+                "timezone": timezone,
                 "subscription": subscription,
                 "entitlementOverrides": entitlement_overrides,
                 "backlogEnabled": backlog_enabled,
@@ -130,6 +134,8 @@ class Tenant:
         is_dart = d.pop("isDart")
 
         name = d.pop("name")
+
+        timezone = d.pop("timezone")
 
         subscription = Subscription(d.pop("subscription"))
 
@@ -190,6 +196,7 @@ class Tenant:
             duid=duid,
             is_dart=is_dart,
             name=name,
+            timezone=timezone,
             subscription=subscription,
             entitlement_overrides=entitlement_overrides,
             backlog_enabled=backlog_enabled,

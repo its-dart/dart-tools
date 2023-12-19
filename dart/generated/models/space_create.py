@@ -1,12 +1,19 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+import datetime
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from dateutil.parser import isoparse
 
 from ..models.color_name import ColorName
 from ..models.cycle_mode import CycleMode
 from ..models.icon_kind import IconKind
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.space_create_changelog_recurrence import SpaceCreateChangelogRecurrence
+    from ..models.space_create_standup_recurrence import SpaceCreateStandupRecurrence
+
 
 T = TypeVar("T", bound="SpaceCreate")
 
@@ -53,6 +60,10 @@ class SpaceCreate:
             * `Light Gray` - LIGHT_GRAY
         cycle_mode (Union[Unset, CycleMode]): * `None` - NONE
             * `ANBA` - ANBA
+        standup_recurrence (Union[Unset, None, SpaceCreateStandupRecurrence]):
+        standup_recurrs_next_at (Union[Unset, None, datetime.datetime]):
+        changelog_recurrence (Union[Unset, None, SpaceCreateChangelogRecurrence]):
+        changelog_recurrs_next_at (Union[Unset, None, datetime.datetime]):
     """
 
     duid: str
@@ -67,6 +78,10 @@ class SpaceCreate:
     icon_name_or_emoji: Union[Unset, str] = UNSET
     color_name: Union[Unset, ColorName] = UNSET
     cycle_mode: Union[Unset, CycleMode] = UNSET
+    standup_recurrence: Union[Unset, None, "SpaceCreateStandupRecurrence"] = UNSET
+    standup_recurrs_next_at: Union[Unset, None, datetime.datetime] = UNSET
+    changelog_recurrence: Union[Unset, None, "SpaceCreateChangelogRecurrence"] = UNSET
+    changelog_recurrs_next_at: Union[Unset, None, datetime.datetime] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -93,6 +108,24 @@ class SpaceCreate:
         cycle_mode: Union[Unset, str] = UNSET
         if not isinstance(self.cycle_mode, Unset):
             cycle_mode = self.cycle_mode.value
+
+        standup_recurrence: Union[Unset, None, Dict[str, Any]] = UNSET
+        if not isinstance(self.standup_recurrence, Unset):
+            standup_recurrence = self.standup_recurrence.to_dict() if self.standup_recurrence else None
+
+        standup_recurrs_next_at: Union[Unset, None, str] = UNSET
+        if not isinstance(self.standup_recurrs_next_at, Unset):
+            standup_recurrs_next_at = self.standup_recurrs_next_at.isoformat() if self.standup_recurrs_next_at else None
+
+        changelog_recurrence: Union[Unset, None, Dict[str, Any]] = UNSET
+        if not isinstance(self.changelog_recurrence, Unset):
+            changelog_recurrence = self.changelog_recurrence.to_dict() if self.changelog_recurrence else None
+
+        changelog_recurrs_next_at: Union[Unset, None, str] = UNSET
+        if not isinstance(self.changelog_recurrs_next_at, Unset):
+            changelog_recurrs_next_at = (
+                self.changelog_recurrs_next_at.isoformat() if self.changelog_recurrs_next_at else None
+            )
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -122,11 +155,22 @@ class SpaceCreate:
             field_dict["colorName"] = color_name
         if cycle_mode is not UNSET:
             field_dict["cycleMode"] = cycle_mode
+        if standup_recurrence is not UNSET:
+            field_dict["standupRecurrence"] = standup_recurrence
+        if standup_recurrs_next_at is not UNSET:
+            field_dict["standupRecurrsNextAt"] = standup_recurrs_next_at
+        if changelog_recurrence is not UNSET:
+            field_dict["changelogRecurrence"] = changelog_recurrence
+        if changelog_recurrs_next_at is not UNSET:
+            field_dict["changelogRecurrsNextAt"] = changelog_recurrs_next_at
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.space_create_changelog_recurrence import SpaceCreateChangelogRecurrence
+        from ..models.space_create_standup_recurrence import SpaceCreateStandupRecurrence
+
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -167,6 +211,42 @@ class SpaceCreate:
         else:
             cycle_mode = CycleMode(_cycle_mode)
 
+        _standup_recurrence = d.pop("standupRecurrence", UNSET)
+        standup_recurrence: Union[Unset, None, SpaceCreateStandupRecurrence]
+        if _standup_recurrence is None:
+            standup_recurrence = None
+        elif isinstance(_standup_recurrence, Unset):
+            standup_recurrence = UNSET
+        else:
+            standup_recurrence = SpaceCreateStandupRecurrence.from_dict(_standup_recurrence)
+
+        _standup_recurrs_next_at = d.pop("standupRecurrsNextAt", UNSET)
+        standup_recurrs_next_at: Union[Unset, None, datetime.datetime]
+        if _standup_recurrs_next_at is None:
+            standup_recurrs_next_at = None
+        elif isinstance(_standup_recurrs_next_at, Unset):
+            standup_recurrs_next_at = UNSET
+        else:
+            standup_recurrs_next_at = isoparse(_standup_recurrs_next_at)
+
+        _changelog_recurrence = d.pop("changelogRecurrence", UNSET)
+        changelog_recurrence: Union[Unset, None, SpaceCreateChangelogRecurrence]
+        if _changelog_recurrence is None:
+            changelog_recurrence = None
+        elif isinstance(_changelog_recurrence, Unset):
+            changelog_recurrence = UNSET
+        else:
+            changelog_recurrence = SpaceCreateChangelogRecurrence.from_dict(_changelog_recurrence)
+
+        _changelog_recurrs_next_at = d.pop("changelogRecurrsNextAt", UNSET)
+        changelog_recurrs_next_at: Union[Unset, None, datetime.datetime]
+        if _changelog_recurrs_next_at is None:
+            changelog_recurrs_next_at = None
+        elif isinstance(_changelog_recurrs_next_at, Unset):
+            changelog_recurrs_next_at = UNSET
+        else:
+            changelog_recurrs_next_at = isoparse(_changelog_recurrs_next_at)
+
         space_create = cls(
             duid=duid,
             order=order,
@@ -180,6 +260,10 @@ class SpaceCreate:
             icon_name_or_emoji=icon_name_or_emoji,
             color_name=color_name,
             cycle_mode=cycle_mode,
+            standup_recurrence=standup_recurrence,
+            standup_recurrs_next_at=standup_recurrs_next_at,
+            changelog_recurrence=changelog_recurrence,
+            changelog_recurrs_next_at=changelog_recurrs_next_at,
         )
 
         space_create.additional_properties = d

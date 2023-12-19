@@ -78,6 +78,7 @@ from .operation_model_kind import OperationModelKind
 from .option import Option
 from .option_create import OptionCreate
 from .option_update import OptionUpdate
+from .paginated_user_data_entity_list import PaginatedUserDataEntityList
 from .priority import Priority
 from .property_ import Property
 from .property_adtl import PropertyAdtl
@@ -100,9 +101,15 @@ from .slack_integration import SlackIntegration
 from .slack_integration_tenant_extension_status import SlackIntegrationTenantExtensionStatus
 from .sort import Sort
 from .space import Space
+from .space_changelog_recurrence import SpaceChangelogRecurrence
 from .space_create import SpaceCreate
+from .space_create_changelog_recurrence import SpaceCreateChangelogRecurrence
+from .space_create_standup_recurrence import SpaceCreateStandupRecurrence
 from .space_kind import SpaceKind
+from .space_standup_recurrence import SpaceStandupRecurrence
 from .space_update import SpaceUpdate
+from .space_update_changelog_recurrence import SpaceUpdateChangelogRecurrence
+from .space_update_standup_recurrence import SpaceUpdateStandupRecurrence
 from .status import Status
 from .status_create import StatusCreate
 from .status_kind import StatusKind
@@ -151,6 +158,8 @@ from .user_create import UserCreate
 from .user_dartboard_layout import UserDartboardLayout
 from .user_dartboard_layout_create import UserDartboardLayoutCreate
 from .user_dartboard_layout_update import UserDartboardLayoutUpdate
+from .user_data_entity_list_entity_kind import UserDataEntityListEntityKind
+from .user_data_entity_retrieve_entity_kind import UserDataEntityRetrieveEntityKind
 from .user_role import UserRole
 from .user_status import UserStatus
 from .user_update import UserUpdate
@@ -241,6 +250,7 @@ __all__ = (
     "Option",
     "OptionCreate",
     "OptionUpdate",
+    "PaginatedUserDataEntityList",
     "Priority",
     "Property",
     "PropertyAdtl",
@@ -263,9 +273,15 @@ __all__ = (
     "SlackIntegrationTenantExtensionStatus",
     "Sort",
     "Space",
+    "SpaceChangelogRecurrence",
     "SpaceCreate",
+    "SpaceCreateChangelogRecurrence",
+    "SpaceCreateStandupRecurrence",
     "SpaceKind",
+    "SpaceStandupRecurrence",
     "SpaceUpdate",
+    "SpaceUpdateChangelogRecurrence",
+    "SpaceUpdateStandupRecurrence",
     "Status",
     "StatusCreate",
     "StatusKind",
@@ -314,6 +330,8 @@ __all__ = (
     "UserDartboardLayout",
     "UserDartboardLayoutCreate",
     "UserDartboardLayoutUpdate",
+    "UserDataEntityListEntityKind",
+    "UserDataEntityRetrieveEntityKind",
     "UserRole",
     "UserStatus",
     "UserUpdate",

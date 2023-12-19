@@ -3,12 +3,12 @@
 
 import json
 
-from dart import is_signature_correct
+from dart import is_signature_correct, Task
 
 
 # Adjust these depending on the situation within Dart
 STANDARD_TITLE = "Approve to continue"
-APPROVED_STATUS = "Approved"
+APPROVED_STATUS_DUID = "ryeJvn8mkhQS"  # This is the ID of the 'Approved' status; can be found by running this code and logging the `task.status_duid` when the task is moved to the 'Approved' status
 
 
 def run_webhook(payload: bytes, headers: dict) -> bool:
@@ -31,11 +31,11 @@ def run_webhook(payload: bytes, headers: dict) -> bool:
         return True
 
     # Ignore if it isn't relevant based on our criteria
-    task = event["data"]
-    if task["title"] != STANDARD_TITLE or task.status != APPROVED_STATUS:
+    task = Task.from_dict(event["data"])
+    if task.title != STANDARD_TITLE or task.status_duid != APPROVED_STATUS_DUID:
         return True
 
     # At this point we know that this is a relevant event, so we can do whatever we want with it
-    print(f"Task {task.ID} was approved")
+    print(f"Task {task.duid} was approved")
 
     return True

@@ -13,6 +13,7 @@ class TenantCreate:
     """
     Attributes:
         name (str):
+        timezone (Union[Unset, str]):
         backlog_enabled (Union[Unset, bool]):
         ai_assignment_enabled (Union[Unset, bool]):
         email_integration_enabled (Union[Unset, bool]):
@@ -23,6 +24,7 @@ class TenantCreate:
     """
 
     name: str
+    timezone: Union[Unset, str] = UNSET
     backlog_enabled: Union[Unset, bool] = UNSET
     ai_assignment_enabled: Union[Unset, bool] = UNSET
     email_integration_enabled: Union[Unset, bool] = UNSET
@@ -34,6 +36,7 @@ class TenantCreate:
 
     def to_dict(self) -> Dict[str, Any]:
         name = self.name
+        timezone = self.timezone
         backlog_enabled = self.backlog_enabled
         ai_assignment_enabled = self.ai_assignment_enabled
         email_integration_enabled = self.email_integration_enabled
@@ -49,6 +52,8 @@ class TenantCreate:
                 "name": name,
             }
         )
+        if timezone is not UNSET:
+            field_dict["timezone"] = timezone
         if backlog_enabled is not UNSET:
             field_dict["backlogEnabled"] = backlog_enabled
         if ai_assignment_enabled is not UNSET:
@@ -71,6 +76,8 @@ class TenantCreate:
         d = src_dict.copy()
         name = d.pop("name")
 
+        timezone = d.pop("timezone", UNSET)
+
         backlog_enabled = d.pop("backlogEnabled", UNSET)
 
         ai_assignment_enabled = d.pop("aiAssignmentEnabled", UNSET)
@@ -87,6 +94,7 @@ class TenantCreate:
 
         tenant_create = cls(
             name=name,
+            timezone=timezone,
             backlog_enabled=backlog_enabled,
             ai_assignment_enabled=ai_assignment_enabled,
             email_integration_enabled=email_integration_enabled,
