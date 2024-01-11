@@ -5,13 +5,11 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.paginated_user_data_entity_list import PaginatedUserDataEntityList
-from ...models.user_data_entity_list_entity_kind import UserDataEntityListEntityKind
+from ...models.paginated_form_list import PaginatedFormList
 from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
-    entity_kind: UserDataEntityListEntityKind,
     *,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
@@ -27,18 +25,16 @@ def _get_kwargs(
 
     return {
         "method": "get",
-        "url": "/api/v0/{entityKind}".format(
-            entityKind=entity_kind,
-        ),
+        "url": "/api/v0/forms",
         "params": params,
     }
 
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[PaginatedUserDataEntityList]:
+) -> Optional[PaginatedFormList]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = PaginatedUserDataEntityList.from_dict(response.json())
+        response_200 = PaginatedFormList.from_dict(response.json())
 
         return response_200
     if client.raise_on_unexpected_status:
@@ -49,7 +45,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[PaginatedUserDataEntityList]:
+) -> Response[PaginatedFormList]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -59,15 +55,13 @@ def _build_response(
 
 
 def sync_detailed(
-    entity_kind: UserDataEntityListEntityKind,
     *,
     client: AuthenticatedClient,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
-) -> Response[PaginatedUserDataEntityList]:
+) -> Response[PaginatedFormList]:
     """
     Args:
-        entity_kind (UserDataEntityListEntityKind):
         limit (Union[Unset, None, int]):
         offset (Union[Unset, None, int]):
 
@@ -76,11 +70,10 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[PaginatedUserDataEntityList]
+        Response[PaginatedFormList]
     """
 
     kwargs = _get_kwargs(
-        entity_kind=entity_kind,
         limit=limit,
         offset=offset,
     )
@@ -93,15 +86,13 @@ def sync_detailed(
 
 
 def sync(
-    entity_kind: UserDataEntityListEntityKind,
     *,
     client: AuthenticatedClient,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
-) -> Optional[PaginatedUserDataEntityList]:
+) -> Optional[PaginatedFormList]:
     """
     Args:
-        entity_kind (UserDataEntityListEntityKind):
         limit (Union[Unset, None, int]):
         offset (Union[Unset, None, int]):
 
@@ -110,11 +101,10 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        PaginatedUserDataEntityList
+        PaginatedFormList
     """
 
     return sync_detailed(
-        entity_kind=entity_kind,
         client=client,
         limit=limit,
         offset=offset,
@@ -122,15 +112,13 @@ def sync(
 
 
 async def asyncio_detailed(
-    entity_kind: UserDataEntityListEntityKind,
     *,
     client: AuthenticatedClient,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
-) -> Response[PaginatedUserDataEntityList]:
+) -> Response[PaginatedFormList]:
     """
     Args:
-        entity_kind (UserDataEntityListEntityKind):
         limit (Union[Unset, None, int]):
         offset (Union[Unset, None, int]):
 
@@ -139,11 +127,10 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[PaginatedUserDataEntityList]
+        Response[PaginatedFormList]
     """
 
     kwargs = _get_kwargs(
-        entity_kind=entity_kind,
         limit=limit,
         offset=offset,
     )
@@ -154,15 +141,13 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    entity_kind: UserDataEntityListEntityKind,
     *,
     client: AuthenticatedClient,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
-) -> Optional[PaginatedUserDataEntityList]:
+) -> Optional[PaginatedFormList]:
     """
     Args:
-        entity_kind (UserDataEntityListEntityKind):
         limit (Union[Unset, None, int]):
         offset (Union[Unset, None, int]):
 
@@ -171,12 +156,11 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        PaginatedUserDataEntityList
+        PaginatedFormList
     """
 
     return (
         await asyncio_detailed(
-            entity_kind=entity_kind,
             client=client,
             limit=limit,
             offset=offset,

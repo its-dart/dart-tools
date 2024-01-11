@@ -6,7 +6,6 @@ class UserDataEntityRetrieveEntityKind(str, Enum):
     COMMENTS = "comments"
     DARTBOARDS = "dartboards"
     DOCS = "docs"
-    EVENT_SUBSCRIPTIONS = "event-subscriptions"
     FOLDERS = "folders"
     FORMS = "forms"
     FORM_FIELDS = "form-fields"

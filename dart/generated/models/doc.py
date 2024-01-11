@@ -7,6 +7,7 @@ from dateutil.parser import isoparse
 
 from ..models.color_name import ColorName
 from ..models.icon_kind import IconKind
+from ..models.report_kind import ReportKind
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -61,6 +62,8 @@ class Doc:
             * `Light Gray` - LIGHT_GRAY
         updated_by_client_duid (Union[Unset, None, str]):
         drafter_duid (Optional[str]):
+        report_kind (Optional[ReportKind]): * `Standup` - STANDUP
+            * `Changelog` - CHANGELOG
         recommendation_duid (Optional[str]):
     """
 
@@ -79,6 +82,7 @@ class Doc:
     icon_name_or_emoji: str
     color_name: ColorName
     drafter_duid: Optional[str]
+    report_kind: Optional[ReportKind]
     recommendation_duid: Optional[str]
     updated_by_client_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -107,6 +111,8 @@ class Doc:
 
         updated_by_client_duid = self.updated_by_client_duid
         drafter_duid = self.drafter_duid
+        report_kind = self.report_kind.value if self.report_kind else None
+
         recommendation_duid = self.recommendation_duid
 
         field_dict: Dict[str, Any] = {}
@@ -128,6 +134,7 @@ class Doc:
                 "iconNameOrEmoji": icon_name_or_emoji,
                 "colorName": color_name,
                 "drafterDuid": drafter_duid,
+                "reportKind": report_kind,
                 "recommendationDuid": recommendation_duid,
             }
         )
@@ -173,6 +180,13 @@ class Doc:
 
         drafter_duid = d.pop("drafterDuid")
 
+        _report_kind = d.pop("reportKind")
+        report_kind: Optional[ReportKind]
+        if _report_kind is None:
+            report_kind = None
+        else:
+            report_kind = ReportKind(_report_kind)
+
         recommendation_duid = d.pop("recommendationDuid")
 
         doc = cls(
@@ -192,6 +206,7 @@ class Doc:
             color_name=color_name,
             updated_by_client_duid=updated_by_client_duid,
             drafter_duid=drafter_duid,
+            report_kind=report_kind,
             recommendation_duid=recommendation_duid,
         )
 

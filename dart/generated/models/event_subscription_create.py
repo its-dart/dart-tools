@@ -63,6 +63,7 @@ class EventSubscriptionCreate:
             * `ai/emoji` - AI_EMOJI
             * `ai/feedback` - AI_FEEDBACK
             * `ai/icon` - AI_ICON
+            * `ai/report` - AI_REPORT
             * `help/resource_click` - HELP_RESOURCE_CLICK
             * `usage/submit_feedback` - USAGE_SUBMIT_FEEDBACK
             * `usage/undo` - USAGE_UNDO

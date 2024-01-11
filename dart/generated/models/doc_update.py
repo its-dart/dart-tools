@@ -6,6 +6,7 @@ from attrs import field as _attrs_field
 from ..models.color_name import ColorName
 from ..models.doc_source_type import DocSourceType
 from ..models.icon_kind import IconKind
+from ..models.report_kind import ReportKind
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -28,6 +29,8 @@ class DocUpdate:
         drafter_duid (Union[Unset, None, str]):
         in_trash (Union[Unset, bool]):
         folder_duid (Union[Unset, str]):
+        report_kind (Union[Unset, None, ReportKind]): * `Standup` - STANDUP
+            * `Changelog` - CHANGELOG
         order (Union[Unset, str]):
         title (Union[Unset, str]):
         text (Union[Unset, DocUpdateText]):
@@ -71,6 +74,7 @@ class DocUpdate:
     drafter_duid: Union[Unset, None, str] = UNSET
     in_trash: Union[Unset, bool] = UNSET
     folder_duid: Union[Unset, str] = UNSET
+    report_kind: Union[Unset, None, ReportKind] = UNSET
     order: Union[Unset, str] = UNSET
     title: Union[Unset, str] = UNSET
     text: Union[Unset, "DocUpdateText"] = UNSET
@@ -93,6 +97,10 @@ class DocUpdate:
         drafter_duid = self.drafter_duid
         in_trash = self.in_trash
         folder_duid = self.folder_duid
+        report_kind: Union[Unset, None, str] = UNSET
+        if not isinstance(self.report_kind, Unset):
+            report_kind = self.report_kind.value if self.report_kind else None
+
         order = self.order
         title = self.title
         text: Union[Unset, Dict[str, Any]] = UNSET
@@ -135,6 +143,8 @@ class DocUpdate:
             field_dict["inTrash"] = in_trash
         if folder_duid is not UNSET:
             field_dict["folderDuid"] = folder_duid
+        if report_kind is not UNSET:
+            field_dict["reportKind"] = report_kind
         if order is not UNSET:
             field_dict["order"] = order
         if title is not UNSET:
@@ -180,6 +190,15 @@ class DocUpdate:
 
         folder_duid = d.pop("folderDuid", UNSET)
 
+        _report_kind = d.pop("reportKind", UNSET)
+        report_kind: Union[Unset, None, ReportKind]
+        if _report_kind is None:
+            report_kind = None
+        elif isinstance(_report_kind, Unset):
+            report_kind = UNSET
+        else:
+            report_kind = ReportKind(_report_kind)
+
         order = d.pop("order", UNSET)
 
         title = d.pop("title", UNSET)
@@ -222,6 +241,7 @@ class DocUpdate:
             drafter_duid=drafter_duid,
             in_trash=in_trash,
             folder_duid=folder_duid,
+            report_kind=report_kind,
             order=order,
             title=title,
             text=text,

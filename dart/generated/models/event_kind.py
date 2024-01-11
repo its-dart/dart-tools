@@ -7,6 +7,7 @@ class EventKind(str, Enum):
     AIFEEDBACK = "ai/feedback"
     AIICON = "ai/icon"
     AIPROPS = "ai/props"
+    AIREPORT = "ai/report"
     AISUBTASKS = "ai/subtasks"
     AITRANSLATE = "ai/translate"
     DOCSCREATE = "docs/create"

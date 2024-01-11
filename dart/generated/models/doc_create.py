@@ -6,6 +6,7 @@ from attrs import field as _attrs_field
 from ..models.color_name import ColorName
 from ..models.doc_source_type import DocSourceType
 from ..models.icon_kind import IconKind
+from ..models.report_kind import ReportKind
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -29,6 +30,8 @@ class DocCreate:
             * `Application` - APPLICATION Default: DocSourceType.UNKNOWN.
         drafter_duid (Union[Unset, None, str]):
         in_trash (Union[Unset, bool]):
+        report_kind (Union[Unset, None, ReportKind]): * `Standup` - STANDUP
+            * `Changelog` - CHANGELOG
         title (Union[Unset, str]):
         text (Union[Unset, DocCreateText]):
         edited_by_ai (Union[Unset, bool]):
@@ -72,6 +75,7 @@ class DocCreate:
     source_type: Union[Unset, DocSourceType] = DocSourceType.UNKNOWN
     drafter_duid: Union[Unset, None, str] = UNSET
     in_trash: Union[Unset, bool] = UNSET
+    report_kind: Union[Unset, None, ReportKind] = UNSET
     title: Union[Unset, str] = UNSET
     text: Union[Unset, "DocCreateText"] = UNSET
     edited_by_ai: Union[Unset, bool] = UNSET
@@ -94,6 +98,10 @@ class DocCreate:
 
         drafter_duid = self.drafter_duid
         in_trash = self.in_trash
+        report_kind: Union[Unset, None, str] = UNSET
+        if not isinstance(self.report_kind, Unset):
+            report_kind = self.report_kind.value if self.report_kind else None
+
         title = self.title
         text: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.text, Unset):
@@ -135,6 +143,8 @@ class DocCreate:
             field_dict["drafterDuid"] = drafter_duid
         if in_trash is not UNSET:
             field_dict["inTrash"] = in_trash
+        if report_kind is not UNSET:
+            field_dict["reportKind"] = report_kind
         if title is not UNSET:
             field_dict["title"] = title
         if text is not UNSET:
@@ -180,6 +190,15 @@ class DocCreate:
 
         in_trash = d.pop("inTrash", UNSET)
 
+        _report_kind = d.pop("reportKind", UNSET)
+        report_kind: Union[Unset, None, ReportKind]
+        if _report_kind is None:
+            report_kind = None
+        elif isinstance(_report_kind, Unset):
+            report_kind = UNSET
+        else:
+            report_kind = ReportKind(_report_kind)
+
         title = d.pop("title", UNSET)
 
         _text = d.pop("text", UNSET)
@@ -221,6 +240,7 @@ class DocCreate:
             source_type=source_type,
             drafter_duid=drafter_duid,
             in_trash=in_trash,
+            report_kind=report_kind,
             title=title,
             text=text,
             edited_by_ai=edited_by_ai,
