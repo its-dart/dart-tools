@@ -5,7 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.paginated_task_attachment_list import PaginatedTaskAttachmentList
+from ...models.paginated_attachment_list import PaginatedAttachmentList
 from ...types import UNSET, Response, Unset
 
 
@@ -32,9 +32,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[PaginatedTaskAttachmentList]:
+) -> Optional[PaginatedAttachmentList]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = PaginatedTaskAttachmentList.from_dict(response.json())
+        response_200 = PaginatedAttachmentList.from_dict(response.json())
 
         return response_200
     if client.raise_on_unexpected_status:
@@ -45,7 +45,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[PaginatedTaskAttachmentList]:
+) -> Response[PaginatedAttachmentList]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -59,7 +59,7 @@ def sync_detailed(
     client: AuthenticatedClient,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
-) -> Response[PaginatedTaskAttachmentList]:
+) -> Response[PaginatedAttachmentList]:
     """
     Args:
         limit (Union[Unset, None, int]):
@@ -70,7 +70,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[PaginatedTaskAttachmentList]
+        Response[PaginatedAttachmentList]
     """
 
     kwargs = _get_kwargs(
@@ -90,7 +90,7 @@ def sync(
     client: AuthenticatedClient,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
-) -> Optional[PaginatedTaskAttachmentList]:
+) -> Optional[PaginatedAttachmentList]:
     """
     Args:
         limit (Union[Unset, None, int]):
@@ -101,7 +101,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        PaginatedTaskAttachmentList
+        PaginatedAttachmentList
     """
 
     return sync_detailed(
@@ -116,7 +116,7 @@ async def asyncio_detailed(
     client: AuthenticatedClient,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
-) -> Response[PaginatedTaskAttachmentList]:
+) -> Response[PaginatedAttachmentList]:
     """
     Args:
         limit (Union[Unset, None, int]):
@@ -127,7 +127,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[PaginatedTaskAttachmentList]
+        Response[PaginatedAttachmentList]
     """
 
     kwargs = _get_kwargs(
@@ -145,7 +145,7 @@ async def asyncio(
     client: AuthenticatedClient,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
-) -> Optional[PaginatedTaskAttachmentList]:
+) -> Optional[PaginatedAttachmentList]:
     """
     Args:
         limit (Union[Unset, None, int]):
@@ -156,7 +156,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        PaginatedTaskAttachmentList
+        PaginatedAttachmentList
     """
 
     return (

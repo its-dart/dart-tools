@@ -1,14 +1,10 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.event_kind import EventKind
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.event_create_adtl import EventCreateAdtl
-
 
 T = TypeVar("T", bound="EventCreate")
 
@@ -69,6 +65,7 @@ class EventCreate:
             * `ai/feedback` - AI_FEEDBACK
             * `ai/icon` - AI_ICON
             * `ai/report` - AI_REPORT
+            * `ai/plan` - AI_PLAN
             * `help/resource_click` - HELP_RESOURCE_CLICK
             * `usage/submit_feedback` - USAGE_SUBMIT_FEEDBACK
             * `usage/undo` - USAGE_UNDO
@@ -83,22 +80,22 @@ class EventCreate:
             * `usage/nlp_raw_delete` - USAGE_NLP_RAW_DELETE
             * `usage/nlp_typeahead_open` - USAGE_NLP_TYPEAHEAD_OPEN
             * `usage/nlp_typeahead_accept` - USAGE_NLP_TYPEAHEAD_ACCEPT
+            * `brainstorm/start` - BRAINSTORM_START
+            * `brainstorm/stop` - BRAINSTORM_STOP
         actor_duid (str):
-        adtl (Union[Unset, EventCreateAdtl]):
+        adtl (Union[Unset, Any]):
     """
 
     kind: EventKind
     actor_duid: str
-    adtl: Union[Unset, "EventCreateAdtl"] = UNSET
+    adtl: Union[Unset, Any] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         kind = self.kind.value
 
         actor_duid = self.actor_duid
-        adtl: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.adtl, Unset):
-            adtl = self.adtl.to_dict()
+        adtl = self.adtl
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -115,19 +112,12 @@ class EventCreate:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.event_create_adtl import EventCreateAdtl
-
         d = src_dict.copy()
         kind = EventKind(d.pop("kind"))
 
         actor_duid = d.pop("actorDuid")
 
-        _adtl = d.pop("adtl", UNSET)
-        adtl: Union[Unset, EventCreateAdtl]
-        if isinstance(_adtl, Unset):
-            adtl = UNSET
-        else:
-            adtl = EventCreateAdtl.from_dict(_adtl)
+        adtl = d.pop("adtl", UNSET)
 
         event_create = cls(
             kind=kind,

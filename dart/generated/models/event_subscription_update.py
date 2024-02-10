@@ -65,6 +65,7 @@ class EventSubscriptionUpdate:
             * `ai/feedback` - AI_FEEDBACK
             * `ai/icon` - AI_ICON
             * `ai/report` - AI_REPORT
+            * `ai/plan` - AI_PLAN
             * `help/resource_click` - HELP_RESOURCE_CLICK
             * `usage/submit_feedback` - USAGE_SUBMIT_FEEDBACK
             * `usage/undo` - USAGE_UNDO
@@ -79,11 +80,15 @@ class EventSubscriptionUpdate:
             * `usage/nlp_raw_delete` - USAGE_NLP_RAW_DELETE
             * `usage/nlp_typeahead_open` - USAGE_NLP_TYPEAHEAD_OPEN
             * `usage/nlp_typeahead_accept` - USAGE_NLP_TYPEAHEAD_ACCEPT
+            * `brainstorm/start` - BRAINSTORM_START
+            * `brainstorm/stop` - BRAINSTORM_STOP
+        in_app (Union[Unset, bool]):
         email (Union[Unset, bool]):
         slack (Union[Unset, bool]):
     """
 
     kind: Union[Unset, EventKind] = UNSET
+    in_app: Union[Unset, bool] = UNSET
     email: Union[Unset, bool] = UNSET
     slack: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -93,6 +98,7 @@ class EventSubscriptionUpdate:
         if not isinstance(self.kind, Unset):
             kind = self.kind.value
 
+        in_app = self.in_app
         email = self.email
         slack = self.slack
 
@@ -101,6 +107,8 @@ class EventSubscriptionUpdate:
         field_dict.update({})
         if kind is not UNSET:
             field_dict["kind"] = kind
+        if in_app is not UNSET:
+            field_dict["inApp"] = in_app
         if email is not UNSET:
             field_dict["email"] = email
         if slack is not UNSET:
@@ -118,12 +126,15 @@ class EventSubscriptionUpdate:
         else:
             kind = EventKind(_kind)
 
+        in_app = d.pop("inApp", UNSET)
+
         email = d.pop("email", UNSET)
 
         slack = d.pop("slack", UNSET)
 
         event_subscription_update = cls(
             kind=kind,
+            in_app=in_app,
             email=email,
             slack=slack,
         )

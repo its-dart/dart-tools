@@ -6,19 +6,18 @@ from attrs import field as _attrs_field
 from ..models.color_name import ColorName
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="TaskAttachmentUpdate")
+T = TypeVar("T", bound="AttachmentCreate")
 
 
 @_attrs_define
-class TaskAttachmentUpdate:
+class AttachmentCreate:
     """
     Attributes:
         duid (str):
-        task_duid (Union[Unset, str]):
-        order (Union[Unset, str]):
-        name (Union[Unset, str]):
-        kind (Union[Unset, str]):
-        file (Union[Unset, str]):
+        order (str):
+        name (str):
+        kind (str):
+        file (str):
         color_name (Union[Unset, ColorName]): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -47,18 +46,16 @@ class TaskAttachmentUpdate:
     """
 
     duid: str
-    task_duid: Union[Unset, str] = UNSET
-    order: Union[Unset, str] = UNSET
-    name: Union[Unset, str] = UNSET
-    kind: Union[Unset, str] = UNSET
-    file: Union[Unset, str] = UNSET
+    order: str
+    name: str
+    kind: str
+    file: str
     color_name: Union[Unset, ColorName] = UNSET
     recommendation_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
-        task_duid = self.task_duid
         order = self.order
         name = self.name
         kind = self.kind
@@ -74,18 +71,12 @@ class TaskAttachmentUpdate:
         field_dict.update(
             {
                 "duid": duid,
+                "order": order,
+                "name": name,
+                "kind": kind,
+                "file": file,
             }
         )
-        if task_duid is not UNSET:
-            field_dict["taskDuid"] = task_duid
-        if order is not UNSET:
-            field_dict["order"] = order
-        if name is not UNSET:
-            field_dict["name"] = name
-        if kind is not UNSET:
-            field_dict["kind"] = kind
-        if file is not UNSET:
-            field_dict["file"] = file
         if color_name is not UNSET:
             field_dict["colorName"] = color_name
         if recommendation_duid is not UNSET:
@@ -98,15 +89,13 @@ class TaskAttachmentUpdate:
         d = src_dict.copy()
         duid = d.pop("duid")
 
-        task_duid = d.pop("taskDuid", UNSET)
+        order = d.pop("order")
 
-        order = d.pop("order", UNSET)
+        name = d.pop("name")
 
-        name = d.pop("name", UNSET)
+        kind = d.pop("kind")
 
-        kind = d.pop("kind", UNSET)
-
-        file = d.pop("file", UNSET)
+        file = d.pop("file")
 
         _color_name = d.pop("colorName", UNSET)
         color_name: Union[Unset, ColorName]
@@ -117,9 +106,8 @@ class TaskAttachmentUpdate:
 
         recommendation_duid = d.pop("recommendationDuid", UNSET)
 
-        task_attachment_update = cls(
+        attachment_create = cls(
             duid=duid,
-            task_duid=task_duid,
             order=order,
             name=name,
             kind=kind,
@@ -128,8 +116,8 @@ class TaskAttachmentUpdate:
             recommendation_duid=recommendation_duid,
         )
 
-        task_attachment_update.additional_properties = d
-        return task_attachment_update
+        attachment_create.additional_properties = d
+        return attachment_create
 
     @property
     def additional_keys(self) -> List[str]:

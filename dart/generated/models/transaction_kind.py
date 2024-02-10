@@ -2,6 +2,9 @@ from enum import Enum
 
 
 class TransactionKind(str, Enum):
+    BRAINSTORM_CREATE = "brainstorm_create"
+    BRAINSTORM_DELETE = "brainstorm_delete"
+    BRAINSTORM_UPDATE = "brainstorm_update"
     COMMENT_CREATE = "comment_create"
     COMMENT_DELETE = "comment_delete"
     COMMENT_REACTION_CREATE = "comment_reaction_create"
@@ -24,6 +27,7 @@ class TransactionKind(str, Enum):
     LAYOUT_CREATE = "layout_create"
     LAYOUT_DELETE = "layout_delete"
     LAYOUT_UPDATE = "layout_update"
+    NOTIFICATION_UPDATE = "notification_update"
     OPTION_CREATE = "option_create"
     OPTION_DELETE = "option_delete"
     OPTION_UPDATE = "option_update"

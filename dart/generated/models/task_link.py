@@ -1,13 +1,9 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Type, TypeVar
+from typing import Any, Dict, List, Optional, Type, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.task_link_kind import TaskLinkKind
-
-if TYPE_CHECKING:
-    from ..models.task_link_adtl import TaskLinkAdtl
-
 
 T = TypeVar("T", bound="TaskLink")
 
@@ -31,7 +27,7 @@ class TaskLink:
             * `Notion Expansion` - NOTION_EXPANSION
             * `Slack Expansion` - SLACK_EXPANSION
         url (str):
-        adtl (TaskLinkAdtl):
+        adtl (Any):
         title (Optional[str]):
         icon_url (Optional[str]):
     """
@@ -40,7 +36,7 @@ class TaskLink:
     order: str
     kind: TaskLinkKind
     url: str
-    adtl: "TaskLinkAdtl"
+    adtl: Any
     title: Optional[str]
     icon_url: Optional[str]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -51,8 +47,7 @@ class TaskLink:
         kind = self.kind.value
 
         url = self.url
-        adtl = self.adtl.to_dict()
-
+        adtl = self.adtl
         title = self.title
         icon_url = self.icon_url
 
@@ -74,8 +69,6 @@ class TaskLink:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.task_link_adtl import TaskLinkAdtl
-
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -85,7 +78,7 @@ class TaskLink:
 
         url = d.pop("url")
 
-        adtl = TaskLinkAdtl.from_dict(d.pop("adtl"))
+        adtl = d.pop("adtl")
 
         title = d.pop("title")
 

@@ -6,6 +6,8 @@ from attrs import field as _attrs_field
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
+    from ..models.attachment import Attachment
+    from ..models.brainstorm import Brainstorm
     from ..models.comment import Comment
     from ..models.comment_reaction import CommentReaction
     from ..models.dartboard import Dartboard
@@ -16,6 +18,7 @@ if TYPE_CHECKING:
     from ..models.form import Form
     from ..models.form_field import FormField
     from ..models.layout import Layout
+    from ..models.notification import Notification
     from ..models.option import Option
     from ..models.property_ import Property
     from ..models.relationship import Relationship
@@ -23,7 +26,6 @@ if TYPE_CHECKING:
     from ..models.space import Space
     from ..models.status import Status
     from ..models.task import Task
-    from ..models.task_attachment import TaskAttachment
     from ..models.task_doc_relationship import TaskDocRelationship
     from ..models.task_link import TaskLink
     from ..models.tenant import Tenant
@@ -48,16 +50,19 @@ class ModelsResponse:
     }
 
         Attributes:
+            attachments (Union[Unset, List['Attachment']]):
+            brainstorms (Union[Unset, List['Brainstorm']]):
             comments (Union[Unset, List['Comment']]):
             reactions (Union[Unset, List['CommentReaction']]):
             dartboards (Union[Unset, List['Dartboard']]):
             docs (Union[Unset, List['Doc']]):
             events (Union[Unset, List['Event']]):
+            event_subscriptions (Union[Unset, List['EventSubscription']]):
             folders (Union[Unset, List['Folder']]):
             forms (Union[Unset, List['Form']]):
             form_fields (Union[Unset, List['FormField']]):
             layouts (Union[Unset, List['Layout']]):
-            event_subscriptions (Union[Unset, List['EventSubscription']]):
+            notifications (Union[Unset, List['Notification']]):
             options (Union[Unset, List['Option']]):
             properties (Union[Unset, List['Property']]):
             relationships (Union[Unset, List['Relationship']]):
@@ -65,7 +70,6 @@ class ModelsResponse:
             spaces (Union[Unset, List['Space']]):
             statuses (Union[Unset, List['Status']]):
             tasks (Union[Unset, List['Task']]):
-            attachments (Union[Unset, List['TaskAttachment']]):
             task_doc_relationships (Union[Unset, List['TaskDocRelationship']]):
             links (Union[Unset, List['TaskLink']]):
             tenants (Union[Unset, List['Tenant']]):
@@ -74,16 +78,19 @@ class ModelsResponse:
             views (Union[Unset, List['View']]):
     """
 
+    attachments: Union[Unset, List["Attachment"]] = UNSET
+    brainstorms: Union[Unset, List["Brainstorm"]] = UNSET
     comments: Union[Unset, List["Comment"]] = UNSET
     reactions: Union[Unset, List["CommentReaction"]] = UNSET
     dartboards: Union[Unset, List["Dartboard"]] = UNSET
     docs: Union[Unset, List["Doc"]] = UNSET
     events: Union[Unset, List["Event"]] = UNSET
+    event_subscriptions: Union[Unset, List["EventSubscription"]] = UNSET
     folders: Union[Unset, List["Folder"]] = UNSET
     forms: Union[Unset, List["Form"]] = UNSET
     form_fields: Union[Unset, List["FormField"]] = UNSET
     layouts: Union[Unset, List["Layout"]] = UNSET
-    event_subscriptions: Union[Unset, List["EventSubscription"]] = UNSET
+    notifications: Union[Unset, List["Notification"]] = UNSET
     options: Union[Unset, List["Option"]] = UNSET
     properties: Union[Unset, List["Property"]] = UNSET
     relationships: Union[Unset, List["Relationship"]] = UNSET
@@ -91,7 +98,6 @@ class ModelsResponse:
     spaces: Union[Unset, List["Space"]] = UNSET
     statuses: Union[Unset, List["Status"]] = UNSET
     tasks: Union[Unset, List["Task"]] = UNSET
-    attachments: Union[Unset, List["TaskAttachment"]] = UNSET
     task_doc_relationships: Union[Unset, List["TaskDocRelationship"]] = UNSET
     links: Union[Unset, List["TaskLink"]] = UNSET
     tenants: Union[Unset, List["Tenant"]] = UNSET
@@ -101,6 +107,22 @@ class ModelsResponse:
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        attachments: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.attachments, Unset):
+            attachments = []
+            for attachments_item_data in self.attachments:
+                attachments_item = attachments_item_data.to_dict()
+
+                attachments.append(attachments_item)
+
+        brainstorms: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.brainstorms, Unset):
+            brainstorms = []
+            for brainstorms_item_data in self.brainstorms:
+                brainstorms_item = brainstorms_item_data.to_dict()
+
+                brainstorms.append(brainstorms_item)
+
         comments: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.comments, Unset):
             comments = []
@@ -141,6 +163,14 @@ class ModelsResponse:
 
                 events.append(events_item)
 
+        event_subscriptions: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.event_subscriptions, Unset):
+            event_subscriptions = []
+            for event_subscriptions_item_data in self.event_subscriptions:
+                event_subscriptions_item = event_subscriptions_item_data.to_dict()
+
+                event_subscriptions.append(event_subscriptions_item)
+
         folders: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.folders, Unset):
             folders = []
@@ -173,13 +203,13 @@ class ModelsResponse:
 
                 layouts.append(layouts_item)
 
-        event_subscriptions: Union[Unset, List[Dict[str, Any]]] = UNSET
-        if not isinstance(self.event_subscriptions, Unset):
-            event_subscriptions = []
-            for event_subscriptions_item_data in self.event_subscriptions:
-                event_subscriptions_item = event_subscriptions_item_data.to_dict()
+        notifications: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.notifications, Unset):
+            notifications = []
+            for notifications_item_data in self.notifications:
+                notifications_item = notifications_item_data.to_dict()
 
-                event_subscriptions.append(event_subscriptions_item)
+                notifications.append(notifications_item)
 
         options: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.options, Unset):
@@ -237,14 +267,6 @@ class ModelsResponse:
 
                 tasks.append(tasks_item)
 
-        attachments: Union[Unset, List[Dict[str, Any]]] = UNSET
-        if not isinstance(self.attachments, Unset):
-            attachments = []
-            for attachments_item_data in self.attachments:
-                attachments_item = attachments_item_data.to_dict()
-
-                attachments.append(attachments_item)
-
         task_doc_relationships: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.task_doc_relationships, Unset):
             task_doc_relationships = []
@@ -296,6 +318,10 @@ class ModelsResponse:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if attachments is not UNSET:
+            field_dict["attachments"] = attachments
+        if brainstorms is not UNSET:
+            field_dict["brainstorms"] = brainstorms
         if comments is not UNSET:
             field_dict["comments"] = comments
         if reactions is not UNSET:
@@ -306,6 +332,8 @@ class ModelsResponse:
             field_dict["docs"] = docs
         if events is not UNSET:
             field_dict["events"] = events
+        if event_subscriptions is not UNSET:
+            field_dict["eventSubscriptions"] = event_subscriptions
         if folders is not UNSET:
             field_dict["folders"] = folders
         if forms is not UNSET:
@@ -314,8 +342,8 @@ class ModelsResponse:
             field_dict["formFields"] = form_fields
         if layouts is not UNSET:
             field_dict["layouts"] = layouts
-        if event_subscriptions is not UNSET:
-            field_dict["eventSubscriptions"] = event_subscriptions
+        if notifications is not UNSET:
+            field_dict["notifications"] = notifications
         if options is not UNSET:
             field_dict["options"] = options
         if properties is not UNSET:
@@ -330,8 +358,6 @@ class ModelsResponse:
             field_dict["statuses"] = statuses
         if tasks is not UNSET:
             field_dict["tasks"] = tasks
-        if attachments is not UNSET:
-            field_dict["attachments"] = attachments
         if task_doc_relationships is not UNSET:
             field_dict["taskDocRelationships"] = task_doc_relationships
         if links is not UNSET:
@@ -349,6 +375,8 @@ class ModelsResponse:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.attachment import Attachment
+        from ..models.brainstorm import Brainstorm
         from ..models.comment import Comment
         from ..models.comment_reaction import CommentReaction
         from ..models.dartboard import Dartboard
@@ -359,6 +387,7 @@ class ModelsResponse:
         from ..models.form import Form
         from ..models.form_field import FormField
         from ..models.layout import Layout
+        from ..models.notification import Notification
         from ..models.option import Option
         from ..models.property_ import Property
         from ..models.relationship import Relationship
@@ -366,7 +395,6 @@ class ModelsResponse:
         from ..models.space import Space
         from ..models.status import Status
         from ..models.task import Task
-        from ..models.task_attachment import TaskAttachment
         from ..models.task_doc_relationship import TaskDocRelationship
         from ..models.task_link import TaskLink
         from ..models.tenant import Tenant
@@ -375,6 +403,20 @@ class ModelsResponse:
         from ..models.view import View
 
         d = src_dict.copy()
+        attachments = []
+        _attachments = d.pop("attachments", UNSET)
+        for attachments_item_data in _attachments or []:
+            attachments_item = Attachment.from_dict(attachments_item_data)
+
+            attachments.append(attachments_item)
+
+        brainstorms = []
+        _brainstorms = d.pop("brainstorms", UNSET)
+        for brainstorms_item_data in _brainstorms or []:
+            brainstorms_item = Brainstorm.from_dict(brainstorms_item_data)
+
+            brainstorms.append(brainstorms_item)
+
         comments = []
         _comments = d.pop("comments", UNSET)
         for comments_item_data in _comments or []:
@@ -410,6 +452,13 @@ class ModelsResponse:
 
             events.append(events_item)
 
+        event_subscriptions = []
+        _event_subscriptions = d.pop("eventSubscriptions", UNSET)
+        for event_subscriptions_item_data in _event_subscriptions or []:
+            event_subscriptions_item = EventSubscription.from_dict(event_subscriptions_item_data)
+
+            event_subscriptions.append(event_subscriptions_item)
+
         folders = []
         _folders = d.pop("folders", UNSET)
         for folders_item_data in _folders or []:
@@ -438,12 +487,12 @@ class ModelsResponse:
 
             layouts.append(layouts_item)
 
-        event_subscriptions = []
-        _event_subscriptions = d.pop("eventSubscriptions", UNSET)
-        for event_subscriptions_item_data in _event_subscriptions or []:
-            event_subscriptions_item = EventSubscription.from_dict(event_subscriptions_item_data)
+        notifications = []
+        _notifications = d.pop("notifications", UNSET)
+        for notifications_item_data in _notifications or []:
+            notifications_item = Notification.from_dict(notifications_item_data)
 
-            event_subscriptions.append(event_subscriptions_item)
+            notifications.append(notifications_item)
 
         options = []
         _options = d.pop("options", UNSET)
@@ -494,13 +543,6 @@ class ModelsResponse:
 
             tasks.append(tasks_item)
 
-        attachments = []
-        _attachments = d.pop("attachments", UNSET)
-        for attachments_item_data in _attachments or []:
-            attachments_item = TaskAttachment.from_dict(attachments_item_data)
-
-            attachments.append(attachments_item)
-
         task_doc_relationships = []
         _task_doc_relationships = d.pop("taskDocRelationships", UNSET)
         for task_doc_relationships_item_data in _task_doc_relationships or []:
@@ -544,16 +586,19 @@ class ModelsResponse:
             views.append(views_item)
 
         models_response = cls(
+            attachments=attachments,
+            brainstorms=brainstorms,
             comments=comments,
             reactions=reactions,
             dartboards=dartboards,
             docs=docs,
             events=events,
+            event_subscriptions=event_subscriptions,
             folders=folders,
             forms=forms,
             form_fields=form_fields,
             layouts=layouts,
-            event_subscriptions=event_subscriptions,
+            notifications=notifications,
             options=options,
             properties=properties,
             relationships=relationships,
@@ -561,7 +606,6 @@ class ModelsResponse:
             spaces=spaces,
             statuses=statuses,
             tasks=tasks,
-            attachments=attachments,
             task_doc_relationships=task_doc_relationships,
             links=links,
             tenants=tenants,

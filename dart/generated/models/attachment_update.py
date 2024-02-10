@@ -4,25 +4,20 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.color_name import ColorName
-from ..models.theme import Theme
-from ..models.user_role import UserRole
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="UserCreate")
+T = TypeVar("T", bound="AttachmentUpdate")
 
 
 @_attrs_define
-class UserCreate:
+class AttachmentUpdate:
     """
     Attributes:
         duid (str):
-        role (Union[Unset, UserRole]): * `Admin` - ADMIN
-            * `Member` - MEMBER
-            * `Guest` - GUEST
+        order (Union[Unset, str]):
         name (Union[Unset, str]):
-        theme (Union[Unset, Theme]): * `System Default` - SYSTEM_DEFAULT
-            * `Light` - LIGHT
-            * `Dark` - DARK
+        kind (Union[Unset, str]):
+        file (Union[Unset, str]):
         color_name (Union[Unset, ColorName]): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -47,42 +42,29 @@ class UserCreate:
             * `Dark Gray` - DARK_GRAY
             * `Light Brown` - LIGHT_BROWN
             * `Light Gray` - LIGHT_GRAY
-        open_in_native_app (Union[Unset, bool]):
-        notification_default (Union[Unset, bool]):
-        notification_email (Union[Unset, bool]):
-        notification_slack (Union[Unset, bool]):
+        recommendation_duid (Union[Unset, None, str]):
     """
 
     duid: str
-    role: Union[Unset, UserRole] = UNSET
+    order: Union[Unset, str] = UNSET
     name: Union[Unset, str] = UNSET
-    theme: Union[Unset, Theme] = UNSET
+    kind: Union[Unset, str] = UNSET
+    file: Union[Unset, str] = UNSET
     color_name: Union[Unset, ColorName] = UNSET
-    open_in_native_app: Union[Unset, bool] = UNSET
-    notification_default: Union[Unset, bool] = UNSET
-    notification_email: Union[Unset, bool] = UNSET
-    notification_slack: Union[Unset, bool] = UNSET
+    recommendation_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
-        role: Union[Unset, str] = UNSET
-        if not isinstance(self.role, Unset):
-            role = self.role.value
-
+        order = self.order
         name = self.name
-        theme: Union[Unset, str] = UNSET
-        if not isinstance(self.theme, Unset):
-            theme = self.theme.value
-
+        kind = self.kind
+        file = self.file
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value
 
-        open_in_native_app = self.open_in_native_app
-        notification_default = self.notification_default
-        notification_email = self.notification_email
-        notification_slack = self.notification_slack
+        recommendation_duid = self.recommendation_duid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -91,22 +73,18 @@ class UserCreate:
                 "duid": duid,
             }
         )
-        if role is not UNSET:
-            field_dict["role"] = role
+        if order is not UNSET:
+            field_dict["order"] = order
         if name is not UNSET:
             field_dict["name"] = name
-        if theme is not UNSET:
-            field_dict["theme"] = theme
+        if kind is not UNSET:
+            field_dict["kind"] = kind
+        if file is not UNSET:
+            field_dict["file"] = file
         if color_name is not UNSET:
             field_dict["colorName"] = color_name
-        if open_in_native_app is not UNSET:
-            field_dict["openInNativeApp"] = open_in_native_app
-        if notification_default is not UNSET:
-            field_dict["notificationDefault"] = notification_default
-        if notification_email is not UNSET:
-            field_dict["notificationEmail"] = notification_email
-        if notification_slack is not UNSET:
-            field_dict["notificationSlack"] = notification_slack
+        if recommendation_duid is not UNSET:
+            field_dict["recommendationDuid"] = recommendation_duid
 
         return field_dict
 
@@ -115,21 +93,13 @@ class UserCreate:
         d = src_dict.copy()
         duid = d.pop("duid")
 
-        _role = d.pop("role", UNSET)
-        role: Union[Unset, UserRole]
-        if isinstance(_role, Unset):
-            role = UNSET
-        else:
-            role = UserRole(_role)
+        order = d.pop("order", UNSET)
 
         name = d.pop("name", UNSET)
 
-        _theme = d.pop("theme", UNSET)
-        theme: Union[Unset, Theme]
-        if isinstance(_theme, Unset):
-            theme = UNSET
-        else:
-            theme = Theme(_theme)
+        kind = d.pop("kind", UNSET)
+
+        file = d.pop("file", UNSET)
 
         _color_name = d.pop("colorName", UNSET)
         color_name: Union[Unset, ColorName]
@@ -138,28 +108,20 @@ class UserCreate:
         else:
             color_name = ColorName(_color_name)
 
-        open_in_native_app = d.pop("openInNativeApp", UNSET)
+        recommendation_duid = d.pop("recommendationDuid", UNSET)
 
-        notification_default = d.pop("notificationDefault", UNSET)
-
-        notification_email = d.pop("notificationEmail", UNSET)
-
-        notification_slack = d.pop("notificationSlack", UNSET)
-
-        user_create = cls(
+        attachment_update = cls(
             duid=duid,
-            role=role,
+            order=order,
             name=name,
-            theme=theme,
+            kind=kind,
+            file=file,
             color_name=color_name,
-            open_in_native_app=open_in_native_app,
-            notification_default=notification_default,
-            notification_email=notification_email,
-            notification_slack=notification_slack,
+            recommendation_duid=recommendation_duid,
         )
 
-        user_create.additional_properties = d
-        return user_create
+        attachment_update.additional_properties = d
+        return attachment_update
 
     @property
     def additional_keys(self) -> List[str]:

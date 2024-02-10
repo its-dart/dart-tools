@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Optional, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -9,10 +9,6 @@ from ..models.color_name import ColorName
 from ..models.icon_kind import IconKind
 from ..models.report_kind import ReportKind
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.doc_text import DocText
-
 
 T = TypeVar("T", bound="Doc")
 
@@ -28,7 +24,7 @@ class Doc:
         folder_duid (str):
         order (str):
         title (str):
-        text (DocText):
+        text (Any):
         edited_by_ai (bool):
         editor_duids (List[str]):
         subscriber_duids (List[str]):
@@ -74,7 +70,7 @@ class Doc:
     folder_duid: str
     order: str
     title: str
-    text: "DocText"
+    text: Any
     edited_by_ai: bool
     editor_duids: List[str]
     subscriber_duids: List[str]
@@ -97,8 +93,7 @@ class Doc:
         folder_duid = self.folder_duid
         order = self.order
         title = self.title
-        text = self.text.to_dict()
-
+        text = self.text
         edited_by_ai = self.edited_by_ai
         editor_duids = self.editor_duids
 
@@ -145,8 +140,6 @@ class Doc:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.doc_text import DocText
-
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -162,7 +155,7 @@ class Doc:
 
         title = d.pop("title")
 
-        text = DocText.from_dict(d.pop("text"))
+        text = d.pop("text")
 
         edited_by_ai = d.pop("editedByAi")
 

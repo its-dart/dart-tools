@@ -17,7 +17,10 @@ class Transaction:
     """
     Attributes:
         duid (str):
-        kind (TransactionKind): * `comment_create` - COMMENT_CREATE
+        kind (TransactionKind): * `brainstorm_create` - BRAINSTORM_CREATE
+            * `brainstorm_delete` - BRAINSTORM_DELETE
+            * `brainstorm_update` - BRAINSTORM_UPDATE
+            * `comment_create` - COMMENT_CREATE
             * `comment_update` - COMMENT_UPDATE
             * `comment_delete` - COMMENT_DELETE
             * `comment_reaction_create` - COMMENT_REACTION_CREATE
@@ -39,6 +42,7 @@ class Transaction:
             * `layout_create` - LAYOUT_CREATE
             * `layout_delete` - LAYOUT_DELETE
             * `layout_update` - LAYOUT_UPDATE
+            * `notification_update` - NOTIFICATION_UPDATE
             * `option_create` - OPTION_CREATE
             * `option_delete` - OPTION_DELETE
             * `option_update` - OPTION_UPDATE

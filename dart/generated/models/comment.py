@@ -9,7 +9,6 @@ from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.comment_reaction import CommentReaction
-    from ..models.comment_text import CommentText
 
 
 T = TypeVar("T", bound="Comment")
@@ -25,7 +24,7 @@ class Comment:
         task_duid (str):
         authored_by_ai (bool):
         author_duid (str):
-        text (CommentText):
+        text (Any):
         reactions (List['CommentReaction']):
         is_draft (bool):
         edited (bool):
@@ -40,7 +39,7 @@ class Comment:
     task_duid: str
     authored_by_ai: bool
     author_duid: str
-    text: "CommentText"
+    text: Any
     reactions: List["CommentReaction"]
     is_draft: bool
     edited: bool
@@ -58,8 +57,7 @@ class Comment:
         task_duid = self.task_duid
         authored_by_ai = self.authored_by_ai
         author_duid = self.author_duid
-        text = self.text.to_dict()
-
+        text = self.text
         reactions = []
         for reactions_item_data in self.reactions:
             reactions_item = reactions_item_data.to_dict()
@@ -98,7 +96,6 @@ class Comment:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.comment_reaction import CommentReaction
-        from ..models.comment_text import CommentText
 
         d = src_dict.copy()
         duid = d.pop("duid")
@@ -113,7 +110,7 @@ class Comment:
 
         author_duid = d.pop("authorDuid")
 
-        text = CommentText.from_dict(d.pop("text"))
+        text = d.pop("text")
 
         reactions = []
         _reactions = d.pop("reactions")

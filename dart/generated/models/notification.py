@@ -1,51 +1,47 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+import datetime
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="FormField")
+if TYPE_CHECKING:
+    from ..models.event import Event
+
+
+T = TypeVar("T", bound="Notification")
 
 
 @_attrs_define
-class FormField:
+class Notification:
     """
     Attributes:
         duid (str):
-        form_duid (str):
-        property_duid (str):
-        locked (bool):
-        order (str):
-        required (bool):
-        hidden (bool):
-        label (str):
-        default (Any):
+        created_at (datetime.datetime):
+        user_duid (str):
+        event (Event):
+        read (bool):
         updated_by_client_duid (Union[Unset, None, str]):
     """
 
     duid: str
-    form_duid: str
-    property_duid: str
-    locked: bool
-    order: str
-    required: bool
-    hidden: bool
-    label: str
-    default: Any
+    created_at: datetime.datetime
+    user_duid: str
+    event: "Event"
+    read: bool
     updated_by_client_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
-        form_duid = self.form_duid
-        property_duid = self.property_duid
-        locked = self.locked
-        order = self.order
-        required = self.required
-        hidden = self.hidden
-        label = self.label
-        default = self.default
+        created_at = self.created_at.isoformat()
+
+        user_duid = self.user_duid
+        event = self.event.to_dict()
+
+        read = self.read
         updated_by_client_duid = self.updated_by_client_duid
 
         field_dict: Dict[str, Any] = {}
@@ -53,14 +49,10 @@ class FormField:
         field_dict.update(
             {
                 "duid": duid,
-                "formDuid": form_duid,
-                "propertyDuid": property_duid,
-                "locked": locked,
-                "order": order,
-                "required": required,
-                "hidden": hidden,
-                "label": label,
-                "default": default,
+                "createdAt": created_at,
+                "userDuid": user_duid,
+                "event": event,
+                "read": read,
             }
         )
         if updated_by_client_duid is not UNSET:
@@ -70,42 +62,32 @@ class FormField:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.event import Event
+
         d = src_dict.copy()
         duid = d.pop("duid")
 
-        form_duid = d.pop("formDuid")
+        created_at = isoparse(d.pop("createdAt"))
 
-        property_duid = d.pop("propertyDuid")
+        user_duid = d.pop("userDuid")
 
-        locked = d.pop("locked")
+        event = Event.from_dict(d.pop("event"))
 
-        order = d.pop("order")
-
-        required = d.pop("required")
-
-        hidden = d.pop("hidden")
-
-        label = d.pop("label")
-
-        default = d.pop("default")
+        read = d.pop("read")
 
         updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
 
-        form_field = cls(
+        notification = cls(
             duid=duid,
-            form_duid=form_duid,
-            property_duid=property_duid,
-            locked=locked,
-            order=order,
-            required=required,
-            hidden=hidden,
-            label=label,
-            default=default,
+            created_at=created_at,
+            user_duid=user_duid,
+            event=event,
+            read=read,
             updated_by_client_duid=updated_by_client_duid,
         )
 
-        form_field.additional_properties = d
-        return form_field
+        notification.additional_properties = d
+        return notification
 
     @property
     def additional_keys(self) -> List[str]:

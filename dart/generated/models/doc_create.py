@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -8,10 +8,6 @@ from ..models.doc_source_type import DocSourceType
 from ..models.icon_kind import IconKind
 from ..models.report_kind import ReportKind
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.doc_create_text import DocCreateText
-
 
 T = TypeVar("T", bound="DocCreate")
 
@@ -27,13 +23,15 @@ class DocCreate:
         source_type (Union[Unset, DocSourceType]): * `Unknown` - UNKNOWN
             * `Onboarding` - ONBOARDING
             * `Recommendation` - RECOMMENDATION
+            * `GeneratedReport` - GENERATED_REPORT
+            * `ChatGPT` - CHAT_GPT
             * `Application` - APPLICATION Default: DocSourceType.UNKNOWN.
         drafter_duid (Union[Unset, None, str]):
         in_trash (Union[Unset, bool]):
         report_kind (Union[Unset, None, ReportKind]): * `Standup` - STANDUP
             * `Changelog` - CHANGELOG
         title (Union[Unset, str]):
-        text (Union[Unset, DocCreateText]):
+        text (Union[Unset, Any]):
         edited_by_ai (Union[Unset, bool]):
         recommendation_duid (Union[Unset, None, str]):
         editor_duids (Union[Unset, List[str]]):
@@ -77,7 +75,7 @@ class DocCreate:
     in_trash: Union[Unset, bool] = UNSET
     report_kind: Union[Unset, None, ReportKind] = UNSET
     title: Union[Unset, str] = UNSET
-    text: Union[Unset, "DocCreateText"] = UNSET
+    text: Union[Unset, Any] = UNSET
     edited_by_ai: Union[Unset, bool] = UNSET
     recommendation_duid: Union[Unset, None, str] = UNSET
     editor_duids: Union[Unset, List[str]] = UNSET
@@ -103,10 +101,7 @@ class DocCreate:
             report_kind = self.report_kind.value if self.report_kind else None
 
         title = self.title
-        text: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.text, Unset):
-            text = self.text.to_dict()
-
+        text = self.text
         edited_by_ai = self.edited_by_ai
         recommendation_duid = self.recommendation_duid
         editor_duids: Union[Unset, List[str]] = UNSET
@@ -168,8 +163,6 @@ class DocCreate:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.doc_create_text import DocCreateText
-
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -201,12 +194,7 @@ class DocCreate:
 
         title = d.pop("title", UNSET)
 
-        _text = d.pop("text", UNSET)
-        text: Union[Unset, DocCreateText]
-        if isinstance(_text, Unset):
-            text = UNSET
-        else:
-            text = DocCreateText.from_dict(_text)
+        text = d.pop("text", UNSET)
 
         edited_by_ai = d.pop("editedByAi", UNSET)
 

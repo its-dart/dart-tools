@@ -1,61 +1,85 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="UserDartboardLayoutUpdate")
+if TYPE_CHECKING:
+    from ..models.event import Event
+
+
+T = TypeVar("T", bound="NotificationUpdate")
 
 
 @_attrs_define
-class UserDartboardLayoutUpdate:
+class NotificationUpdate:
     """
     Attributes:
+        duid (str):
         user_duid (Union[Unset, str]):
-        dartboard_duid (Union[Unset, str]):
-        layout_duid (Union[Unset, str]):
+        event (Union[Unset, Event]):
+        read (Union[Unset, bool]):
     """
 
+    duid: str
     user_duid: Union[Unset, str] = UNSET
-    dartboard_duid: Union[Unset, str] = UNSET
-    layout_duid: Union[Unset, str] = UNSET
+    event: Union[Unset, "Event"] = UNSET
+    read: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        duid = self.duid
         user_duid = self.user_duid
-        dartboard_duid = self.dartboard_duid
-        layout_duid = self.layout_duid
+        event: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.event, Unset):
+            event = self.event.to_dict()
+
+        read = self.read
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({})
+        field_dict.update(
+            {
+                "duid": duid,
+            }
+        )
         if user_duid is not UNSET:
             field_dict["userDuid"] = user_duid
-        if dartboard_duid is not UNSET:
-            field_dict["dartboardDuid"] = dartboard_duid
-        if layout_duid is not UNSET:
-            field_dict["layoutDuid"] = layout_duid
+        if event is not UNSET:
+            field_dict["event"] = event
+        if read is not UNSET:
+            field_dict["read"] = read
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.event import Event
+
         d = src_dict.copy()
+        duid = d.pop("duid")
+
         user_duid = d.pop("userDuid", UNSET)
 
-        dartboard_duid = d.pop("dartboardDuid", UNSET)
+        _event = d.pop("event", UNSET)
+        event: Union[Unset, Event]
+        if isinstance(_event, Unset):
+            event = UNSET
+        else:
+            event = Event.from_dict(_event)
 
-        layout_duid = d.pop("layoutDuid", UNSET)
+        read = d.pop("read", UNSET)
 
-        user_dartboard_layout_update = cls(
+        notification_update = cls(
+            duid=duid,
             user_duid=user_duid,
-            dartboard_duid=dartboard_duid,
-            layout_duid=layout_duid,
+            event=event,
+            read=read,
         )
 
-        user_dartboard_layout_update.additional_properties = d
-        return user_dartboard_layout_update
+        notification_update.additional_properties = d
+        return notification_update
 
     @property
     def additional_keys(self) -> List[str]:

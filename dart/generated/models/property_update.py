@@ -1,14 +1,10 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.property_kind import PropertyKind
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.property_update_adtl import PropertyUpdateAdtl
-
 
 T = TypeVar("T", bound="PropertyUpdate")
 
@@ -43,7 +39,7 @@ class PropertyUpdate:
         hidden (Union[Unset, bool]):
         title (Union[Unset, str]):
         description (Union[Unset, str]):
-        adtl (Union[Unset, PropertyUpdateAdtl]):
+        adtl (Union[Unset, Any]):
     """
 
     duid: str
@@ -52,7 +48,7 @@ class PropertyUpdate:
     hidden: Union[Unset, bool] = UNSET
     title: Union[Unset, str] = UNSET
     description: Union[Unset, str] = UNSET
-    adtl: Union[Unset, "PropertyUpdateAdtl"] = UNSET
+    adtl: Union[Unset, Any] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -65,9 +61,7 @@ class PropertyUpdate:
         hidden = self.hidden
         title = self.title
         description = self.description
-        adtl: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.adtl, Unset):
-            adtl = self.adtl.to_dict()
+        adtl = self.adtl
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -93,8 +87,6 @@ class PropertyUpdate:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.property_update_adtl import PropertyUpdateAdtl
-
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -113,12 +105,7 @@ class PropertyUpdate:
 
         description = d.pop("description", UNSET)
 
-        _adtl = d.pop("adtl", UNSET)
-        adtl: Union[Unset, PropertyUpdateAdtl]
-        if isinstance(_adtl, Unset):
-            adtl = UNSET
-        else:
-            adtl = PropertyUpdateAdtl.from_dict(_adtl)
+        adtl = d.pop("adtl", UNSET)
 
         property_update = cls(
             duid=duid,

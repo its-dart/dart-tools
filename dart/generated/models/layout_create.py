@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -6,12 +6,6 @@ from attrs import field as _attrs_field
 from ..models.layout_kind import LayoutKind
 from ..models.summary_statistic_kind import SummaryStatisticKind
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.layout_create_filter_group import LayoutCreateFilterGroup
-    from ..models.layout_create_kind_config_map import LayoutCreateKindConfigMap
-    from ..models.layout_create_sorts import LayoutCreateSorts
-
 
 T = TypeVar("T", bound="LayoutCreate")
 
@@ -25,9 +19,9 @@ class LayoutCreate:
             * `board` - BOARD
             * `calendar` - CALENDAR
             * `roadmap` - ROADMAP
-        kind_config_map (Union[Unset, LayoutCreateKindConfigMap]):
-        filter_group (Union[Unset, LayoutCreateFilterGroup]):
-        sorts (Union[Unset, LayoutCreateSorts]):
+        kind_config_map (Union[Unset, Any]):
+        filter_group (Union[Unset, Any]):
+        sorts (Union[Unset, Any]):
         summary_statistic_kind (Union[Unset, SummaryStatisticKind]): * `None` - NONE
             * `TotalCount` - TOTAL_COUNT
             * `IncompleteCount` - INCOMPLETE_COUNT
@@ -39,9 +33,9 @@ class LayoutCreate:
 
     duid: str
     kind: Union[Unset, LayoutKind] = UNSET
-    kind_config_map: Union[Unset, "LayoutCreateKindConfigMap"] = UNSET
-    filter_group: Union[Unset, "LayoutCreateFilterGroup"] = UNSET
-    sorts: Union[Unset, "LayoutCreateSorts"] = UNSET
+    kind_config_map: Union[Unset, Any] = UNSET
+    filter_group: Union[Unset, Any] = UNSET
+    sorts: Union[Unset, Any] = UNSET
     summary_statistic_kind: Union[Unset, SummaryStatisticKind] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -51,18 +45,9 @@ class LayoutCreate:
         if not isinstance(self.kind, Unset):
             kind = self.kind.value
 
-        kind_config_map: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.kind_config_map, Unset):
-            kind_config_map = self.kind_config_map.to_dict()
-
-        filter_group: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.filter_group, Unset):
-            filter_group = self.filter_group.to_dict()
-
-        sorts: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.sorts, Unset):
-            sorts = self.sorts.to_dict()
-
+        kind_config_map = self.kind_config_map
+        filter_group = self.filter_group
+        sorts = self.sorts
         summary_statistic_kind: Union[Unset, str] = UNSET
         if not isinstance(self.summary_statistic_kind, Unset):
             summary_statistic_kind = self.summary_statistic_kind.value
@@ -89,10 +74,6 @@ class LayoutCreate:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.layout_create_filter_group import LayoutCreateFilterGroup
-        from ..models.layout_create_kind_config_map import LayoutCreateKindConfigMap
-        from ..models.layout_create_sorts import LayoutCreateSorts
-
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -103,26 +84,11 @@ class LayoutCreate:
         else:
             kind = LayoutKind(_kind)
 
-        _kind_config_map = d.pop("kindConfigMap", UNSET)
-        kind_config_map: Union[Unset, LayoutCreateKindConfigMap]
-        if isinstance(_kind_config_map, Unset):
-            kind_config_map = UNSET
-        else:
-            kind_config_map = LayoutCreateKindConfigMap.from_dict(_kind_config_map)
+        kind_config_map = d.pop("kindConfigMap", UNSET)
 
-        _filter_group = d.pop("filterGroup", UNSET)
-        filter_group: Union[Unset, LayoutCreateFilterGroup]
-        if isinstance(_filter_group, Unset):
-            filter_group = UNSET
-        else:
-            filter_group = LayoutCreateFilterGroup.from_dict(_filter_group)
+        filter_group = d.pop("filterGroup", UNSET)
 
-        _sorts = d.pop("sorts", UNSET)
-        sorts: Union[Unset, LayoutCreateSorts]
-        if isinstance(_sorts, Unset):
-            sorts = UNSET
-        else:
-            sorts = LayoutCreateSorts.from_dict(_sorts)
+        sorts = d.pop("sorts", UNSET)
 
         _summary_statistic_kind = d.pop("summaryStatisticKind", UNSET)
         summary_statistic_kind: Union[Unset, SummaryStatisticKind]

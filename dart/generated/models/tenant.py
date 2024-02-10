@@ -10,7 +10,6 @@ if TYPE_CHECKING:
     from ..models.github_integration import GithubIntegration
     from ..models.notion_integration import NotionIntegration
     from ..models.slack_integration import SlackIntegration
-    from ..models.tenant_entitlement_overrides import TenantEntitlementOverrides
     from ..models.yc_integration import YcIntegration
 
 
@@ -27,7 +26,7 @@ class Tenant:
         timezone (str):
         subscription (Subscription): * `Personal` - PERSONAL
             * `Premium` - PREMIUM
-        entitlement_overrides (TenantEntitlementOverrides):
+        entitlement_overrides (Any):
         backlog_enabled (bool):
         ai_assignment_enabled (bool):
         email_integration_enabled (bool):
@@ -48,7 +47,7 @@ class Tenant:
     name: str
     timezone: str
     subscription: Subscription
-    entitlement_overrides: "TenantEntitlementOverrides"
+    entitlement_overrides: Any
     backlog_enabled: bool
     ai_assignment_enabled: bool
     email_integration_enabled: bool
@@ -71,8 +70,7 @@ class Tenant:
         timezone = self.timezone
         subscription = self.subscription.value
 
-        entitlement_overrides = self.entitlement_overrides.to_dict()
-
+        entitlement_overrides = self.entitlement_overrides
         backlog_enabled = self.backlog_enabled
         ai_assignment_enabled = self.ai_assignment_enabled
         email_integration_enabled = self.email_integration_enabled
@@ -125,7 +123,6 @@ class Tenant:
         from ..models.github_integration import GithubIntegration
         from ..models.notion_integration import NotionIntegration
         from ..models.slack_integration import SlackIntegration
-        from ..models.tenant_entitlement_overrides import TenantEntitlementOverrides
         from ..models.yc_integration import YcIntegration
 
         d = src_dict.copy()
@@ -139,7 +136,7 @@ class Tenant:
 
         subscription = Subscription(d.pop("subscription"))
 
-        entitlement_overrides = TenantEntitlementOverrides.from_dict(d.pop("entitlementOverrides"))
+        entitlement_overrides = d.pop("entitlementOverrides")
 
         backlog_enabled = d.pop("backlogEnabled")
 

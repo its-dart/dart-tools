@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Optional, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -10,11 +10,6 @@ from ..models.cycle_mode import CycleMode
 from ..models.icon_kind import IconKind
 from ..models.space_kind import SpaceKind
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.space_changelog_recurrence import SpaceChangelogRecurrence
-    from ..models.space_standup_recurrence import SpaceStandupRecurrence
-
 
 T = TypeVar("T", bound="Space")
 
@@ -63,11 +58,11 @@ class Space:
             * `Light Gray` - LIGHT_GRAY
         cycle_mode (CycleMode): * `None` - NONE
             * `ANBA` - ANBA
+        standup_recurrence (Any):
+        changelog_recurrence (Any):
         updated_by_client_duid (Union[Unset, None, str]):
         drafter_duid (Optional[str]):
-        standup_recurrence (Optional[SpaceStandupRecurrence]):
         standup_recurrs_next_at (Optional[datetime.datetime]):
-        changelog_recurrence (Optional[SpaceChangelogRecurrence]):
         changelog_recurrs_next_at (Optional[datetime.datetime]):
     """
 
@@ -83,10 +78,10 @@ class Space:
     icon_name_or_emoji: str
     color_name: ColorName
     cycle_mode: CycleMode
+    standup_recurrence: Any
+    changelog_recurrence: Any
     drafter_duid: Optional[str]
-    standup_recurrence: Optional["SpaceStandupRecurrence"]
     standup_recurrs_next_at: Optional[datetime.datetime]
-    changelog_recurrence: Optional["SpaceChangelogRecurrence"]
     changelog_recurrs_next_at: Optional[datetime.datetime]
     updated_by_client_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -109,13 +104,11 @@ class Space:
 
         cycle_mode = self.cycle_mode.value
 
+        standup_recurrence = self.standup_recurrence
+        changelog_recurrence = self.changelog_recurrence
         updated_by_client_duid = self.updated_by_client_duid
         drafter_duid = self.drafter_duid
-        standup_recurrence = self.standup_recurrence.to_dict() if self.standup_recurrence else None
-
         standup_recurrs_next_at = self.standup_recurrs_next_at.isoformat() if self.standup_recurrs_next_at else None
-
-        changelog_recurrence = self.changelog_recurrence.to_dict() if self.changelog_recurrence else None
 
         changelog_recurrs_next_at = (
             self.changelog_recurrs_next_at.isoformat() if self.changelog_recurrs_next_at else None
@@ -137,10 +130,10 @@ class Space:
                 "iconNameOrEmoji": icon_name_or_emoji,
                 "colorName": color_name,
                 "cycleMode": cycle_mode,
-                "drafterDuid": drafter_duid,
                 "standupRecurrence": standup_recurrence,
-                "standupRecurrsNextAt": standup_recurrs_next_at,
                 "changelogRecurrence": changelog_recurrence,
+                "drafterDuid": drafter_duid,
+                "standupRecurrsNextAt": standup_recurrs_next_at,
                 "changelogRecurrsNextAt": changelog_recurrs_next_at,
             }
         )
@@ -151,9 +144,6 @@ class Space:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.space_changelog_recurrence import SpaceChangelogRecurrence
-        from ..models.space_standup_recurrence import SpaceStandupRecurrence
-
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -179,16 +169,13 @@ class Space:
 
         cycle_mode = CycleMode(d.pop("cycleMode"))
 
+        standup_recurrence = d.pop("standupRecurrence")
+
+        changelog_recurrence = d.pop("changelogRecurrence")
+
         updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
 
         drafter_duid = d.pop("drafterDuid")
-
-        _standup_recurrence = d.pop("standupRecurrence")
-        standup_recurrence: Optional[SpaceStandupRecurrence]
-        if _standup_recurrence is None:
-            standup_recurrence = None
-        else:
-            standup_recurrence = SpaceStandupRecurrence.from_dict(_standup_recurrence)
 
         _standup_recurrs_next_at = d.pop("standupRecurrsNextAt")
         standup_recurrs_next_at: Optional[datetime.datetime]
@@ -196,13 +183,6 @@ class Space:
             standup_recurrs_next_at = None
         else:
             standup_recurrs_next_at = isoparse(_standup_recurrs_next_at)
-
-        _changelog_recurrence = d.pop("changelogRecurrence")
-        changelog_recurrence: Optional[SpaceChangelogRecurrence]
-        if _changelog_recurrence is None:
-            changelog_recurrence = None
-        else:
-            changelog_recurrence = SpaceChangelogRecurrence.from_dict(_changelog_recurrence)
 
         _changelog_recurrs_next_at = d.pop("changelogRecurrsNextAt")
         changelog_recurrs_next_at: Optional[datetime.datetime]
@@ -224,11 +204,11 @@ class Space:
             icon_name_or_emoji=icon_name_or_emoji,
             color_name=color_name,
             cycle_mode=cycle_mode,
+            standup_recurrence=standup_recurrence,
+            changelog_recurrence=changelog_recurrence,
             updated_by_client_duid=updated_by_client_duid,
             drafter_duid=drafter_duid,
-            standup_recurrence=standup_recurrence,
             standup_recurrs_next_at=standup_recurrs_next_at,
-            changelog_recurrence=changelog_recurrence,
             changelog_recurrs_next_at=changelog_recurrs_next_at,
         )
 

@@ -1,13 +1,10 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar
+from typing import Any, Dict, List, Optional, Type, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..models.entity_name import EntityName
 from ..models.event_kind import EventKind
-
-if TYPE_CHECKING:
-    from ..models.event_adtl import EventAdtl
-
 
 T = TypeVar("T", bound="Event")
 
@@ -68,6 +65,7 @@ class Event:
             * `ai/feedback` - AI_FEEDBACK
             * `ai/icon` - AI_ICON
             * `ai/report` - AI_REPORT
+            * `ai/plan` - AI_PLAN
             * `help/resource_click` - HELP_RESOURCE_CLICK
             * `usage/submit_feedback` - USAGE_SUBMIT_FEEDBACK
             * `usage/undo` - USAGE_UNDO
@@ -82,24 +80,104 @@ class Event:
             * `usage/nlp_raw_delete` - USAGE_NLP_RAW_DELETE
             * `usage/nlp_typeahead_open` - USAGE_NLP_TYPEAHEAD_OPEN
             * `usage/nlp_typeahead_accept` - USAGE_NLP_TYPEAHEAD_ACCEPT
-        adtl (EventAdtl):
+            * `brainstorm/start` - BRAINSTORM_START
+            * `brainstorm/stop` - BRAINSTORM_STOP
+        actor_is_user (bool):
+        main_entity_name (EntityName): * `comment` - COMMENT
+            * `task` - TASK
+            * `dartboard` - DARTBOARD
+            * `view` - VIEW
+            * `space` - SPACE
+            * `doc` - DOC
+            * `folder` - FOLDER
+            * `form` - FORM
+            * `brainstorm` - BRAINSTORM
+            * `property` - PROPERTY
+            * `status` - STATUS
+            * `tenant` - TENANT
+            * `user` - USER
+            * `UNKNOWN` - UNKNOWN
+        adtl (Any):
+        message (Optional[str]):
+        actor_duid_or_str (Optional[str]):
+        comment_duid (Optional[str]):
+        task_duid (Optional[str]):
+        dartboard_duid (Optional[str]):
+        view_duid (Optional[str]):
+        space_duid (Optional[str]):
+        doc_duid (Optional[str]):
+        folder_duid (Optional[str]):
+        form_duid (Optional[str]):
+        brainstorm_duid (Optional[str]):
+        property_duid (Optional[str]):
+        status_duid (Optional[str]):
+        user_duid (Optional[str]):
     """
 
     kind: EventKind
-    adtl: "EventAdtl"
+    actor_is_user: bool
+    main_entity_name: EntityName
+    adtl: Any
+    message: Optional[str]
+    actor_duid_or_str: Optional[str]
+    comment_duid: Optional[str]
+    task_duid: Optional[str]
+    dartboard_duid: Optional[str]
+    view_duid: Optional[str]
+    space_duid: Optional[str]
+    doc_duid: Optional[str]
+    folder_duid: Optional[str]
+    form_duid: Optional[str]
+    brainstorm_duid: Optional[str]
+    property_duid: Optional[str]
+    status_duid: Optional[str]
+    user_duid: Optional[str]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         kind = self.kind.value
 
-        adtl = self.adtl.to_dict()
+        actor_is_user = self.actor_is_user
+        main_entity_name = self.main_entity_name.value
+
+        adtl = self.adtl
+        message = self.message
+        actor_duid_or_str = self.actor_duid_or_str
+        comment_duid = self.comment_duid
+        task_duid = self.task_duid
+        dartboard_duid = self.dartboard_duid
+        view_duid = self.view_duid
+        space_duid = self.space_duid
+        doc_duid = self.doc_duid
+        folder_duid = self.folder_duid
+        form_duid = self.form_duid
+        brainstorm_duid = self.brainstorm_duid
+        property_duid = self.property_duid
+        status_duid = self.status_duid
+        user_duid = self.user_duid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "kind": kind,
+                "actorIsUser": actor_is_user,
+                "mainEntityName": main_entity_name,
                 "adtl": adtl,
+                "message": message,
+                "actorDuidOrStr": actor_duid_or_str,
+                "commentDuid": comment_duid,
+                "taskDuid": task_duid,
+                "dartboardDuid": dartboard_duid,
+                "viewDuid": view_duid,
+                "spaceDuid": space_duid,
+                "docDuid": doc_duid,
+                "folderDuid": folder_duid,
+                "formDuid": form_duid,
+                "brainstormDuid": brainstorm_duid,
+                "propertyDuid": property_duid,
+                "statusDuid": status_duid,
+                "userDuid": user_duid,
             }
         )
 
@@ -107,16 +185,62 @@ class Event:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.event_adtl import EventAdtl
-
         d = src_dict.copy()
         kind = EventKind(d.pop("kind"))
 
-        adtl = EventAdtl.from_dict(d.pop("adtl"))
+        actor_is_user = d.pop("actorIsUser")
+
+        main_entity_name = EntityName(d.pop("mainEntityName"))
+
+        adtl = d.pop("adtl")
+
+        message = d.pop("message")
+
+        actor_duid_or_str = d.pop("actorDuidOrStr")
+
+        comment_duid = d.pop("commentDuid")
+
+        task_duid = d.pop("taskDuid")
+
+        dartboard_duid = d.pop("dartboardDuid")
+
+        view_duid = d.pop("viewDuid")
+
+        space_duid = d.pop("spaceDuid")
+
+        doc_duid = d.pop("docDuid")
+
+        folder_duid = d.pop("folderDuid")
+
+        form_duid = d.pop("formDuid")
+
+        brainstorm_duid = d.pop("brainstormDuid")
+
+        property_duid = d.pop("propertyDuid")
+
+        status_duid = d.pop("statusDuid")
+
+        user_duid = d.pop("userDuid")
 
         event = cls(
             kind=kind,
+            actor_is_user=actor_is_user,
+            main_entity_name=main_entity_name,
             adtl=adtl,
+            message=message,
+            actor_duid_or_str=actor_duid_or_str,
+            comment_duid=comment_duid,
+            task_duid=task_duid,
+            dartboard_duid=dartboard_duid,
+            view_duid=view_duid,
+            space_duid=space_duid,
+            doc_duid=doc_duid,
+            folder_duid=folder_duid,
+            form_duid=form_duid,
+            brainstorm_duid=brainstorm_duid,
+            property_duid=property_duid,
+            status_duid=status_duid,
+            user_duid=user_duid,
         )
 
         event.additional_properties = d

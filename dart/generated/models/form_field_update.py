@@ -1,13 +1,9 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.form_field_update_default import FormFieldUpdateDefault
-
 
 T = TypeVar("T", bound="FormFieldUpdate")
 
@@ -21,9 +17,10 @@ class FormFieldUpdate:
         property_duid (Union[Unset, str]):
         locked (Union[Unset, bool]):
         order (Union[Unset, str]):
+        required (Union[Unset, bool]):
         hidden (Union[Unset, bool]):
         label (Union[Unset, str]):
-        default (Union[Unset, FormFieldUpdateDefault]):
+        default (Union[Unset, Any]):
     """
 
     duid: str
@@ -31,9 +28,10 @@ class FormFieldUpdate:
     property_duid: Union[Unset, str] = UNSET
     locked: Union[Unset, bool] = UNSET
     order: Union[Unset, str] = UNSET
+    required: Union[Unset, bool] = UNSET
     hidden: Union[Unset, bool] = UNSET
     label: Union[Unset, str] = UNSET
-    default: Union[Unset, "FormFieldUpdateDefault"] = UNSET
+    default: Union[Unset, Any] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -42,11 +40,10 @@ class FormFieldUpdate:
         property_duid = self.property_duid
         locked = self.locked
         order = self.order
+        required = self.required
         hidden = self.hidden
         label = self.label
-        default: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.default, Unset):
-            default = self.default.to_dict()
+        default = self.default
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -63,6 +60,8 @@ class FormFieldUpdate:
             field_dict["locked"] = locked
         if order is not UNSET:
             field_dict["order"] = order
+        if required is not UNSET:
+            field_dict["required"] = required
         if hidden is not UNSET:
             field_dict["hidden"] = hidden
         if label is not UNSET:
@@ -74,8 +73,6 @@ class FormFieldUpdate:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.form_field_update_default import FormFieldUpdateDefault
-
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -87,16 +84,13 @@ class FormFieldUpdate:
 
         order = d.pop("order", UNSET)
 
+        required = d.pop("required", UNSET)
+
         hidden = d.pop("hidden", UNSET)
 
         label = d.pop("label", UNSET)
 
-        _default = d.pop("default", UNSET)
-        default: Union[Unset, FormFieldUpdateDefault]
-        if isinstance(_default, Unset):
-            default = UNSET
-        else:
-            default = FormFieldUpdateDefault.from_dict(_default)
+        default = d.pop("default", UNSET)
 
         form_field_update = cls(
             duid=duid,
@@ -104,6 +98,7 @@ class FormFieldUpdate:
             property_duid=property_duid,
             locked=locked,
             order=order,
+            required=required,
             hidden=hidden,
             label=label,
             default=default,

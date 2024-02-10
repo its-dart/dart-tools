@@ -2,6 +2,8 @@ from enum import Enum
 
 
 class OperationModelKind(str, Enum):
+    ATTACHMENT = "attachment"
+    BRAINSTORM = "brainstorm"
     COMMENT = "comment"
     COMMENT_REACTION = "comment_reaction"
     DARTBOARD = "dartboard"
@@ -12,6 +14,7 @@ class OperationModelKind(str, Enum):
     FORM = "form"
     FORM_FIELD = "form_field"
     LAYOUT = "layout"
+    NOTIFICATION = "notification"
     OPTION = "option"
     PROPERTY = "property"
     RELATIONSHIP = "relationship"
@@ -19,7 +22,6 @@ class OperationModelKind(str, Enum):
     SPACE = "space"
     STATUS = "status"
     TASK = "task"
-    TASK_ATTACHMENT = "task_attachment"
     TASK_DOC_RELATIONSHIP = "task_doc_relationship"
     TASK_LINK = "task_link"
     TENANT = "tenant"

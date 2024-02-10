@@ -1,14 +1,10 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.property_kind import PropertyKind
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.property_adtl import PropertyAdtl
-
 
 T = TypeVar("T", bound="Property")
 
@@ -43,7 +39,7 @@ class Property:
         hidden (bool):
         title (str):
         description (str):
-        adtl (PropertyAdtl):
+        adtl (Any):
         updated_by_client_duid (Union[Unset, None, str]):
     """
 
@@ -53,7 +49,7 @@ class Property:
     hidden: bool
     title: str
     description: str
-    adtl: "PropertyAdtl"
+    adtl: Any
     updated_by_client_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -65,8 +61,7 @@ class Property:
         hidden = self.hidden
         title = self.title
         description = self.description
-        adtl = self.adtl.to_dict()
-
+        adtl = self.adtl
         updated_by_client_duid = self.updated_by_client_duid
 
         field_dict: Dict[str, Any] = {}
@@ -89,8 +84,6 @@ class Property:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.property_adtl import PropertyAdtl
-
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -104,7 +97,7 @@ class Property:
 
         description = d.pop("description")
 
-        adtl = PropertyAdtl.from_dict(d.pop("adtl"))
+        adtl = d.pop("adtl")
 
         updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
 

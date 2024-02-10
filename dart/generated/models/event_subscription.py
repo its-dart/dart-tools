@@ -10,15 +10,18 @@ T = TypeVar("T", bound="EventSubscription")
 class EventSubscription:
     """
     Attributes:
+        in_app (bool):
         email (bool):
         slack (bool):
     """
 
+    in_app: bool
     email: bool
     slack: bool
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        in_app = self.in_app
         email = self.email
         slack = self.slack
 
@@ -26,6 +29,7 @@ class EventSubscription:
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
+                "inApp": in_app,
                 "email": email,
                 "slack": slack,
             }
@@ -36,11 +40,14 @@ class EventSubscription:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        in_app = d.pop("inApp")
+
         email = d.pop("email")
 
         slack = d.pop("slack")
 
         event_subscription = cls(
+            in_app=in_app,
             email=email,
             slack=slack,
         )

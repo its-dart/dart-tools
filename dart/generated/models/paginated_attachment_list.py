@@ -6,26 +6,26 @@ from attrs import field as _attrs_field
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.task_attachment import TaskAttachment
+    from ..models.attachment import Attachment
 
 
-T = TypeVar("T", bound="PaginatedTaskAttachmentList")
+T = TypeVar("T", bound="PaginatedAttachmentList")
 
 
 @_attrs_define
-class PaginatedTaskAttachmentList:
+class PaginatedAttachmentList:
     """
     Attributes:
         count (Union[Unset, int]):  Example: 123.
         next_ (Union[Unset, None, str]):  Example: http://api.example.org/accounts/?offset=400&limit=100.
         previous (Union[Unset, None, str]):  Example: http://api.example.org/accounts/?offset=200&limit=100.
-        results (Union[Unset, List['TaskAttachment']]):
+        results (Union[Unset, List['Attachment']]):
     """
 
     count: Union[Unset, int] = UNSET
     next_: Union[Unset, None, str] = UNSET
     previous: Union[Unset, None, str] = UNSET
-    results: Union[Unset, List["TaskAttachment"]] = UNSET
+    results: Union[Unset, List["Attachment"]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -56,7 +56,7 @@ class PaginatedTaskAttachmentList:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.task_attachment import TaskAttachment
+        from ..models.attachment import Attachment
 
         d = src_dict.copy()
         count = d.pop("count", UNSET)
@@ -68,19 +68,19 @@ class PaginatedTaskAttachmentList:
         results = []
         _results = d.pop("results", UNSET)
         for results_item_data in _results or []:
-            results_item = TaskAttachment.from_dict(results_item_data)
+            results_item = Attachment.from_dict(results_item_data)
 
             results.append(results_item)
 
-        paginated_task_attachment_list = cls(
+        paginated_attachment_list = cls(
             count=count,
             next_=next_,
             previous=previous,
             results=results,
         )
 
-        paginated_task_attachment_list.additional_properties = d
-        return paginated_task_attachment_list
+        paginated_attachment_list.additional_properties = d
+        return paginated_attachment_list
 
     @property
     def additional_keys(self) -> List[str]:

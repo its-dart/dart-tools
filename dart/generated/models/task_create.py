@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -9,12 +9,6 @@ from ..models.priority import Priority
 from ..models.recommendation_status import RecommendationStatus
 from ..models.task_source_type import TaskSourceType
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.task_create_description import TaskCreateDescription
-    from ..models.task_create_properties import TaskCreateProperties
-    from ..models.task_create_recurrence import TaskCreateRecurrence
-
 
 T = TypeVar("T", bound="TaskCreate")
 
@@ -59,11 +53,12 @@ class TaskCreate:
         recommendation_status (Union[Unset, None, RecommendationStatus]): * `Accepted` - ACCEPTED
             * `Declined` - DECLINED
         title (Union[Unset, str]):
-        description (Union[Unset, TaskCreateDescription]):
+        description (Union[Unset, Any]):
         assigned_to_ai (Union[Unset, bool]):
         assignee_duids (Union[Unset, List[str]]):
         subscriber_duids (Union[Unset, List[str]]):
         tag_duids (Union[Unset, List[str]]):
+        attachment_duids (Union[Unset, List[str]]):
         priority (Union[Unset, None, Priority]): * `Critical` - CRITICAL
             * `High` - HIGH
             * `Medium` - MEDIUM
@@ -72,9 +67,9 @@ class TaskCreate:
         start_at (Union[Unset, None, datetime.datetime]):
         due_at (Union[Unset, None, datetime.datetime]):
         remind_at (Union[Unset, None, datetime.datetime]):
-        recurrence (Union[Unset, None, TaskCreateRecurrence]):
+        recurrence (Union[Unset, Any]):
         recurrs_next_at (Union[Unset, None, datetime.datetime]):
-        properties (Union[Unset, TaskCreateProperties]):
+        properties (Union[Unset, Any]):
     """
 
     duid: str
@@ -89,19 +84,20 @@ class TaskCreate:
     in_trash: Union[Unset, bool] = UNSET
     recommendation_status: Union[Unset, None, RecommendationStatus] = UNSET
     title: Union[Unset, str] = UNSET
-    description: Union[Unset, "TaskCreateDescription"] = UNSET
+    description: Union[Unset, Any] = UNSET
     assigned_to_ai: Union[Unset, bool] = UNSET
     assignee_duids: Union[Unset, List[str]] = UNSET
     subscriber_duids: Union[Unset, List[str]] = UNSET
     tag_duids: Union[Unset, List[str]] = UNSET
+    attachment_duids: Union[Unset, List[str]] = UNSET
     priority: Union[Unset, None, Priority] = UNSET
     size: Union[Unset, None, int] = UNSET
     start_at: Union[Unset, None, datetime.datetime] = UNSET
     due_at: Union[Unset, None, datetime.datetime] = UNSET
     remind_at: Union[Unset, None, datetime.datetime] = UNSET
-    recurrence: Union[Unset, None, "TaskCreateRecurrence"] = UNSET
+    recurrence: Union[Unset, Any] = UNSET
     recurrs_next_at: Union[Unset, None, datetime.datetime] = UNSET
-    properties: Union[Unset, "TaskCreateProperties"] = UNSET
+    properties: Union[Unset, Any] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -123,10 +119,7 @@ class TaskCreate:
             recommendation_status = self.recommendation_status.value if self.recommendation_status else None
 
         title = self.title
-        description: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.description, Unset):
-            description = self.description.to_dict()
-
+        description = self.description
         assigned_to_ai = self.assigned_to_ai
         assignee_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.assignee_duids, Unset):
@@ -139,6 +132,10 @@ class TaskCreate:
         tag_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.tag_duids, Unset):
             tag_duids = self.tag_duids
+
+        attachment_duids: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.attachment_duids, Unset):
+            attachment_duids = self.attachment_duids
 
         priority: Union[Unset, None, str] = UNSET
         if not isinstance(self.priority, Unset):
@@ -157,17 +154,12 @@ class TaskCreate:
         if not isinstance(self.remind_at, Unset):
             remind_at = self.remind_at.isoformat() if self.remind_at else None
 
-        recurrence: Union[Unset, None, Dict[str, Any]] = UNSET
-        if not isinstance(self.recurrence, Unset):
-            recurrence = self.recurrence.to_dict() if self.recurrence else None
-
+        recurrence = self.recurrence
         recurrs_next_at: Union[Unset, None, str] = UNSET
         if not isinstance(self.recurrs_next_at, Unset):
             recurrs_next_at = self.recurrs_next_at.isoformat() if self.recurrs_next_at else None
 
-        properties: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.properties, Unset):
-            properties = self.properties.to_dict()
+        properties = self.properties
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -205,6 +197,8 @@ class TaskCreate:
             field_dict["subscriberDuids"] = subscriber_duids
         if tag_duids is not UNSET:
             field_dict["tagDuids"] = tag_duids
+        if attachment_duids is not UNSET:
+            field_dict["attachmentDuids"] = attachment_duids
         if priority is not UNSET:
             field_dict["priority"] = priority
         if size is not UNSET:
@@ -226,10 +220,6 @@ class TaskCreate:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.task_create_description import TaskCreateDescription
-        from ..models.task_create_properties import TaskCreateProperties
-        from ..models.task_create_recurrence import TaskCreateRecurrence
-
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -267,12 +257,7 @@ class TaskCreate:
 
         title = d.pop("title", UNSET)
 
-        _description = d.pop("description", UNSET)
-        description: Union[Unset, TaskCreateDescription]
-        if isinstance(_description, Unset):
-            description = UNSET
-        else:
-            description = TaskCreateDescription.from_dict(_description)
+        description = d.pop("description", UNSET)
 
         assigned_to_ai = d.pop("assignedToAi", UNSET)
 
@@ -281,6 +266,8 @@ class TaskCreate:
         subscriber_duids = cast(List[str], d.pop("subscriberDuids", UNSET))
 
         tag_duids = cast(List[str], d.pop("tagDuids", UNSET))
+
+        attachment_duids = cast(List[str], d.pop("attachmentDuids", UNSET))
 
         _priority = d.pop("priority", UNSET)
         priority: Union[Unset, None, Priority]
@@ -320,14 +307,7 @@ class TaskCreate:
         else:
             remind_at = isoparse(_remind_at)
 
-        _recurrence = d.pop("recurrence", UNSET)
-        recurrence: Union[Unset, None, TaskCreateRecurrence]
-        if _recurrence is None:
-            recurrence = None
-        elif isinstance(_recurrence, Unset):
-            recurrence = UNSET
-        else:
-            recurrence = TaskCreateRecurrence.from_dict(_recurrence)
+        recurrence = d.pop("recurrence", UNSET)
 
         _recurrs_next_at = d.pop("recurrsNextAt", UNSET)
         recurrs_next_at: Union[Unset, None, datetime.datetime]
@@ -338,12 +318,7 @@ class TaskCreate:
         else:
             recurrs_next_at = isoparse(_recurrs_next_at)
 
-        _properties = d.pop("properties", UNSET)
-        properties: Union[Unset, TaskCreateProperties]
-        if isinstance(_properties, Unset):
-            properties = UNSET
-        else:
-            properties = TaskCreateProperties.from_dict(_properties)
+        properties = d.pop("properties", UNSET)
 
         task_create = cls(
             duid=duid,
@@ -363,6 +338,7 @@ class TaskCreate:
             assignee_duids=assignee_duids,
             subscriber_duids=subscriber_duids,
             tag_duids=tag_duids,
+            attachment_duids=attachment_duids,
             priority=priority,
             size=size,
             start_at=start_at,

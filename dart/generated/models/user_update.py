@@ -48,7 +48,9 @@ class UserUpdate:
             * `Light Brown` - LIGHT_BROWN
             * `Light Gray` - LIGHT_GRAY
         open_in_native_app (Union[Unset, bool]):
+        sections (Union[Unset, Any]):
         notification_default (Union[Unset, bool]):
+        notification_in_app (Union[Unset, bool]):
         notification_email (Union[Unset, bool]):
         notification_slack (Union[Unset, bool]):
     """
@@ -59,7 +61,9 @@ class UserUpdate:
     theme: Union[Unset, Theme] = UNSET
     color_name: Union[Unset, ColorName] = UNSET
     open_in_native_app: Union[Unset, bool] = UNSET
+    sections: Union[Unset, Any] = UNSET
     notification_default: Union[Unset, bool] = UNSET
+    notification_in_app: Union[Unset, bool] = UNSET
     notification_email: Union[Unset, bool] = UNSET
     notification_slack: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -80,7 +84,9 @@ class UserUpdate:
             color_name = self.color_name.value
 
         open_in_native_app = self.open_in_native_app
+        sections = self.sections
         notification_default = self.notification_default
+        notification_in_app = self.notification_in_app
         notification_email = self.notification_email
         notification_slack = self.notification_slack
 
@@ -101,8 +107,12 @@ class UserUpdate:
             field_dict["colorName"] = color_name
         if open_in_native_app is not UNSET:
             field_dict["openInNativeApp"] = open_in_native_app
+        if sections is not UNSET:
+            field_dict["sections"] = sections
         if notification_default is not UNSET:
             field_dict["notificationDefault"] = notification_default
+        if notification_in_app is not UNSET:
+            field_dict["notificationInApp"] = notification_in_app
         if notification_email is not UNSET:
             field_dict["notificationEmail"] = notification_email
         if notification_slack is not UNSET:
@@ -140,7 +150,11 @@ class UserUpdate:
 
         open_in_native_app = d.pop("openInNativeApp", UNSET)
 
+        sections = d.pop("sections", UNSET)
+
         notification_default = d.pop("notificationDefault", UNSET)
+
+        notification_in_app = d.pop("notificationInApp", UNSET)
 
         notification_email = d.pop("notificationEmail", UNSET)
 
@@ -153,7 +167,9 @@ class UserUpdate:
             theme=theme,
             color_name=color_name,
             open_in_native_app=open_in_native_app,
+            sections=sections,
             notification_default=notification_default,
+            notification_in_app=notification_in_app,
             notification_email=notification_email,
             notification_slack=notification_slack,
         )

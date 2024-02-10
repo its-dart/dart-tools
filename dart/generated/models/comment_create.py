@@ -1,15 +1,11 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.comment_create_text import CommentCreateText
-
 
 T = TypeVar("T", bound="CommentCreate")
 
@@ -23,7 +19,7 @@ class CommentCreate:
         task_duid (str):
         authored_by_ai (Union[Unset, bool]):
         root_duid (Union[Unset, None, str]):
-        text (Union[Unset, CommentCreateText]):
+        text (Union[Unset, Any]):
         published_at (Union[Unset, None, datetime.datetime]):
     """
 
@@ -32,7 +28,7 @@ class CommentCreate:
     task_duid: str
     authored_by_ai: Union[Unset, bool] = UNSET
     root_duid: Union[Unset, None, str] = UNSET
-    text: Union[Unset, "CommentCreateText"] = UNSET
+    text: Union[Unset, Any] = UNSET
     published_at: Union[Unset, None, datetime.datetime] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -42,10 +38,7 @@ class CommentCreate:
         task_duid = self.task_duid
         authored_by_ai = self.authored_by_ai
         root_duid = self.root_duid
-        text: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.text, Unset):
-            text = self.text.to_dict()
-
+        text = self.text
         published_at: Union[Unset, None, str] = UNSET
         if not isinstance(self.published_at, Unset):
             published_at = self.published_at.isoformat() if self.published_at else None
@@ -72,8 +65,6 @@ class CommentCreate:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.comment_create_text import CommentCreateText
-
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -85,12 +76,7 @@ class CommentCreate:
 
         root_duid = d.pop("rootDuid", UNSET)
 
-        _text = d.pop("text", UNSET)
-        text: Union[Unset, CommentCreateText]
-        if isinstance(_text, Unset):
-            text = UNSET
-        else:
-            text = CommentCreateText.from_dict(_text)
+        text = d.pop("text", UNSET)
 
         _published_at = d.pop("publishedAt", UNSET)
         published_at: Union[Unset, None, datetime.datetime]

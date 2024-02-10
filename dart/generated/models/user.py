@@ -59,6 +59,7 @@ class User:
             * `Dark Gray` - DARK_GRAY
             * `Light Brown` - LIGHT_BROWN
             * `Light Gray` - LIGHT_GRAY
+        sections (Any):
         is_admin (bool):
         updated_by_client_duid (Union[Unset, None, str]):
         image_url (Optional[str]):
@@ -74,6 +75,7 @@ class User:
     abrev: str
     theme: Theme
     color_name: ColorName
+    sections: Any
     is_admin: bool
     image_url: Optional[str]
     auth_token: Optional[str]
@@ -94,6 +96,7 @@ class User:
 
         color_name = self.color_name.value
 
+        sections = self.sections
         is_admin = self.is_admin
         updated_by_client_duid = self.updated_by_client_duid
         image_url = self.image_url
@@ -112,6 +115,7 @@ class User:
                 "abrev": abrev,
                 "theme": theme,
                 "colorName": color_name,
+                "sections": sections,
                 "isAdmin": is_admin,
                 "imageUrl": image_url,
                 "authToken": auth_token,
@@ -144,6 +148,8 @@ class User:
 
         color_name = ColorName(d.pop("colorName"))
 
+        sections = d.pop("sections")
+
         is_admin = d.pop("isAdmin")
 
         updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
@@ -168,6 +174,7 @@ class User:
             abrev=abrev,
             theme=theme,
             color_name=color_name,
+            sections=sections,
             is_admin=is_admin,
             updated_by_client_duid=updated_by_client_duid,
             image_url=image_url,
