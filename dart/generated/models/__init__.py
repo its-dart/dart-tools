@@ -15,11 +15,11 @@ from .comment_reaction import CommentReaction
 from .comment_reaction_create import CommentReactionCreate
 from .comment_reaction_update import CommentReactionUpdate
 from .comment_update import CommentUpdate
-from .cycle_mode import CycleMode
 from .dartboard import Dartboard
 from .dartboard_create import DartboardCreate
 from .dartboard_kind import DartboardKind
 from .dartboard_update import DartboardUpdate
+from .dartboards_list_kind import DartboardsListKind
 from .discord_integration import DiscordIntegration
 from .doc import Doc
 from .doc_create import DocCreate
@@ -27,6 +27,7 @@ from .doc_source_type import DocSourceType
 from .doc_update import DocUpdate
 from .entity_name import EntityName
 from .event import Event
+from .event_actor import EventActor
 from .event_create import EventCreate
 from .event_kind import EventKind
 from .event_subscription import EventSubscription
@@ -41,6 +42,7 @@ from .folder import Folder
 from .folder_create import FolderCreate
 from .folder_kind import FolderKind
 from .folder_update import FolderUpdate
+from .folders_list_kind import FoldersListKind
 from .form import Form
 from .form_create import FormCreate
 from .form_field import FormField
@@ -91,6 +93,7 @@ from .paginated_user_dartboard_layout_list import PaginatedUserDartboardLayoutLi
 from .paginated_user_list import PaginatedUserList
 from .paginated_view_list import PaginatedViewList
 from .priority import Priority
+from .properties_list_kind import PropertiesListKind
 from .property_ import Property
 from .property_create import PropertyCreate
 from .property_kind import PropertyKind
@@ -112,10 +115,12 @@ from .space import Space
 from .space_create import SpaceCreate
 from .space_kind import SpaceKind
 from .space_update import SpaceUpdate
+from .sprint_mode import SprintMode
 from .status import Status
 from .status_create import StatusCreate
 from .status_kind import StatusKind
 from .status_update import StatusUpdate
+from .statuses_list_kind import StatusesListKind
 from .subscription import Subscription
 from .subtask_display_mode import SubtaskDisplayMode
 from .summary_statistic_kind import SummaryStatisticKind
@@ -171,10 +176,10 @@ __all__ = (
     "CommentReactionCreate",
     "CommentReactionUpdate",
     "CommentUpdate",
-    "CycleMode",
     "Dartboard",
     "DartboardCreate",
     "DartboardKind",
+    "DartboardsListKind",
     "DartboardUpdate",
     "DiscordIntegration",
     "Doc",
@@ -183,6 +188,7 @@ __all__ = (
     "DocUpdate",
     "EntityName",
     "Event",
+    "EventActor",
     "EventCreate",
     "EventKind",
     "EventSubscription",
@@ -196,6 +202,7 @@ __all__ = (
     "Folder",
     "FolderCreate",
     "FolderKind",
+    "FoldersListKind",
     "FolderUpdate",
     "Form",
     "FormCreate",
@@ -247,6 +254,7 @@ __all__ = (
     "PaginatedUserList",
     "PaginatedViewList",
     "Priority",
+    "PropertiesListKind",
     "Property",
     "PropertyCreate",
     "PropertyKind",
@@ -268,8 +276,10 @@ __all__ = (
     "SpaceCreate",
     "SpaceKind",
     "SpaceUpdate",
+    "SprintMode",
     "Status",
     "StatusCreate",
+    "StatusesListKind",
     "StatusKind",
     "StatusUpdate",
     "Subscription",

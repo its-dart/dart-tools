@@ -18,6 +18,7 @@ class EventKind(str, Enum):
     DOCSUPDATE_OTHER = "docs/update_other"
     DOCSUPDATE_TITLE = "docs/update_title"
     HELPRESOURCE_CLICK = "help/resource_click"
+    LOADSIGNUP = "load/signup"
     ONBOARDINGFINISH_STEP = "onboarding/finish_step"
     PAGESCREATE = "pages/create"
     PAGESDELETE = "pages/delete"

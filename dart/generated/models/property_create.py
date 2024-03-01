@@ -18,11 +18,12 @@ class PropertyCreate:
             * `Default: Description` - DEFAULT_DESCRIPTION
             * `Default: Dartboard` - DEFAULT_DARTBOARD
             * `Default: Status` - DEFAULT_STATUS
-            * `Default: Assignee` - DEFAULT_ASSIGNEE
+            * `Default: Assignees` - DEFAULT_ASSIGNEES
             * `Default: Dates` - DEFAULT_DATES
             * `Default: Priority` - DEFAULT_PRIORITY
             * `Default: Tags` - DEFAULT_TAGS
             * `Default: Size` - DEFAULT_SIZE
+            * `Default: Attachments` - DEFAULT_ATTACHMENTS
             * `Default: Created` - DEFAULT_CREATED_AT
             * `Default: Created by` - DEFAULT_CREATED_BY
             * `Default: Last updated` - DEFAULT_UPDATED_AT

@@ -6,8 +6,8 @@ from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..models.color_name import ColorName
-from ..models.cycle_mode import CycleMode
 from ..models.icon_kind import IconKind
+from ..models.sprint_mode import SprintMode
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="SpaceUpdate")
@@ -53,7 +53,7 @@ class SpaceUpdate:
             * `Dark Gray` - DARK_GRAY
             * `Light Brown` - LIGHT_BROWN
             * `Light Gray` - LIGHT_GRAY
-        cycle_mode (Union[Unset, CycleMode]): * `None` - NONE
+        sprint_mode (Union[Unset, SprintMode]): * `None` - NONE
             * `ANBA` - ANBA
         standup_recurrence (Union[Unset, Any]):
         standup_recurrs_next_at (Union[Unset, None, datetime.datetime]):
@@ -72,7 +72,7 @@ class SpaceUpdate:
     icon_kind: Union[Unset, IconKind] = UNSET
     icon_name_or_emoji: Union[Unset, str] = UNSET
     color_name: Union[Unset, ColorName] = UNSET
-    cycle_mode: Union[Unset, CycleMode] = UNSET
+    sprint_mode: Union[Unset, SprintMode] = UNSET
     standup_recurrence: Union[Unset, Any] = UNSET
     standup_recurrs_next_at: Union[Unset, None, datetime.datetime] = UNSET
     changelog_recurrence: Union[Unset, Any] = UNSET
@@ -100,9 +100,9 @@ class SpaceUpdate:
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value
 
-        cycle_mode: Union[Unset, str] = UNSET
-        if not isinstance(self.cycle_mode, Unset):
-            cycle_mode = self.cycle_mode.value
+        sprint_mode: Union[Unset, str] = UNSET
+        if not isinstance(self.sprint_mode, Unset):
+            sprint_mode = self.sprint_mode.value
 
         standup_recurrence = self.standup_recurrence
         standup_recurrs_next_at: Union[Unset, None, str] = UNSET
@@ -143,8 +143,8 @@ class SpaceUpdate:
             field_dict["iconNameOrEmoji"] = icon_name_or_emoji
         if color_name is not UNSET:
             field_dict["colorName"] = color_name
-        if cycle_mode is not UNSET:
-            field_dict["cycleMode"] = cycle_mode
+        if sprint_mode is not UNSET:
+            field_dict["sprintMode"] = sprint_mode
         if standup_recurrence is not UNSET:
             field_dict["standupRecurrence"] = standup_recurrence
         if standup_recurrs_next_at is not UNSET:
@@ -191,12 +191,12 @@ class SpaceUpdate:
         else:
             color_name = ColorName(_color_name)
 
-        _cycle_mode = d.pop("cycleMode", UNSET)
-        cycle_mode: Union[Unset, CycleMode]
-        if isinstance(_cycle_mode, Unset):
-            cycle_mode = UNSET
+        _sprint_mode = d.pop("sprintMode", UNSET)
+        sprint_mode: Union[Unset, SprintMode]
+        if isinstance(_sprint_mode, Unset):
+            sprint_mode = UNSET
         else:
-            cycle_mode = CycleMode(_cycle_mode)
+            sprint_mode = SprintMode(_sprint_mode)
 
         standup_recurrence = d.pop("standupRecurrence", UNSET)
 
@@ -232,7 +232,7 @@ class SpaceUpdate:
             icon_kind=icon_kind,
             icon_name_or_emoji=icon_name_or_emoji,
             color_name=color_name,
-            cycle_mode=cycle_mode,
+            sprint_mode=sprint_mode,
             standup_recurrence=standup_recurrence,
             standup_recurrs_next_at=standup_recurrs_next_at,
             changelog_recurrence=changelog_recurrence,

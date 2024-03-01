@@ -25,7 +25,7 @@ class Transaction:
             * `comment_delete` - COMMENT_DELETE
             * `comment_reaction_create` - COMMENT_REACTION_CREATE
             * `comment_reaction_delete` - COMMENT_REACTION_DELETE
-            * `cycle_rollover` - CYCLE_ROLLOVER
+            * `sprint_rollover` - SPRINT_ROLLOVER
             * `dartboard_create` - DARTBOARD_CREATE
             * `dartboard_delete` - DARTBOARD_DELETE
             * `dartboard_update` - DARTBOARD_UPDATE

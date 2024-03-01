@@ -6,9 +6,9 @@ from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..models.color_name import ColorName
-from ..models.cycle_mode import CycleMode
 from ..models.icon_kind import IconKind
 from ..models.space_kind import SpaceKind
+from ..models.sprint_mode import SprintMode
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Space")
@@ -56,7 +56,7 @@ class Space:
             * `Dark Gray` - DARK_GRAY
             * `Light Brown` - LIGHT_BROWN
             * `Light Gray` - LIGHT_GRAY
-        cycle_mode (CycleMode): * `None` - NONE
+        sprint_mode (SprintMode): * `None` - NONE
             * `ANBA` - ANBA
         standup_recurrence (Any):
         changelog_recurrence (Any):
@@ -77,7 +77,7 @@ class Space:
     icon_kind: IconKind
     icon_name_or_emoji: str
     color_name: ColorName
-    cycle_mode: CycleMode
+    sprint_mode: SprintMode
     standup_recurrence: Any
     changelog_recurrence: Any
     drafter_duid: Optional[str]
@@ -102,7 +102,7 @@ class Space:
         icon_name_or_emoji = self.icon_name_or_emoji
         color_name = self.color_name.value
 
-        cycle_mode = self.cycle_mode.value
+        sprint_mode = self.sprint_mode.value
 
         standup_recurrence = self.standup_recurrence
         changelog_recurrence = self.changelog_recurrence
@@ -129,7 +129,7 @@ class Space:
                 "iconKind": icon_kind,
                 "iconNameOrEmoji": icon_name_or_emoji,
                 "colorName": color_name,
-                "cycleMode": cycle_mode,
+                "sprintMode": sprint_mode,
                 "standupRecurrence": standup_recurrence,
                 "changelogRecurrence": changelog_recurrence,
                 "drafterDuid": drafter_duid,
@@ -167,7 +167,7 @@ class Space:
 
         color_name = ColorName(d.pop("colorName"))
 
-        cycle_mode = CycleMode(d.pop("cycleMode"))
+        sprint_mode = SprintMode(d.pop("sprintMode"))
 
         standup_recurrence = d.pop("standupRecurrence")
 
@@ -203,7 +203,7 @@ class Space:
             icon_kind=icon_kind,
             icon_name_or_emoji=icon_name_or_emoji,
             color_name=color_name,
-            cycle_mode=cycle_mode,
+            sprint_mode=sprint_mode,
             standup_recurrence=standup_recurrence,
             changelog_recurrence=changelog_recurrence,
             updated_by_client_duid=updated_by_client_duid,

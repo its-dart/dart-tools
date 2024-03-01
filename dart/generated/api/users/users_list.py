@@ -11,15 +11,24 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
+    email: Union[Unset, None, str] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
+    name: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
+    role: Union[Unset, None, str] = UNSET,
 ) -> Dict[str, Any]:
     pass
 
     params: Dict[str, Any] = {}
+    params["email"] = email
+
     params["limit"] = limit
 
+    params["name"] = name
+
     params["offset"] = offset
+
+    params["role"] = role
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -57,13 +66,19 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
+    email: Union[Unset, None, str] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
+    name: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
+    role: Union[Unset, None, str] = UNSET,
 ) -> Response[PaginatedUserList]:
     """
     Args:
+        email (Union[Unset, None, str]):
         limit (Union[Unset, None, int]):
+        name (Union[Unset, None, str]):
         offset (Union[Unset, None, int]):
+        role (Union[Unset, None, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -74,8 +89,11 @@ def sync_detailed(
     """
 
     kwargs = _get_kwargs(
+        email=email,
         limit=limit,
+        name=name,
         offset=offset,
+        role=role,
     )
 
     response = client.get_httpx_client().request(
@@ -88,13 +106,19 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
+    email: Union[Unset, None, str] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
+    name: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
+    role: Union[Unset, None, str] = UNSET,
 ) -> Optional[PaginatedUserList]:
     """
     Args:
+        email (Union[Unset, None, str]):
         limit (Union[Unset, None, int]):
+        name (Union[Unset, None, str]):
         offset (Union[Unset, None, int]):
+        role (Union[Unset, None, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -106,21 +130,30 @@ def sync(
 
     return sync_detailed(
         client=client,
+        email=email,
         limit=limit,
+        name=name,
         offset=offset,
+        role=role,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
+    email: Union[Unset, None, str] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
+    name: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
+    role: Union[Unset, None, str] = UNSET,
 ) -> Response[PaginatedUserList]:
     """
     Args:
+        email (Union[Unset, None, str]):
         limit (Union[Unset, None, int]):
+        name (Union[Unset, None, str]):
         offset (Union[Unset, None, int]):
+        role (Union[Unset, None, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -131,8 +164,11 @@ async def asyncio_detailed(
     """
 
     kwargs = _get_kwargs(
+        email=email,
         limit=limit,
+        name=name,
         offset=offset,
+        role=role,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -143,13 +179,19 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
+    email: Union[Unset, None, str] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
+    name: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
+    role: Union[Unset, None, str] = UNSET,
 ) -> Optional[PaginatedUserList]:
     """
     Args:
+        email (Union[Unset, None, str]):
         limit (Union[Unset, None, int]):
+        name (Union[Unset, None, str]):
         offset (Union[Unset, None, int]):
+        role (Union[Unset, None, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -162,7 +204,10 @@ async def asyncio(
     return (
         await asyncio_detailed(
             client=client,
+            email=email,
             limit=limit,
+            name=name,
             offset=offset,
+            role=role,
         )
     ).parsed

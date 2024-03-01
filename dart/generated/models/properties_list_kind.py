@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class PropertyKind(str, Enum):
+class PropertiesListKind(str, Enum):
     CHECKBOX = "Checkbox"
     DATES = "Dates"
     DEFAULT_ASSIGNEES = "Default: Assignees"

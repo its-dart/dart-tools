@@ -4,6 +4,7 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.entity_name import EntityName
+from ..models.event_actor import EventActor
 from ..models.event_kind import EventKind
 
 T = TypeVar("T", bound="Event")
@@ -66,6 +67,7 @@ class Event:
             * `ai/icon` - AI_ICON
             * `ai/report` - AI_REPORT
             * `ai/plan` - AI_PLAN
+            * `load/signup` - LOAD_SIGNUP
             * `help/resource_click` - HELP_RESOURCE_CLICK
             * `usage/submit_feedback` - USAGE_SUBMIT_FEEDBACK
             * `usage/undo` - USAGE_UNDO
@@ -82,7 +84,6 @@ class Event:
             * `usage/nlp_typeahead_accept` - USAGE_NLP_TYPEAHEAD_ACCEPT
             * `brainstorm/start` - BRAINSTORM_START
             * `brainstorm/stop` - BRAINSTORM_STOP
-        actor_is_user (bool):
         main_entity_name (EntityName): * `comment` - COMMENT
             * `task` - TASK
             * `dartboard` - DARTBOARD
@@ -99,7 +100,18 @@ class Event:
             * `UNKNOWN` - UNKNOWN
         adtl (Any):
         message (Optional[str]):
-        actor_duid_or_str (Optional[str]):
+        actor_duid (Optional[str]):
+        actor_str (Optional[EventActor]): * `Dart AI` - DART_AI
+            * `Dart due date bot` - DART_DUE_DATE_BOT
+            * `Dart GitHub bot` - DART_GITHUB_BOT
+            * `Dart metrics bot` - DART_METRICS_BOT
+            * `Dart recurring task bot` - DART_RECURRING_TASK_BOT
+            * `Dart reminder bot` - DART_REMINDER_BOT
+            * `Dart report bot` - DART_REPORT_BOT
+            * `Dart Slack bot` - DART_SLACK_BOT
+            * `A form user` - FORM_USER
+            * `An email user` - EMAIL_USER
+            * `Stripe webhook` - STRIPE_WEBHOOK
         comment_duid (Optional[str]):
         task_duid (Optional[str]):
         dartboard_duid (Optional[str]):
@@ -115,11 +127,11 @@ class Event:
     """
 
     kind: EventKind
-    actor_is_user: bool
     main_entity_name: EntityName
     adtl: Any
     message: Optional[str]
-    actor_duid_or_str: Optional[str]
+    actor_duid: Optional[str]
+    actor_str: Optional[EventActor]
     comment_duid: Optional[str]
     task_duid: Optional[str]
     dartboard_duid: Optional[str]
@@ -137,12 +149,13 @@ class Event:
     def to_dict(self) -> Dict[str, Any]:
         kind = self.kind.value
 
-        actor_is_user = self.actor_is_user
         main_entity_name = self.main_entity_name.value
 
         adtl = self.adtl
         message = self.message
-        actor_duid_or_str = self.actor_duid_or_str
+        actor_duid = self.actor_duid
+        actor_str = self.actor_str.value if self.actor_str else None
+
         comment_duid = self.comment_duid
         task_duid = self.task_duid
         dartboard_duid = self.dartboard_duid
@@ -161,11 +174,11 @@ class Event:
         field_dict.update(
             {
                 "kind": kind,
-                "actorIsUser": actor_is_user,
                 "mainEntityName": main_entity_name,
                 "adtl": adtl,
                 "message": message,
-                "actorDuidOrStr": actor_duid_or_str,
+                "actorDuid": actor_duid,
+                "actorStr": actor_str,
                 "commentDuid": comment_duid,
                 "taskDuid": task_duid,
                 "dartboardDuid": dartboard_duid,
@@ -188,15 +201,20 @@ class Event:
         d = src_dict.copy()
         kind = EventKind(d.pop("kind"))
 
-        actor_is_user = d.pop("actorIsUser")
-
         main_entity_name = EntityName(d.pop("mainEntityName"))
 
         adtl = d.pop("adtl")
 
         message = d.pop("message")
 
-        actor_duid_or_str = d.pop("actorDuidOrStr")
+        actor_duid = d.pop("actorDuid")
+
+        _actor_str = d.pop("actorStr")
+        actor_str: Optional[EventActor]
+        if _actor_str is None:
+            actor_str = None
+        else:
+            actor_str = EventActor(_actor_str)
 
         comment_duid = d.pop("commentDuid")
 
@@ -224,11 +242,11 @@ class Event:
 
         event = cls(
             kind=kind,
-            actor_is_user=actor_is_user,
             main_entity_name=main_entity_name,
             adtl=adtl,
             message=message,
-            actor_duid_or_str=actor_duid_or_str,
+            actor_duid=actor_duid,
+            actor_str=actor_str,
             comment_duid=comment_duid,
             task_duid=task_duid,
             dartboard_duid=dartboard_duid,

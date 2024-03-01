@@ -6,21 +6,32 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.paginated_status_list import PaginatedStatusList
+from ...models.statuses_list_kind import StatusesListKind
 from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     *,
+    kind: Union[Unset, None, StatusesListKind] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
+    property_: Union[Unset, None, str] = UNSET,
     title: Union[Unset, None, str] = UNSET,
 ) -> Dict[str, Any]:
     pass
 
     params: Dict[str, Any] = {}
+    json_kind: Union[Unset, None, str] = UNSET
+    if not isinstance(kind, Unset):
+        json_kind = kind.value if kind else None
+
+    params["kind"] = json_kind
+
     params["limit"] = limit
 
     params["offset"] = offset
+
+    params["property"] = property_
 
     params["title"] = title
 
@@ -60,14 +71,18 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
+    kind: Union[Unset, None, StatusesListKind] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
+    property_: Union[Unset, None, str] = UNSET,
     title: Union[Unset, None, str] = UNSET,
 ) -> Response[PaginatedStatusList]:
     """
     Args:
+        kind (Union[Unset, None, StatusesListKind]):
         limit (Union[Unset, None, int]):
         offset (Union[Unset, None, int]):
+        property_ (Union[Unset, None, str]):
         title (Union[Unset, None, str]):
 
     Raises:
@@ -79,8 +94,10 @@ def sync_detailed(
     """
 
     kwargs = _get_kwargs(
+        kind=kind,
         limit=limit,
         offset=offset,
+        property_=property_,
         title=title,
     )
 
@@ -94,14 +111,18 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
+    kind: Union[Unset, None, StatusesListKind] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
+    property_: Union[Unset, None, str] = UNSET,
     title: Union[Unset, None, str] = UNSET,
 ) -> Optional[PaginatedStatusList]:
     """
     Args:
+        kind (Union[Unset, None, StatusesListKind]):
         limit (Union[Unset, None, int]):
         offset (Union[Unset, None, int]):
+        property_ (Union[Unset, None, str]):
         title (Union[Unset, None, str]):
 
     Raises:
@@ -114,8 +135,10 @@ def sync(
 
     return sync_detailed(
         client=client,
+        kind=kind,
         limit=limit,
         offset=offset,
+        property_=property_,
         title=title,
     ).parsed
 
@@ -123,14 +146,18 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
+    kind: Union[Unset, None, StatusesListKind] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
+    property_: Union[Unset, None, str] = UNSET,
     title: Union[Unset, None, str] = UNSET,
 ) -> Response[PaginatedStatusList]:
     """
     Args:
+        kind (Union[Unset, None, StatusesListKind]):
         limit (Union[Unset, None, int]):
         offset (Union[Unset, None, int]):
+        property_ (Union[Unset, None, str]):
         title (Union[Unset, None, str]):
 
     Raises:
@@ -142,8 +169,10 @@ async def asyncio_detailed(
     """
 
     kwargs = _get_kwargs(
+        kind=kind,
         limit=limit,
         offset=offset,
+        property_=property_,
         title=title,
     )
 
@@ -155,14 +184,18 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
+    kind: Union[Unset, None, StatusesListKind] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
+    property_: Union[Unset, None, str] = UNSET,
     title: Union[Unset, None, str] = UNSET,
 ) -> Optional[PaginatedStatusList]:
     """
     Args:
+        kind (Union[Unset, None, StatusesListKind]):
         limit (Union[Unset, None, int]):
         offset (Union[Unset, None, int]):
+        property_ (Union[Unset, None, str]):
         title (Union[Unset, None, str]):
 
     Raises:
@@ -176,8 +209,10 @@ async def asyncio(
     return (
         await asyncio_detailed(
             client=client,
+            kind=kind,
             limit=limit,
             offset=offset,
+            property_=property_,
             title=title,
         )
     ).parsed
