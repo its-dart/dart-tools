@@ -12,6 +12,13 @@
 `dart-tools` is the Dart CLI and Python Library. It enables direct integration with Dart through a terminal CLI or through Python.
 
 
+- [Setup](#setup)
+- [Using the CLI](#using-the-cli)
+- [Using the Python Library](#using-the-python-library)
+- [Advanced Usage](#advanced-usage)
+- [Help and Resources](#help-and-resources)
+
+
 ## Setup
 
 In the terminal, install by running

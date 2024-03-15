@@ -102,13 +102,13 @@ class Event:
         message (Optional[str]):
         actor_duid (Optional[str]):
         actor_str (Optional[EventActor]): * `Dart AI` - DART_AI
-            * `Dart due date bot` - DART_DUE_DATE_BOT
-            * `Dart GitHub bot` - DART_GITHUB_BOT
-            * `Dart metrics bot` - DART_METRICS_BOT
-            * `Dart recurring task bot` - DART_RECURRING_TASK_BOT
-            * `Dart reminder bot` - DART_REMINDER_BOT
-            * `Dart report bot` - DART_REPORT_BOT
-            * `Dart Slack bot` - DART_SLACK_BOT
+            * `Dart Due Date Bot` - DART_DUE_DATE_BOT
+            * `Dart GitHub Bot` - DART_GITHUB_BOT
+            * `Dart Metrics Bot` - DART_METRICS_BOT
+            * `Dart Recurring Task Bot` - DART_RECURRING_TASK_BOT
+            * `Dart Reminder Bot` - DART_REMINDER_BOT
+            * `Dart Report Bot` - DART_REPORT_BOT
+            * `Dart Slack Bot` - DART_SLACK_BOT
             * `A form user` - FORM_USER
             * `An email user` - EMAIL_USER
             * `Stripe webhook` - STRIPE_WEBHOOK

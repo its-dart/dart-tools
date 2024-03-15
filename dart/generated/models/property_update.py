@@ -28,14 +28,14 @@ class PropertyUpdate:
             * `Default: Created by` - DEFAULT_CREATED_BY
             * `Default: Last updated` - DEFAULT_UPDATED_AT
             * `Default: Last updated by` - DEFAULT_UPDATED_BY
-            * `Text` - TEXT
-            * `Number` - NUMBER
-            * `Checkbox` - CHECKBOX
             * `Select` - SELECT
             * `Multiselect` - MULTISELECT
             * `Status` - STATUS
             * `User` - USER
             * `Dates` - DATES
+            * `Text` - TEXT
+            * `Number` - NUMBER
+            * `Checkbox` - CHECKBOX
         order (Union[Unset, str]):
         hidden (Union[Unset, bool]):
         title (Union[Unset, str]):
