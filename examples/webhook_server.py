@@ -32,19 +32,22 @@ def webhook() -> Response:
 
     # Handle the event
     event_type = event["type"]
-    if event_type == "task.created":
-        task = event["data"]  # Contains details of the task that was created
-        print(f"Task created:\n{Task.from_dict(task)}")
-    elif event_type == "task.updated":
-        task = event["data"]  # Contains details of the task that was updated
-        print(f"Task updated:\n{Task.from_dict(task)}")
-    elif event_type == "task.deleted":
-        task = event["data"]  # Contains details of the task that was deleted
-        print(f"Task deleted:\n{Task.from_dict(task)}")
-    else:
-        # Unexpected event type
-        print(f"Unhandled event type: {event_type}")
-        return jsonify(success=False)
+    match event_type:
+        case "task.created":
+            task = event["data"]["model"]  # The task that was created
+            print(f"Task created:\n{Task.from_dict(task)}")
+        case "task.updated":
+            data = event["data"]
+            task = data["model"]  # The new version of the task that was updated
+            old_task = data["oldModel"]  # The old version of the task that was updated
+            print(f"Task updated:\n{Task.from_dict(task)}")
+        case "task.deleted":
+            task = event["data"]["model"]  # The task that was deleted
+            print(f"Task deleted:\n{Task.from_dict(task)}")
+        case _:
+            # Unexpected event type
+            print(f"Unhandled event type: {event_type}")
+            return jsonify(success=False)
 
     return jsonify(success=True)
 
