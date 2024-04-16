@@ -79,6 +79,8 @@ _AUTH_TOKEN_KEY = "authToken"
 _CSRF_TOKEN_KEY = "csrfToken"
 
 _DUID_CHARS = string.ascii_lowercase + string.ascii_uppercase + string.digits
+_NON_ALPHANUM_RE = re.compile(r"[^a-zA-Z0-9-]+")
+_REPEATED_DASH_RE = re.compile(r"-{2,}")
 _PRIORITY_MAP = {
     0: Priority.CRITICAL,
     1: Priority.HIGH,
@@ -97,6 +99,23 @@ _is_cli = False
 # TODO dedupe these functions with other usages elsewhere
 def _make_duid():
     return "".join(random.choices(_DUID_CHARS, k=12))
+
+
+def trim_slug_str(s: str, length: int, max_under: int | None = None):
+    max_under = max_under if max_under is not None else length // 6
+    if len(s) <= length:
+        return s
+    for i in range(1, max_under + 1):
+        if s[length - i] == "-":
+            return s[: length - i]
+    return s[:length]
+
+
+def slugify_str(s: str, lower=False, trim_kwargs=None):
+    lowered = s.lower() if lower else s
+    formatted = _NON_ALPHANUM_RE.sub("-", lowered.replace("'", ""))
+    formatted = _REPEATED_DASH_RE.sub("-", formatted).strip("-")
+    return trim_slug_str(formatted, **trim_kwargs) if trim_kwargs is not None else formatted
 
 
 def _run_cmd(cmd):
@@ -338,22 +357,10 @@ class _Git:
         return True
 
     @staticmethod
-    def _format_for_branch(s):
-        return re.sub(
-            r"-{2,}", "-", re.sub(r"[^a-z0-9-]+", "-", s.lower().replace("'", ""))
-        ).strip("-")
-
-    @staticmethod
     def make_task_name(email, task):
-        username = _Git._format_for_branch(email.split("@")[0])
-        title = _Git._format_for_branch(task.title)
-        long = f"{username}/{task.duid}-{title}"
-        if len(long) <= 60:
-            return long
-        for i in range(1, 11):
-            if long[60 - i] == "-":
-                return long[: 60 - i]
-        return long[:60]
+        username = slugify_str(email.split("@")[0], lower=True)
+        title = slugify_str(task.title, lower=True)
+        return trim_slug_str(f"{username}/{task.duid}-{title}", length=60)
 
     @staticmethod
     def get_current_branch():

@@ -11,6 +11,7 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
+    default_only: Union[Unset, None, bool] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     property_: Union[Unset, None, str] = UNSET,
@@ -19,6 +20,8 @@ def _get_kwargs(
     pass
 
     params: Dict[str, Any] = {}
+    params["defaultOnly"] = default_only
+
     params["limit"] = limit
 
     params["offset"] = offset
@@ -63,6 +66,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
+    default_only: Union[Unset, None, bool] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     property_: Union[Unset, None, str] = UNSET,
@@ -70,6 +74,7 @@ def sync_detailed(
 ) -> Response[PaginatedOptionList]:
     """
     Args:
+        default_only (Union[Unset, None, bool]):
         limit (Union[Unset, None, int]):
         offset (Union[Unset, None, int]):
         property_ (Union[Unset, None, str]):
@@ -84,6 +89,7 @@ def sync_detailed(
     """
 
     kwargs = _get_kwargs(
+        default_only=default_only,
         limit=limit,
         offset=offset,
         property_=property_,
@@ -100,6 +106,7 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
+    default_only: Union[Unset, None, bool] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     property_: Union[Unset, None, str] = UNSET,
@@ -107,6 +114,7 @@ def sync(
 ) -> Optional[PaginatedOptionList]:
     """
     Args:
+        default_only (Union[Unset, None, bool]):
         limit (Union[Unset, None, int]):
         offset (Union[Unset, None, int]):
         property_ (Union[Unset, None, str]):
@@ -122,6 +130,7 @@ def sync(
 
     return sync_detailed(
         client=client,
+        default_only=default_only,
         limit=limit,
         offset=offset,
         property_=property_,
@@ -132,6 +141,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
+    default_only: Union[Unset, None, bool] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     property_: Union[Unset, None, str] = UNSET,
@@ -139,6 +149,7 @@ async def asyncio_detailed(
 ) -> Response[PaginatedOptionList]:
     """
     Args:
+        default_only (Union[Unset, None, bool]):
         limit (Union[Unset, None, int]):
         offset (Union[Unset, None, int]):
         property_ (Union[Unset, None, str]):
@@ -153,6 +164,7 @@ async def asyncio_detailed(
     """
 
     kwargs = _get_kwargs(
+        default_only=default_only,
         limit=limit,
         offset=offset,
         property_=property_,
@@ -167,6 +179,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
+    default_only: Union[Unset, None, bool] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     property_: Union[Unset, None, str] = UNSET,
@@ -174,6 +187,7 @@ async def asyncio(
 ) -> Optional[PaginatedOptionList]:
     """
     Args:
+        default_only (Union[Unset, None, bool]):
         limit (Union[Unset, None, int]):
         offset (Union[Unset, None, int]):
         property_ (Union[Unset, None, str]):
@@ -190,6 +204,7 @@ async def asyncio(
     return (
         await asyncio_detailed(
             client=client,
+            default_only=default_only,
             limit=limit,
             offset=offset,
             property_=property_,

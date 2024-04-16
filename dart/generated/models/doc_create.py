@@ -17,8 +17,6 @@ class DocCreate:
     """
     Attributes:
         duid (str):
-        folder_duid (str):
-        order (str):
         source_user (Union[Unset, None, str]):
         source_type (Union[Unset, DocSourceType]): * `Unknown` - UNKNOWN
             * `Onboarding` - ONBOARDING
@@ -28,10 +26,13 @@ class DocCreate:
             * `Application` - APPLICATION Default: DocSourceType.UNKNOWN.
         drafter_duid (Union[Unset, None, str]):
         in_trash (Union[Unset, bool]):
+        folder_duid (Union[Unset, str]):
         report_kind (Union[Unset, None, ReportKind]): * `Standup` - STANDUP
             * `Changelog` - CHANGELOG
+        order (Union[Unset, str]):
         title (Union[Unset, str]):
         text (Union[Unset, Any]):
+        text_markdown (Union[Unset, str]):
         edited_by_ai (Union[Unset, bool]):
         recommendation_duid (Union[Unset, None, str]):
         editor_duids (Union[Unset, List[str]]):
@@ -67,15 +68,16 @@ class DocCreate:
     """
 
     duid: str
-    folder_duid: str
-    order: str
     source_user: Union[Unset, None, str] = UNSET
     source_type: Union[Unset, DocSourceType] = DocSourceType.UNKNOWN
     drafter_duid: Union[Unset, None, str] = UNSET
     in_trash: Union[Unset, bool] = UNSET
+    folder_duid: Union[Unset, str] = UNSET
     report_kind: Union[Unset, None, ReportKind] = UNSET
+    order: Union[Unset, str] = UNSET
     title: Union[Unset, str] = UNSET
     text: Union[Unset, Any] = UNSET
+    text_markdown: Union[Unset, str] = UNSET
     edited_by_ai: Union[Unset, bool] = UNSET
     recommendation_duid: Union[Unset, None, str] = UNSET
     editor_duids: Union[Unset, List[str]] = UNSET
@@ -87,8 +89,6 @@ class DocCreate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
-        folder_duid = self.folder_duid
-        order = self.order
         source_user = self.source_user
         source_type: Union[Unset, str] = UNSET
         if not isinstance(self.source_type, Unset):
@@ -96,12 +96,15 @@ class DocCreate:
 
         drafter_duid = self.drafter_duid
         in_trash = self.in_trash
+        folder_duid = self.folder_duid
         report_kind: Union[Unset, None, str] = UNSET
         if not isinstance(self.report_kind, Unset):
             report_kind = self.report_kind.value if self.report_kind else None
 
+        order = self.order
         title = self.title
         text = self.text
+        text_markdown = self.text_markdown
         edited_by_ai = self.edited_by_ai
         recommendation_duid = self.recommendation_duid
         editor_duids: Union[Unset, List[str]] = UNSET
@@ -126,8 +129,6 @@ class DocCreate:
         field_dict.update(
             {
                 "duid": duid,
-                "folderDuid": folder_duid,
-                "order": order,
             }
         )
         if source_user is not UNSET:
@@ -138,12 +139,18 @@ class DocCreate:
             field_dict["drafterDuid"] = drafter_duid
         if in_trash is not UNSET:
             field_dict["inTrash"] = in_trash
+        if folder_duid is not UNSET:
+            field_dict["folderDuid"] = folder_duid
         if report_kind is not UNSET:
             field_dict["reportKind"] = report_kind
+        if order is not UNSET:
+            field_dict["order"] = order
         if title is not UNSET:
             field_dict["title"] = title
         if text is not UNSET:
             field_dict["text"] = text
+        if text_markdown is not UNSET:
+            field_dict["textMarkdown"] = text_markdown
         if edited_by_ai is not UNSET:
             field_dict["editedByAi"] = edited_by_ai
         if recommendation_duid is not UNSET:
@@ -166,10 +173,6 @@ class DocCreate:
         d = src_dict.copy()
         duid = d.pop("duid")
 
-        folder_duid = d.pop("folderDuid")
-
-        order = d.pop("order")
-
         source_user = d.pop("sourceUser", UNSET)
 
         _source_type = d.pop("sourceType", UNSET)
@@ -183,6 +186,8 @@ class DocCreate:
 
         in_trash = d.pop("inTrash", UNSET)
 
+        folder_duid = d.pop("folderDuid", UNSET)
+
         _report_kind = d.pop("reportKind", UNSET)
         report_kind: Union[Unset, None, ReportKind]
         if _report_kind is None:
@@ -192,9 +197,13 @@ class DocCreate:
         else:
             report_kind = ReportKind(_report_kind)
 
+        order = d.pop("order", UNSET)
+
         title = d.pop("title", UNSET)
 
         text = d.pop("text", UNSET)
+
+        text_markdown = d.pop("textMarkdown", UNSET)
 
         edited_by_ai = d.pop("editedByAi", UNSET)
 
@@ -222,15 +231,16 @@ class DocCreate:
 
         doc_create = cls(
             duid=duid,
-            folder_duid=folder_duid,
-            order=order,
             source_user=source_user,
             source_type=source_type,
             drafter_duid=drafter_duid,
             in_trash=in_trash,
+            folder_duid=folder_duid,
             report_kind=report_kind,
+            order=order,
             title=title,
             text=text,
+            text_markdown=text_markdown,
             edited_by_ai=edited_by_ai,
             recommendation_duid=recommendation_duid,
             editor_duids=editor_duids,

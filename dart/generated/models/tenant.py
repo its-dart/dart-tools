@@ -11,6 +11,7 @@ if TYPE_CHECKING:
     from ..models.notion_integration import NotionIntegration
     from ..models.slack_integration import SlackIntegration
     from ..models.yc_integration import YcIntegration
+    from ..models.zapier_integration import ZapierIntegration
 
 
 T = TypeVar("T", bound="Tenant")
@@ -40,6 +41,7 @@ class Tenant:
         slack_integration (Optional[SlackIntegration]):
         discord_integration (Optional[DiscordIntegration]):
         github_integration (Optional[GithubIntegration]):
+        zapier_integration (Optional[ZapierIntegration]):
     """
 
     duid: str
@@ -61,6 +63,7 @@ class Tenant:
     slack_integration: Optional["SlackIntegration"]
     discord_integration: Optional["DiscordIntegration"]
     github_integration: Optional["GithubIntegration"]
+    zapier_integration: Optional["ZapierIntegration"]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -89,6 +92,8 @@ class Tenant:
 
         github_integration = self.github_integration.to_dict() if self.github_integration else None
 
+        zapier_integration = self.zapier_integration.to_dict() if self.zapier_integration else None
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -112,6 +117,7 @@ class Tenant:
                 "slackIntegration": slack_integration,
                 "discordIntegration": discord_integration,
                 "githubIntegration": github_integration,
+                "zapierIntegration": zapier_integration,
             }
         )
 
@@ -124,6 +130,7 @@ class Tenant:
         from ..models.notion_integration import NotionIntegration
         from ..models.slack_integration import SlackIntegration
         from ..models.yc_integration import YcIntegration
+        from ..models.zapier_integration import ZapierIntegration
 
         d = src_dict.copy()
         duid = d.pop("duid")
@@ -189,6 +196,13 @@ class Tenant:
         else:
             github_integration = GithubIntegration.from_dict(_github_integration)
 
+        _zapier_integration = d.pop("zapierIntegration")
+        zapier_integration: Optional[ZapierIntegration]
+        if _zapier_integration is None:
+            zapier_integration = None
+        else:
+            zapier_integration = ZapierIntegration.from_dict(_zapier_integration)
+
         tenant = cls(
             duid=duid,
             is_dart=is_dart,
@@ -209,6 +223,7 @@ class Tenant:
             slack_integration=slack_integration,
             discord_integration=discord_integration,
             github_integration=github_integration,
+            zapier_integration=zapier_integration,
         )
 
         tenant.additional_properties = d

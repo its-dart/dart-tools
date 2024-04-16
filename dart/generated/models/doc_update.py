@@ -32,6 +32,7 @@ class DocUpdate:
         order (Union[Unset, str]):
         title (Union[Unset, str]):
         text (Union[Unset, Any]):
+        text_markdown (Union[Unset, str]):
         edited_by_ai (Union[Unset, bool]):
         recommendation_duid (Union[Unset, None, str]):
         editor_duids (Union[Unset, List[str]]):
@@ -76,6 +77,7 @@ class DocUpdate:
     order: Union[Unset, str] = UNSET
     title: Union[Unset, str] = UNSET
     text: Union[Unset, Any] = UNSET
+    text_markdown: Union[Unset, str] = UNSET
     edited_by_ai: Union[Unset, bool] = UNSET
     recommendation_duid: Union[Unset, None, str] = UNSET
     editor_duids: Union[Unset, List[str]] = UNSET
@@ -102,6 +104,7 @@ class DocUpdate:
         order = self.order
         title = self.title
         text = self.text
+        text_markdown = self.text_markdown
         edited_by_ai = self.edited_by_ai
         recommendation_duid = self.recommendation_duid
         editor_duids: Union[Unset, List[str]] = UNSET
@@ -146,6 +149,8 @@ class DocUpdate:
             field_dict["title"] = title
         if text is not UNSET:
             field_dict["text"] = text
+        if text_markdown is not UNSET:
+            field_dict["textMarkdown"] = text_markdown
         if edited_by_ai is not UNSET:
             field_dict["editedByAi"] = edited_by_ai
         if recommendation_duid is not UNSET:
@@ -198,6 +203,8 @@ class DocUpdate:
 
         text = d.pop("text", UNSET)
 
+        text_markdown = d.pop("textMarkdown", UNSET)
+
         edited_by_ai = d.pop("editedByAi", UNSET)
 
         recommendation_duid = d.pop("recommendationDuid", UNSET)
@@ -233,6 +240,7 @@ class DocUpdate:
             order=order,
             title=title,
             text=text,
+            text_markdown=text_markdown,
             edited_by_ai=edited_by_ai,
             recommendation_duid=recommendation_duid,
             editor_duids=editor_duids,

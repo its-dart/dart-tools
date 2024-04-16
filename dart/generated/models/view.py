@@ -55,6 +55,8 @@ class View:
             * `Light Gray` - LIGHT_GRAY
         layout_duid (str):
         favorited_by_user_duids (List[str]):
+        always_shown_property_duids (List[str]):
+        always_hidden_property_duids (List[str]):
         updated_by_client_duid (Union[Unset, None, str]):
     """
 
@@ -70,6 +72,8 @@ class View:
     color_name: ColorName
     layout_duid: str
     favorited_by_user_duids: List[str]
+    always_shown_property_duids: List[str]
+    always_hidden_property_duids: List[str]
     updated_by_client_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -91,6 +95,10 @@ class View:
         layout_duid = self.layout_duid
         favorited_by_user_duids = self.favorited_by_user_duids
 
+        always_shown_property_duids = self.always_shown_property_duids
+
+        always_hidden_property_duids = self.always_hidden_property_duids
+
         updated_by_client_duid = self.updated_by_client_duid
 
         field_dict: Dict[str, Any] = {}
@@ -109,6 +117,8 @@ class View:
                 "colorName": color_name,
                 "layoutDuid": layout_duid,
                 "favoritedByUserDuids": favorited_by_user_duids,
+                "alwaysShownPropertyDuids": always_shown_property_duids,
+                "alwaysHiddenPropertyDuids": always_hidden_property_duids,
             }
         )
         if updated_by_client_duid is not UNSET:
@@ -143,6 +153,10 @@ class View:
 
         favorited_by_user_duids = cast(List[str], d.pop("favoritedByUserDuids"))
 
+        always_shown_property_duids = cast(List[str], d.pop("alwaysShownPropertyDuids"))
+
+        always_hidden_property_duids = cast(List[str], d.pop("alwaysHiddenPropertyDuids"))
+
         updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
 
         view = cls(
@@ -158,6 +172,8 @@ class View:
             color_name=color_name,
             layout_duid=layout_duid,
             favorited_by_user_duids=favorited_by_user_duids,
+            always_shown_property_duids=always_shown_property_duids,
+            always_hidden_property_duids=always_hidden_property_duids,
             updated_by_client_duid=updated_by_client_duid,
         )
 

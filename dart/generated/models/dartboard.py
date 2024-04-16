@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -61,6 +61,8 @@ class Dartboard:
             * `Light Brown` - LIGHT_BROWN
             * `Light Gray` - LIGHT_GRAY
         user_duids_to_layout_duids (List['UserDartboardLayout']):
+        always_shown_property_duids (List[str]):
+        always_hidden_property_duids (List[str]):
         updated_by_client_duid (Union[Unset, None, str]):
         index (Optional[int]):
         started_at (Optional[datetime.datetime]):
@@ -77,6 +79,8 @@ class Dartboard:
     icon_name_or_emoji: str
     color_name: ColorName
     user_duids_to_layout_duids: List["UserDartboardLayout"]
+    always_shown_property_duids: List[str]
+    always_hidden_property_duids: List[str]
     index: Optional[int]
     started_at: Optional[datetime.datetime]
     finished_at: Optional[datetime.datetime]
@@ -102,6 +106,10 @@ class Dartboard:
 
             user_duids_to_layout_duids.append(user_duids_to_layout_duids_item)
 
+        always_shown_property_duids = self.always_shown_property_duids
+
+        always_hidden_property_duids = self.always_hidden_property_duids
+
         updated_by_client_duid = self.updated_by_client_duid
         index = self.index
         started_at = self.started_at.isoformat() if self.started_at else None
@@ -122,6 +130,8 @@ class Dartboard:
                 "iconNameOrEmoji": icon_name_or_emoji,
                 "colorName": color_name,
                 "userDuidsToLayoutDuids": user_duids_to_layout_duids,
+                "alwaysShownPropertyDuids": always_shown_property_duids,
+                "alwaysHiddenPropertyDuids": always_hidden_property_duids,
                 "index": index,
                 "startedAt": started_at,
                 "finishedAt": finished_at,
@@ -162,6 +172,10 @@ class Dartboard:
 
             user_duids_to_layout_duids.append(user_duids_to_layout_duids_item)
 
+        always_shown_property_duids = cast(List[str], d.pop("alwaysShownPropertyDuids"))
+
+        always_hidden_property_duids = cast(List[str], d.pop("alwaysHiddenPropertyDuids"))
+
         updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
 
         index = d.pop("index")
@@ -191,6 +205,8 @@ class Dartboard:
             icon_name_or_emoji=icon_name_or_emoji,
             color_name=color_name,
             user_duids_to_layout_duids=user_duids_to_layout_duids,
+            always_shown_property_duids=always_shown_property_duids,
+            always_hidden_property_duids=always_hidden_property_duids,
             updated_by_client_duid=updated_by_client_duid,
             index=index,
             started_at=started_at,

@@ -53,6 +53,7 @@ class TaskUpdate:
         order (Union[Unset, str]):
         title (Union[Unset, str]):
         description (Union[Unset, Any]):
+        description_markdown (Union[Unset, str]):
         status_duid (Union[Unset, str]):
         assigned_to_ai (Union[Unset, bool]):
         assignee_duids (Union[Unset, List[str]]):
@@ -84,6 +85,7 @@ class TaskUpdate:
     order: Union[Unset, str] = UNSET
     title: Union[Unset, str] = UNSET
     description: Union[Unset, Any] = UNSET
+    description_markdown: Union[Unset, str] = UNSET
     status_duid: Union[Unset, str] = UNSET
     assigned_to_ai: Union[Unset, bool] = UNSET
     assignee_duids: Union[Unset, List[str]] = UNSET
@@ -119,6 +121,7 @@ class TaskUpdate:
         order = self.order
         title = self.title
         description = self.description
+        description_markdown = self.description_markdown
         status_duid = self.status_duid
         assigned_to_ai = self.assigned_to_ai
         assignee_duids: Union[Unset, List[str]] = UNSET
@@ -190,6 +193,8 @@ class TaskUpdate:
             field_dict["title"] = title
         if description is not UNSET:
             field_dict["description"] = description
+        if description_markdown is not UNSET:
+            field_dict["descriptionMarkdown"] = description_markdown
         if status_duid is not UNSET:
             field_dict["statusDuid"] = status_duid
         if assigned_to_ai is not UNSET:
@@ -259,6 +264,8 @@ class TaskUpdate:
         title = d.pop("title", UNSET)
 
         description = d.pop("description", UNSET)
+
+        description_markdown = d.pop("descriptionMarkdown", UNSET)
 
         status_duid = d.pop("statusDuid", UNSET)
 
@@ -336,6 +343,7 @@ class TaskUpdate:
             order=order,
             title=title,
             description=description,
+            description_markdown=description_markdown,
             status_duid=status_duid,
             assigned_to_ai=assigned_to_ai,
             assignee_duids=assignee_duids,

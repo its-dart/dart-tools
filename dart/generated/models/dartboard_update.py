@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -59,6 +59,8 @@ class DartboardUpdate:
         index (Union[Unset, None, int]):
         started_at (Union[Unset, None, datetime.datetime]):
         finished_at (Union[Unset, None, datetime.datetime]):
+        always_shown_property_duids (Union[Unset, List[str]]):
+        always_hidden_property_duids (Union[Unset, List[str]]):
     """
 
     duid: str
@@ -73,6 +75,8 @@ class DartboardUpdate:
     index: Union[Unset, None, int] = UNSET
     started_at: Union[Unset, None, datetime.datetime] = UNSET
     finished_at: Union[Unset, None, datetime.datetime] = UNSET
+    always_shown_property_duids: Union[Unset, List[str]] = UNSET
+    always_hidden_property_duids: Union[Unset, List[str]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -103,6 +107,14 @@ class DartboardUpdate:
         if not isinstance(self.finished_at, Unset):
             finished_at = self.finished_at.isoformat() if self.finished_at else None
 
+        always_shown_property_duids: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.always_shown_property_duids, Unset):
+            always_shown_property_duids = self.always_shown_property_duids
+
+        always_hidden_property_duids: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.always_hidden_property_duids, Unset):
+            always_hidden_property_duids = self.always_hidden_property_duids
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -132,6 +144,10 @@ class DartboardUpdate:
             field_dict["startedAt"] = started_at
         if finished_at is not UNSET:
             field_dict["finishedAt"] = finished_at
+        if always_shown_property_duids is not UNSET:
+            field_dict["alwaysShownPropertyDuids"] = always_shown_property_duids
+        if always_hidden_property_duids is not UNSET:
+            field_dict["alwaysHiddenPropertyDuids"] = always_hidden_property_duids
 
         return field_dict
 
@@ -191,6 +207,10 @@ class DartboardUpdate:
         else:
             finished_at = isoparse(_finished_at)
 
+        always_shown_property_duids = cast(List[str], d.pop("alwaysShownPropertyDuids", UNSET))
+
+        always_hidden_property_duids = cast(List[str], d.pop("alwaysHiddenPropertyDuids", UNSET))
+
         dartboard_update = cls(
             duid=duid,
             space_duid=space_duid,
@@ -204,6 +224,8 @@ class DartboardUpdate:
             index=index,
             started_at=started_at,
             finished_at=finished_at,
+            always_shown_property_duids=always_shown_property_duids,
+            always_hidden_property_duids=always_hidden_property_duids,
         )
 
         dartboard_update.additional_properties = d

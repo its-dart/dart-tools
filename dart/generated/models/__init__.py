@@ -159,6 +159,7 @@ from .view_create import ViewCreate
 from .view_kind import ViewKind
 from .view_update import ViewUpdate
 from .yc_integration import YcIntegration
+from .zapier_integration import ZapierIntegration
 
 __all__ = (
     "Attachment",
@@ -320,4 +321,5 @@ __all__ = (
     "ViewKind",
     "ViewUpdate",
     "YcIntegration",
+    "ZapierIntegration",
 )

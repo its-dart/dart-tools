@@ -12,6 +12,7 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
+    default_only: Union[Unset, None, bool] = UNSET,
     kind: Union[Unset, None, StatusesListKind] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
@@ -21,6 +22,8 @@ def _get_kwargs(
     pass
 
     params: Dict[str, Any] = {}
+    params["defaultOnly"] = default_only
+
     json_kind: Union[Unset, None, str] = UNSET
     if not isinstance(kind, Unset):
         json_kind = kind.value if kind else None
@@ -71,6 +74,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
+    default_only: Union[Unset, None, bool] = UNSET,
     kind: Union[Unset, None, StatusesListKind] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
@@ -79,6 +83,7 @@ def sync_detailed(
 ) -> Response[PaginatedStatusList]:
     """
     Args:
+        default_only (Union[Unset, None, bool]):
         kind (Union[Unset, None, StatusesListKind]):
         limit (Union[Unset, None, int]):
         offset (Union[Unset, None, int]):
@@ -94,6 +99,7 @@ def sync_detailed(
     """
 
     kwargs = _get_kwargs(
+        default_only=default_only,
         kind=kind,
         limit=limit,
         offset=offset,
@@ -111,6 +117,7 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
+    default_only: Union[Unset, None, bool] = UNSET,
     kind: Union[Unset, None, StatusesListKind] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
@@ -119,6 +126,7 @@ def sync(
 ) -> Optional[PaginatedStatusList]:
     """
     Args:
+        default_only (Union[Unset, None, bool]):
         kind (Union[Unset, None, StatusesListKind]):
         limit (Union[Unset, None, int]):
         offset (Union[Unset, None, int]):
@@ -135,6 +143,7 @@ def sync(
 
     return sync_detailed(
         client=client,
+        default_only=default_only,
         kind=kind,
         limit=limit,
         offset=offset,
@@ -146,6 +155,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
+    default_only: Union[Unset, None, bool] = UNSET,
     kind: Union[Unset, None, StatusesListKind] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
@@ -154,6 +164,7 @@ async def asyncio_detailed(
 ) -> Response[PaginatedStatusList]:
     """
     Args:
+        default_only (Union[Unset, None, bool]):
         kind (Union[Unset, None, StatusesListKind]):
         limit (Union[Unset, None, int]):
         offset (Union[Unset, None, int]):
@@ -169,6 +180,7 @@ async def asyncio_detailed(
     """
 
     kwargs = _get_kwargs(
+        default_only=default_only,
         kind=kind,
         limit=limit,
         offset=offset,
@@ -184,6 +196,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
+    default_only: Union[Unset, None, bool] = UNSET,
     kind: Union[Unset, None, StatusesListKind] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
@@ -192,6 +205,7 @@ async def asyncio(
 ) -> Optional[PaginatedStatusList]:
     """
     Args:
+        default_only (Union[Unset, None, bool]):
         kind (Union[Unset, None, StatusesListKind]):
         limit (Union[Unset, None, int]):
         offset (Union[Unset, None, int]):
@@ -209,6 +223,7 @@ async def asyncio(
     return (
         await asyncio_detailed(
             client=client,
+            default_only=default_only,
             kind=kind,
             limit=limit,
             offset=offset,

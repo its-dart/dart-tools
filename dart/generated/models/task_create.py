@@ -18,9 +18,6 @@ class TaskCreate:
     """
     Attributes:
         duid (str):
-        dartboard_duid (str):
-        order (str):
-        status_duid (str):
         source_type (Union[Unset, TaskSourceType]): * `Unknown` - UNKNOWN
             * `Import` - IMPORT
             * `Onboarding` - ONBOARDING
@@ -52,8 +49,12 @@ class TaskCreate:
         in_trash (Union[Unset, bool]):
         recommendation_status (Union[Unset, None, RecommendationStatus]): * `Accepted` - ACCEPTED
             * `Declined` - DECLINED
+        dartboard_duid (Union[Unset, str]):
+        order (Union[Unset, str]):
         title (Union[Unset, str]):
         description (Union[Unset, Any]):
+        description_markdown (Union[Unset, str]):
+        status_duid (Union[Unset, str]):
         assigned_to_ai (Union[Unset, bool]):
         assignee_duids (Union[Unset, List[str]]):
         subscriber_duids (Union[Unset, List[str]]):
@@ -73,9 +74,6 @@ class TaskCreate:
     """
 
     duid: str
-    dartboard_duid: str
-    order: str
-    status_duid: str
     source_type: Union[Unset, TaskSourceType] = TaskSourceType.UNKNOWN
     source_form_duid: Union[Unset, None, str] = UNSET
     created_by_duid: Union[Unset, None, str] = UNSET
@@ -83,8 +81,12 @@ class TaskCreate:
     drafter_duid: Union[Unset, None, str] = UNSET
     in_trash: Union[Unset, bool] = UNSET
     recommendation_status: Union[Unset, None, RecommendationStatus] = UNSET
+    dartboard_duid: Union[Unset, str] = UNSET
+    order: Union[Unset, str] = UNSET
     title: Union[Unset, str] = UNSET
     description: Union[Unset, Any] = UNSET
+    description_markdown: Union[Unset, str] = UNSET
+    status_duid: Union[Unset, str] = UNSET
     assigned_to_ai: Union[Unset, bool] = UNSET
     assignee_duids: Union[Unset, List[str]] = UNSET
     subscriber_duids: Union[Unset, List[str]] = UNSET
@@ -102,9 +104,6 @@ class TaskCreate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
-        dartboard_duid = self.dartboard_duid
-        order = self.order
-        status_duid = self.status_duid
         source_type: Union[Unset, str] = UNSET
         if not isinstance(self.source_type, Unset):
             source_type = self.source_type.value
@@ -118,8 +117,12 @@ class TaskCreate:
         if not isinstance(self.recommendation_status, Unset):
             recommendation_status = self.recommendation_status.value if self.recommendation_status else None
 
+        dartboard_duid = self.dartboard_duid
+        order = self.order
         title = self.title
         description = self.description
+        description_markdown = self.description_markdown
+        status_duid = self.status_duid
         assigned_to_ai = self.assigned_to_ai
         assignee_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.assignee_duids, Unset):
@@ -166,9 +169,6 @@ class TaskCreate:
         field_dict.update(
             {
                 "duid": duid,
-                "dartboardDuid": dartboard_duid,
-                "order": order,
-                "statusDuid": status_duid,
             }
         )
         if source_type is not UNSET:
@@ -185,10 +185,18 @@ class TaskCreate:
             field_dict["inTrash"] = in_trash
         if recommendation_status is not UNSET:
             field_dict["recommendationStatus"] = recommendation_status
+        if dartboard_duid is not UNSET:
+            field_dict["dartboardDuid"] = dartboard_duid
+        if order is not UNSET:
+            field_dict["order"] = order
         if title is not UNSET:
             field_dict["title"] = title
         if description is not UNSET:
             field_dict["description"] = description
+        if description_markdown is not UNSET:
+            field_dict["descriptionMarkdown"] = description_markdown
+        if status_duid is not UNSET:
+            field_dict["statusDuid"] = status_duid
         if assigned_to_ai is not UNSET:
             field_dict["assignedToAi"] = assigned_to_ai
         if assignee_duids is not UNSET:
@@ -223,12 +231,6 @@ class TaskCreate:
         d = src_dict.copy()
         duid = d.pop("duid")
 
-        dartboard_duid = d.pop("dartboardDuid")
-
-        order = d.pop("order")
-
-        status_duid = d.pop("statusDuid")
-
         _source_type = d.pop("sourceType", UNSET)
         source_type: Union[Unset, TaskSourceType]
         if isinstance(_source_type, Unset):
@@ -255,9 +257,17 @@ class TaskCreate:
         else:
             recommendation_status = RecommendationStatus(_recommendation_status)
 
+        dartboard_duid = d.pop("dartboardDuid", UNSET)
+
+        order = d.pop("order", UNSET)
+
         title = d.pop("title", UNSET)
 
         description = d.pop("description", UNSET)
+
+        description_markdown = d.pop("descriptionMarkdown", UNSET)
+
+        status_duid = d.pop("statusDuid", UNSET)
 
         assigned_to_ai = d.pop("assignedToAi", UNSET)
 
@@ -322,9 +332,6 @@ class TaskCreate:
 
         task_create = cls(
             duid=duid,
-            dartboard_duid=dartboard_duid,
-            order=order,
-            status_duid=status_duid,
             source_type=source_type,
             source_form_duid=source_form_duid,
             created_by_duid=created_by_duid,
@@ -332,8 +339,12 @@ class TaskCreate:
             drafter_duid=drafter_duid,
             in_trash=in_trash,
             recommendation_status=recommendation_status,
+            dartboard_duid=dartboard_duid,
+            order=order,
             title=title,
             description=description,
+            description_markdown=description_markdown,
+            status_duid=status_duid,
             assigned_to_ai=assigned_to_ai,
             assignee_duids=assignee_duids,
             subscriber_duids=subscriber_duids,

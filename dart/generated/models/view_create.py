@@ -50,6 +50,8 @@ class ViewCreate:
             * `Light Brown` - LIGHT_BROWN
             * `Light Gray` - LIGHT_GRAY
         favorited_by_user_duids (Union[Unset, List[str]]):
+        always_shown_property_duids (Union[Unset, List[str]]):
+        always_hidden_property_duids (Union[Unset, List[str]]):
     """
 
     duid: str
@@ -63,6 +65,8 @@ class ViewCreate:
     icon_name_or_emoji: Union[Unset, str] = UNSET
     color_name: Union[Unset, ColorName] = UNSET
     favorited_by_user_duids: Union[Unset, List[str]] = UNSET
+    always_shown_property_duids: Union[Unset, List[str]] = UNSET
+    always_hidden_property_duids: Union[Unset, List[str]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -89,6 +93,14 @@ class ViewCreate:
         if not isinstance(self.favorited_by_user_duids, Unset):
             favorited_by_user_duids = self.favorited_by_user_duids
 
+        always_shown_property_duids: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.always_shown_property_duids, Unset):
+            always_shown_property_duids = self.always_shown_property_duids
+
+        always_hidden_property_duids: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.always_hidden_property_duids, Unset):
+            always_hidden_property_duids = self.always_hidden_property_duids
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -114,6 +126,10 @@ class ViewCreate:
             field_dict["colorName"] = color_name
         if favorited_by_user_duids is not UNSET:
             field_dict["favoritedByUserDuids"] = favorited_by_user_duids
+        if always_shown_property_duids is not UNSET:
+            field_dict["alwaysShownPropertyDuids"] = always_shown_property_duids
+        if always_hidden_property_duids is not UNSET:
+            field_dict["alwaysHiddenPropertyDuids"] = always_hidden_property_duids
 
         return field_dict
 
@@ -152,6 +168,10 @@ class ViewCreate:
 
         favorited_by_user_duids = cast(List[str], d.pop("favoritedByUserDuids", UNSET))
 
+        always_shown_property_duids = cast(List[str], d.pop("alwaysShownPropertyDuids", UNSET))
+
+        always_hidden_property_duids = cast(List[str], d.pop("alwaysHiddenPropertyDuids", UNSET))
+
         view_create = cls(
             duid=duid,
             order=order,
@@ -164,6 +184,8 @@ class ViewCreate:
             icon_name_or_emoji=icon_name_or_emoji,
             color_name=color_name,
             favorited_by_user_duids=favorited_by_user_duids,
+            always_shown_property_duids=always_shown_property_duids,
+            always_hidden_property_duids=always_hidden_property_duids,
         )
 
         view_create.additional_properties = d
