@@ -16,41 +16,41 @@ T = TypeVar("T", bound="PaginatedRelationshipList")
 class PaginatedRelationshipList:
     """
     Attributes:
-        count (Union[Unset, int]):  Example: 123.
+        count (int):  Example: 123.
+        results (List['Relationship']):
         next_ (Union[Unset, None, str]):  Example: http://api.example.org/accounts/?offset=400&limit=100.
         previous (Union[Unset, None, str]):  Example: http://api.example.org/accounts/?offset=200&limit=100.
-        results (Union[Unset, List['Relationship']]):
     """
 
-    count: Union[Unset, int] = UNSET
+    count: int
+    results: List["Relationship"]
     next_: Union[Unset, None, str] = UNSET
     previous: Union[Unset, None, str] = UNSET
-    results: Union[Unset, List["Relationship"]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         count = self.count
+        results = []
+        for results_item_data in self.results:
+            results_item = results_item_data.to_dict()
+
+            results.append(results_item)
+
         next_ = self.next_
         previous = self.previous
-        results: Union[Unset, List[Dict[str, Any]]] = UNSET
-        if not isinstance(self.results, Unset):
-            results = []
-            for results_item_data in self.results:
-                results_item = results_item_data.to_dict()
-
-                results.append(results_item)
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if count is not UNSET:
-            field_dict["count"] = count
+        field_dict.update(
+            {
+                "count": count,
+                "results": results,
+            }
+        )
         if next_ is not UNSET:
             field_dict["next"] = next_
         if previous is not UNSET:
             field_dict["previous"] = previous
-        if results is not UNSET:
-            field_dict["results"] = results
 
         return field_dict
 
@@ -59,24 +59,24 @@ class PaginatedRelationshipList:
         from ..models.relationship import Relationship
 
         d = src_dict.copy()
-        count = d.pop("count", UNSET)
+        count = d.pop("count")
+
+        results = []
+        _results = d.pop("results")
+        for results_item_data in _results:
+            results_item = Relationship.from_dict(results_item_data)
+
+            results.append(results_item)
 
         next_ = d.pop("next", UNSET)
 
         previous = d.pop("previous", UNSET)
 
-        results = []
-        _results = d.pop("results", UNSET)
-        for results_item_data in _results or []:
-            results_item = Relationship.from_dict(results_item_data)
-
-            results.append(results_item)
-
         paginated_relationship_list = cls(
             count=count,
+            results=results,
             next_=next_,
             previous=previous,
-            results=results,
         )
 
         paginated_relationship_list.additional_properties = d

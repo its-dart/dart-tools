@@ -17,6 +17,7 @@ class ViewUpdate:
         duid (str):
         accessible_by_team (Union[Unset, bool]):
         accessible_by_user_duids (Union[Unset, List[str]]):
+        public (Union[Unset, bool]):
         order (Union[Unset, str]):
         title (Union[Unset, str]):
         description (Union[Unset, str]):
@@ -57,6 +58,7 @@ class ViewUpdate:
     duid: str
     accessible_by_team: Union[Unset, bool] = UNSET
     accessible_by_user_duids: Union[Unset, List[str]] = UNSET
+    public: Union[Unset, bool] = UNSET
     order: Union[Unset, str] = UNSET
     title: Union[Unset, str] = UNSET
     description: Union[Unset, str] = UNSET
@@ -76,6 +78,7 @@ class ViewUpdate:
         if not isinstance(self.accessible_by_user_duids, Unset):
             accessible_by_user_duids = self.accessible_by_user_duids
 
+        public = self.public
         order = self.order
         title = self.title
         description = self.description
@@ -112,6 +115,8 @@ class ViewUpdate:
             field_dict["accessibleByTeam"] = accessible_by_team
         if accessible_by_user_duids is not UNSET:
             field_dict["accessibleByUserDuids"] = accessible_by_user_duids
+        if public is not UNSET:
+            field_dict["public"] = public
         if order is not UNSET:
             field_dict["order"] = order
         if title is not UNSET:
@@ -143,6 +148,8 @@ class ViewUpdate:
         accessible_by_team = d.pop("accessibleByTeam", UNSET)
 
         accessible_by_user_duids = cast(List[str], d.pop("accessibleByUserDuids", UNSET))
+
+        public = d.pop("public", UNSET)
 
         order = d.pop("order", UNSET)
 
@@ -178,6 +185,7 @@ class ViewUpdate:
             duid=duid,
             accessible_by_team=accessible_by_team,
             accessible_by_user_duids=accessible_by_user_duids,
+            public=public,
             order=order,
             title=title,
             description=description,

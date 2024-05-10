@@ -50,6 +50,7 @@ class UserUpdate:
         open_in_native_app (Union[Unset, bool]):
         first_day_of_week (Union[Unset, int]):
         sections (Union[Unset, Any]):
+        layout (Union[Unset, Any]):
         notification_default (Union[Unset, bool]):
         notification_in_app (Union[Unset, bool]):
         notification_email (Union[Unset, bool]):
@@ -64,6 +65,7 @@ class UserUpdate:
     open_in_native_app: Union[Unset, bool] = UNSET
     first_day_of_week: Union[Unset, int] = UNSET
     sections: Union[Unset, Any] = UNSET
+    layout: Union[Unset, Any] = UNSET
     notification_default: Union[Unset, bool] = UNSET
     notification_in_app: Union[Unset, bool] = UNSET
     notification_email: Union[Unset, bool] = UNSET
@@ -88,6 +90,7 @@ class UserUpdate:
         open_in_native_app = self.open_in_native_app
         first_day_of_week = self.first_day_of_week
         sections = self.sections
+        layout = self.layout
         notification_default = self.notification_default
         notification_in_app = self.notification_in_app
         notification_email = self.notification_email
@@ -114,6 +117,8 @@ class UserUpdate:
             field_dict["firstDayOfWeek"] = first_day_of_week
         if sections is not UNSET:
             field_dict["sections"] = sections
+        if layout is not UNSET:
+            field_dict["layout"] = layout
         if notification_default is not UNSET:
             field_dict["notificationDefault"] = notification_default
         if notification_in_app is not UNSET:
@@ -159,6 +164,8 @@ class UserUpdate:
 
         sections = d.pop("sections", UNSET)
 
+        layout = d.pop("layout", UNSET)
+
         notification_default = d.pop("notificationDefault", UNSET)
 
         notification_in_app = d.pop("notificationInApp", UNSET)
@@ -176,6 +183,7 @@ class UserUpdate:
             open_in_native_app=open_in_native_app,
             first_day_of_week=first_day_of_week,
             sections=sections,
+            layout=layout,
             notification_default=notification_default,
             notification_in_app=notification_in_app,
             notification_email=notification_email,

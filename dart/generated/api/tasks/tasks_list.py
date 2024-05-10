@@ -41,11 +41,11 @@ def _get_kwargs(
     if not isinstance(due_at, Unset):
         json_due_at = due_at.isoformat() if due_at else None
 
-    params["dueAt"] = json_due_at
+    params["due_at"] = json_due_at
 
-    params["inTrash"] = in_trash
+    params["in_trash"] = in_trash
 
-    params["isDraft"] = is_draft
+    params["is_draft"] = is_draft
 
     params["limit"] = limit
 
@@ -59,7 +59,7 @@ def _get_kwargs(
     if not isinstance(start_at, Unset):
         json_start_at = start_at.isoformat() if start_at else None
 
-    params["startAt"] = json_start_at
+    params["start_at"] = json_start_at
 
     params["status"] = status
 

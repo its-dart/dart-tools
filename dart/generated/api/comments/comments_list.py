@@ -33,7 +33,7 @@ def _get_kwargs(
     if not isinstance(published_at, Unset):
         json_published_at = published_at.isoformat() if published_at else None
 
-    params["publishedAt"] = json_published_at
+    params["published_at"] = json_published_at
 
     params["task"] = task
 

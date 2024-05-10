@@ -22,6 +22,7 @@ class View:
             * `My tasks` - MY_TASKS
         accessible_by_team (bool):
         accessible_by_user_duids (List[str]):
+        public (bool):
         order (str):
         title (str):
         description (str):
@@ -64,6 +65,7 @@ class View:
     kind: ViewKind
     accessible_by_team: bool
     accessible_by_user_duids: List[str]
+    public: bool
     order: str
     title: str
     description: str
@@ -84,6 +86,7 @@ class View:
         accessible_by_team = self.accessible_by_team
         accessible_by_user_duids = self.accessible_by_user_duids
 
+        public = self.public
         order = self.order
         title = self.title
         description = self.description
@@ -109,6 +112,7 @@ class View:
                 "kind": kind,
                 "accessibleByTeam": accessible_by_team,
                 "accessibleByUserDuids": accessible_by_user_duids,
+                "public": public,
                 "order": order,
                 "title": title,
                 "description": description,
@@ -137,6 +141,8 @@ class View:
 
         accessible_by_user_duids = cast(List[str], d.pop("accessibleByUserDuids"))
 
+        public = d.pop("public")
+
         order = d.pop("order")
 
         title = d.pop("title")
@@ -164,6 +170,7 @@ class View:
             kind=kind,
             accessible_by_team=accessible_by_team,
             accessible_by_user_duids=accessible_by_user_duids,
+            public=public,
             order=order,
             title=title,
             description=description,

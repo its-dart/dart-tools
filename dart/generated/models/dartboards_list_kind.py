@@ -7,7 +7,6 @@ class DartboardsListKind(str, Enum):
     CUSTOM = "Custom"
     FINISHED = "Finished"
     NEXT = "Next"
-    YC = "YC"
 
     def __str__(self) -> str:
         return str(self.value)

@@ -3,7 +3,6 @@
 from .attachment import Attachment
 from .attachment_create import AttachmentCreate
 from .attachment_update import AttachmentUpdate
-from .batch import Batch
 from .brainstorm import Brainstorm
 from .brainstorm_create import BrainstormCreate
 from .brainstorm_state import BrainstormState
@@ -98,7 +97,6 @@ from .property_ import Property
 from .property_create import PropertyCreate
 from .property_kind import PropertyKind
 from .property_update import PropertyUpdate
-from .recommendation_status import RecommendationStatus
 from .relationship import Relationship
 from .relationship_create import RelationshipCreate
 from .relationship_kind import RelationshipKind
@@ -158,14 +156,12 @@ from .view import View
 from .view_create import ViewCreate
 from .view_kind import ViewKind
 from .view_update import ViewUpdate
-from .yc_integration import YcIntegration
 from .zapier_integration import ZapierIntegration
 
 __all__ = (
     "Attachment",
     "AttachmentCreate",
     "AttachmentUpdate",
-    "Batch",
     "Brainstorm",
     "BrainstormCreate",
     "BrainstormState",
@@ -260,7 +256,6 @@ __all__ = (
     "PropertyCreate",
     "PropertyKind",
     "PropertyUpdate",
-    "RecommendationStatus",
     "Relationship",
     "RelationshipCreate",
     "RelationshipKind",
@@ -320,6 +315,5 @@ __all__ = (
     "ViewCreate",
     "ViewKind",
     "ViewUpdate",
-    "YcIntegration",
     "ZapierIntegration",
 )

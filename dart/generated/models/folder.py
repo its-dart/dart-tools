@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -20,8 +20,6 @@ class Folder:
         kind (FolderKind): * `Other` - OTHER
             * `Default` - DEFAULT
             * `Reports` - REPORTS
-        accessible_by_team (bool):
-        accessible_by_user_duids (List[str]):
         order (str):
         title (str):
         description (str):
@@ -59,8 +57,6 @@ class Folder:
     duid: str
     space_duid: str
     kind: FolderKind
-    accessible_by_team: bool
-    accessible_by_user_duids: List[str]
     order: str
     title: str
     description: str
@@ -74,9 +70,6 @@ class Folder:
         duid = self.duid
         space_duid = self.space_duid
         kind = self.kind.value
-
-        accessible_by_team = self.accessible_by_team
-        accessible_by_user_duids = self.accessible_by_user_duids
 
         order = self.order
         title = self.title
@@ -95,8 +88,6 @@ class Folder:
                 "duid": duid,
                 "spaceDuid": space_duid,
                 "kind": kind,
-                "accessibleByTeam": accessible_by_team,
-                "accessibleByUserDuids": accessible_by_user_duids,
                 "order": order,
                 "title": title,
                 "description": description,
@@ -119,10 +110,6 @@ class Folder:
 
         kind = FolderKind(d.pop("kind"))
 
-        accessible_by_team = d.pop("accessibleByTeam")
-
-        accessible_by_user_duids = cast(List[str], d.pop("accessibleByUserDuids"))
-
         order = d.pop("order")
 
         title = d.pop("title")
@@ -141,8 +128,6 @@ class Folder:
             duid=duid,
             space_duid=space_duid,
             kind=kind,
-            accessible_by_team=accessible_by_team,
-            accessible_by_user_duids=accessible_by_user_duids,
             order=order,
             title=title,
             description=description,

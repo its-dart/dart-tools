@@ -2,10 +2,15 @@ from enum import Enum
 
 
 class EventKind(str, Enum):
+    AIBRAINSTORM_START = "ai/brainstorm_start"
     AICONTENT = "ai/content"
+    AIDETECT_DUPLICATES = "ai/detect_duplicates"
     AIEMOJI = "ai/emoji"
+    AIEXECUTE = "ai/execute"
     AIFEEDBACK = "ai/feedback"
+    AIFILTERS = "ai/filters"
     AIICON = "ai/icon"
+    AIIMAGE = "ai/image"
     AIPLAN = "ai/plan"
     AIPROPS = "ai/props"
     AIREPORT = "ai/report"

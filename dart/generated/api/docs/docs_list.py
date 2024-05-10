@@ -29,15 +29,15 @@ def _get_kwargs(
 
     params["folder"] = folder
 
-    params["inTrash"] = in_trash
+    params["in_trash"] = in_trash
 
-    params["isDraft"] = is_draft
+    params["is_draft"] = is_draft
 
     params["limit"] = limit
 
     params["offset"] = offset
 
-    params["reportKind"] = report_kind
+    params["report_kind"] = report_kind
 
     params["subscriber"] = subscriber
 

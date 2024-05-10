@@ -1,7 +1,9 @@
+import datetime
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Type, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from dateutil.parser import isoparse
 
 from ..models.subscription import Subscription
 
@@ -10,7 +12,6 @@ if TYPE_CHECKING:
     from ..models.github_integration import GithubIntegration
     from ..models.notion_integration import NotionIntegration
     from ..models.slack_integration import SlackIntegration
-    from ..models.yc_integration import YcIntegration
     from ..models.zapier_integration import ZapierIntegration
 
 
@@ -24,6 +25,7 @@ class Tenant:
         duid (str):
         is_dart (bool):
         name (str):
+        created_at (datetime.datetime):
         timezone (str):
         subscription (Subscription): * `Personal` - PERSONAL
             * `Premium` - PREMIUM
@@ -36,7 +38,6 @@ class Tenant:
         webhook_secret (str):
         image_url (Optional[str]):
         webhook_url (Optional[str]):
-        yc (Optional[YcIntegration]):
         notion_integration (Optional[NotionIntegration]):
         slack_integration (Optional[SlackIntegration]):
         discord_integration (Optional[DiscordIntegration]):
@@ -47,6 +48,7 @@ class Tenant:
     duid: str
     is_dart: bool
     name: str
+    created_at: datetime.datetime
     timezone: str
     subscription: Subscription
     entitlement_overrides: Any
@@ -58,7 +60,6 @@ class Tenant:
     webhook_secret: str
     image_url: Optional[str]
     webhook_url: Optional[str]
-    yc: Optional["YcIntegration"]
     notion_integration: Optional["NotionIntegration"]
     slack_integration: Optional["SlackIntegration"]
     discord_integration: Optional["DiscordIntegration"]
@@ -70,6 +71,8 @@ class Tenant:
         duid = self.duid
         is_dart = self.is_dart
         name = self.name
+        created_at = self.created_at.isoformat()
+
         timezone = self.timezone
         subscription = self.subscription.value
 
@@ -82,8 +85,6 @@ class Tenant:
         webhook_secret = self.webhook_secret
         image_url = self.image_url
         webhook_url = self.webhook_url
-        yc = self.yc.to_dict() if self.yc else None
-
         notion_integration = self.notion_integration.to_dict() if self.notion_integration else None
 
         slack_integration = self.slack_integration.to_dict() if self.slack_integration else None
@@ -101,6 +102,7 @@ class Tenant:
                 "duid": duid,
                 "isDart": is_dart,
                 "name": name,
+                "createdAt": created_at,
                 "timezone": timezone,
                 "subscription": subscription,
                 "entitlementOverrides": entitlement_overrides,
@@ -112,7 +114,6 @@ class Tenant:
                 "webhookSecret": webhook_secret,
                 "imageUrl": image_url,
                 "webhookUrl": webhook_url,
-                "yc": yc,
                 "notionIntegration": notion_integration,
                 "slackIntegration": slack_integration,
                 "discordIntegration": discord_integration,
@@ -129,7 +130,6 @@ class Tenant:
         from ..models.github_integration import GithubIntegration
         from ..models.notion_integration import NotionIntegration
         from ..models.slack_integration import SlackIntegration
-        from ..models.yc_integration import YcIntegration
         from ..models.zapier_integration import ZapierIntegration
 
         d = src_dict.copy()
@@ -138,6 +138,8 @@ class Tenant:
         is_dart = d.pop("isDart")
 
         name = d.pop("name")
+
+        created_at = isoparse(d.pop("createdAt"))
 
         timezone = d.pop("timezone")
 
@@ -160,13 +162,6 @@ class Tenant:
         image_url = d.pop("imageUrl")
 
         webhook_url = d.pop("webhookUrl")
-
-        _yc = d.pop("yc")
-        yc: Optional[YcIntegration]
-        if _yc is None:
-            yc = None
-        else:
-            yc = YcIntegration.from_dict(_yc)
 
         _notion_integration = d.pop("notionIntegration")
         notion_integration: Optional[NotionIntegration]
@@ -207,6 +202,7 @@ class Tenant:
             duid=duid,
             is_dart=is_dart,
             name=name,
+            created_at=created_at,
             timezone=timezone,
             subscription=subscription,
             entitlement_overrides=entitlement_overrides,
@@ -218,7 +214,6 @@ class Tenant:
             webhook_secret=webhook_secret,
             image_url=image_url,
             webhook_url=webhook_url,
-            yc=yc,
             notion_integration=notion_integration,
             slack_integration=slack_integration,
             discord_integration=discord_integration,

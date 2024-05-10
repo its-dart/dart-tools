@@ -28,7 +28,7 @@ def _get_kwargs(
     if not isinstance(finished_at, Unset):
         json_finished_at = finished_at.isoformat() if finished_at else None
 
-    params["finishedAt"] = json_finished_at
+    params["finished_at"] = json_finished_at
 
     json_kind: Union[Unset, None, str] = UNSET
     if not isinstance(kind, Unset):
@@ -46,7 +46,7 @@ def _get_kwargs(
     if not isinstance(started_at, Unset):
         json_started_at = started_at.isoformat() if started_at else None
 
-    params["startedAt"] = json_started_at
+    params["started_at"] = json_started_at
 
     params["title"] = title
 

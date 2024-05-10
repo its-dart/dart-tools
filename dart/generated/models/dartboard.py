@@ -26,7 +26,6 @@ class Dartboard:
         kind (DartboardKind): * `Active` - ACTIVE
             * `Next` - NEXT
             * `Backlog` - BACKLOG
-            * `YC` - YC
             * `Finished` - FINISHED
             * `Custom` - CUSTOM
         order (str):

@@ -6,7 +6,6 @@ from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..models.priority import Priority
-from ..models.recommendation_status import RecommendationStatus
 from ..models.task_source_type import TaskSourceType
 from ..types import UNSET, Unset
 
@@ -47,8 +46,6 @@ class TaskUpdate:
         updated_by_duid (Union[Unset, None, str]):
         drafter_duid (Union[Unset, None, str]):
         in_trash (Union[Unset, bool]):
-        recommendation_status (Union[Unset, None, RecommendationStatus]): * `Accepted` - ACCEPTED
-            * `Declined` - DECLINED
         dartboard_duid (Union[Unset, str]):
         order (Union[Unset, str]):
         title (Union[Unset, str]):
@@ -80,7 +77,6 @@ class TaskUpdate:
     updated_by_duid: Union[Unset, None, str] = UNSET
     drafter_duid: Union[Unset, None, str] = UNSET
     in_trash: Union[Unset, bool] = UNSET
-    recommendation_status: Union[Unset, None, RecommendationStatus] = UNSET
     dartboard_duid: Union[Unset, str] = UNSET
     order: Union[Unset, str] = UNSET
     title: Union[Unset, str] = UNSET
@@ -113,10 +109,6 @@ class TaskUpdate:
         updated_by_duid = self.updated_by_duid
         drafter_duid = self.drafter_duid
         in_trash = self.in_trash
-        recommendation_status: Union[Unset, None, str] = UNSET
-        if not isinstance(self.recommendation_status, Unset):
-            recommendation_status = self.recommendation_status.value if self.recommendation_status else None
-
         dartboard_duid = self.dartboard_duid
         order = self.order
         title = self.title
@@ -183,8 +175,6 @@ class TaskUpdate:
             field_dict["drafterDuid"] = drafter_duid
         if in_trash is not UNSET:
             field_dict["inTrash"] = in_trash
-        if recommendation_status is not UNSET:
-            field_dict["recommendationStatus"] = recommendation_status
         if dartboard_duid is not UNSET:
             field_dict["dartboardDuid"] = dartboard_duid
         if order is not UNSET:
@@ -247,15 +237,6 @@ class TaskUpdate:
         drafter_duid = d.pop("drafterDuid", UNSET)
 
         in_trash = d.pop("inTrash", UNSET)
-
-        _recommendation_status = d.pop("recommendationStatus", UNSET)
-        recommendation_status: Union[Unset, None, RecommendationStatus]
-        if _recommendation_status is None:
-            recommendation_status = None
-        elif isinstance(_recommendation_status, Unset):
-            recommendation_status = UNSET
-        else:
-            recommendation_status = RecommendationStatus(_recommendation_status)
 
         dartboard_duid = d.pop("dartboardDuid", UNSET)
 
@@ -338,7 +319,6 @@ class TaskUpdate:
             updated_by_duid=updated_by_duid,
             drafter_duid=drafter_duid,
             in_trash=in_trash,
-            recommendation_status=recommendation_status,
             dartboard_duid=dartboard_duid,
             order=order,
             title=title,

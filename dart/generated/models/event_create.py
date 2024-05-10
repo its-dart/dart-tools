@@ -66,6 +66,11 @@ class EventCreate:
             * `ai/icon` - AI_ICON
             * `ai/report` - AI_REPORT
             * `ai/plan` - AI_PLAN
+            * `ai/brainstorm_start` - AI_BRAINSTORM_START
+            * `ai/detect_duplicates` - AI_DETECT_DUPLICATES
+            * `ai/filters` - AI_FILTERS
+            * `ai/execute` - AI_EXECUTE
+            * `ai/image` - AI_IMAGE
             * `load/signup` - LOAD_SIGNUP
             * `help/resource_click` - HELP_RESOURCE_CLICK
             * `usage/submit_feedback` - USAGE_SUBMIT_FEEDBACK

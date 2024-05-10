@@ -23,7 +23,6 @@ class DartboardCreate:
         kind (Union[Unset, DartboardKind]): * `Active` - ACTIVE
             * `Next` - NEXT
             * `Backlog` - BACKLOG
-            * `YC` - YC
             * `Finished` - FINISHED
             * `Custom` - CUSTOM
         title (Union[Unset, str]):

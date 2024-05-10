@@ -19,6 +19,7 @@ class ViewCreate:
         layout_duid (str):
         accessible_by_team (Union[Unset, bool]):
         accessible_by_user_duids (Union[Unset, List[str]]):
+        public (Union[Unset, bool]):
         title (Union[Unset, str]):
         description (Union[Unset, str]):
         icon_kind (Union[Unset, IconKind]): * `None` - NONE
@@ -59,6 +60,7 @@ class ViewCreate:
     layout_duid: str
     accessible_by_team: Union[Unset, bool] = UNSET
     accessible_by_user_duids: Union[Unset, List[str]] = UNSET
+    public: Union[Unset, bool] = UNSET
     title: Union[Unset, str] = UNSET
     description: Union[Unset, str] = UNSET
     icon_kind: Union[Unset, IconKind] = UNSET
@@ -78,6 +80,7 @@ class ViewCreate:
         if not isinstance(self.accessible_by_user_duids, Unset):
             accessible_by_user_duids = self.accessible_by_user_duids
 
+        public = self.public
         title = self.title
         description = self.description
         icon_kind: Union[Unset, str] = UNSET
@@ -114,6 +117,8 @@ class ViewCreate:
             field_dict["accessibleByTeam"] = accessible_by_team
         if accessible_by_user_duids is not UNSET:
             field_dict["accessibleByUserDuids"] = accessible_by_user_duids
+        if public is not UNSET:
+            field_dict["public"] = public
         if title is not UNSET:
             field_dict["title"] = title
         if description is not UNSET:
@@ -145,6 +150,8 @@ class ViewCreate:
         accessible_by_team = d.pop("accessibleByTeam", UNSET)
 
         accessible_by_user_duids = cast(List[str], d.pop("accessibleByUserDuids", UNSET))
+
+        public = d.pop("public", UNSET)
 
         title = d.pop("title", UNSET)
 
@@ -178,6 +185,7 @@ class ViewCreate:
             layout_duid=layout_duid,
             accessible_by_team=accessible_by_team,
             accessible_by_user_duids=accessible_by_user_duids,
+            public=public,
             title=title,
             description=description,
             icon_kind=icon_kind,

@@ -22,7 +22,7 @@ def _get_kwargs(
     pass
 
     params: Dict[str, Any] = {}
-    params["defaultOnly"] = default_only
+    params["default_only"] = default_only
 
     json_kind: Union[Unset, None, str] = UNSET
     if not isinstance(kind, Unset):

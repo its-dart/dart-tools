@@ -6,7 +6,7 @@ from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..models.priority import Priority
-from ..models.recommendation_status import RecommendationStatus
+from ..models.task_source_type import TaskSourceType
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -24,6 +24,30 @@ class Task:
     """
     Attributes:
         duid (str):
+        source_type (TaskSourceType): * `Unknown` - UNKNOWN
+            * `Import` - IMPORT
+            * `Onboarding` - ONBOARDING
+            * `Recommendation` - RECOMMENDATION
+            * `Recurrence` - RECURRENCE
+            * `Template` - TEMPLATE
+            * `ChatGPT` - CHAT_GPT
+            * `Email` - EMAIL
+            * `Slack` - SLACK
+            * `API` - API
+            * `CLI` - CLI
+            * `Application` - APPLICATION
+            * `AppTcm` - APP_TCM
+            * `AppInternalForm` - APP_INTERNAL_FORM
+            * `AppQuickAdd` - APP_QUICK_ADD
+            * `AppBoard` - APP_BOARD
+            * `AppSubtask` - APP_SUBTASK
+            * `AppRelationship` - APP_RELATIONSHIP
+            * `AppEnter` - APP_ENTER
+            * `AppReplicate` - APP_REPLICATE
+            * `AppPaste` - APP_PASTE
+            * `AppRoadmapList` - APP_ROADMAP_LIST
+            * `AppRoadmapTimeline` - APP_ROADMAP_TIMELINE
+            * `ExternalForm` - EXTERNAL_FORM
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
         in_trash (bool):
@@ -45,8 +69,6 @@ class Task:
         created_by_duid (Optional[str]):
         updated_by_duid (Optional[str]):
         drafter_duid (Optional[str]):
-        recommendation_status (Optional[RecommendationStatus]): * `Accepted` - ACCEPTED
-            * `Declined` - DECLINED
         notion_document (Optional[TaskNotionDocument]):
         priority (Optional[Priority]): * `Critical` - CRITICAL
             * `High` - HIGH
@@ -60,6 +82,7 @@ class Task:
     """
 
     duid: str
+    source_type: TaskSourceType
     created_at: datetime.datetime
     updated_at: datetime.datetime
     in_trash: bool
@@ -80,7 +103,6 @@ class Task:
     created_by_duid: Optional[str]
     updated_by_duid: Optional[str]
     drafter_duid: Optional[str]
-    recommendation_status: Optional[RecommendationStatus]
     notion_document: Optional["TaskNotionDocument"]
     priority: Optional[Priority]
     size: Optional[int]
@@ -93,6 +115,8 @@ class Task:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+        source_type = self.source_type.value
+
         created_at = self.created_at.isoformat()
 
         updated_at = self.updated_at.isoformat()
@@ -131,8 +155,6 @@ class Task:
         created_by_duid = self.created_by_duid
         updated_by_duid = self.updated_by_duid
         drafter_duid = self.drafter_duid
-        recommendation_status = self.recommendation_status.value if self.recommendation_status else None
-
         notion_document = self.notion_document.to_dict() if self.notion_document else None
 
         priority = self.priority.value if self.priority else None
@@ -151,6 +173,7 @@ class Task:
         field_dict.update(
             {
                 "duid": duid,
+                "sourceType": source_type,
                 "createdAt": created_at,
                 "updatedAt": updated_at,
                 "inTrash": in_trash,
@@ -171,7 +194,6 @@ class Task:
                 "createdByDuid": created_by_duid,
                 "updatedByDuid": updated_by_duid,
                 "drafterDuid": drafter_duid,
-                "recommendationStatus": recommendation_status,
                 "notionDocument": notion_document,
                 "priority": priority,
                 "size": size,
@@ -195,6 +217,8 @@ class Task:
 
         d = src_dict.copy()
         duid = d.pop("duid")
+
+        source_type = TaskSourceType(d.pop("sourceType"))
 
         created_at = isoparse(d.pop("createdAt"))
 
@@ -248,13 +272,6 @@ class Task:
 
         drafter_duid = d.pop("drafterDuid")
 
-        _recommendation_status = d.pop("recommendationStatus")
-        recommendation_status: Optional[RecommendationStatus]
-        if _recommendation_status is None:
-            recommendation_status = None
-        else:
-            recommendation_status = RecommendationStatus(_recommendation_status)
-
         _notion_document = d.pop("notionDocument")
         notion_document: Optional[TaskNotionDocument]
         if _notion_document is None:
@@ -301,6 +318,7 @@ class Task:
 
         task = cls(
             duid=duid,
+            source_type=source_type,
             created_at=created_at,
             updated_at=updated_at,
             in_trash=in_trash,
@@ -322,7 +340,6 @@ class Task:
             created_by_duid=created_by_duid,
             updated_by_duid=updated_by_duid,
             drafter_duid=drafter_duid,
-            recommendation_status=recommendation_status,
             notion_document=notion_document,
             priority=priority,
             size=size,

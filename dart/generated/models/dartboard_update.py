@@ -22,7 +22,6 @@ class DartboardUpdate:
         kind (Union[Unset, DartboardKind]): * `Active` - ACTIVE
             * `Next` - NEXT
             * `Backlog` - BACKLOG
-            * `YC` - YC
             * `Finished` - FINISHED
             * `Custom` - CUSTOM
         order (Union[Unset, str]):
