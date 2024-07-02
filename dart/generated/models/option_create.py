@@ -16,6 +16,7 @@ class OptionCreate:
         duid (str):
         property_duid (str):
         title (str):
+        color_hex (Union[Unset, str]):
         color_name (Union[Unset, ColorName]): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -45,6 +46,7 @@ class OptionCreate:
     duid: str
     property_duid: str
     title: str
+    color_hex: Union[Unset, str] = UNSET
     color_name: Union[Unset, ColorName] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -52,6 +54,7 @@ class OptionCreate:
         duid = self.duid
         property_duid = self.property_duid
         title = self.title
+        color_hex = self.color_hex
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value
@@ -65,6 +68,8 @@ class OptionCreate:
                 "title": title,
             }
         )
+        if color_hex is not UNSET:
+            field_dict["colorHex"] = color_hex
         if color_name is not UNSET:
             field_dict["colorName"] = color_name
 
@@ -79,6 +84,8 @@ class OptionCreate:
 
         title = d.pop("title")
 
+        color_hex = d.pop("colorHex", UNSET)
+
         _color_name = d.pop("colorName", UNSET)
         color_name: Union[Unset, ColorName]
         if isinstance(_color_name, Unset):
@@ -90,6 +97,7 @@ class OptionCreate:
             duid=duid,
             property_duid=property_duid,
             title=title,
+            color_hex=color_hex,
             color_name=color_name,
         )
 

@@ -17,7 +17,8 @@ class AttachmentCreate:
         order (str):
         name (str):
         kind (str):
-        file (str):
+        file_path (str):
+        color_hex (Union[Unset, str]):
         color_name (Union[Unset, ColorName]): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -49,7 +50,8 @@ class AttachmentCreate:
     order: str
     name: str
     kind: str
-    file: str
+    file_path: str
+    color_hex: Union[Unset, str] = UNSET
     color_name: Union[Unset, ColorName] = UNSET
     recommendation_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -59,7 +61,8 @@ class AttachmentCreate:
         order = self.order
         name = self.name
         kind = self.kind
-        file = self.file
+        file_path = self.file_path
+        color_hex = self.color_hex
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value
@@ -74,9 +77,11 @@ class AttachmentCreate:
                 "order": order,
                 "name": name,
                 "kind": kind,
-                "file": file,
+                "filePath": file_path,
             }
         )
+        if color_hex is not UNSET:
+            field_dict["colorHex"] = color_hex
         if color_name is not UNSET:
             field_dict["colorName"] = color_name
         if recommendation_duid is not UNSET:
@@ -95,7 +100,9 @@ class AttachmentCreate:
 
         kind = d.pop("kind")
 
-        file = d.pop("file")
+        file_path = d.pop("filePath")
+
+        color_hex = d.pop("colorHex", UNSET)
 
         _color_name = d.pop("colorName", UNSET)
         color_name: Union[Unset, ColorName]
@@ -111,7 +118,8 @@ class AttachmentCreate:
             order=order,
             name=name,
             kind=kind,
-            file=file,
+            file_path=file_path,
+            color_hex=color_hex,
             color_name=color_name,
             recommendation_duid=recommendation_duid,
         )

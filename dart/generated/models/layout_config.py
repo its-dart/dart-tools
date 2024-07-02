@@ -15,19 +15,24 @@ class LayoutConfig:
         subtask_display_mode (SubtaskDisplayMode): * `1` - INDENTED
             * `2` - COLLAPSED
             * `3` - FLAT
+        show_absentees (bool):
     """
 
     subtask_display_mode: SubtaskDisplayMode
+    show_absentees: bool
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         subtask_display_mode = self.subtask_display_mode.value
+
+        show_absentees = self.show_absentees
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "subtaskDisplayMode": subtask_display_mode,
+                "showAbsentees": show_absentees,
             }
         )
 
@@ -38,8 +43,11 @@ class LayoutConfig:
         d = src_dict.copy()
         subtask_display_mode = SubtaskDisplayMode(d.pop("subtaskDisplayMode"))
 
+        show_absentees = d.pop("showAbsentees")
+
         layout_config = cls(
             subtask_display_mode=subtask_display_mode,
+            show_absentees=show_absentees,
         )
 
         layout_config.additional_properties = d

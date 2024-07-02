@@ -17,6 +17,7 @@ class GithubIntegration:
             * `Suspended` - SUSPENDED
             * `Enabled` - ENABLED
         linkback_enabled (bool):
+        auto_assign (bool):
         installation_link (Optional[str]):
         status_on_branch_link_copy_duid (Optional[str]):
         status_on_branch_create_duid (Optional[str]):
@@ -27,6 +28,7 @@ class GithubIntegration:
 
     status: GithubIntegrationTenantExtensionStatus
     linkback_enabled: bool
+    auto_assign: bool
     installation_link: Optional[str]
     status_on_branch_link_copy_duid: Optional[str]
     status_on_branch_create_duid: Optional[str]
@@ -39,6 +41,7 @@ class GithubIntegration:
         status = self.status.value
 
         linkback_enabled = self.linkback_enabled
+        auto_assign = self.auto_assign
         installation_link = self.installation_link
         status_on_branch_link_copy_duid = self.status_on_branch_link_copy_duid
         status_on_branch_create_duid = self.status_on_branch_create_duid
@@ -52,6 +55,7 @@ class GithubIntegration:
             {
                 "status": status,
                 "linkbackEnabled": linkback_enabled,
+                "autoAssign": auto_assign,
                 "installationLink": installation_link,
                 "statusOnBranchLinkCopyDuid": status_on_branch_link_copy_duid,
                 "statusOnBranchCreateDuid": status_on_branch_create_duid,
@@ -70,6 +74,8 @@ class GithubIntegration:
 
         linkback_enabled = d.pop("linkbackEnabled")
 
+        auto_assign = d.pop("autoAssign")
+
         installation_link = d.pop("installationLink")
 
         status_on_branch_link_copy_duid = d.pop("statusOnBranchLinkCopyDuid")
@@ -85,6 +91,7 @@ class GithubIntegration:
         github_integration = cls(
             status=status,
             linkback_enabled=linkback_enabled,
+            auto_assign=auto_assign,
             installation_link=installation_link,
             status_on_branch_link_copy_duid=status_on_branch_link_copy_duid,
             status_on_branch_create_duid=status_on_branch_create_duid,

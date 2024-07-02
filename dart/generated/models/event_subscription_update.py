@@ -52,11 +52,16 @@ class EventSubscriptionUpdate:
             * `workspace/downgrade_finalize` - WORKSPACE_DOWNGRADE_FINALIZE
             * `workspace/become_active` - WORKSPACE_BECOME_ACTIVE
             * `workspace/become_inactive` - WORKSPACE_BECOME_INACTIVE
-            * `onboarding/finish_step` - ONBOARDING_FINISH_STEP
+            * `load/app` - LOAD_APP
+            * `load/authenticate` - AUTHENTICATE
+            * `load/unidle` - UNIDLE
+            * `load/signup` - LOAD_SIGNUP
+            * `profile/create` - PROFILE_CREATE
             * `profile/update` - PROFILE_UPDATE
             * `profile/delete` - PROFILE_DELETE
             * `profile/become_active` - PROFILE_BECOME_ACTIVE
             * `profile/become_inactive` - PROFILE_BECOME_INACTIVE
+            * `onboarding/finish_step` - ONBOARDING_FINISH_STEP
             * `ai/props` - AI_PROPS
             * `ai/subtasks` - AI_SUBTASKS
             * `ai/content` - AI_CONTENT
@@ -71,7 +76,8 @@ class EventSubscriptionUpdate:
             * `ai/filters` - AI_FILTERS
             * `ai/execute` - AI_EXECUTE
             * `ai/image` - AI_IMAGE
-            * `load/signup` - LOAD_SIGNUP
+            * `brainstorm/start` - BRAINSTORM_START
+            * `brainstorm/stop` - BRAINSTORM_STOP
             * `help/resource_click` - HELP_RESOURCE_CLICK
             * `usage/submit_feedback` - USAGE_SUBMIT_FEEDBACK
             * `usage/undo` - USAGE_UNDO
@@ -86,8 +92,6 @@ class EventSubscriptionUpdate:
             * `usage/nlp_raw_delete` - USAGE_NLP_RAW_DELETE
             * `usage/nlp_typeahead_open` - USAGE_NLP_TYPEAHEAD_OPEN
             * `usage/nlp_typeahead_accept` - USAGE_NLP_TYPEAHEAD_ACCEPT
-            * `brainstorm/start` - BRAINSTORM_START
-            * `brainstorm/stop` - BRAINSTORM_STOP
         in_app (Union[Unset, bool]):
         email (Union[Unset, bool]):
         slack (Union[Unset, bool]):

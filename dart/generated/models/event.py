@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Type, TypeVar
+from typing import Any, Dict, List, Optional, Type, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -53,11 +53,16 @@ class Event:
             * `workspace/downgrade_finalize` - WORKSPACE_DOWNGRADE_FINALIZE
             * `workspace/become_active` - WORKSPACE_BECOME_ACTIVE
             * `workspace/become_inactive` - WORKSPACE_BECOME_INACTIVE
-            * `onboarding/finish_step` - ONBOARDING_FINISH_STEP
+            * `load/app` - LOAD_APP
+            * `load/authenticate` - AUTHENTICATE
+            * `load/unidle` - UNIDLE
+            * `load/signup` - LOAD_SIGNUP
+            * `profile/create` - PROFILE_CREATE
             * `profile/update` - PROFILE_UPDATE
             * `profile/delete` - PROFILE_DELETE
             * `profile/become_active` - PROFILE_BECOME_ACTIVE
             * `profile/become_inactive` - PROFILE_BECOME_INACTIVE
+            * `onboarding/finish_step` - ONBOARDING_FINISH_STEP
             * `ai/props` - AI_PROPS
             * `ai/subtasks` - AI_SUBTASKS
             * `ai/content` - AI_CONTENT
@@ -72,7 +77,8 @@ class Event:
             * `ai/filters` - AI_FILTERS
             * `ai/execute` - AI_EXECUTE
             * `ai/image` - AI_IMAGE
-            * `load/signup` - LOAD_SIGNUP
+            * `brainstorm/start` - BRAINSTORM_START
+            * `brainstorm/stop` - BRAINSTORM_STOP
             * `help/resource_click` - HELP_RESOURCE_CLICK
             * `usage/submit_feedback` - USAGE_SUBMIT_FEEDBACK
             * `usage/undo` - USAGE_UNDO
@@ -87,8 +93,6 @@ class Event:
             * `usage/nlp_raw_delete` - USAGE_NLP_RAW_DELETE
             * `usage/nlp_typeahead_open` - USAGE_NLP_TYPEAHEAD_OPEN
             * `usage/nlp_typeahead_accept` - USAGE_NLP_TYPEAHEAD_ACCEPT
-            * `brainstorm/start` - BRAINSTORM_START
-            * `brainstorm/stop` - BRAINSTORM_STOP
         main_entity_name (EntityName): * `comment` - COMMENT
             * `task` - TASK
             * `dartboard` - DARTBOARD
@@ -104,7 +108,8 @@ class Event:
             * `user` - USER
             * `UNKNOWN` - UNKNOWN
         adtl (Any):
-        message (Optional[str]):
+        message_str (Optional[str]):
+        message_frags (Optional[List[Any]]):
         actor_duid (Optional[str]):
         actor_str (Optional[EventActor]): * `Dart AI` - DART_AI
             * `Dart Due Date Bot` - DART_DUE_DATE_BOT
@@ -134,7 +139,8 @@ class Event:
     kind: EventKind
     main_entity_name: EntityName
     adtl: Any
-    message: Optional[str]
+    message_str: Optional[str]
+    message_frags: Optional[List[Any]]
     actor_duid: Optional[str]
     actor_str: Optional[EventActor]
     comment_duid: Optional[str]
@@ -157,7 +163,12 @@ class Event:
         main_entity_name = self.main_entity_name.value
 
         adtl = self.adtl
-        message = self.message
+        message_str = self.message_str
+        if self.message_frags is None:
+            message_frags = None
+        else:
+            message_frags = self.message_frags
+
         actor_duid = self.actor_duid
         actor_str = self.actor_str.value if self.actor_str else None
 
@@ -181,7 +192,8 @@ class Event:
                 "kind": kind,
                 "mainEntityName": main_entity_name,
                 "adtl": adtl,
-                "message": message,
+                "messageStr": message_str,
+                "messageFrags": message_frags,
                 "actorDuid": actor_duid,
                 "actorStr": actor_str,
                 "commentDuid": comment_duid,
@@ -210,7 +222,9 @@ class Event:
 
         adtl = d.pop("adtl")
 
-        message = d.pop("message")
+        message_str = d.pop("messageStr")
+
+        message_frags = cast(List[Any], d.pop("messageFrags"))
 
         actor_duid = d.pop("actorDuid")
 
@@ -249,7 +263,8 @@ class Event:
             kind=kind,
             main_entity_name=main_entity_name,
             adtl=adtl,
-            message=message,
+            message_str=message_str,
+            message_frags=message_frags,
             actor_duid=actor_duid,
             actor_str=actor_str,
             comment_duid=comment_duid,

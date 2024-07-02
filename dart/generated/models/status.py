@@ -24,6 +24,7 @@ class Status:
         locked (bool):
         order (str):
         title (str):
+        color_hex (str):
         color_name (ColorName): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -58,6 +59,7 @@ class Status:
     locked: bool
     order: str
     title: str
+    color_hex: str
     color_name: ColorName
     description: str
     updated_by_client_duid: Union[Unset, None, str] = UNSET
@@ -71,6 +73,7 @@ class Status:
         locked = self.locked
         order = self.order
         title = self.title
+        color_hex = self.color_hex
         color_name = self.color_name.value
 
         description = self.description
@@ -86,6 +89,7 @@ class Status:
                 "locked": locked,
                 "order": order,
                 "title": title,
+                "colorHex": color_hex,
                 "colorName": color_name,
                 "description": description,
             }
@@ -110,6 +114,8 @@ class Status:
 
         title = d.pop("title")
 
+        color_hex = d.pop("colorHex")
+
         color_name = ColorName(d.pop("colorName"))
 
         description = d.pop("description")
@@ -123,6 +129,7 @@ class Status:
             locked=locked,
             order=order,
             title=title,
+            color_hex=color_hex,
             color_name=color_name,
             description=description,
             updated_by_client_duid=updated_by_client_duid,

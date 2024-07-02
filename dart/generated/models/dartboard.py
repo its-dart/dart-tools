@@ -35,6 +35,7 @@ class Dartboard:
             * `Icon` - ICON
             * `Emoji` - EMOJI
         icon_name_or_emoji (str):
+        color_hex (str):
         color_name (ColorName): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -76,6 +77,7 @@ class Dartboard:
     description: str
     icon_kind: IconKind
     icon_name_or_emoji: str
+    color_hex: str
     color_name: ColorName
     user_duids_to_layout_duids: List["UserDartboardLayout"]
     always_shown_property_duids: List[str]
@@ -97,6 +99,7 @@ class Dartboard:
         icon_kind = self.icon_kind.value
 
         icon_name_or_emoji = self.icon_name_or_emoji
+        color_hex = self.color_hex
         color_name = self.color_name.value
 
         user_duids_to_layout_duids = []
@@ -127,6 +130,7 @@ class Dartboard:
                 "description": description,
                 "iconKind": icon_kind,
                 "iconNameOrEmoji": icon_name_or_emoji,
+                "colorHex": color_hex,
                 "colorName": color_name,
                 "userDuidsToLayoutDuids": user_duids_to_layout_duids,
                 "alwaysShownPropertyDuids": always_shown_property_duids,
@@ -161,6 +165,8 @@ class Dartboard:
         icon_kind = IconKind(d.pop("iconKind"))
 
         icon_name_or_emoji = d.pop("iconNameOrEmoji")
+
+        color_hex = d.pop("colorHex")
 
         color_name = ColorName(d.pop("colorName"))
 
@@ -202,6 +208,7 @@ class Dartboard:
             description=description,
             icon_kind=icon_kind,
             icon_name_or_emoji=icon_name_or_emoji,
+            color_hex=color_hex,
             color_name=color_name,
             user_duids_to_layout_duids=user_duids_to_layout_duids,
             always_shown_property_duids=always_shown_property_duids,

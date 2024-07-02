@@ -24,6 +24,7 @@ class StatusCreate:
         order (str):
         locked (Union[Unset, bool]):
         title (Union[Unset, str]):
+        color_hex (Union[Unset, str]):
         color_name (Union[Unset, ColorName]): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -57,6 +58,7 @@ class StatusCreate:
     order: str
     locked: Union[Unset, bool] = UNSET
     title: Union[Unset, str] = UNSET
+    color_hex: Union[Unset, str] = UNSET
     color_name: Union[Unset, ColorName] = UNSET
     description: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -69,6 +71,7 @@ class StatusCreate:
         order = self.order
         locked = self.locked
         title = self.title
+        color_hex = self.color_hex
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value
@@ -89,6 +92,8 @@ class StatusCreate:
             field_dict["locked"] = locked
         if title is not UNSET:
             field_dict["title"] = title
+        if color_hex is not UNSET:
+            field_dict["colorHex"] = color_hex
         if color_name is not UNSET:
             field_dict["colorName"] = color_name
         if description is not UNSET:
@@ -111,6 +116,8 @@ class StatusCreate:
 
         title = d.pop("title", UNSET)
 
+        color_hex = d.pop("colorHex", UNSET)
+
         _color_name = d.pop("colorName", UNSET)
         color_name: Union[Unset, ColorName]
         if isinstance(_color_name, Unset):
@@ -127,6 +134,7 @@ class StatusCreate:
             order=order,
             locked=locked,
             title=title,
+            color_hex=color_hex,
             color_name=color_name,
             description=description,
         )

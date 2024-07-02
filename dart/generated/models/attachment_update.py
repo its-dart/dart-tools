@@ -17,7 +17,8 @@ class AttachmentUpdate:
         order (Union[Unset, str]):
         name (Union[Unset, str]):
         kind (Union[Unset, str]):
-        file (Union[Unset, str]):
+        file_path (Union[Unset, str]):
+        color_hex (Union[Unset, str]):
         color_name (Union[Unset, ColorName]): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -49,7 +50,8 @@ class AttachmentUpdate:
     order: Union[Unset, str] = UNSET
     name: Union[Unset, str] = UNSET
     kind: Union[Unset, str] = UNSET
-    file: Union[Unset, str] = UNSET
+    file_path: Union[Unset, str] = UNSET
+    color_hex: Union[Unset, str] = UNSET
     color_name: Union[Unset, ColorName] = UNSET
     recommendation_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -59,7 +61,8 @@ class AttachmentUpdate:
         order = self.order
         name = self.name
         kind = self.kind
-        file = self.file
+        file_path = self.file_path
+        color_hex = self.color_hex
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value
@@ -79,8 +82,10 @@ class AttachmentUpdate:
             field_dict["name"] = name
         if kind is not UNSET:
             field_dict["kind"] = kind
-        if file is not UNSET:
-            field_dict["file"] = file
+        if file_path is not UNSET:
+            field_dict["filePath"] = file_path
+        if color_hex is not UNSET:
+            field_dict["colorHex"] = color_hex
         if color_name is not UNSET:
             field_dict["colorName"] = color_name
         if recommendation_duid is not UNSET:
@@ -99,7 +104,9 @@ class AttachmentUpdate:
 
         kind = d.pop("kind", UNSET)
 
-        file = d.pop("file", UNSET)
+        file_path = d.pop("filePath", UNSET)
+
+        color_hex = d.pop("colorHex", UNSET)
 
         _color_name = d.pop("colorName", UNSET)
         color_name: Union[Unset, ColorName]
@@ -115,7 +122,8 @@ class AttachmentUpdate:
             order=order,
             name=name,
             kind=kind,
-            file=file,
+            file_path=file_path,
+            color_hex=color_hex,
             color_name=color_name,
             recommendation_duid=recommendation_duid,
         )

@@ -23,6 +23,7 @@ class UserUpdate:
         theme (Union[Unset, Theme]): * `System Default` - SYSTEM_DEFAULT
             * `Light` - LIGHT
             * `Dark` - DARK
+        color_hex (Union[Unset, str]):
         color_name (Union[Unset, ColorName]): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -61,6 +62,7 @@ class UserUpdate:
     role: Union[Unset, UserRole] = UNSET
     name: Union[Unset, str] = UNSET
     theme: Union[Unset, Theme] = UNSET
+    color_hex: Union[Unset, str] = UNSET
     color_name: Union[Unset, ColorName] = UNSET
     open_in_native_app: Union[Unset, bool] = UNSET
     first_day_of_week: Union[Unset, int] = UNSET
@@ -83,6 +85,7 @@ class UserUpdate:
         if not isinstance(self.theme, Unset):
             theme = self.theme.value
 
+        color_hex = self.color_hex
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value
@@ -109,6 +112,8 @@ class UserUpdate:
             field_dict["name"] = name
         if theme is not UNSET:
             field_dict["theme"] = theme
+        if color_hex is not UNSET:
+            field_dict["colorHex"] = color_hex
         if color_name is not UNSET:
             field_dict["colorName"] = color_name
         if open_in_native_app is not UNSET:
@@ -151,6 +156,8 @@ class UserUpdate:
         else:
             theme = Theme(_theme)
 
+        color_hex = d.pop("colorHex", UNSET)
+
         _color_name = d.pop("colorName", UNSET)
         color_name: Union[Unset, ColorName]
         if isinstance(_color_name, Unset):
@@ -179,6 +186,7 @@ class UserUpdate:
             role=role,
             name=name,
             theme=theme,
+            color_hex=color_hex,
             color_name=color_name,
             open_in_native_app=open_in_native_app,
             first_day_of_week=first_day_of_week,

@@ -32,6 +32,7 @@ class Space:
             * `Icon` - ICON
             * `Emoji` - EMOJI
         icon_name_or_emoji (str):
+        color_hex (str):
         color_name (ColorName): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -62,8 +63,8 @@ class Space:
         changelog_recurrence (Any):
         updated_by_client_duid (Union[Unset, None, str]):
         drafter_duid (Optional[str]):
-        standup_recurrs_next_at (Optional[datetime.datetime]):
-        changelog_recurrs_next_at (Optional[datetime.datetime]):
+        standup_recurs_next_at (Optional[datetime.datetime]):
+        changelog_recurs_next_at (Optional[datetime.datetime]):
     """
 
     duid: str
@@ -76,13 +77,14 @@ class Space:
     description: str
     icon_kind: IconKind
     icon_name_or_emoji: str
+    color_hex: str
     color_name: ColorName
     sprint_mode: SprintMode
     standup_recurrence: Any
     changelog_recurrence: Any
     drafter_duid: Optional[str]
-    standup_recurrs_next_at: Optional[datetime.datetime]
-    changelog_recurrs_next_at: Optional[datetime.datetime]
+    standup_recurs_next_at: Optional[datetime.datetime]
+    changelog_recurs_next_at: Optional[datetime.datetime]
     updated_by_client_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -100,6 +102,7 @@ class Space:
         icon_kind = self.icon_kind.value
 
         icon_name_or_emoji = self.icon_name_or_emoji
+        color_hex = self.color_hex
         color_name = self.color_name.value
 
         sprint_mode = self.sprint_mode.value
@@ -108,11 +111,9 @@ class Space:
         changelog_recurrence = self.changelog_recurrence
         updated_by_client_duid = self.updated_by_client_duid
         drafter_duid = self.drafter_duid
-        standup_recurrs_next_at = self.standup_recurrs_next_at.isoformat() if self.standup_recurrs_next_at else None
+        standup_recurs_next_at = self.standup_recurs_next_at.isoformat() if self.standup_recurs_next_at else None
 
-        changelog_recurrs_next_at = (
-            self.changelog_recurrs_next_at.isoformat() if self.changelog_recurrs_next_at else None
-        )
+        changelog_recurs_next_at = self.changelog_recurs_next_at.isoformat() if self.changelog_recurs_next_at else None
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -128,13 +129,14 @@ class Space:
                 "description": description,
                 "iconKind": icon_kind,
                 "iconNameOrEmoji": icon_name_or_emoji,
+                "colorHex": color_hex,
                 "colorName": color_name,
                 "sprintMode": sprint_mode,
                 "standupRecurrence": standup_recurrence,
                 "changelogRecurrence": changelog_recurrence,
                 "drafterDuid": drafter_duid,
-                "standupRecurrsNextAt": standup_recurrs_next_at,
-                "changelogRecurrsNextAt": changelog_recurrs_next_at,
+                "standupRecursNextAt": standup_recurs_next_at,
+                "changelogRecursNextAt": changelog_recurs_next_at,
             }
         )
         if updated_by_client_duid is not UNSET:
@@ -165,6 +167,8 @@ class Space:
 
         icon_name_or_emoji = d.pop("iconNameOrEmoji")
 
+        color_hex = d.pop("colorHex")
+
         color_name = ColorName(d.pop("colorName"))
 
         sprint_mode = SprintMode(d.pop("sprintMode"))
@@ -177,19 +181,19 @@ class Space:
 
         drafter_duid = d.pop("drafterDuid")
 
-        _standup_recurrs_next_at = d.pop("standupRecurrsNextAt")
-        standup_recurrs_next_at: Optional[datetime.datetime]
-        if _standup_recurrs_next_at is None:
-            standup_recurrs_next_at = None
+        _standup_recurs_next_at = d.pop("standupRecursNextAt")
+        standup_recurs_next_at: Optional[datetime.datetime]
+        if _standup_recurs_next_at is None:
+            standup_recurs_next_at = None
         else:
-            standup_recurrs_next_at = isoparse(_standup_recurrs_next_at)
+            standup_recurs_next_at = isoparse(_standup_recurs_next_at)
 
-        _changelog_recurrs_next_at = d.pop("changelogRecurrsNextAt")
-        changelog_recurrs_next_at: Optional[datetime.datetime]
-        if _changelog_recurrs_next_at is None:
-            changelog_recurrs_next_at = None
+        _changelog_recurs_next_at = d.pop("changelogRecursNextAt")
+        changelog_recurs_next_at: Optional[datetime.datetime]
+        if _changelog_recurs_next_at is None:
+            changelog_recurs_next_at = None
         else:
-            changelog_recurrs_next_at = isoparse(_changelog_recurrs_next_at)
+            changelog_recurs_next_at = isoparse(_changelog_recurs_next_at)
 
         space = cls(
             duid=duid,
@@ -202,14 +206,15 @@ class Space:
             description=description,
             icon_kind=icon_kind,
             icon_name_or_emoji=icon_name_or_emoji,
+            color_hex=color_hex,
             color_name=color_name,
             sprint_mode=sprint_mode,
             standup_recurrence=standup_recurrence,
             changelog_recurrence=changelog_recurrence,
             updated_by_client_duid=updated_by_client_duid,
             drafter_duid=drafter_duid,
-            standup_recurrs_next_at=standup_recurrs_next_at,
-            changelog_recurrs_next_at=changelog_recurrs_next_at,
+            standup_recurs_next_at=standup_recurs_next_at,
+            changelog_recurs_next_at=changelog_recurs_next_at,
         )
 
         space.additional_properties = d

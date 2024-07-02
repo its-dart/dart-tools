@@ -17,6 +17,7 @@ class Attachment:
         name (str):
         kind (str):
         file_url (str):
+        color_hex (str):
         color_name (ColorName): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -49,6 +50,7 @@ class Attachment:
     name: str
     kind: str
     file_url: str
+    color_hex: str
     color_name: ColorName
     recommendation_duid: Optional[str]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -59,6 +61,7 @@ class Attachment:
         name = self.name
         kind = self.kind
         file_url = self.file_url
+        color_hex = self.color_hex
         color_name = self.color_name.value
 
         recommendation_duid = self.recommendation_duid
@@ -72,6 +75,7 @@ class Attachment:
                 "name": name,
                 "kind": kind,
                 "fileUrl": file_url,
+                "colorHex": color_hex,
                 "colorName": color_name,
                 "recommendationDuid": recommendation_duid,
             }
@@ -92,6 +96,8 @@ class Attachment:
 
         file_url = d.pop("fileUrl")
 
+        color_hex = d.pop("colorHex")
+
         color_name = ColorName(d.pop("colorName"))
 
         recommendation_duid = d.pop("recommendationDuid")
@@ -102,6 +108,7 @@ class Attachment:
             name=name,
             kind=kind,
             file_url=file_url,
+            color_hex=color_hex,
             color_name=color_name,
             recommendation_duid=recommendation_duid,
         )

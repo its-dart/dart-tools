@@ -41,6 +41,8 @@ class TaskUpdate:
             * `AppRoadmapList` - APP_ROADMAP_LIST
             * `AppRoadmapTimeline` - APP_ROADMAP_TIMELINE
             * `ExternalForm` - EXTERNAL_FORM Default: TaskSourceType.UNKNOWN.
+        source_template_view_duid (Union[Unset, None, str]):
+        source_template_task_duid (Union[Unset, None, str]):
         source_form_duid (Union[Unset, None, str]):
         created_by_duid (Union[Unset, None, str]):
         updated_by_duid (Union[Unset, None, str]):
@@ -48,11 +50,13 @@ class TaskUpdate:
         in_trash (Union[Unset, bool]):
         dartboard_duid (Union[Unset, str]):
         order (Union[Unset, str]):
+        expanded (Union[Unset, bool]):
         title (Union[Unset, str]):
         description (Union[Unset, Any]):
         description_markdown (Union[Unset, str]):
         status_duid (Union[Unset, str]):
         assigned_to_ai (Union[Unset, bool]):
+        recommendation_duid (Union[Unset, None, str]):
         assignee_duids (Union[Unset, List[str]]):
         subscriber_duids (Union[Unset, List[str]]):
         tag_duids (Union[Unset, List[str]]):
@@ -66,12 +70,14 @@ class TaskUpdate:
         due_at (Union[Unset, None, datetime.datetime]):
         remind_at (Union[Unset, None, datetime.datetime]):
         recurrence (Union[Unset, Any]):
-        recurrs_next_at (Union[Unset, None, datetime.datetime]):
+        recurs_next_at (Union[Unset, None, datetime.datetime]):
         properties (Union[Unset, Any]):
     """
 
     duid: str
     source_type: Union[Unset, TaskSourceType] = TaskSourceType.UNKNOWN
+    source_template_view_duid: Union[Unset, None, str] = UNSET
+    source_template_task_duid: Union[Unset, None, str] = UNSET
     source_form_duid: Union[Unset, None, str] = UNSET
     created_by_duid: Union[Unset, None, str] = UNSET
     updated_by_duid: Union[Unset, None, str] = UNSET
@@ -79,11 +85,13 @@ class TaskUpdate:
     in_trash: Union[Unset, bool] = UNSET
     dartboard_duid: Union[Unset, str] = UNSET
     order: Union[Unset, str] = UNSET
+    expanded: Union[Unset, bool] = UNSET
     title: Union[Unset, str] = UNSET
     description: Union[Unset, Any] = UNSET
     description_markdown: Union[Unset, str] = UNSET
     status_duid: Union[Unset, str] = UNSET
     assigned_to_ai: Union[Unset, bool] = UNSET
+    recommendation_duid: Union[Unset, None, str] = UNSET
     assignee_duids: Union[Unset, List[str]] = UNSET
     subscriber_duids: Union[Unset, List[str]] = UNSET
     tag_duids: Union[Unset, List[str]] = UNSET
@@ -94,7 +102,7 @@ class TaskUpdate:
     due_at: Union[Unset, None, datetime.datetime] = UNSET
     remind_at: Union[Unset, None, datetime.datetime] = UNSET
     recurrence: Union[Unset, Any] = UNSET
-    recurrs_next_at: Union[Unset, None, datetime.datetime] = UNSET
+    recurs_next_at: Union[Unset, None, datetime.datetime] = UNSET
     properties: Union[Unset, Any] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -104,6 +112,8 @@ class TaskUpdate:
         if not isinstance(self.source_type, Unset):
             source_type = self.source_type.value
 
+        source_template_view_duid = self.source_template_view_duid
+        source_template_task_duid = self.source_template_task_duid
         source_form_duid = self.source_form_duid
         created_by_duid = self.created_by_duid
         updated_by_duid = self.updated_by_duid
@@ -111,11 +121,13 @@ class TaskUpdate:
         in_trash = self.in_trash
         dartboard_duid = self.dartboard_duid
         order = self.order
+        expanded = self.expanded
         title = self.title
         description = self.description
         description_markdown = self.description_markdown
         status_duid = self.status_duid
         assigned_to_ai = self.assigned_to_ai
+        recommendation_duid = self.recommendation_duid
         assignee_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.assignee_duids, Unset):
             assignee_duids = self.assignee_duids
@@ -150,9 +162,9 @@ class TaskUpdate:
             remind_at = self.remind_at.isoformat() if self.remind_at else None
 
         recurrence = self.recurrence
-        recurrs_next_at: Union[Unset, None, str] = UNSET
-        if not isinstance(self.recurrs_next_at, Unset):
-            recurrs_next_at = self.recurrs_next_at.isoformat() if self.recurrs_next_at else None
+        recurs_next_at: Union[Unset, None, str] = UNSET
+        if not isinstance(self.recurs_next_at, Unset):
+            recurs_next_at = self.recurs_next_at.isoformat() if self.recurs_next_at else None
 
         properties = self.properties
 
@@ -165,6 +177,10 @@ class TaskUpdate:
         )
         if source_type is not UNSET:
             field_dict["sourceType"] = source_type
+        if source_template_view_duid is not UNSET:
+            field_dict["sourceTemplateViewDuid"] = source_template_view_duid
+        if source_template_task_duid is not UNSET:
+            field_dict["sourceTemplateTaskDuid"] = source_template_task_duid
         if source_form_duid is not UNSET:
             field_dict["sourceFormDuid"] = source_form_duid
         if created_by_duid is not UNSET:
@@ -179,6 +195,8 @@ class TaskUpdate:
             field_dict["dartboardDuid"] = dartboard_duid
         if order is not UNSET:
             field_dict["order"] = order
+        if expanded is not UNSET:
+            field_dict["expanded"] = expanded
         if title is not UNSET:
             field_dict["title"] = title
         if description is not UNSET:
@@ -189,6 +207,8 @@ class TaskUpdate:
             field_dict["statusDuid"] = status_duid
         if assigned_to_ai is not UNSET:
             field_dict["assignedToAi"] = assigned_to_ai
+        if recommendation_duid is not UNSET:
+            field_dict["recommendationDuid"] = recommendation_duid
         if assignee_duids is not UNSET:
             field_dict["assigneeDuids"] = assignee_duids
         if subscriber_duids is not UNSET:
@@ -209,8 +229,8 @@ class TaskUpdate:
             field_dict["remindAt"] = remind_at
         if recurrence is not UNSET:
             field_dict["recurrence"] = recurrence
-        if recurrs_next_at is not UNSET:
-            field_dict["recurrsNextAt"] = recurrs_next_at
+        if recurs_next_at is not UNSET:
+            field_dict["recursNextAt"] = recurs_next_at
         if properties is not UNSET:
             field_dict["properties"] = properties
 
@@ -228,6 +248,10 @@ class TaskUpdate:
         else:
             source_type = TaskSourceType(_source_type)
 
+        source_template_view_duid = d.pop("sourceTemplateViewDuid", UNSET)
+
+        source_template_task_duid = d.pop("sourceTemplateTaskDuid", UNSET)
+
         source_form_duid = d.pop("sourceFormDuid", UNSET)
 
         created_by_duid = d.pop("createdByDuid", UNSET)
@@ -242,6 +266,8 @@ class TaskUpdate:
 
         order = d.pop("order", UNSET)
 
+        expanded = d.pop("expanded", UNSET)
+
         title = d.pop("title", UNSET)
 
         description = d.pop("description", UNSET)
@@ -251,6 +277,8 @@ class TaskUpdate:
         status_duid = d.pop("statusDuid", UNSET)
 
         assigned_to_ai = d.pop("assignedToAi", UNSET)
+
+        recommendation_duid = d.pop("recommendationDuid", UNSET)
 
         assignee_duids = cast(List[str], d.pop("assigneeDuids", UNSET))
 
@@ -300,20 +328,22 @@ class TaskUpdate:
 
         recurrence = d.pop("recurrence", UNSET)
 
-        _recurrs_next_at = d.pop("recurrsNextAt", UNSET)
-        recurrs_next_at: Union[Unset, None, datetime.datetime]
-        if _recurrs_next_at is None:
-            recurrs_next_at = None
-        elif isinstance(_recurrs_next_at, Unset):
-            recurrs_next_at = UNSET
+        _recurs_next_at = d.pop("recursNextAt", UNSET)
+        recurs_next_at: Union[Unset, None, datetime.datetime]
+        if _recurs_next_at is None:
+            recurs_next_at = None
+        elif isinstance(_recurs_next_at, Unset):
+            recurs_next_at = UNSET
         else:
-            recurrs_next_at = isoparse(_recurrs_next_at)
+            recurs_next_at = isoparse(_recurs_next_at)
 
         properties = d.pop("properties", UNSET)
 
         task_update = cls(
             duid=duid,
             source_type=source_type,
+            source_template_view_duid=source_template_view_duid,
+            source_template_task_duid=source_template_task_duid,
             source_form_duid=source_form_duid,
             created_by_duid=created_by_duid,
             updated_by_duid=updated_by_duid,
@@ -321,11 +351,13 @@ class TaskUpdate:
             in_trash=in_trash,
             dartboard_duid=dartboard_duid,
             order=order,
+            expanded=expanded,
             title=title,
             description=description,
             description_markdown=description_markdown,
             status_duid=status_duid,
             assigned_to_ai=assigned_to_ai,
+            recommendation_duid=recommendation_duid,
             assignee_duids=assignee_duids,
             subscriber_duids=subscriber_duids,
             tag_duids=tag_duids,
@@ -336,7 +368,7 @@ class TaskUpdate:
             due_at=due_at,
             remind_at=remind_at,
             recurrence=recurrence,
-            recurrs_next_at=recurrs_next_at,
+            recurs_next_at=recurs_next_at,
             properties=properties,
         )
 

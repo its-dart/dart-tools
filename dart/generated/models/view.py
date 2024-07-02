@@ -30,6 +30,7 @@ class View:
             * `Icon` - ICON
             * `Emoji` - EMOJI
         icon_name_or_emoji (str):
+        color_hex (str):
         color_name (ColorName): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -71,6 +72,7 @@ class View:
     description: str
     icon_kind: IconKind
     icon_name_or_emoji: str
+    color_hex: str
     color_name: ColorName
     layout_duid: str
     favorited_by_user_duids: List[str]
@@ -93,6 +95,7 @@ class View:
         icon_kind = self.icon_kind.value
 
         icon_name_or_emoji = self.icon_name_or_emoji
+        color_hex = self.color_hex
         color_name = self.color_name.value
 
         layout_duid = self.layout_duid
@@ -118,6 +121,7 @@ class View:
                 "description": description,
                 "iconKind": icon_kind,
                 "iconNameOrEmoji": icon_name_or_emoji,
+                "colorHex": color_hex,
                 "colorName": color_name,
                 "layoutDuid": layout_duid,
                 "favoritedByUserDuids": favorited_by_user_duids,
@@ -153,6 +157,8 @@ class View:
 
         icon_name_or_emoji = d.pop("iconNameOrEmoji")
 
+        color_hex = d.pop("colorHex")
+
         color_name = ColorName(d.pop("colorName"))
 
         layout_duid = d.pop("layoutDuid")
@@ -176,6 +182,7 @@ class View:
             description=description,
             icon_kind=icon_kind,
             icon_name_or_emoji=icon_name_or_emoji,
+            color_hex=color_hex,
             color_name=color_name,
             layout_duid=layout_duid,
             favorited_by_user_duids=favorited_by_user_duids,

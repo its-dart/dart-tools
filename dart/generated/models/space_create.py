@@ -29,6 +29,7 @@ class SpaceCreate:
             * `Icon` - ICON
             * `Emoji` - EMOJI
         icon_name_or_emoji (Union[Unset, str]):
+        color_hex (Union[Unset, str]):
         color_name (Union[Unset, ColorName]): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -56,9 +57,9 @@ class SpaceCreate:
         sprint_mode (Union[Unset, SprintMode]): * `None` - NONE
             * `ANBA` - ANBA
         standup_recurrence (Union[Unset, Any]):
-        standup_recurrs_next_at (Union[Unset, None, datetime.datetime]):
+        standup_recurs_next_at (Union[Unset, None, datetime.datetime]):
         changelog_recurrence (Union[Unset, Any]):
-        changelog_recurrs_next_at (Union[Unset, None, datetime.datetime]):
+        changelog_recurs_next_at (Union[Unset, None, datetime.datetime]):
     """
 
     duid: str
@@ -71,12 +72,13 @@ class SpaceCreate:
     description: Union[Unset, str] = UNSET
     icon_kind: Union[Unset, IconKind] = UNSET
     icon_name_or_emoji: Union[Unset, str] = UNSET
+    color_hex: Union[Unset, str] = UNSET
     color_name: Union[Unset, ColorName] = UNSET
     sprint_mode: Union[Unset, SprintMode] = UNSET
     standup_recurrence: Union[Unset, Any] = UNSET
-    standup_recurrs_next_at: Union[Unset, None, datetime.datetime] = UNSET
+    standup_recurs_next_at: Union[Unset, None, datetime.datetime] = UNSET
     changelog_recurrence: Union[Unset, Any] = UNSET
-    changelog_recurrs_next_at: Union[Unset, None, datetime.datetime] = UNSET
+    changelog_recurs_next_at: Union[Unset, None, datetime.datetime] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -96,6 +98,7 @@ class SpaceCreate:
             icon_kind = self.icon_kind.value
 
         icon_name_or_emoji = self.icon_name_or_emoji
+        color_hex = self.color_hex
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value
@@ -105,15 +108,15 @@ class SpaceCreate:
             sprint_mode = self.sprint_mode.value
 
         standup_recurrence = self.standup_recurrence
-        standup_recurrs_next_at: Union[Unset, None, str] = UNSET
-        if not isinstance(self.standup_recurrs_next_at, Unset):
-            standup_recurrs_next_at = self.standup_recurrs_next_at.isoformat() if self.standup_recurrs_next_at else None
+        standup_recurs_next_at: Union[Unset, None, str] = UNSET
+        if not isinstance(self.standup_recurs_next_at, Unset):
+            standup_recurs_next_at = self.standup_recurs_next_at.isoformat() if self.standup_recurs_next_at else None
 
         changelog_recurrence = self.changelog_recurrence
-        changelog_recurrs_next_at: Union[Unset, None, str] = UNSET
-        if not isinstance(self.changelog_recurrs_next_at, Unset):
-            changelog_recurrs_next_at = (
-                self.changelog_recurrs_next_at.isoformat() if self.changelog_recurrs_next_at else None
+        changelog_recurs_next_at: Union[Unset, None, str] = UNSET
+        if not isinstance(self.changelog_recurs_next_at, Unset):
+            changelog_recurs_next_at = (
+                self.changelog_recurs_next_at.isoformat() if self.changelog_recurs_next_at else None
             )
 
         field_dict: Dict[str, Any] = {}
@@ -140,18 +143,20 @@ class SpaceCreate:
             field_dict["iconKind"] = icon_kind
         if icon_name_or_emoji is not UNSET:
             field_dict["iconNameOrEmoji"] = icon_name_or_emoji
+        if color_hex is not UNSET:
+            field_dict["colorHex"] = color_hex
         if color_name is not UNSET:
             field_dict["colorName"] = color_name
         if sprint_mode is not UNSET:
             field_dict["sprintMode"] = sprint_mode
         if standup_recurrence is not UNSET:
             field_dict["standupRecurrence"] = standup_recurrence
-        if standup_recurrs_next_at is not UNSET:
-            field_dict["standupRecurrsNextAt"] = standup_recurrs_next_at
+        if standup_recurs_next_at is not UNSET:
+            field_dict["standupRecursNextAt"] = standup_recurs_next_at
         if changelog_recurrence is not UNSET:
             field_dict["changelogRecurrence"] = changelog_recurrence
-        if changelog_recurrs_next_at is not UNSET:
-            field_dict["changelogRecurrsNextAt"] = changelog_recurrs_next_at
+        if changelog_recurs_next_at is not UNSET:
+            field_dict["changelogRecursNextAt"] = changelog_recurs_next_at
 
         return field_dict
 
@@ -183,6 +188,8 @@ class SpaceCreate:
 
         icon_name_or_emoji = d.pop("iconNameOrEmoji", UNSET)
 
+        color_hex = d.pop("colorHex", UNSET)
+
         _color_name = d.pop("colorName", UNSET)
         color_name: Union[Unset, ColorName]
         if isinstance(_color_name, Unset):
@@ -199,25 +206,25 @@ class SpaceCreate:
 
         standup_recurrence = d.pop("standupRecurrence", UNSET)
 
-        _standup_recurrs_next_at = d.pop("standupRecurrsNextAt", UNSET)
-        standup_recurrs_next_at: Union[Unset, None, datetime.datetime]
-        if _standup_recurrs_next_at is None:
-            standup_recurrs_next_at = None
-        elif isinstance(_standup_recurrs_next_at, Unset):
-            standup_recurrs_next_at = UNSET
+        _standup_recurs_next_at = d.pop("standupRecursNextAt", UNSET)
+        standup_recurs_next_at: Union[Unset, None, datetime.datetime]
+        if _standup_recurs_next_at is None:
+            standup_recurs_next_at = None
+        elif isinstance(_standup_recurs_next_at, Unset):
+            standup_recurs_next_at = UNSET
         else:
-            standup_recurrs_next_at = isoparse(_standup_recurrs_next_at)
+            standup_recurs_next_at = isoparse(_standup_recurs_next_at)
 
         changelog_recurrence = d.pop("changelogRecurrence", UNSET)
 
-        _changelog_recurrs_next_at = d.pop("changelogRecurrsNextAt", UNSET)
-        changelog_recurrs_next_at: Union[Unset, None, datetime.datetime]
-        if _changelog_recurrs_next_at is None:
-            changelog_recurrs_next_at = None
-        elif isinstance(_changelog_recurrs_next_at, Unset):
-            changelog_recurrs_next_at = UNSET
+        _changelog_recurs_next_at = d.pop("changelogRecursNextAt", UNSET)
+        changelog_recurs_next_at: Union[Unset, None, datetime.datetime]
+        if _changelog_recurs_next_at is None:
+            changelog_recurs_next_at = None
+        elif isinstance(_changelog_recurs_next_at, Unset):
+            changelog_recurs_next_at = UNSET
         else:
-            changelog_recurrs_next_at = isoparse(_changelog_recurrs_next_at)
+            changelog_recurs_next_at = isoparse(_changelog_recurs_next_at)
 
         space_create = cls(
             duid=duid,
@@ -230,12 +237,13 @@ class SpaceCreate:
             description=description,
             icon_kind=icon_kind,
             icon_name_or_emoji=icon_name_or_emoji,
+            color_hex=color_hex,
             color_name=color_name,
             sprint_mode=sprint_mode,
             standup_recurrence=standup_recurrence,
-            standup_recurrs_next_at=standup_recurrs_next_at,
+            standup_recurs_next_at=standup_recurs_next_at,
             changelog_recurrence=changelog_recurrence,
-            changelog_recurrs_next_at=changelog_recurrs_next_at,
+            changelog_recurs_next_at=changelog_recurs_next_at,
         )
 
         space_create.additional_properties = d

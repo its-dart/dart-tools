@@ -16,6 +16,7 @@ class Option:
         duid (str):
         property_duid (str):
         title (str):
+        color_hex (str):
         color_name (ColorName): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -46,6 +47,7 @@ class Option:
     duid: str
     property_duid: str
     title: str
+    color_hex: str
     color_name: ColorName
     updated_by_client_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -54,6 +56,7 @@ class Option:
         duid = self.duid
         property_duid = self.property_duid
         title = self.title
+        color_hex = self.color_hex
         color_name = self.color_name.value
 
         updated_by_client_duid = self.updated_by_client_duid
@@ -65,6 +68,7 @@ class Option:
                 "duid": duid,
                 "propertyDuid": property_duid,
                 "title": title,
+                "colorHex": color_hex,
                 "colorName": color_name,
             }
         )
@@ -82,6 +86,8 @@ class Option:
 
         title = d.pop("title")
 
+        color_hex = d.pop("colorHex")
+
         color_name = ColorName(d.pop("colorName"))
 
         updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
@@ -90,6 +96,7 @@ class Option:
             duid=duid,
             property_duid=property_duid,
             title=title,
+            color_hex=color_hex,
             color_name=color_name,
             updated_by_client_duid=updated_by_client_duid,
         )

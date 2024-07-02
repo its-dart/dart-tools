@@ -53,6 +53,7 @@ class Task:
         in_trash (bool):
         dartboard_duid (str):
         order (str):
+        expanded (bool):
         title (str):
         description (Any):
         status_duid (str):
@@ -70,6 +71,7 @@ class Task:
         updated_by_duid (Optional[str]):
         drafter_duid (Optional[str]):
         notion_document (Optional[TaskNotionDocument]):
+        recommendation_duid (Optional[str]):
         priority (Optional[Priority]): * `Critical` - CRITICAL
             * `High` - HIGH
             * `Medium` - MEDIUM
@@ -78,7 +80,7 @@ class Task:
         start_at (Optional[datetime.datetime]):
         due_at (Optional[datetime.datetime]):
         remind_at (Optional[datetime.datetime]):
-        recurrs_next_at (Optional[datetime.datetime]):
+        recurs_next_at (Optional[datetime.datetime]):
     """
 
     duid: str
@@ -88,6 +90,7 @@ class Task:
     in_trash: bool
     dartboard_duid: str
     order: str
+    expanded: bool
     title: str
     description: Any
     status_duid: str
@@ -104,12 +107,13 @@ class Task:
     updated_by_duid: Optional[str]
     drafter_duid: Optional[str]
     notion_document: Optional["TaskNotionDocument"]
+    recommendation_duid: Optional[str]
     priority: Optional[Priority]
     size: Optional[int]
     start_at: Optional[datetime.datetime]
     due_at: Optional[datetime.datetime]
     remind_at: Optional[datetime.datetime]
-    recurrs_next_at: Optional[datetime.datetime]
+    recurs_next_at: Optional[datetime.datetime]
     updated_by_client_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -124,6 +128,7 @@ class Task:
         in_trash = self.in_trash
         dartboard_duid = self.dartboard_duid
         order = self.order
+        expanded = self.expanded
         title = self.title
         description = self.description
         status_duid = self.status_duid
@@ -157,6 +162,7 @@ class Task:
         drafter_duid = self.drafter_duid
         notion_document = self.notion_document.to_dict() if self.notion_document else None
 
+        recommendation_duid = self.recommendation_duid
         priority = self.priority.value if self.priority else None
 
         size = self.size
@@ -166,7 +172,7 @@ class Task:
 
         remind_at = self.remind_at.isoformat() if self.remind_at else None
 
-        recurrs_next_at = self.recurrs_next_at.isoformat() if self.recurrs_next_at else None
+        recurs_next_at = self.recurs_next_at.isoformat() if self.recurs_next_at else None
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -179,6 +185,7 @@ class Task:
                 "inTrash": in_trash,
                 "dartboardDuid": dartboard_duid,
                 "order": order,
+                "expanded": expanded,
                 "title": title,
                 "description": description,
                 "statusDuid": status_duid,
@@ -195,12 +202,13 @@ class Task:
                 "updatedByDuid": updated_by_duid,
                 "drafterDuid": drafter_duid,
                 "notionDocument": notion_document,
+                "recommendationDuid": recommendation_duid,
                 "priority": priority,
                 "size": size,
                 "startAt": start_at,
                 "dueAt": due_at,
                 "remindAt": remind_at,
-                "recurrsNextAt": recurrs_next_at,
+                "recursNextAt": recurs_next_at,
             }
         )
         if updated_by_client_duid is not UNSET:
@@ -229,6 +237,8 @@ class Task:
         dartboard_duid = d.pop("dartboardDuid")
 
         order = d.pop("order")
+
+        expanded = d.pop("expanded")
 
         title = d.pop("title")
 
@@ -279,6 +289,8 @@ class Task:
         else:
             notion_document = TaskNotionDocument.from_dict(_notion_document)
 
+        recommendation_duid = d.pop("recommendationDuid")
+
         _priority = d.pop("priority")
         priority: Optional[Priority]
         if _priority is None:
@@ -309,12 +321,12 @@ class Task:
         else:
             remind_at = isoparse(_remind_at)
 
-        _recurrs_next_at = d.pop("recurrsNextAt")
-        recurrs_next_at: Optional[datetime.datetime]
-        if _recurrs_next_at is None:
-            recurrs_next_at = None
+        _recurs_next_at = d.pop("recursNextAt")
+        recurs_next_at: Optional[datetime.datetime]
+        if _recurs_next_at is None:
+            recurs_next_at = None
         else:
-            recurrs_next_at = isoparse(_recurrs_next_at)
+            recurs_next_at = isoparse(_recurs_next_at)
 
         task = cls(
             duid=duid,
@@ -324,6 +336,7 @@ class Task:
             in_trash=in_trash,
             dartboard_duid=dartboard_duid,
             order=order,
+            expanded=expanded,
             title=title,
             description=description,
             status_duid=status_duid,
@@ -341,12 +354,13 @@ class Task:
             updated_by_duid=updated_by_duid,
             drafter_duid=drafter_duid,
             notion_document=notion_document,
+            recommendation_duid=recommendation_duid,
             priority=priority,
             size=size,
             start_at=start_at,
             due_at=due_at,
             remind_at=remind_at,
-            recurrs_next_at=recurrs_next_at,
+            recurs_next_at=recurs_next_at,
         )
 
         task.additional_properties = d

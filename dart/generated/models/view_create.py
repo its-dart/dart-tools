@@ -26,6 +26,7 @@ class ViewCreate:
             * `Icon` - ICON
             * `Emoji` - EMOJI
         icon_name_or_emoji (Union[Unset, str]):
+        color_hex (Union[Unset, str]):
         color_name (Union[Unset, ColorName]): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -65,6 +66,7 @@ class ViewCreate:
     description: Union[Unset, str] = UNSET
     icon_kind: Union[Unset, IconKind] = UNSET
     icon_name_or_emoji: Union[Unset, str] = UNSET
+    color_hex: Union[Unset, str] = UNSET
     color_name: Union[Unset, ColorName] = UNSET
     favorited_by_user_duids: Union[Unset, List[str]] = UNSET
     always_shown_property_duids: Union[Unset, List[str]] = UNSET
@@ -88,6 +90,7 @@ class ViewCreate:
             icon_kind = self.icon_kind.value
 
         icon_name_or_emoji = self.icon_name_or_emoji
+        color_hex = self.color_hex
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value
@@ -127,6 +130,8 @@ class ViewCreate:
             field_dict["iconKind"] = icon_kind
         if icon_name_or_emoji is not UNSET:
             field_dict["iconNameOrEmoji"] = icon_name_or_emoji
+        if color_hex is not UNSET:
+            field_dict["colorHex"] = color_hex
         if color_name is not UNSET:
             field_dict["colorName"] = color_name
         if favorited_by_user_duids is not UNSET:
@@ -166,6 +171,8 @@ class ViewCreate:
 
         icon_name_or_emoji = d.pop("iconNameOrEmoji", UNSET)
 
+        color_hex = d.pop("colorHex", UNSET)
+
         _color_name = d.pop("colorName", UNSET)
         color_name: Union[Unset, ColorName]
         if isinstance(_color_name, Unset):
@@ -190,6 +197,7 @@ class ViewCreate:
             description=description,
             icon_kind=icon_kind,
             icon_name_or_emoji=icon_name_or_emoji,
+            color_hex=color_hex,
             color_name=color_name,
             favorited_by_user_duids=favorited_by_user_duids,
             always_shown_property_duids=always_shown_property_duids,

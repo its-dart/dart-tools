@@ -27,6 +27,7 @@ class FolderUpdate:
             * `Icon` - ICON
             * `Emoji` - EMOJI
         icon_name_or_emoji (Union[Unset, str]):
+        color_hex (Union[Unset, str]):
         color_name (Union[Unset, ColorName]): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -61,6 +62,7 @@ class FolderUpdate:
     description: Union[Unset, str] = UNSET
     icon_kind: Union[Unset, IconKind] = UNSET
     icon_name_or_emoji: Union[Unset, str] = UNSET
+    color_hex: Union[Unset, str] = UNSET
     color_name: Union[Unset, ColorName] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -79,6 +81,7 @@ class FolderUpdate:
             icon_kind = self.icon_kind.value
 
         icon_name_or_emoji = self.icon_name_or_emoji
+        color_hex = self.color_hex
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value
@@ -104,6 +107,8 @@ class FolderUpdate:
             field_dict["iconKind"] = icon_kind
         if icon_name_or_emoji is not UNSET:
             field_dict["iconNameOrEmoji"] = icon_name_or_emoji
+        if color_hex is not UNSET:
+            field_dict["colorHex"] = color_hex
         if color_name is not UNSET:
             field_dict["colorName"] = color_name
 
@@ -138,6 +143,8 @@ class FolderUpdate:
 
         icon_name_or_emoji = d.pop("iconNameOrEmoji", UNSET)
 
+        color_hex = d.pop("colorHex", UNSET)
+
         _color_name = d.pop("colorName", UNSET)
         color_name: Union[Unset, ColorName]
         if isinstance(_color_name, Unset):
@@ -154,6 +161,7 @@ class FolderUpdate:
             description=description,
             icon_kind=icon_kind,
             icon_name_or_emoji=icon_name_or_emoji,
+            color_hex=color_hex,
             color_name=color_name,
         )
 

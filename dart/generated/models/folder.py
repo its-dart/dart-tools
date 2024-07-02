@@ -27,6 +27,7 @@ class Folder:
             * `Icon` - ICON
             * `Emoji` - EMOJI
         icon_name_or_emoji (str):
+        color_hex (str):
         color_name (ColorName): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -62,6 +63,7 @@ class Folder:
     description: str
     icon_kind: IconKind
     icon_name_or_emoji: str
+    color_hex: str
     color_name: ColorName
     updated_by_client_duid: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -77,6 +79,7 @@ class Folder:
         icon_kind = self.icon_kind.value
 
         icon_name_or_emoji = self.icon_name_or_emoji
+        color_hex = self.color_hex
         color_name = self.color_name.value
 
         updated_by_client_duid = self.updated_by_client_duid
@@ -93,6 +96,7 @@ class Folder:
                 "description": description,
                 "iconKind": icon_kind,
                 "iconNameOrEmoji": icon_name_or_emoji,
+                "colorHex": color_hex,
                 "colorName": color_name,
             }
         )
@@ -120,6 +124,8 @@ class Folder:
 
         icon_name_or_emoji = d.pop("iconNameOrEmoji")
 
+        color_hex = d.pop("colorHex")
+
         color_name = ColorName(d.pop("colorName"))
 
         updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
@@ -133,6 +139,7 @@ class Folder:
             description=description,
             icon_kind=icon_kind,
             icon_name_or_emoji=icon_name_or_emoji,
+            color_hex=color_hex,
             color_name=color_name,
             updated_by_client_duid=updated_by_client_duid,
         )

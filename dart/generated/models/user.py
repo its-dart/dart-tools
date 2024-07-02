@@ -35,6 +35,7 @@ class User:
         theme (Theme): * `System Default` - SYSTEM_DEFAULT
             * `Light` - LIGHT
             * `Dark` - DARK
+        color_hex (str):
         color_name (ColorName): * `Red` - RED
             * `Dark Blue` - DARK_BLUE
             * `Dark Orange` - DARK_ORANGE
@@ -75,6 +76,7 @@ class User:
     name: str
     abrev: str
     theme: Theme
+    color_hex: str
     color_name: ColorName
     sections: Any
     layout: Any
@@ -96,6 +98,7 @@ class User:
         abrev = self.abrev
         theme = self.theme.value
 
+        color_hex = self.color_hex
         color_name = self.color_name.value
 
         sections = self.sections
@@ -117,6 +120,7 @@ class User:
                 "name": name,
                 "abrev": abrev,
                 "theme": theme,
+                "colorHex": color_hex,
                 "colorName": color_name,
                 "sections": sections,
                 "layout": layout,
@@ -150,6 +154,8 @@ class User:
 
         theme = Theme(d.pop("theme"))
 
+        color_hex = d.pop("colorHex")
+
         color_name = ColorName(d.pop("colorName"))
 
         sections = d.pop("sections")
@@ -179,6 +185,7 @@ class User:
             name=name,
             abrev=abrev,
             theme=theme,
+            color_hex=color_hex,
             color_name=color_name,
             sections=sections,
             layout=layout,
