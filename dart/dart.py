@@ -61,7 +61,7 @@ _CREATE_TASK_CMD = "createtask"
 _UPDATE_TASK_CMD = "updatetask"
 _BEGIN_TASK_CMD = "begintask"
 
-_PROFILE_SETTINGS_URL_FRAG = "/?settings=profile"
+_PROFILE_SETTINGS_URL_FRAG = "/?settings=account"
 _ROOT_API_URL_FRAG = "/api/v0"
 _CSRF_URL_FRAG = _ROOT_API_URL_FRAG + "/csrf-token"
 _USER_STATUS_URL_FRAG = _ROOT_API_URL_FRAG + "/user-status"

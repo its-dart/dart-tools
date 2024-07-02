@@ -51,7 +51,7 @@ This command will mark the referenced task 'Done'. Here `[DUID]` is meant to be 
 
 ## Using the Python Library
 
-First, set up authentication. Run `dart login` in the terminal for an interactive process, or visit [your Dart profile](https://app.itsdart.com/?settings=profile) and then run `dart.login(token)` or save the token into the `DART_TOKEN` environment variable.
+First, set up authentication. Run `dart login` in the terminal for an interactive process, or visit [your Dart profile](https://app.itsdart.com/?settings=account) and then run `dart.login(token)` or save the token into the `DART_TOKEN` environment variable.
 
 Then, you can run something like
 ```python

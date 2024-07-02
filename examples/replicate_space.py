@@ -6,7 +6,7 @@ from dart import is_logged_in, replicate_space
 
 
 # The DART_TOKEN environment variable must be set to the value from
-# https://app.itsdart.com/?settings=profile at this point
+# https://app.itsdart.com/?settings=account at this point
 is_logged_in(should_raise=True)
 
 
