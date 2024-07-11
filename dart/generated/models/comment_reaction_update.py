@@ -26,8 +26,11 @@ class CommentReactionUpdate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         author_duid = self.author_duid
+
         comment_duid = self.comment_duid
+
         emoji = self.emoji
 
         field_dict: Dict[str, Any] = {}

@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -43,7 +43,7 @@ class AttachmentUpdate:
             * `Dark Gray` - DARK_GRAY
             * `Light Brown` - LIGHT_BROWN
             * `Light Gray` - LIGHT_GRAY
-        recommendation_duid (Union[Unset, None, str]):
+        recommendation_duid (Union[None, Unset, str]):
     """
 
     duid: str
@@ -53,21 +53,31 @@ class AttachmentUpdate:
     file_path: Union[Unset, str] = UNSET
     color_hex: Union[Unset, str] = UNSET
     color_name: Union[Unset, ColorName] = UNSET
-    recommendation_duid: Union[Unset, None, str] = UNSET
+    recommendation_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         order = self.order
+
         name = self.name
+
         kind = self.kind
+
         file_path = self.file_path
+
         color_hex = self.color_hex
+
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value
 
-        recommendation_duid = self.recommendation_duid
+        recommendation_duid: Union[None, Unset, str]
+        if isinstance(self.recommendation_duid, Unset):
+            recommendation_duid = UNSET
+        else:
+            recommendation_duid = self.recommendation_duid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -115,7 +125,14 @@ class AttachmentUpdate:
         else:
             color_name = ColorName(_color_name)
 
-        recommendation_duid = d.pop("recommendationDuid", UNSET)
+        def _parse_recommendation_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        recommendation_duid = _parse_recommendation_duid(d.pop("recommendationDuid", UNSET))
 
         attachment_update = cls(
             duid=duid,

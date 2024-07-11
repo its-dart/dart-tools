@@ -85,6 +85,7 @@ class EventSubscriptionUpdate:
             * `usage/open_command_center` - USAGE_OPEN_COMMAND_CENTER
             * `usage/open_rightbar` - USAGE_OPEN_RIGHTBAR
             * `usage/open_fullscreen` - USAGE_OPEN_FULLSCREEN
+            * `usage/open_task_overlay` - USAGE_OPEN_TASK_OVERLAY
             * `usage/copy_task_link` - USAGE_COPY_TASK_LINK
             * `usage/copy_branch` - USAGE_COPY_BRANCH
             * `usage/open_search` - USAGE_OPEN_SEARCH
@@ -109,7 +110,9 @@ class EventSubscriptionUpdate:
             kind = self.kind.value
 
         in_app = self.in_app
+
         email = self.email
+
         slack = self.slack
 
         field_dict: Dict[str, Any] = {}

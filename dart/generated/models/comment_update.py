@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -18,30 +18,44 @@ class CommentUpdate:
         authored_by_ai (Union[Unset, bool]):
         author_duid (Union[Unset, str]):
         task_duid (Union[Unset, str]):
-        root_duid (Union[Unset, None, str]):
+        root_duid (Union[None, Unset, str]):
         text (Union[Unset, Any]):
-        published_at (Union[Unset, None, datetime.datetime]):
+        published_at (Union[None, Unset, datetime.datetime]):
     """
 
     duid: str
     authored_by_ai: Union[Unset, bool] = UNSET
     author_duid: Union[Unset, str] = UNSET
     task_duid: Union[Unset, str] = UNSET
-    root_duid: Union[Unset, None, str] = UNSET
+    root_duid: Union[None, Unset, str] = UNSET
     text: Union[Unset, Any] = UNSET
-    published_at: Union[Unset, None, datetime.datetime] = UNSET
+    published_at: Union[None, Unset, datetime.datetime] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         authored_by_ai = self.authored_by_ai
+
         author_duid = self.author_duid
+
         task_duid = self.task_duid
-        root_duid = self.root_duid
+
+        root_duid: Union[None, Unset, str]
+        if isinstance(self.root_duid, Unset):
+            root_duid = UNSET
+        else:
+            root_duid = self.root_duid
+
         text = self.text
-        published_at: Union[Unset, None, str] = UNSET
-        if not isinstance(self.published_at, Unset):
-            published_at = self.published_at.isoformat() if self.published_at else None
+
+        published_at: Union[None, Unset, str]
+        if isinstance(self.published_at, Unset):
+            published_at = UNSET
+        elif isinstance(self.published_at, datetime.datetime):
+            published_at = self.published_at.isoformat()
+        else:
+            published_at = self.published_at
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -76,18 +90,33 @@ class CommentUpdate:
 
         task_duid = d.pop("taskDuid", UNSET)
 
-        root_duid = d.pop("rootDuid", UNSET)
+        def _parse_root_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        root_duid = _parse_root_duid(d.pop("rootDuid", UNSET))
 
         text = d.pop("text", UNSET)
 
-        _published_at = d.pop("publishedAt", UNSET)
-        published_at: Union[Unset, None, datetime.datetime]
-        if _published_at is None:
-            published_at = None
-        elif isinstance(_published_at, Unset):
-            published_at = UNSET
-        else:
-            published_at = isoparse(_published_at)
+        def _parse_published_at(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                published_at_type_0 = isoparse(data)
+
+                return published_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        published_at = _parse_published_at(d.pop("publishedAt", UNSET))
 
         comment_update = cls(
             duid=duid,

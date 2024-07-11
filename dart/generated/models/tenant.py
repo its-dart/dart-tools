@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Type, TypeVar
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -30,19 +30,22 @@ class Tenant:
         subscription (Subscription): * `Personal` - PERSONAL
             * `Premium` - PREMIUM
         entitlement_overrides (Any):
+        image_url (Union[None, str]):
         backlog_enabled (bool):
         ai_assignment_enabled (bool):
         email_integration_enabled (bool):
+        close_parent_on_close_all_subtasks (bool):
+        move_subtasks_on_move_parent (bool):
+        update_subtasks_status_on_update_parent_status (bool):
         copy_parent_fields_on_create (bool):
         webhook_enabled (bool):
         webhook_secret (str):
-        image_url (Optional[str]):
-        webhook_url (Optional[str]):
-        notion_integration (Optional[NotionIntegration]):
-        slack_integration (Optional[SlackIntegration]):
-        discord_integration (Optional[DiscordIntegration]):
-        github_integration (Optional[GithubIntegration]):
-        zapier_integration (Optional[ZapierIntegration]):
+        webhook_url (Union[None, str]):
+        notion_integration (Union['NotionIntegration', None]):
+        slack_integration (Union['SlackIntegration', None]):
+        discord_integration (Union['DiscordIntegration', None]):
+        github_integration (Union['GithubIntegration', None]):
+        zapier_integration (Union['ZapierIntegration', None]):
     """
 
     duid: str
@@ -52,48 +55,98 @@ class Tenant:
     timezone: str
     subscription: Subscription
     entitlement_overrides: Any
+    image_url: Union[None, str]
     backlog_enabled: bool
     ai_assignment_enabled: bool
     email_integration_enabled: bool
+    close_parent_on_close_all_subtasks: bool
+    move_subtasks_on_move_parent: bool
+    update_subtasks_status_on_update_parent_status: bool
     copy_parent_fields_on_create: bool
     webhook_enabled: bool
     webhook_secret: str
-    image_url: Optional[str]
-    webhook_url: Optional[str]
-    notion_integration: Optional["NotionIntegration"]
-    slack_integration: Optional["SlackIntegration"]
-    discord_integration: Optional["DiscordIntegration"]
-    github_integration: Optional["GithubIntegration"]
-    zapier_integration: Optional["ZapierIntegration"]
+    webhook_url: Union[None, str]
+    notion_integration: Union["NotionIntegration", None]
+    slack_integration: Union["SlackIntegration", None]
+    discord_integration: Union["DiscordIntegration", None]
+    github_integration: Union["GithubIntegration", None]
+    zapier_integration: Union["ZapierIntegration", None]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        from ..models.discord_integration import DiscordIntegration
+        from ..models.github_integration import GithubIntegration
+        from ..models.notion_integration import NotionIntegration
+        from ..models.slack_integration import SlackIntegration
+        from ..models.zapier_integration import ZapierIntegration
+
         duid = self.duid
+
         is_dart = self.is_dart
+
         name = self.name
+
         created_at = self.created_at.isoformat()
 
         timezone = self.timezone
+
         subscription = self.subscription.value
 
         entitlement_overrides = self.entitlement_overrides
-        backlog_enabled = self.backlog_enabled
-        ai_assignment_enabled = self.ai_assignment_enabled
-        email_integration_enabled = self.email_integration_enabled
-        copy_parent_fields_on_create = self.copy_parent_fields_on_create
-        webhook_enabled = self.webhook_enabled
-        webhook_secret = self.webhook_secret
+
+        image_url: Union[None, str]
         image_url = self.image_url
+
+        backlog_enabled = self.backlog_enabled
+
+        ai_assignment_enabled = self.ai_assignment_enabled
+
+        email_integration_enabled = self.email_integration_enabled
+
+        close_parent_on_close_all_subtasks = self.close_parent_on_close_all_subtasks
+
+        move_subtasks_on_move_parent = self.move_subtasks_on_move_parent
+
+        update_subtasks_status_on_update_parent_status = self.update_subtasks_status_on_update_parent_status
+
+        copy_parent_fields_on_create = self.copy_parent_fields_on_create
+
+        webhook_enabled = self.webhook_enabled
+
+        webhook_secret = self.webhook_secret
+
+        webhook_url: Union[None, str]
         webhook_url = self.webhook_url
-        notion_integration = self.notion_integration.to_dict() if self.notion_integration else None
 
-        slack_integration = self.slack_integration.to_dict() if self.slack_integration else None
+        notion_integration: Union[Dict[str, Any], None]
+        if isinstance(self.notion_integration, NotionIntegration):
+            notion_integration = self.notion_integration.to_dict()
+        else:
+            notion_integration = self.notion_integration
 
-        discord_integration = self.discord_integration.to_dict() if self.discord_integration else None
+        slack_integration: Union[Dict[str, Any], None]
+        if isinstance(self.slack_integration, SlackIntegration):
+            slack_integration = self.slack_integration.to_dict()
+        else:
+            slack_integration = self.slack_integration
 
-        github_integration = self.github_integration.to_dict() if self.github_integration else None
+        discord_integration: Union[Dict[str, Any], None]
+        if isinstance(self.discord_integration, DiscordIntegration):
+            discord_integration = self.discord_integration.to_dict()
+        else:
+            discord_integration = self.discord_integration
 
-        zapier_integration = self.zapier_integration.to_dict() if self.zapier_integration else None
+        github_integration: Union[Dict[str, Any], None]
+        if isinstance(self.github_integration, GithubIntegration):
+            github_integration = self.github_integration.to_dict()
+        else:
+            github_integration = self.github_integration
+
+        zapier_integration: Union[Dict[str, Any], None]
+        if isinstance(self.zapier_integration, ZapierIntegration):
+            zapier_integration = self.zapier_integration.to_dict()
+        else:
+            zapier_integration = self.zapier_integration
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -106,13 +159,16 @@ class Tenant:
                 "timezone": timezone,
                 "subscription": subscription,
                 "entitlementOverrides": entitlement_overrides,
+                "imageUrl": image_url,
                 "backlogEnabled": backlog_enabled,
                 "aiAssignmentEnabled": ai_assignment_enabled,
                 "emailIntegrationEnabled": email_integration_enabled,
+                "closeParentOnCloseAllSubtasks": close_parent_on_close_all_subtasks,
+                "moveSubtasksOnMoveParent": move_subtasks_on_move_parent,
+                "updateSubtasksStatusOnUpdateParentStatus": update_subtasks_status_on_update_parent_status,
                 "copyParentFieldsOnCreate": copy_parent_fields_on_create,
                 "webhookEnabled": webhook_enabled,
                 "webhookSecret": webhook_secret,
-                "imageUrl": image_url,
                 "webhookUrl": webhook_url,
                 "notionIntegration": notion_integration,
                 "slackIntegration": slack_integration,
@@ -147,11 +203,24 @@ class Tenant:
 
         entitlement_overrides = d.pop("entitlementOverrides")
 
+        def _parse_image_url(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        image_url = _parse_image_url(d.pop("imageUrl"))
+
         backlog_enabled = d.pop("backlogEnabled")
 
         ai_assignment_enabled = d.pop("aiAssignmentEnabled")
 
         email_integration_enabled = d.pop("emailIntegrationEnabled")
+
+        close_parent_on_close_all_subtasks = d.pop("closeParentOnCloseAllSubtasks")
+
+        move_subtasks_on_move_parent = d.pop("moveSubtasksOnMoveParent")
+
+        update_subtasks_status_on_update_parent_status = d.pop("updateSubtasksStatusOnUpdateParentStatus")
 
         copy_parent_fields_on_create = d.pop("copyParentFieldsOnCreate")
 
@@ -159,44 +228,87 @@ class Tenant:
 
         webhook_secret = d.pop("webhookSecret")
 
-        image_url = d.pop("imageUrl")
+        def _parse_webhook_url(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
 
-        webhook_url = d.pop("webhookUrl")
+        webhook_url = _parse_webhook_url(d.pop("webhookUrl"))
 
-        _notion_integration = d.pop("notionIntegration")
-        notion_integration: Optional[NotionIntegration]
-        if _notion_integration is None:
-            notion_integration = None
-        else:
-            notion_integration = NotionIntegration.from_dict(_notion_integration)
+        def _parse_notion_integration(data: object) -> Union["NotionIntegration", None]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                notion_integration_type_0 = NotionIntegration.from_dict(data)
 
-        _slack_integration = d.pop("slackIntegration")
-        slack_integration: Optional[SlackIntegration]
-        if _slack_integration is None:
-            slack_integration = None
-        else:
-            slack_integration = SlackIntegration.from_dict(_slack_integration)
+                return notion_integration_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union["NotionIntegration", None], data)
 
-        _discord_integration = d.pop("discordIntegration")
-        discord_integration: Optional[DiscordIntegration]
-        if _discord_integration is None:
-            discord_integration = None
-        else:
-            discord_integration = DiscordIntegration.from_dict(_discord_integration)
+        notion_integration = _parse_notion_integration(d.pop("notionIntegration"))
 
-        _github_integration = d.pop("githubIntegration")
-        github_integration: Optional[GithubIntegration]
-        if _github_integration is None:
-            github_integration = None
-        else:
-            github_integration = GithubIntegration.from_dict(_github_integration)
+        def _parse_slack_integration(data: object) -> Union["SlackIntegration", None]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                slack_integration_type_0 = SlackIntegration.from_dict(data)
 
-        _zapier_integration = d.pop("zapierIntegration")
-        zapier_integration: Optional[ZapierIntegration]
-        if _zapier_integration is None:
-            zapier_integration = None
-        else:
-            zapier_integration = ZapierIntegration.from_dict(_zapier_integration)
+                return slack_integration_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union["SlackIntegration", None], data)
+
+        slack_integration = _parse_slack_integration(d.pop("slackIntegration"))
+
+        def _parse_discord_integration(data: object) -> Union["DiscordIntegration", None]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                discord_integration_type_0 = DiscordIntegration.from_dict(data)
+
+                return discord_integration_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union["DiscordIntegration", None], data)
+
+        discord_integration = _parse_discord_integration(d.pop("discordIntegration"))
+
+        def _parse_github_integration(data: object) -> Union["GithubIntegration", None]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                github_integration_type_0 = GithubIntegration.from_dict(data)
+
+                return github_integration_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union["GithubIntegration", None], data)
+
+        github_integration = _parse_github_integration(d.pop("githubIntegration"))
+
+        def _parse_zapier_integration(data: object) -> Union["ZapierIntegration", None]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                zapier_integration_type_0 = ZapierIntegration.from_dict(data)
+
+                return zapier_integration_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union["ZapierIntegration", None], data)
+
+        zapier_integration = _parse_zapier_integration(d.pop("zapierIntegration"))
 
         tenant = cls(
             duid=duid,
@@ -206,13 +318,16 @@ class Tenant:
             timezone=timezone,
             subscription=subscription,
             entitlement_overrides=entitlement_overrides,
+            image_url=image_url,
             backlog_enabled=backlog_enabled,
             ai_assignment_enabled=ai_assignment_enabled,
             email_integration_enabled=email_integration_enabled,
+            close_parent_on_close_all_subtasks=close_parent_on_close_all_subtasks,
+            move_subtasks_on_move_parent=move_subtasks_on_move_parent,
+            update_subtasks_status_on_update_parent_status=update_subtasks_status_on_update_parent_status,
             copy_parent_fields_on_create=copy_parent_fields_on_create,
             webhook_enabled=webhook_enabled,
             webhook_secret=webhook_secret,
-            image_url=image_url,
             webhook_url=webhook_url,
             notion_integration=notion_integration,
             slack_integration=slack_integration,

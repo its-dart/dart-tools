@@ -12,27 +12,25 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
-    author: Union[Unset, None, str] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    published_at: Union[Unset, None, datetime.date] = UNSET,
-    task: Union[Unset, None, str] = UNSET,
-    text: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    author: Union[Unset, str] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    published_at: Union[Unset, datetime.date] = UNSET,
+    task: Union[Unset, str] = UNSET,
+    text: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
-    pass
-
     params: Dict[str, Any] = {}
+
     params["author"] = author
 
     params["limit"] = limit
 
     params["offset"] = offset
 
-    json_published_at: Union[Unset, None, str] = UNSET
+    json_published_at: Union[Unset, str] = UNSET
     if not isinstance(published_at, Unset):
-        json_published_at = published_at.isoformat() if published_at else None
-
+        json_published_at = published_at.isoformat()
     params["published_at"] = json_published_at
 
     params["task"] = task
@@ -43,11 +41,13 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    return {
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": "/api/v0/comments",
         "params": params,
     }
+
+    return _kwargs
 
 
 def _parse_response(
@@ -77,23 +77,23 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    author: Union[Unset, None, str] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    published_at: Union[Unset, None, datetime.date] = UNSET,
-    task: Union[Unset, None, str] = UNSET,
-    text: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    author: Union[Unset, str] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    published_at: Union[Unset, datetime.date] = UNSET,
+    task: Union[Unset, str] = UNSET,
+    text: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedCommentList]:
     """
     Args:
-        author (Union[Unset, None, str]):
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
-        published_at (Union[Unset, None, datetime.date]):
-        task (Union[Unset, None, str]):
-        text (Union[Unset, None, str]):
-        title (Union[Unset, None, str]):
+        author (Union[Unset, str]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        published_at (Union[Unset, datetime.date]):
+        task (Union[Unset, str]):
+        text (Union[Unset, str]):
+        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -123,23 +123,23 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-    author: Union[Unset, None, str] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    published_at: Union[Unset, None, datetime.date] = UNSET,
-    task: Union[Unset, None, str] = UNSET,
-    text: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    author: Union[Unset, str] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    published_at: Union[Unset, datetime.date] = UNSET,
+    task: Union[Unset, str] = UNSET,
+    text: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedCommentList]:
     """
     Args:
-        author (Union[Unset, None, str]):
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
-        published_at (Union[Unset, None, datetime.date]):
-        task (Union[Unset, None, str]):
-        text (Union[Unset, None, str]):
-        title (Union[Unset, None, str]):
+        author (Union[Unset, str]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        published_at (Union[Unset, datetime.date]):
+        task (Union[Unset, str]):
+        text (Union[Unset, str]):
+        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -164,23 +164,23 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-    author: Union[Unset, None, str] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    published_at: Union[Unset, None, datetime.date] = UNSET,
-    task: Union[Unset, None, str] = UNSET,
-    text: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    author: Union[Unset, str] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    published_at: Union[Unset, datetime.date] = UNSET,
+    task: Union[Unset, str] = UNSET,
+    text: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedCommentList]:
     """
     Args:
-        author (Union[Unset, None, str]):
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
-        published_at (Union[Unset, None, datetime.date]):
-        task (Union[Unset, None, str]):
-        text (Union[Unset, None, str]):
-        title (Union[Unset, None, str]):
+        author (Union[Unset, str]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        published_at (Union[Unset, datetime.date]):
+        task (Union[Unset, str]):
+        text (Union[Unset, str]):
+        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -208,23 +208,23 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
-    author: Union[Unset, None, str] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    published_at: Union[Unset, None, datetime.date] = UNSET,
-    task: Union[Unset, None, str] = UNSET,
-    text: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    author: Union[Unset, str] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    published_at: Union[Unset, datetime.date] = UNSET,
+    task: Union[Unset, str] = UNSET,
+    text: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedCommentList]:
     """
     Args:
-        author (Union[Unset, None, str]):
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
-        published_at (Union[Unset, None, datetime.date]):
-        task (Union[Unset, None, str]):
-        text (Union[Unset, None, str]):
-        title (Union[Unset, None, str]):
+        author (Union[Unset, str]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        published_at (Union[Unset, datetime.date]):
+        task (Union[Unset, str]):
+        text (Union[Unset, str]):
+        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

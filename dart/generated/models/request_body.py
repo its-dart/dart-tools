@@ -26,7 +26,6 @@ class RequestBody:
         items = []
         for items_item_data in self.items:
             items_item = items_item_data.to_dict()
-
             items.append(items_item)
 
         client_duid = self.client_duid

@@ -20,6 +20,7 @@ class ZapierIntegration:
 
     def to_dict(self) -> Dict[str, Any]:
         enabled = self.enabled
+
         linked_user_duids = self.linked_user_duids
 
         field_dict: Dict[str, Any] = {}

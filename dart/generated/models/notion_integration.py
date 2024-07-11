@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Type, TypeVar
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -15,19 +15,22 @@ class NotionIntegration:
         status (NotionIntegrationTenantExtensionStatus): * `Disabled` - DISABLED
             * `Pending` - PENDING
             * `Enabled` - ENABLED
-        workspace_name (Optional[str]):
-        workspace_icon (Optional[str]):
+        workspace_name (Union[None, str]):
+        workspace_icon (Union[None, str]):
     """
 
     status: NotionIntegrationTenantExtensionStatus
-    workspace_name: Optional[str]
-    workspace_icon: Optional[str]
+    workspace_name: Union[None, str]
+    workspace_icon: Union[None, str]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         status = self.status.value
 
+        workspace_name: Union[None, str]
         workspace_name = self.workspace_name
+
+        workspace_icon: Union[None, str]
         workspace_icon = self.workspace_icon
 
         field_dict: Dict[str, Any] = {}
@@ -47,9 +50,19 @@ class NotionIntegration:
         d = src_dict.copy()
         status = NotionIntegrationTenantExtensionStatus(d.pop("status"))
 
-        workspace_name = d.pop("workspaceName")
+        def _parse_workspace_name(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
 
-        workspace_icon = d.pop("workspaceIcon")
+        workspace_name = _parse_workspace_name(d.pop("workspaceName"))
+
+        def _parse_workspace_icon(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        workspace_icon = _parse_workspace_icon(d.pop("workspaceIcon"))
 
         notion_integration = cls(
             status=status,

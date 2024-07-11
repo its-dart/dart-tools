@@ -36,13 +36,21 @@ class FormFieldCreate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         form_duid = self.form_duid
+
         property_duid = self.property_duid
+
         order = self.order
+
         locked = self.locked
+
         required = self.required
+
         hidden = self.hidden
+
         label = self.label
+
         default = self.default
 
         field_dict: Dict[str, Any] = {}

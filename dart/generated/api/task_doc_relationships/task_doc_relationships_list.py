@@ -11,23 +11,24 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
 ) -> Dict[str, Any]:
-    pass
-
     params: Dict[str, Any] = {}
+
     params["limit"] = limit
 
     params["offset"] = offset
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    return {
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": "/api/v0/task-doc-relationships",
         "params": params,
     }
+
+    return _kwargs
 
 
 def _parse_response(
@@ -57,13 +58,13 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
 ) -> Response[PaginatedTaskDocRelationshipList]:
     """
     Args:
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -88,13 +89,13 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
 ) -> Optional[PaginatedTaskDocRelationshipList]:
     """
     Args:
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -114,13 +115,13 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
 ) -> Response[PaginatedTaskDocRelationshipList]:
     """
     Args:
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -143,13 +144,13 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
 ) -> Optional[PaginatedTaskDocRelationshipList]:
     """
     Args:
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

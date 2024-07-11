@@ -20,6 +20,7 @@ class UserDartboardLayout:
 
     def to_dict(self) -> Dict[str, Any]:
         user_duid = self.user_duid
+
         layout_duid = self.layout_duid
 
         field_dict: Dict[str, Any] = {}

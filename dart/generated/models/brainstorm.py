@@ -26,7 +26,7 @@ class Brainstorm:
             * `Stopped` - STOPPED
         after_start_ms (int):
         created_tasks_duids (List[str]):
-        updated_by_client_duid (Union[Unset, None, str]):
+        updated_by_client_duid (Union[None, Unset, str]):
     """
 
     duid: str
@@ -38,23 +38,33 @@ class Brainstorm:
     state: BrainstormState
     after_start_ms: int
     created_tasks_duids: List[str]
-    updated_by_client_duid: Union[Unset, None, str] = UNSET
+    updated_by_client_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         dartboard_duid = self.dartboard_duid
+
         subject = self.subject
+
         ai = self.ai
+
         total_session_ms = self.total_session_ms
+
         started_at = self.started_at.isoformat()
 
         state = self.state.value
 
         after_start_ms = self.after_start_ms
+
         created_tasks_duids = self.created_tasks_duids
 
-        updated_by_client_duid = self.updated_by_client_duid
+        updated_by_client_duid: Union[None, Unset, str]
+        if isinstance(self.updated_by_client_duid, Unset):
+            updated_by_client_duid = UNSET
+        else:
+            updated_by_client_duid = self.updated_by_client_duid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -97,7 +107,14 @@ class Brainstorm:
 
         created_tasks_duids = cast(List[str], d.pop("createdTasksDuids"))
 
-        updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
+        def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        updated_by_client_duid = _parse_updated_by_client_duid(d.pop("updatedByClientDuid", UNSET))
 
         brainstorm = cls(
             duid=duid,

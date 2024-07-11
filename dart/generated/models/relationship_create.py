@@ -28,9 +28,13 @@ class RelationshipCreate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         source_duid = self.source_duid
+
         kind_duid = self.kind_duid
+
         target_duid = self.target_duid
+
         is_forward = self.is_forward
 
         field_dict: Dict[str, Any] = {}

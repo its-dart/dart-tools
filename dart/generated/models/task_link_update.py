@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -29,8 +29,8 @@ class TaskLinkUpdate:
             * `Notion Expansion` - NOTION_EXPANSION
             * `Slack Expansion` - SLACK_EXPANSION
         url (Union[Unset, str]):
-        title (Union[Unset, None, str]):
-        icon_url (Union[Unset, None, str]):
+        title (Union[None, Unset, str]):
+        icon_url (Union[None, Unset, str]):
     """
 
     duid: str
@@ -38,21 +38,34 @@ class TaskLinkUpdate:
     order: Union[Unset, str] = UNSET
     kind: Union[Unset, TaskLinkKind] = UNSET
     url: Union[Unset, str] = UNSET
-    title: Union[Unset, None, str] = UNSET
-    icon_url: Union[Unset, None, str] = UNSET
+    title: Union[None, Unset, str] = UNSET
+    icon_url: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         task_duid = self.task_duid
+
         order = self.order
+
         kind: Union[Unset, str] = UNSET
         if not isinstance(self.kind, Unset):
             kind = self.kind.value
 
         url = self.url
-        title = self.title
-        icon_url = self.icon_url
+
+        title: Union[None, Unset, str]
+        if isinstance(self.title, Unset):
+            title = UNSET
+        else:
+            title = self.title
+
+        icon_url: Union[None, Unset, str]
+        if isinstance(self.icon_url, Unset):
+            icon_url = UNSET
+        else:
+            icon_url = self.icon_url
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -94,9 +107,23 @@ class TaskLinkUpdate:
 
         url = d.pop("url", UNSET)
 
-        title = d.pop("title", UNSET)
+        def _parse_title(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
 
-        icon_url = d.pop("iconUrl", UNSET)
+        title = _parse_title(d.pop("title", UNSET))
+
+        def _parse_icon_url(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        icon_url = _parse_icon_url(d.pop("iconUrl", UNSET))
 
         task_link_update = cls(
             duid=duid,

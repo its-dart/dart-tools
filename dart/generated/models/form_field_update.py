@@ -36,13 +36,21 @@ class FormFieldUpdate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         form_duid = self.form_duid
+
         property_duid = self.property_duid
+
         locked = self.locked
+
         order = self.order
+
         required = self.required
+
         hidden = self.hidden
+
         label = self.label
+
         default = self.default
 
         field_dict: Dict[str, Any] = {}

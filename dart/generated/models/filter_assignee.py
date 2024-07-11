@@ -46,8 +46,11 @@ class FilterAssignee:
 
     def to_dict(self) -> Dict[str, Any]:
         id = self.id
+
         field = self.field
+
         locked = self.locked
+
         applicability = self.applicability.value
 
         connector = self.connector.value

@@ -65,15 +65,21 @@ class StatusUpdate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         property_duid = self.property_duid
+
         kind: Union[Unset, str] = UNSET
         if not isinstance(self.kind, Unset):
             kind = self.kind.value
 
         locked = self.locked
+
         order = self.order
+
         title = self.title
+
         color_hex = self.color_hex
+
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value

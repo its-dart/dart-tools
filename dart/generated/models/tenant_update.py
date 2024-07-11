@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -17,10 +17,13 @@ class TenantUpdate:
         backlog_enabled (Union[Unset, bool]):
         ai_assignment_enabled (Union[Unset, bool]):
         email_integration_enabled (Union[Unset, bool]):
+        close_parent_on_close_all_subtasks (Union[Unset, bool]):
+        move_subtasks_on_move_parent (Union[Unset, bool]):
+        update_subtasks_status_on_update_parent_status (Union[Unset, bool]):
         copy_parent_fields_on_create (Union[Unset, bool]):
         webhook_enabled (Union[Unset, bool]):
         webhook_secret (Union[Unset, str]):
-        webhook_url (Union[Unset, None, str]):
+        webhook_url (Union[None, Unset, str]):
     """
 
     name: Union[Unset, str] = UNSET
@@ -28,22 +31,43 @@ class TenantUpdate:
     backlog_enabled: Union[Unset, bool] = UNSET
     ai_assignment_enabled: Union[Unset, bool] = UNSET
     email_integration_enabled: Union[Unset, bool] = UNSET
+    close_parent_on_close_all_subtasks: Union[Unset, bool] = UNSET
+    move_subtasks_on_move_parent: Union[Unset, bool] = UNSET
+    update_subtasks_status_on_update_parent_status: Union[Unset, bool] = UNSET
     copy_parent_fields_on_create: Union[Unset, bool] = UNSET
     webhook_enabled: Union[Unset, bool] = UNSET
     webhook_secret: Union[Unset, str] = UNSET
-    webhook_url: Union[Unset, None, str] = UNSET
+    webhook_url: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         name = self.name
+
         timezone = self.timezone
+
         backlog_enabled = self.backlog_enabled
+
         ai_assignment_enabled = self.ai_assignment_enabled
+
         email_integration_enabled = self.email_integration_enabled
+
+        close_parent_on_close_all_subtasks = self.close_parent_on_close_all_subtasks
+
+        move_subtasks_on_move_parent = self.move_subtasks_on_move_parent
+
+        update_subtasks_status_on_update_parent_status = self.update_subtasks_status_on_update_parent_status
+
         copy_parent_fields_on_create = self.copy_parent_fields_on_create
+
         webhook_enabled = self.webhook_enabled
+
         webhook_secret = self.webhook_secret
-        webhook_url = self.webhook_url
+
+        webhook_url: Union[None, Unset, str]
+        if isinstance(self.webhook_url, Unset):
+            webhook_url = UNSET
+        else:
+            webhook_url = self.webhook_url
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -58,6 +82,12 @@ class TenantUpdate:
             field_dict["aiAssignmentEnabled"] = ai_assignment_enabled
         if email_integration_enabled is not UNSET:
             field_dict["emailIntegrationEnabled"] = email_integration_enabled
+        if close_parent_on_close_all_subtasks is not UNSET:
+            field_dict["closeParentOnCloseAllSubtasks"] = close_parent_on_close_all_subtasks
+        if move_subtasks_on_move_parent is not UNSET:
+            field_dict["moveSubtasksOnMoveParent"] = move_subtasks_on_move_parent
+        if update_subtasks_status_on_update_parent_status is not UNSET:
+            field_dict["updateSubtasksStatusOnUpdateParentStatus"] = update_subtasks_status_on_update_parent_status
         if copy_parent_fields_on_create is not UNSET:
             field_dict["copyParentFieldsOnCreate"] = copy_parent_fields_on_create
         if webhook_enabled is not UNSET:
@@ -82,13 +112,26 @@ class TenantUpdate:
 
         email_integration_enabled = d.pop("emailIntegrationEnabled", UNSET)
 
+        close_parent_on_close_all_subtasks = d.pop("closeParentOnCloseAllSubtasks", UNSET)
+
+        move_subtasks_on_move_parent = d.pop("moveSubtasksOnMoveParent", UNSET)
+
+        update_subtasks_status_on_update_parent_status = d.pop("updateSubtasksStatusOnUpdateParentStatus", UNSET)
+
         copy_parent_fields_on_create = d.pop("copyParentFieldsOnCreate", UNSET)
 
         webhook_enabled = d.pop("webhookEnabled", UNSET)
 
         webhook_secret = d.pop("webhookSecret", UNSET)
 
-        webhook_url = d.pop("webhookUrl", UNSET)
+        def _parse_webhook_url(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        webhook_url = _parse_webhook_url(d.pop("webhookUrl", UNSET))
 
         tenant_update = cls(
             name=name,
@@ -96,6 +139,9 @@ class TenantUpdate:
             backlog_enabled=backlog_enabled,
             ai_assignment_enabled=ai_assignment_enabled,
             email_integration_enabled=email_integration_enabled,
+            close_parent_on_close_all_subtasks=close_parent_on_close_all_subtasks,
+            move_subtasks_on_move_parent=move_subtasks_on_move_parent,
+            update_subtasks_status_on_update_parent_status=update_subtasks_status_on_update_parent_status,
             copy_parent_fields_on_create=copy_parent_fields_on_create,
             webhook_enabled=webhook_enabled,
             webhook_secret=webhook_secret,

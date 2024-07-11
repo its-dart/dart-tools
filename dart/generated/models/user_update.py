@@ -76,27 +76,37 @@ class UserUpdate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         role: Union[Unset, str] = UNSET
         if not isinstance(self.role, Unset):
             role = self.role.value
 
         name = self.name
+
         theme: Union[Unset, str] = UNSET
         if not isinstance(self.theme, Unset):
             theme = self.theme.value
 
         color_hex = self.color_hex
+
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value
 
         open_in_native_app = self.open_in_native_app
+
         first_day_of_week = self.first_day_of_week
+
         sections = self.sections
+
         layout = self.layout
+
         notification_default = self.notification_default
+
         notification_in_app = self.notification_in_app
+
         notification_email = self.notification_email
+
         notification_slack = self.notification_slack
 
         field_dict: Dict[str, Any] = {}

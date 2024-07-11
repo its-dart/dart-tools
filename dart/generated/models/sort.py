@@ -20,6 +20,7 @@ class Sort:
 
     def to_dict(self) -> Dict[str, Any]:
         field = self.field
+
         is_ascending = self.is_ascending
 
         field_dict: Dict[str, Any] = {}

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -62,11 +62,11 @@ class User:
             * `Light Gray` - LIGHT_GRAY
         sections (Any):
         layout (Any):
+        image_url (Union[None, str]):
         is_admin (bool):
-        updated_by_client_duid (Union[Unset, None, str]):
-        image_url (Optional[str]):
-        auth_token (Optional[str]):
-        google_data (Optional[GoogleData]):
+        auth_token (Union[None, str]):
+        google_data (Union['GoogleData', None]):
+        updated_by_client_duid (Union[None, Unset, str]):
     """
 
     duid: str
@@ -80,34 +80,57 @@ class User:
     color_name: ColorName
     sections: Any
     layout: Any
+    image_url: Union[None, str]
     is_admin: bool
-    image_url: Optional[str]
-    auth_token: Optional[str]
-    google_data: Optional["GoogleData"]
-    updated_by_client_duid: Union[Unset, None, str] = UNSET
+    auth_token: Union[None, str]
+    google_data: Union["GoogleData", None]
+    updated_by_client_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        from ..models.google_data import GoogleData
+
         duid = self.duid
+
         status = self.status.value
 
         role = self.role.value
 
         email = self.email
+
         name = self.name
+
         abrev = self.abrev
+
         theme = self.theme.value
 
         color_hex = self.color_hex
+
         color_name = self.color_name.value
 
         sections = self.sections
+
         layout = self.layout
-        is_admin = self.is_admin
-        updated_by_client_duid = self.updated_by_client_duid
+
+        image_url: Union[None, str]
         image_url = self.image_url
+
+        is_admin = self.is_admin
+
+        auth_token: Union[None, str]
         auth_token = self.auth_token
-        google_data = self.google_data.to_dict() if self.google_data else None
+
+        google_data: Union[Dict[str, Any], None]
+        if isinstance(self.google_data, GoogleData):
+            google_data = self.google_data.to_dict()
+        else:
+            google_data = self.google_data
+
+        updated_by_client_duid: Union[None, Unset, str]
+        if isinstance(self.updated_by_client_duid, Unset):
+            updated_by_client_duid = UNSET
+        else:
+            updated_by_client_duid = self.updated_by_client_duid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -124,8 +147,8 @@ class User:
                 "colorName": color_name,
                 "sections": sections,
                 "layout": layout,
-                "isAdmin": is_admin,
                 "imageUrl": image_url,
+                "isAdmin": is_admin,
                 "authToken": auth_token,
                 "googleData": google_data,
             }
@@ -162,20 +185,45 @@ class User:
 
         layout = d.pop("layout")
 
+        def _parse_image_url(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        image_url = _parse_image_url(d.pop("imageUrl"))
+
         is_admin = d.pop("isAdmin")
 
-        updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
+        def _parse_auth_token(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
 
-        image_url = d.pop("imageUrl")
+        auth_token = _parse_auth_token(d.pop("authToken"))
 
-        auth_token = d.pop("authToken")
+        def _parse_google_data(data: object) -> Union["GoogleData", None]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                google_data_type_0 = GoogleData.from_dict(data)
 
-        _google_data = d.pop("googleData")
-        google_data: Optional[GoogleData]
-        if _google_data is None:
-            google_data = None
-        else:
-            google_data = GoogleData.from_dict(_google_data)
+                return google_data_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union["GoogleData", None], data)
+
+        google_data = _parse_google_data(d.pop("googleData"))
+
+        def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        updated_by_client_duid = _parse_updated_by_client_duid(d.pop("updatedByClientDuid", UNSET))
 
         user = cls(
             duid=duid,
@@ -189,11 +237,11 @@ class User:
             color_name=color_name,
             sections=sections,
             layout=layout,
-            is_admin=is_admin,
-            updated_by_client_duid=updated_by_client_duid,
             image_url=image_url,
+            is_admin=is_admin,
             auth_token=auth_token,
             google_data=google_data,
+            updated_by_client_duid=updated_by_client_duid,
         )
 
         user.additional_properties = d

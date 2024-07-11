@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Type, TypeVar
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -27,29 +27,36 @@ class TaskLink:
             * `Notion Expansion` - NOTION_EXPANSION
             * `Slack Expansion` - SLACK_EXPANSION
         url (str):
+        title (Union[None, str]):
+        icon_url (Union[None, str]):
         adtl (Any):
-        title (Optional[str]):
-        icon_url (Optional[str]):
     """
 
     duid: str
     order: str
     kind: TaskLinkKind
     url: str
+    title: Union[None, str]
+    icon_url: Union[None, str]
     adtl: Any
-    title: Optional[str]
-    icon_url: Optional[str]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         order = self.order
+
         kind = self.kind.value
 
         url = self.url
-        adtl = self.adtl
+
+        title: Union[None, str]
         title = self.title
+
+        icon_url: Union[None, str]
         icon_url = self.icon_url
+
+        adtl = self.adtl
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -59,9 +66,9 @@ class TaskLink:
                 "order": order,
                 "kind": kind,
                 "url": url,
-                "adtl": adtl,
                 "title": title,
                 "iconUrl": icon_url,
+                "adtl": adtl,
             }
         )
 
@@ -78,20 +85,30 @@ class TaskLink:
 
         url = d.pop("url")
 
+        def _parse_title(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        title = _parse_title(d.pop("title"))
+
+        def _parse_icon_url(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        icon_url = _parse_icon_url(d.pop("iconUrl"))
+
         adtl = d.pop("adtl")
-
-        title = d.pop("title")
-
-        icon_url = d.pop("iconUrl")
 
         task_link = cls(
             duid=duid,
             order=order,
             kind=kind,
             url=url,
-            adtl=adtl,
             title=title,
             icon_url=icon_url,
+            adtl=adtl,
         )
 
         task_link.additional_properties = d

@@ -41,12 +41,12 @@ class TaskCreate:
             * `AppRoadmapList` - APP_ROADMAP_LIST
             * `AppRoadmapTimeline` - APP_ROADMAP_TIMELINE
             * `ExternalForm` - EXTERNAL_FORM Default: TaskSourceType.UNKNOWN.
-        source_template_view_duid (Union[Unset, None, str]):
-        source_template_task_duid (Union[Unset, None, str]):
-        source_form_duid (Union[Unset, None, str]):
-        created_by_duid (Union[Unset, None, str]):
-        updated_by_duid (Union[Unset, None, str]):
-        drafter_duid (Union[Unset, None, str]):
+        source_template_view_duid (Union[None, Unset, str]):
+        source_template_task_duid (Union[None, Unset, str]):
+        source_form_duid (Union[None, Unset, str]):
+        created_by_duid (Union[None, Unset, str]):
+        updated_by_duid (Union[None, Unset, str]):
+        drafter_duid (Union[None, Unset, str]):
         in_trash (Union[Unset, bool]):
         dartboard_duid (Union[Unset, str]):
         order (Union[Unset, str]):
@@ -56,32 +56,29 @@ class TaskCreate:
         description_markdown (Union[Unset, str]):
         status_duid (Union[Unset, str]):
         assigned_to_ai (Union[Unset, bool]):
-        recommendation_duid (Union[Unset, None, str]):
+        recommendation_duid (Union[None, Unset, str]):
         assignee_duids (Union[Unset, List[str]]):
         subscriber_duids (Union[Unset, List[str]]):
         tag_duids (Union[Unset, List[str]]):
         attachment_duids (Union[Unset, List[str]]):
-        priority (Union[Unset, None, Priority]): * `Critical` - CRITICAL
-            * `High` - HIGH
-            * `Medium` - MEDIUM
-            * `Low` - LOW
-        size (Union[Unset, None, int]):
-        start_at (Union[Unset, None, datetime.datetime]):
-        due_at (Union[Unset, None, datetime.datetime]):
-        remind_at (Union[Unset, None, datetime.datetime]):
-        recurrence (Union[Unset, Any]):
-        recurs_next_at (Union[Unset, None, datetime.datetime]):
+        priority (Union[None, Priority, Unset]):
+        size (Union[None, Unset, int]):
+        start_at (Union[None, Unset, datetime.datetime]):
+        due_at (Union[None, Unset, datetime.datetime]):
+        remind_at (Union[None, Unset, datetime.datetime]):
+        recurrence (Union[Any, None, Unset]):
+        recurs_next_at (Union[None, Unset, datetime.datetime]):
         properties (Union[Unset, Any]):
     """
 
     duid: str
     source_type: Union[Unset, TaskSourceType] = TaskSourceType.UNKNOWN
-    source_template_view_duid: Union[Unset, None, str] = UNSET
-    source_template_task_duid: Union[Unset, None, str] = UNSET
-    source_form_duid: Union[Unset, None, str] = UNSET
-    created_by_duid: Union[Unset, None, str] = UNSET
-    updated_by_duid: Union[Unset, None, str] = UNSET
-    drafter_duid: Union[Unset, None, str] = UNSET
+    source_template_view_duid: Union[None, Unset, str] = UNSET
+    source_template_task_duid: Union[None, Unset, str] = UNSET
+    source_form_duid: Union[None, Unset, str] = UNSET
+    created_by_duid: Union[None, Unset, str] = UNSET
+    updated_by_duid: Union[None, Unset, str] = UNSET
+    drafter_duid: Union[None, Unset, str] = UNSET
     in_trash: Union[Unset, bool] = UNSET
     dartboard_duid: Union[Unset, str] = UNSET
     order: Union[Unset, str] = UNSET
@@ -91,43 +88,88 @@ class TaskCreate:
     description_markdown: Union[Unset, str] = UNSET
     status_duid: Union[Unset, str] = UNSET
     assigned_to_ai: Union[Unset, bool] = UNSET
-    recommendation_duid: Union[Unset, None, str] = UNSET
+    recommendation_duid: Union[None, Unset, str] = UNSET
     assignee_duids: Union[Unset, List[str]] = UNSET
     subscriber_duids: Union[Unset, List[str]] = UNSET
     tag_duids: Union[Unset, List[str]] = UNSET
     attachment_duids: Union[Unset, List[str]] = UNSET
-    priority: Union[Unset, None, Priority] = UNSET
-    size: Union[Unset, None, int] = UNSET
-    start_at: Union[Unset, None, datetime.datetime] = UNSET
-    due_at: Union[Unset, None, datetime.datetime] = UNSET
-    remind_at: Union[Unset, None, datetime.datetime] = UNSET
-    recurrence: Union[Unset, Any] = UNSET
-    recurs_next_at: Union[Unset, None, datetime.datetime] = UNSET
+    priority: Union[None, Priority, Unset] = UNSET
+    size: Union[None, Unset, int] = UNSET
+    start_at: Union[None, Unset, datetime.datetime] = UNSET
+    due_at: Union[None, Unset, datetime.datetime] = UNSET
+    remind_at: Union[None, Unset, datetime.datetime] = UNSET
+    recurrence: Union[Any, None, Unset] = UNSET
+    recurs_next_at: Union[None, Unset, datetime.datetime] = UNSET
     properties: Union[Unset, Any] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         source_type: Union[Unset, str] = UNSET
         if not isinstance(self.source_type, Unset):
             source_type = self.source_type.value
 
-        source_template_view_duid = self.source_template_view_duid
-        source_template_task_duid = self.source_template_task_duid
-        source_form_duid = self.source_form_duid
-        created_by_duid = self.created_by_duid
-        updated_by_duid = self.updated_by_duid
-        drafter_duid = self.drafter_duid
+        source_template_view_duid: Union[None, Unset, str]
+        if isinstance(self.source_template_view_duid, Unset):
+            source_template_view_duid = UNSET
+        else:
+            source_template_view_duid = self.source_template_view_duid
+
+        source_template_task_duid: Union[None, Unset, str]
+        if isinstance(self.source_template_task_duid, Unset):
+            source_template_task_duid = UNSET
+        else:
+            source_template_task_duid = self.source_template_task_duid
+
+        source_form_duid: Union[None, Unset, str]
+        if isinstance(self.source_form_duid, Unset):
+            source_form_duid = UNSET
+        else:
+            source_form_duid = self.source_form_duid
+
+        created_by_duid: Union[None, Unset, str]
+        if isinstance(self.created_by_duid, Unset):
+            created_by_duid = UNSET
+        else:
+            created_by_duid = self.created_by_duid
+
+        updated_by_duid: Union[None, Unset, str]
+        if isinstance(self.updated_by_duid, Unset):
+            updated_by_duid = UNSET
+        else:
+            updated_by_duid = self.updated_by_duid
+
+        drafter_duid: Union[None, Unset, str]
+        if isinstance(self.drafter_duid, Unset):
+            drafter_duid = UNSET
+        else:
+            drafter_duid = self.drafter_duid
+
         in_trash = self.in_trash
+
         dartboard_duid = self.dartboard_duid
+
         order = self.order
+
         expanded = self.expanded
+
         title = self.title
+
         description = self.description
+
         description_markdown = self.description_markdown
+
         status_duid = self.status_duid
+
         assigned_to_ai = self.assigned_to_ai
-        recommendation_duid = self.recommendation_duid
+
+        recommendation_duid: Union[None, Unset, str]
+        if isinstance(self.recommendation_duid, Unset):
+            recommendation_duid = UNSET
+        else:
+            recommendation_duid = self.recommendation_duid
+
         assignee_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.assignee_duids, Unset):
             assignee_duids = self.assignee_duids
@@ -144,27 +186,57 @@ class TaskCreate:
         if not isinstance(self.attachment_duids, Unset):
             attachment_duids = self.attachment_duids
 
-        priority: Union[Unset, None, str] = UNSET
-        if not isinstance(self.priority, Unset):
-            priority = self.priority.value if self.priority else None
+        priority: Union[None, Unset, str]
+        if isinstance(self.priority, Unset):
+            priority = UNSET
+        elif isinstance(self.priority, Priority):
+            priority = self.priority.value
+        else:
+            priority = self.priority
 
-        size = self.size
-        start_at: Union[Unset, None, str] = UNSET
-        if not isinstance(self.start_at, Unset):
-            start_at = self.start_at.isoformat() if self.start_at else None
+        size: Union[None, Unset, int]
+        if isinstance(self.size, Unset):
+            size = UNSET
+        else:
+            size = self.size
 
-        due_at: Union[Unset, None, str] = UNSET
-        if not isinstance(self.due_at, Unset):
-            due_at = self.due_at.isoformat() if self.due_at else None
+        start_at: Union[None, Unset, str]
+        if isinstance(self.start_at, Unset):
+            start_at = UNSET
+        elif isinstance(self.start_at, datetime.datetime):
+            start_at = self.start_at.isoformat()
+        else:
+            start_at = self.start_at
 
-        remind_at: Union[Unset, None, str] = UNSET
-        if not isinstance(self.remind_at, Unset):
-            remind_at = self.remind_at.isoformat() if self.remind_at else None
+        due_at: Union[None, Unset, str]
+        if isinstance(self.due_at, Unset):
+            due_at = UNSET
+        elif isinstance(self.due_at, datetime.datetime):
+            due_at = self.due_at.isoformat()
+        else:
+            due_at = self.due_at
 
-        recurrence = self.recurrence
-        recurs_next_at: Union[Unset, None, str] = UNSET
-        if not isinstance(self.recurs_next_at, Unset):
-            recurs_next_at = self.recurs_next_at.isoformat() if self.recurs_next_at else None
+        remind_at: Union[None, Unset, str]
+        if isinstance(self.remind_at, Unset):
+            remind_at = UNSET
+        elif isinstance(self.remind_at, datetime.datetime):
+            remind_at = self.remind_at.isoformat()
+        else:
+            remind_at = self.remind_at
+
+        recurrence: Union[Any, None, Unset]
+        if isinstance(self.recurrence, Unset):
+            recurrence = UNSET
+        else:
+            recurrence = self.recurrence
+
+        recurs_next_at: Union[None, Unset, str]
+        if isinstance(self.recurs_next_at, Unset):
+            recurs_next_at = UNSET
+        elif isinstance(self.recurs_next_at, datetime.datetime):
+            recurs_next_at = self.recurs_next_at.isoformat()
+        else:
+            recurs_next_at = self.recurs_next_at
 
         properties = self.properties
 
@@ -248,17 +320,59 @@ class TaskCreate:
         else:
             source_type = TaskSourceType(_source_type)
 
-        source_template_view_duid = d.pop("sourceTemplateViewDuid", UNSET)
+        def _parse_source_template_view_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
 
-        source_template_task_duid = d.pop("sourceTemplateTaskDuid", UNSET)
+        source_template_view_duid = _parse_source_template_view_duid(d.pop("sourceTemplateViewDuid", UNSET))
 
-        source_form_duid = d.pop("sourceFormDuid", UNSET)
+        def _parse_source_template_task_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
 
-        created_by_duid = d.pop("createdByDuid", UNSET)
+        source_template_task_duid = _parse_source_template_task_duid(d.pop("sourceTemplateTaskDuid", UNSET))
 
-        updated_by_duid = d.pop("updatedByDuid", UNSET)
+        def _parse_source_form_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
 
-        drafter_duid = d.pop("drafterDuid", UNSET)
+        source_form_duid = _parse_source_form_duid(d.pop("sourceFormDuid", UNSET))
+
+        def _parse_created_by_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        created_by_duid = _parse_created_by_duid(d.pop("createdByDuid", UNSET))
+
+        def _parse_updated_by_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        updated_by_duid = _parse_updated_by_duid(d.pop("updatedByDuid", UNSET))
+
+        def _parse_drafter_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        drafter_duid = _parse_drafter_duid(d.pop("drafterDuid", UNSET))
 
         in_trash = d.pop("inTrash", UNSET)
 
@@ -278,7 +392,14 @@ class TaskCreate:
 
         assigned_to_ai = d.pop("assignedToAi", UNSET)
 
-        recommendation_duid = d.pop("recommendationDuid", UNSET)
+        def _parse_recommendation_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        recommendation_duid = _parse_recommendation_duid(d.pop("recommendationDuid", UNSET))
 
         assignee_duids = cast(List[str], d.pop("assigneeDuids", UNSET))
 
@@ -288,54 +409,108 @@ class TaskCreate:
 
         attachment_duids = cast(List[str], d.pop("attachmentDuids", UNSET))
 
-        _priority = d.pop("priority", UNSET)
-        priority: Union[Unset, None, Priority]
-        if _priority is None:
-            priority = None
-        elif isinstance(_priority, Unset):
-            priority = UNSET
-        else:
-            priority = Priority(_priority)
+        def _parse_priority(data: object) -> Union[None, Priority, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                priority_type_0 = Priority(data)
 
-        size = d.pop("size", UNSET)
+                return priority_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Priority, Unset], data)
 
-        _start_at = d.pop("startAt", UNSET)
-        start_at: Union[Unset, None, datetime.datetime]
-        if _start_at is None:
-            start_at = None
-        elif isinstance(_start_at, Unset):
-            start_at = UNSET
-        else:
-            start_at = isoparse(_start_at)
+        priority = _parse_priority(d.pop("priority", UNSET))
 
-        _due_at = d.pop("dueAt", UNSET)
-        due_at: Union[Unset, None, datetime.datetime]
-        if _due_at is None:
-            due_at = None
-        elif isinstance(_due_at, Unset):
-            due_at = UNSET
-        else:
-            due_at = isoparse(_due_at)
+        def _parse_size(data: object) -> Union[None, Unset, int]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, int], data)
 
-        _remind_at = d.pop("remindAt", UNSET)
-        remind_at: Union[Unset, None, datetime.datetime]
-        if _remind_at is None:
-            remind_at = None
-        elif isinstance(_remind_at, Unset):
-            remind_at = UNSET
-        else:
-            remind_at = isoparse(_remind_at)
+        size = _parse_size(d.pop("size", UNSET))
 
-        recurrence = d.pop("recurrence", UNSET)
+        def _parse_start_at(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                start_at_type_0 = isoparse(data)
 
-        _recurs_next_at = d.pop("recursNextAt", UNSET)
-        recurs_next_at: Union[Unset, None, datetime.datetime]
-        if _recurs_next_at is None:
-            recurs_next_at = None
-        elif isinstance(_recurs_next_at, Unset):
-            recurs_next_at = UNSET
-        else:
-            recurs_next_at = isoparse(_recurs_next_at)
+                return start_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        start_at = _parse_start_at(d.pop("startAt", UNSET))
+
+        def _parse_due_at(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                due_at_type_0 = isoparse(data)
+
+                return due_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        due_at = _parse_due_at(d.pop("dueAt", UNSET))
+
+        def _parse_remind_at(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                remind_at_type_0 = isoparse(data)
+
+                return remind_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        remind_at = _parse_remind_at(d.pop("remindAt", UNSET))
+
+        def _parse_recurrence(data: object) -> Union[Any, None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[Any, None, Unset], data)
+
+        recurrence = _parse_recurrence(d.pop("recurrence", UNSET))
+
+        def _parse_recurs_next_at(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                recurs_next_at_type_0 = isoparse(data)
+
+                return recurs_next_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        recurs_next_at = _parse_recurs_next_at(d.pop("recursNextAt", UNSET))
 
         properties = d.pop("properties", UNSET)
 

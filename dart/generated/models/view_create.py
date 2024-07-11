@@ -75,22 +75,31 @@ class ViewCreate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         order = self.order
+
         layout_duid = self.layout_duid
+
         accessible_by_team = self.accessible_by_team
+
         accessible_by_user_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.accessible_by_user_duids, Unset):
             accessible_by_user_duids = self.accessible_by_user_duids
 
         public = self.public
+
         title = self.title
+
         description = self.description
+
         icon_kind: Union[Unset, str] = UNSET
         if not isinstance(self.icon_kind, Unset):
             icon_kind = self.icon_kind.value
 
         icon_name_or_emoji = self.icon_name_or_emoji
+
         color_hex = self.color_hex
+
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value

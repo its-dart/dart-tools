@@ -22,7 +22,9 @@ class Relationship:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         source_duid = self.source_duid
+
         target_duid = self.target_duid
 
         field_dict: Dict[str, Any] = {}

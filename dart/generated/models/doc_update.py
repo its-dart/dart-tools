@@ -17,24 +17,23 @@ class DocUpdate:
     """
     Attributes:
         duid (str):
-        source_user (Union[Unset, None, str]):
+        source_user (Union[None, Unset, str]):
         source_type (Union[Unset, DocSourceType]): * `Unknown` - UNKNOWN
             * `Onboarding` - ONBOARDING
             * `Recommendation` - RECOMMENDATION
             * `GeneratedReport` - GENERATED_REPORT
             * `ChatGPT` - CHAT_GPT
             * `Application` - APPLICATION Default: DocSourceType.UNKNOWN.
-        drafter_duid (Union[Unset, None, str]):
+        drafter_duid (Union[None, Unset, str]):
         in_trash (Union[Unset, bool]):
         folder_duid (Union[Unset, str]):
-        report_kind (Union[Unset, None, ReportKind]): * `Standup` - STANDUP
-            * `Changelog` - CHANGELOG
+        report_kind (Union[None, ReportKind, Unset]):
         order (Union[Unset, str]):
         title (Union[Unset, str]):
         text (Union[Unset, Any]):
         text_markdown (Union[Unset, str]):
         edited_by_ai (Union[Unset, bool]):
-        recommendation_duid (Union[Unset, None, str]):
+        recommendation_duid (Union[None, Unset, str]):
         editor_duids (Union[Unset, List[str]]):
         subscriber_duids (Union[Unset, List[str]]):
         icon_kind (Union[Unset, IconKind]): * `None` - NONE
@@ -69,18 +68,18 @@ class DocUpdate:
     """
 
     duid: str
-    source_user: Union[Unset, None, str] = UNSET
+    source_user: Union[None, Unset, str] = UNSET
     source_type: Union[Unset, DocSourceType] = DocSourceType.UNKNOWN
-    drafter_duid: Union[Unset, None, str] = UNSET
+    drafter_duid: Union[None, Unset, str] = UNSET
     in_trash: Union[Unset, bool] = UNSET
     folder_duid: Union[Unset, str] = UNSET
-    report_kind: Union[Unset, None, ReportKind] = UNSET
+    report_kind: Union[None, ReportKind, Unset] = UNSET
     order: Union[Unset, str] = UNSET
     title: Union[Unset, str] = UNSET
     text: Union[Unset, Any] = UNSET
     text_markdown: Union[Unset, str] = UNSET
     edited_by_ai: Union[Unset, bool] = UNSET
-    recommendation_duid: Union[Unset, None, str] = UNSET
+    recommendation_duid: Union[None, Unset, str] = UNSET
     editor_duids: Union[Unset, List[str]] = UNSET
     subscriber_duids: Union[Unset, List[str]] = UNSET
     icon_kind: Union[Unset, IconKind] = UNSET
@@ -91,24 +90,51 @@ class DocUpdate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
-        source_user = self.source_user
+
+        source_user: Union[None, Unset, str]
+        if isinstance(self.source_user, Unset):
+            source_user = UNSET
+        else:
+            source_user = self.source_user
+
         source_type: Union[Unset, str] = UNSET
         if not isinstance(self.source_type, Unset):
             source_type = self.source_type.value
 
-        drafter_duid = self.drafter_duid
+        drafter_duid: Union[None, Unset, str]
+        if isinstance(self.drafter_duid, Unset):
+            drafter_duid = UNSET
+        else:
+            drafter_duid = self.drafter_duid
+
         in_trash = self.in_trash
+
         folder_duid = self.folder_duid
-        report_kind: Union[Unset, None, str] = UNSET
-        if not isinstance(self.report_kind, Unset):
-            report_kind = self.report_kind.value if self.report_kind else None
+
+        report_kind: Union[None, Unset, str]
+        if isinstance(self.report_kind, Unset):
+            report_kind = UNSET
+        elif isinstance(self.report_kind, ReportKind):
+            report_kind = self.report_kind.value
+        else:
+            report_kind = self.report_kind
 
         order = self.order
+
         title = self.title
+
         text = self.text
+
         text_markdown = self.text_markdown
+
         edited_by_ai = self.edited_by_ai
-        recommendation_duid = self.recommendation_duid
+
+        recommendation_duid: Union[None, Unset, str]
+        if isinstance(self.recommendation_duid, Unset):
+            recommendation_duid = UNSET
+        else:
+            recommendation_duid = self.recommendation_duid
+
         editor_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.editor_duids, Unset):
             editor_duids = self.editor_duids
@@ -122,7 +148,9 @@ class DocUpdate:
             icon_kind = self.icon_kind.value
 
         icon_name_or_emoji = self.icon_name_or_emoji
+
         color_hex = self.color_hex
+
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value
@@ -178,7 +206,14 @@ class DocUpdate:
         d = src_dict.copy()
         duid = d.pop("duid")
 
-        source_user = d.pop("sourceUser", UNSET)
+        def _parse_source_user(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        source_user = _parse_source_user(d.pop("sourceUser", UNSET))
 
         _source_type = d.pop("sourceType", UNSET)
         source_type: Union[Unset, DocSourceType]
@@ -187,20 +222,35 @@ class DocUpdate:
         else:
             source_type = DocSourceType(_source_type)
 
-        drafter_duid = d.pop("drafterDuid", UNSET)
+        def _parse_drafter_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        drafter_duid = _parse_drafter_duid(d.pop("drafterDuid", UNSET))
 
         in_trash = d.pop("inTrash", UNSET)
 
         folder_duid = d.pop("folderDuid", UNSET)
 
-        _report_kind = d.pop("reportKind", UNSET)
-        report_kind: Union[Unset, None, ReportKind]
-        if _report_kind is None:
-            report_kind = None
-        elif isinstance(_report_kind, Unset):
-            report_kind = UNSET
-        else:
-            report_kind = ReportKind(_report_kind)
+        def _parse_report_kind(data: object) -> Union[None, ReportKind, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                report_kind_type_0 = ReportKind(data)
+
+                return report_kind_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, ReportKind, Unset], data)
+
+        report_kind = _parse_report_kind(d.pop("reportKind", UNSET))
 
         order = d.pop("order", UNSET)
 
@@ -212,7 +262,14 @@ class DocUpdate:
 
         edited_by_ai = d.pop("editedByAi", UNSET)
 
-        recommendation_duid = d.pop("recommendationDuid", UNSET)
+        def _parse_recommendation_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        recommendation_duid = _parse_recommendation_duid(d.pop("recommendationDuid", UNSET))
 
         editor_duids = cast(List[str], d.pop("editorDuids", UNSET))
 

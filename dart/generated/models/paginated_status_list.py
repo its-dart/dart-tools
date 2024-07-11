@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -18,26 +18,35 @@ class PaginatedStatusList:
     Attributes:
         count (int):  Example: 123.
         results (List['Status']):
-        next_ (Union[Unset, None, str]):  Example: http://api.example.org/accounts/?offset=400&limit=100.
-        previous (Union[Unset, None, str]):  Example: http://api.example.org/accounts/?offset=200&limit=100.
+        next_ (Union[None, Unset, str]):  Example: http://api.example.org/accounts/?offset=400&limit=100.
+        previous (Union[None, Unset, str]):  Example: http://api.example.org/accounts/?offset=200&limit=100.
     """
 
     count: int
     results: List["Status"]
-    next_: Union[Unset, None, str] = UNSET
-    previous: Union[Unset, None, str] = UNSET
+    next_: Union[None, Unset, str] = UNSET
+    previous: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         count = self.count
+
         results = []
         for results_item_data in self.results:
             results_item = results_item_data.to_dict()
-
             results.append(results_item)
 
-        next_ = self.next_
-        previous = self.previous
+        next_: Union[None, Unset, str]
+        if isinstance(self.next_, Unset):
+            next_ = UNSET
+        else:
+            next_ = self.next_
+
+        previous: Union[None, Unset, str]
+        if isinstance(self.previous, Unset):
+            previous = UNSET
+        else:
+            previous = self.previous
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -68,9 +77,23 @@ class PaginatedStatusList:
 
             results.append(results_item)
 
-        next_ = d.pop("next", UNSET)
+        def _parse_next_(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
 
-        previous = d.pop("previous", UNSET)
+        next_ = _parse_next_(d.pop("next", UNSET))
+
+        def _parse_previous(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        previous = _parse_previous(d.pop("previous", UNSET))
 
         paginated_status_list = cls(
             count=count,

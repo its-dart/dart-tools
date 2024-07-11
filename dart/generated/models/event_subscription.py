@@ -22,7 +22,9 @@ class EventSubscription:
 
     def to_dict(self) -> Dict[str, Any]:
         in_app = self.in_app
+
         email = self.email
+
         slack = self.slack
 
         field_dict: Dict[str, Any] = {}

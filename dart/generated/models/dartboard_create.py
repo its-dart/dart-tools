@@ -56,9 +56,9 @@ class DartboardCreate:
             * `Dark Gray` - DARK_GRAY
             * `Light Brown` - LIGHT_BROWN
             * `Light Gray` - LIGHT_GRAY
-        index (Union[Unset, None, int]):
-        started_at (Union[Unset, None, datetime.datetime]):
-        finished_at (Union[Unset, None, datetime.datetime]):
+        index (Union[None, Unset, int]):
+        started_at (Union[None, Unset, datetime.datetime]):
+        finished_at (Union[None, Unset, datetime.datetime]):
         always_shown_property_duids (Union[Unset, List[str]]):
         always_hidden_property_duids (Union[Unset, List[str]]):
     """
@@ -73,41 +73,61 @@ class DartboardCreate:
     icon_name_or_emoji: Union[Unset, str] = UNSET
     color_hex: Union[Unset, str] = UNSET
     color_name: Union[Unset, ColorName] = UNSET
-    index: Union[Unset, None, int] = UNSET
-    started_at: Union[Unset, None, datetime.datetime] = UNSET
-    finished_at: Union[Unset, None, datetime.datetime] = UNSET
+    index: Union[None, Unset, int] = UNSET
+    started_at: Union[None, Unset, datetime.datetime] = UNSET
+    finished_at: Union[None, Unset, datetime.datetime] = UNSET
     always_shown_property_duids: Union[Unset, List[str]] = UNSET
     always_hidden_property_duids: Union[Unset, List[str]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         space_duid = self.space_duid
+
         order = self.order
+
         kind: Union[Unset, str] = UNSET
         if not isinstance(self.kind, Unset):
             kind = self.kind.value
 
         title = self.title
+
         description = self.description
+
         icon_kind: Union[Unset, str] = UNSET
         if not isinstance(self.icon_kind, Unset):
             icon_kind = self.icon_kind.value
 
         icon_name_or_emoji = self.icon_name_or_emoji
+
         color_hex = self.color_hex
+
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value
 
-        index = self.index
-        started_at: Union[Unset, None, str] = UNSET
-        if not isinstance(self.started_at, Unset):
-            started_at = self.started_at.isoformat() if self.started_at else None
+        index: Union[None, Unset, int]
+        if isinstance(self.index, Unset):
+            index = UNSET
+        else:
+            index = self.index
 
-        finished_at: Union[Unset, None, str] = UNSET
-        if not isinstance(self.finished_at, Unset):
-            finished_at = self.finished_at.isoformat() if self.finished_at else None
+        started_at: Union[None, Unset, str]
+        if isinstance(self.started_at, Unset):
+            started_at = UNSET
+        elif isinstance(self.started_at, datetime.datetime):
+            started_at = self.started_at.isoformat()
+        else:
+            started_at = self.started_at
+
+        finished_at: Union[None, Unset, str]
+        if isinstance(self.finished_at, Unset):
+            finished_at = UNSET
+        elif isinstance(self.finished_at, datetime.datetime):
+            finished_at = self.finished_at.isoformat()
+        else:
+            finished_at = self.finished_at
 
         always_shown_property_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.always_shown_property_duids, Unset):
@@ -191,25 +211,48 @@ class DartboardCreate:
         else:
             color_name = ColorName(_color_name)
 
-        index = d.pop("index", UNSET)
+        def _parse_index(data: object) -> Union[None, Unset, int]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, int], data)
 
-        _started_at = d.pop("startedAt", UNSET)
-        started_at: Union[Unset, None, datetime.datetime]
-        if _started_at is None:
-            started_at = None
-        elif isinstance(_started_at, Unset):
-            started_at = UNSET
-        else:
-            started_at = isoparse(_started_at)
+        index = _parse_index(d.pop("index", UNSET))
 
-        _finished_at = d.pop("finishedAt", UNSET)
-        finished_at: Union[Unset, None, datetime.datetime]
-        if _finished_at is None:
-            finished_at = None
-        elif isinstance(_finished_at, Unset):
-            finished_at = UNSET
-        else:
-            finished_at = isoparse(_finished_at)
+        def _parse_started_at(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                started_at_type_0 = isoparse(data)
+
+                return started_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        started_at = _parse_started_at(d.pop("startedAt", UNSET))
+
+        def _parse_finished_at(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                finished_at_type_0 = isoparse(data)
+
+                return finished_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        finished_at = _parse_finished_at(d.pop("finishedAt", UNSET))
 
         always_shown_property_duids = cast(List[str], d.pop("alwaysShownPropertyDuids", UNSET))
 

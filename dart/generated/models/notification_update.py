@@ -30,7 +30,9 @@ class NotificationUpdate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         user_duid = self.user_duid
+
         event: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.event, Unset):
             event = self.event.to_dict()

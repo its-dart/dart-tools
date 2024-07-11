@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -41,7 +41,7 @@ class Option:
             * `Dark Gray` - DARK_GRAY
             * `Light Brown` - LIGHT_BROWN
             * `Light Gray` - LIGHT_GRAY
-        updated_by_client_duid (Union[Unset, None, str]):
+        updated_by_client_duid (Union[None, Unset, str]):
     """
 
     duid: str
@@ -49,17 +49,25 @@ class Option:
     title: str
     color_hex: str
     color_name: ColorName
-    updated_by_client_duid: Union[Unset, None, str] = UNSET
+    updated_by_client_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         property_duid = self.property_duid
+
         title = self.title
+
         color_hex = self.color_hex
+
         color_name = self.color_name.value
 
-        updated_by_client_duid = self.updated_by_client_duid
+        updated_by_client_duid: Union[None, Unset, str]
+        if isinstance(self.updated_by_client_duid, Unset):
+            updated_by_client_duid = UNSET
+        else:
+            updated_by_client_duid = self.updated_by_client_duid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -90,7 +98,14 @@ class Option:
 
         color_name = ColorName(d.pop("colorName"))
 
-        updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
+        def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        updated_by_client_duid = _parse_updated_by_client_duid(d.pop("updatedByClientDuid", UNSET))
 
         option = cls(
             duid=duid,

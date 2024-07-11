@@ -22,7 +22,9 @@ class TaskDocRelationshipCreate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         task_duid = self.task_duid
+
         doc_duid = self.doc_duid
 
         field_dict: Dict[str, Any] = {}

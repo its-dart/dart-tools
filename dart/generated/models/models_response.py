@@ -112,7 +112,6 @@ class ModelsResponse:
             attachments = []
             for attachments_item_data in self.attachments:
                 attachments_item = attachments_item_data.to_dict()
-
                 attachments.append(attachments_item)
 
         brainstorms: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -120,7 +119,6 @@ class ModelsResponse:
             brainstorms = []
             for brainstorms_item_data in self.brainstorms:
                 brainstorms_item = brainstorms_item_data.to_dict()
-
                 brainstorms.append(brainstorms_item)
 
         comments: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -128,7 +126,6 @@ class ModelsResponse:
             comments = []
             for comments_item_data in self.comments:
                 comments_item = comments_item_data.to_dict()
-
                 comments.append(comments_item)
 
         reactions: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -136,7 +133,6 @@ class ModelsResponse:
             reactions = []
             for reactions_item_data in self.reactions:
                 reactions_item = reactions_item_data.to_dict()
-
                 reactions.append(reactions_item)
 
         dartboards: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -144,7 +140,6 @@ class ModelsResponse:
             dartboards = []
             for dartboards_item_data in self.dartboards:
                 dartboards_item = dartboards_item_data.to_dict()
-
                 dartboards.append(dartboards_item)
 
         docs: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -152,7 +147,6 @@ class ModelsResponse:
             docs = []
             for docs_item_data in self.docs:
                 docs_item = docs_item_data.to_dict()
-
                 docs.append(docs_item)
 
         events: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -160,7 +154,6 @@ class ModelsResponse:
             events = []
             for events_item_data in self.events:
                 events_item = events_item_data.to_dict()
-
                 events.append(events_item)
 
         event_subscriptions: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -168,7 +161,6 @@ class ModelsResponse:
             event_subscriptions = []
             for event_subscriptions_item_data in self.event_subscriptions:
                 event_subscriptions_item = event_subscriptions_item_data.to_dict()
-
                 event_subscriptions.append(event_subscriptions_item)
 
         folders: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -176,7 +168,6 @@ class ModelsResponse:
             folders = []
             for folders_item_data in self.folders:
                 folders_item = folders_item_data.to_dict()
-
                 folders.append(folders_item)
 
         forms: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -184,7 +175,6 @@ class ModelsResponse:
             forms = []
             for forms_item_data in self.forms:
                 forms_item = forms_item_data.to_dict()
-
                 forms.append(forms_item)
 
         form_fields: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -192,7 +182,6 @@ class ModelsResponse:
             form_fields = []
             for form_fields_item_data in self.form_fields:
                 form_fields_item = form_fields_item_data.to_dict()
-
                 form_fields.append(form_fields_item)
 
         layouts: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -200,7 +189,6 @@ class ModelsResponse:
             layouts = []
             for layouts_item_data in self.layouts:
                 layouts_item = layouts_item_data.to_dict()
-
                 layouts.append(layouts_item)
 
         notifications: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -208,7 +196,6 @@ class ModelsResponse:
             notifications = []
             for notifications_item_data in self.notifications:
                 notifications_item = notifications_item_data.to_dict()
-
                 notifications.append(notifications_item)
 
         options: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -216,7 +203,6 @@ class ModelsResponse:
             options = []
             for options_item_data in self.options:
                 options_item = options_item_data.to_dict()
-
                 options.append(options_item)
 
         properties: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -224,7 +210,6 @@ class ModelsResponse:
             properties = []
             for properties_item_data in self.properties:
                 properties_item = properties_item_data.to_dict()
-
                 properties.append(properties_item)
 
         relationships: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -232,7 +217,6 @@ class ModelsResponse:
             relationships = []
             for relationships_item_data in self.relationships:
                 relationships_item = relationships_item_data.to_dict()
-
                 relationships.append(relationships_item)
 
         relationship_kinds: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -240,7 +224,6 @@ class ModelsResponse:
             relationship_kinds = []
             for relationship_kinds_item_data in self.relationship_kinds:
                 relationship_kinds_item = relationship_kinds_item_data.to_dict()
-
                 relationship_kinds.append(relationship_kinds_item)
 
         spaces: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -248,7 +231,6 @@ class ModelsResponse:
             spaces = []
             for spaces_item_data in self.spaces:
                 spaces_item = spaces_item_data.to_dict()
-
                 spaces.append(spaces_item)
 
         statuses: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -256,7 +238,6 @@ class ModelsResponse:
             statuses = []
             for statuses_item_data in self.statuses:
                 statuses_item = statuses_item_data.to_dict()
-
                 statuses.append(statuses_item)
 
         tasks: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -264,7 +245,6 @@ class ModelsResponse:
             tasks = []
             for tasks_item_data in self.tasks:
                 tasks_item = tasks_item_data.to_dict()
-
                 tasks.append(tasks_item)
 
         task_doc_relationships: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -272,7 +252,6 @@ class ModelsResponse:
             task_doc_relationships = []
             for task_doc_relationships_item_data in self.task_doc_relationships:
                 task_doc_relationships_item = task_doc_relationships_item_data.to_dict()
-
                 task_doc_relationships.append(task_doc_relationships_item)
 
         links: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -280,7 +259,6 @@ class ModelsResponse:
             links = []
             for links_item_data in self.links:
                 links_item = links_item_data.to_dict()
-
                 links.append(links_item)
 
         tenants: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -288,7 +266,6 @@ class ModelsResponse:
             tenants = []
             for tenants_item_data in self.tenants:
                 tenants_item = tenants_item_data.to_dict()
-
                 tenants.append(tenants_item)
 
         users: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -296,7 +273,6 @@ class ModelsResponse:
             users = []
             for users_item_data in self.users:
                 users_item = users_item_data.to_dict()
-
                 users.append(users_item)
 
         user_dartboard_layouts: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -304,7 +280,6 @@ class ModelsResponse:
             user_dartboard_layouts = []
             for user_dartboard_layouts_item_data in self.user_dartboard_layouts:
                 user_dartboard_layouts_item = user_dartboard_layouts_item_data.to_dict()
-
                 user_dartboard_layouts.append(user_dartboard_layouts_item)
 
         views: Union[Unset, List[Dict[str, Any]]] = UNSET
@@ -312,7 +287,6 @@ class ModelsResponse:
             views = []
             for views_item_data in self.views:
                 views_item = views_item_data.to_dict()
-
                 views.append(views_item)
 
         field_dict: Dict[str, Any] = {}

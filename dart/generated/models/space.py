@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Optional, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -19,6 +19,7 @@ class Space:
     """
     Attributes:
         duid (str):
+        drafter_duid (Union[None, str]):
         kind (SpaceKind): * `Other` - OTHER
             * `Workspace` - WORKSPACE
             * `Personal` - PERSONAL
@@ -59,15 +60,15 @@ class Space:
             * `Light Gray` - LIGHT_GRAY
         sprint_mode (SprintMode): * `None` - NONE
             * `ANBA` - ANBA
-        standup_recurrence (Any):
-        changelog_recurrence (Any):
-        updated_by_client_duid (Union[Unset, None, str]):
-        drafter_duid (Optional[str]):
-        standup_recurs_next_at (Optional[datetime.datetime]):
-        changelog_recurs_next_at (Optional[datetime.datetime]):
+        standup_recurrence (Union[Any, None]):
+        standup_recurs_next_at (Union[None, datetime.datetime]):
+        changelog_recurrence (Union[Any, None]):
+        changelog_recurs_next_at (Union[None, datetime.datetime]):
+        updated_by_client_duid (Union[None, Unset, str]):
     """
 
     duid: str
+    drafter_duid: Union[None, str]
     kind: SpaceKind
     accessible_by_team: bool
     accessible_by_user_duids: List[str]
@@ -80,46 +81,73 @@ class Space:
     color_hex: str
     color_name: ColorName
     sprint_mode: SprintMode
-    standup_recurrence: Any
-    changelog_recurrence: Any
-    drafter_duid: Optional[str]
-    standup_recurs_next_at: Optional[datetime.datetime]
-    changelog_recurs_next_at: Optional[datetime.datetime]
-    updated_by_client_duid: Union[Unset, None, str] = UNSET
+    standup_recurrence: Union[Any, None]
+    standup_recurs_next_at: Union[None, datetime.datetime]
+    changelog_recurrence: Union[Any, None]
+    changelog_recurs_next_at: Union[None, datetime.datetime]
+    updated_by_client_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
+        drafter_duid: Union[None, str]
+        drafter_duid = self.drafter_duid
+
         kind = self.kind.value
 
         accessible_by_team = self.accessible_by_team
+
         accessible_by_user_duids = self.accessible_by_user_duids
 
         order = self.order
+
         title = self.title
+
         abrev = self.abrev
+
         description = self.description
+
         icon_kind = self.icon_kind.value
 
         icon_name_or_emoji = self.icon_name_or_emoji
+
         color_hex = self.color_hex
+
         color_name = self.color_name.value
 
         sprint_mode = self.sprint_mode.value
 
+        standup_recurrence: Union[Any, None]
         standup_recurrence = self.standup_recurrence
-        changelog_recurrence = self.changelog_recurrence
-        updated_by_client_duid = self.updated_by_client_duid
-        drafter_duid = self.drafter_duid
-        standup_recurs_next_at = self.standup_recurs_next_at.isoformat() if self.standup_recurs_next_at else None
 
-        changelog_recurs_next_at = self.changelog_recurs_next_at.isoformat() if self.changelog_recurs_next_at else None
+        standup_recurs_next_at: Union[None, str]
+        if isinstance(self.standup_recurs_next_at, datetime.datetime):
+            standup_recurs_next_at = self.standup_recurs_next_at.isoformat()
+        else:
+            standup_recurs_next_at = self.standup_recurs_next_at
+
+        changelog_recurrence: Union[Any, None]
+        changelog_recurrence = self.changelog_recurrence
+
+        changelog_recurs_next_at: Union[None, str]
+        if isinstance(self.changelog_recurs_next_at, datetime.datetime):
+            changelog_recurs_next_at = self.changelog_recurs_next_at.isoformat()
+        else:
+            changelog_recurs_next_at = self.changelog_recurs_next_at
+
+        updated_by_client_duid: Union[None, Unset, str]
+        if isinstance(self.updated_by_client_duid, Unset):
+            updated_by_client_duid = UNSET
+        else:
+            updated_by_client_duid = self.updated_by_client_duid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "duid": duid,
+                "drafterDuid": drafter_duid,
                 "kind": kind,
                 "accessibleByTeam": accessible_by_team,
                 "accessibleByUserDuids": accessible_by_user_duids,
@@ -133,9 +161,8 @@ class Space:
                 "colorName": color_name,
                 "sprintMode": sprint_mode,
                 "standupRecurrence": standup_recurrence,
-                "changelogRecurrence": changelog_recurrence,
-                "drafterDuid": drafter_duid,
                 "standupRecursNextAt": standup_recurs_next_at,
+                "changelogRecurrence": changelog_recurrence,
                 "changelogRecursNextAt": changelog_recurs_next_at,
             }
         )
@@ -148,6 +175,13 @@ class Space:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         duid = d.pop("duid")
+
+        def _parse_drafter_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        drafter_duid = _parse_drafter_duid(d.pop("drafterDuid"))
 
         kind = SpaceKind(d.pop("kind"))
 
@@ -173,30 +207,62 @@ class Space:
 
         sprint_mode = SprintMode(d.pop("sprintMode"))
 
-        standup_recurrence = d.pop("standupRecurrence")
+        def _parse_standup_recurrence(data: object) -> Union[Any, None]:
+            if data is None:
+                return data
+            return cast(Union[Any, None], data)
 
-        changelog_recurrence = d.pop("changelogRecurrence")
+        standup_recurrence = _parse_standup_recurrence(d.pop("standupRecurrence"))
 
-        updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
+        def _parse_standup_recurs_next_at(data: object) -> Union[None, datetime.datetime]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                standup_recurs_next_at_type_0 = isoparse(data)
 
-        drafter_duid = d.pop("drafterDuid")
+                return standup_recurs_next_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, datetime.datetime], data)
 
-        _standup_recurs_next_at = d.pop("standupRecursNextAt")
-        standup_recurs_next_at: Optional[datetime.datetime]
-        if _standup_recurs_next_at is None:
-            standup_recurs_next_at = None
-        else:
-            standup_recurs_next_at = isoparse(_standup_recurs_next_at)
+        standup_recurs_next_at = _parse_standup_recurs_next_at(d.pop("standupRecursNextAt"))
 
-        _changelog_recurs_next_at = d.pop("changelogRecursNextAt")
-        changelog_recurs_next_at: Optional[datetime.datetime]
-        if _changelog_recurs_next_at is None:
-            changelog_recurs_next_at = None
-        else:
-            changelog_recurs_next_at = isoparse(_changelog_recurs_next_at)
+        def _parse_changelog_recurrence(data: object) -> Union[Any, None]:
+            if data is None:
+                return data
+            return cast(Union[Any, None], data)
+
+        changelog_recurrence = _parse_changelog_recurrence(d.pop("changelogRecurrence"))
+
+        def _parse_changelog_recurs_next_at(data: object) -> Union[None, datetime.datetime]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                changelog_recurs_next_at_type_0 = isoparse(data)
+
+                return changelog_recurs_next_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, datetime.datetime], data)
+
+        changelog_recurs_next_at = _parse_changelog_recurs_next_at(d.pop("changelogRecursNextAt"))
+
+        def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        updated_by_client_duid = _parse_updated_by_client_duid(d.pop("updatedByClientDuid", UNSET))
 
         space = cls(
             duid=duid,
+            drafter_duid=drafter_duid,
             kind=kind,
             accessible_by_team=accessible_by_team,
             accessible_by_user_duids=accessible_by_user_duids,
@@ -210,11 +276,10 @@ class Space:
             color_name=color_name,
             sprint_mode=sprint_mode,
             standup_recurrence=standup_recurrence,
-            changelog_recurrence=changelog_recurrence,
-            updated_by_client_duid=updated_by_client_duid,
-            drafter_duid=drafter_duid,
             standup_recurs_next_at=standup_recurs_next_at,
+            changelog_recurrence=changelog_recurrence,
             changelog_recurs_next_at=changelog_recurs_next_at,
+            updated_by_client_duid=updated_by_client_duid,
         )
 
         space.additional_properties = d

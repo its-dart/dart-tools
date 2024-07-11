@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Type, TypeVar
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -16,37 +16,50 @@ class GithubIntegration:
             * `Pending` - PENDING
             * `Suspended` - SUSPENDED
             * `Enabled` - ENABLED
+        installation_link (Union[None, str]):
         linkback_enabled (bool):
         auto_assign (bool):
-        installation_link (Optional[str]):
-        status_on_branch_link_copy_duid (Optional[str]):
-        status_on_branch_create_duid (Optional[str]):
-        status_on_pr_draft_duid (Optional[str]):
-        status_on_pr_ready_duid (Optional[str]):
-        status_on_pr_merge_duid (Optional[str]):
+        status_on_branch_link_copy_duid (Union[None, str]):
+        status_on_branch_create_duid (Union[None, str]):
+        status_on_pr_draft_duid (Union[None, str]):
+        status_on_pr_ready_duid (Union[None, str]):
+        status_on_pr_merge_duid (Union[None, str]):
     """
 
     status: GithubIntegrationTenantExtensionStatus
+    installation_link: Union[None, str]
     linkback_enabled: bool
     auto_assign: bool
-    installation_link: Optional[str]
-    status_on_branch_link_copy_duid: Optional[str]
-    status_on_branch_create_duid: Optional[str]
-    status_on_pr_draft_duid: Optional[str]
-    status_on_pr_ready_duid: Optional[str]
-    status_on_pr_merge_duid: Optional[str]
+    status_on_branch_link_copy_duid: Union[None, str]
+    status_on_branch_create_duid: Union[None, str]
+    status_on_pr_draft_duid: Union[None, str]
+    status_on_pr_ready_duid: Union[None, str]
+    status_on_pr_merge_duid: Union[None, str]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         status = self.status.value
 
-        linkback_enabled = self.linkback_enabled
-        auto_assign = self.auto_assign
+        installation_link: Union[None, str]
         installation_link = self.installation_link
+
+        linkback_enabled = self.linkback_enabled
+
+        auto_assign = self.auto_assign
+
+        status_on_branch_link_copy_duid: Union[None, str]
         status_on_branch_link_copy_duid = self.status_on_branch_link_copy_duid
+
+        status_on_branch_create_duid: Union[None, str]
         status_on_branch_create_duid = self.status_on_branch_create_duid
+
+        status_on_pr_draft_duid: Union[None, str]
         status_on_pr_draft_duid = self.status_on_pr_draft_duid
+
+        status_on_pr_ready_duid: Union[None, str]
         status_on_pr_ready_duid = self.status_on_pr_ready_duid
+
+        status_on_pr_merge_duid: Union[None, str]
         status_on_pr_merge_duid = self.status_on_pr_merge_duid
 
         field_dict: Dict[str, Any] = {}
@@ -54,9 +67,9 @@ class GithubIntegration:
         field_dict.update(
             {
                 "status": status,
+                "installationLink": installation_link,
                 "linkbackEnabled": linkback_enabled,
                 "autoAssign": auto_assign,
-                "installationLink": installation_link,
                 "statusOnBranchLinkCopyDuid": status_on_branch_link_copy_duid,
                 "statusOnBranchCreateDuid": status_on_branch_create_duid,
                 "statusOnPrDraftDuid": status_on_pr_draft_duid,
@@ -72,27 +85,57 @@ class GithubIntegration:
         d = src_dict.copy()
         status = GithubIntegrationTenantExtensionStatus(d.pop("status"))
 
+        def _parse_installation_link(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        installation_link = _parse_installation_link(d.pop("installationLink"))
+
         linkback_enabled = d.pop("linkbackEnabled")
 
         auto_assign = d.pop("autoAssign")
 
-        installation_link = d.pop("installationLink")
+        def _parse_status_on_branch_link_copy_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
 
-        status_on_branch_link_copy_duid = d.pop("statusOnBranchLinkCopyDuid")
+        status_on_branch_link_copy_duid = _parse_status_on_branch_link_copy_duid(d.pop("statusOnBranchLinkCopyDuid"))
 
-        status_on_branch_create_duid = d.pop("statusOnBranchCreateDuid")
+        def _parse_status_on_branch_create_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
 
-        status_on_pr_draft_duid = d.pop("statusOnPrDraftDuid")
+        status_on_branch_create_duid = _parse_status_on_branch_create_duid(d.pop("statusOnBranchCreateDuid"))
 
-        status_on_pr_ready_duid = d.pop("statusOnPrReadyDuid")
+        def _parse_status_on_pr_draft_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
 
-        status_on_pr_merge_duid = d.pop("statusOnPrMergeDuid")
+        status_on_pr_draft_duid = _parse_status_on_pr_draft_duid(d.pop("statusOnPrDraftDuid"))
+
+        def _parse_status_on_pr_ready_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        status_on_pr_ready_duid = _parse_status_on_pr_ready_duid(d.pop("statusOnPrReadyDuid"))
+
+        def _parse_status_on_pr_merge_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        status_on_pr_merge_duid = _parse_status_on_pr_merge_duid(d.pop("statusOnPrMergeDuid"))
 
         github_integration = cls(
             status=status,
+            installation_link=installation_link,
             linkback_enabled=linkback_enabled,
             auto_assign=auto_assign,
-            installation_link=installation_link,
             status_on_branch_link_copy_duid=status_on_branch_link_copy_duid,
             status_on_branch_create_duid=status_on_branch_create_duid,
             status_on_pr_draft_duid=status_on_pr_draft_duid,

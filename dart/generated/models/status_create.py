@@ -65,13 +65,19 @@ class StatusCreate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         property_duid = self.property_duid
+
         kind = self.kind.value
 
         order = self.order
+
         locked = self.locked
+
         title = self.title
+
         color_hex = self.color_hex
+
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value

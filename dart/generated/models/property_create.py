@@ -54,12 +54,17 @@ class PropertyCreate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         kind = self.kind.value
 
         order = self.order
+
         hidden = self.hidden
+
         title = self.title
+
         description = self.description
+
         adtl = self.adtl
 
         field_dict: Dict[str, Any] = {}

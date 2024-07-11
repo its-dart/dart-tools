@@ -84,12 +84,12 @@ class Transaction:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         kind = self.kind.value
 
         operations = []
         for operations_item_data in self.operations:
             operations_item = operations_item_data.to_dict()
-
             operations.append(operations_item)
 
         field_dict: Dict[str, Any] = {}

@@ -27,11 +27,11 @@ def run_webhook(payload: bytes, headers: dict) -> bool:
 
     # Ignore if it wasn't an update
     event_type = event["type"]
-    data = event["data"]
     if event_type != "task.updated":
         return True
 
     # Ignore if it isn't relevant based on our criteria
+    data = event["data"]
     task = Task.from_dict(data["model"])
     old_task = Task.from_dict(data["oldModel"])
     if task.title != STANDARD_TITLE or task.status_duid != APPROVED_STATUS_DUID or old_task.status_duid == APPROVED_STATUS_DUID:

@@ -22,7 +22,9 @@ class UserDartboardLayoutCreate:
 
     def to_dict(self) -> Dict[str, Any]:
         user_duid = self.user_duid
+
         dartboard_duid = self.dartboard_duid
+
         layout_duid = self.layout_duid
 
         field_dict: Dict[str, Any] = {}

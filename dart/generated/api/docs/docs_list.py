@@ -11,20 +11,19 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
-    editor: Union[Unset, None, str] = UNSET,
-    folder: Union[Unset, None, str] = UNSET,
-    in_trash: Union[Unset, None, bool] = UNSET,
-    is_draft: Union[Unset, None, bool] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    report_kind: Union[Unset, None, str] = UNSET,
-    subscriber: Union[Unset, None, str] = UNSET,
-    text: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    editor: Union[Unset, str] = UNSET,
+    folder: Union[Unset, str] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
+    is_draft: Union[Unset, bool] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    report_kind: Union[Unset, str] = UNSET,
+    subscriber: Union[Unset, str] = UNSET,
+    text: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
-    pass
-
     params: Dict[str, Any] = {}
+
     params["editor"] = editor
 
     params["folder"] = folder
@@ -47,11 +46,13 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    return {
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": "/api/v0/docs",
         "params": params,
     }
+
+    return _kwargs
 
 
 def _parse_response(
@@ -81,29 +82,29 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    editor: Union[Unset, None, str] = UNSET,
-    folder: Union[Unset, None, str] = UNSET,
-    in_trash: Union[Unset, None, bool] = UNSET,
-    is_draft: Union[Unset, None, bool] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    report_kind: Union[Unset, None, str] = UNSET,
-    subscriber: Union[Unset, None, str] = UNSET,
-    text: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    editor: Union[Unset, str] = UNSET,
+    folder: Union[Unset, str] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
+    is_draft: Union[Unset, bool] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    report_kind: Union[Unset, str] = UNSET,
+    subscriber: Union[Unset, str] = UNSET,
+    text: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedDocList]:
     """
     Args:
-        editor (Union[Unset, None, str]):
-        folder (Union[Unset, None, str]):
-        in_trash (Union[Unset, None, bool]):
-        is_draft (Union[Unset, None, bool]):
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
-        report_kind (Union[Unset, None, str]):
-        subscriber (Union[Unset, None, str]):
-        text (Union[Unset, None, str]):
-        title (Union[Unset, None, str]):
+        editor (Union[Unset, str]):
+        folder (Union[Unset, str]):
+        in_trash (Union[Unset, bool]):
+        is_draft (Union[Unset, bool]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        report_kind (Union[Unset, str]):
+        subscriber (Union[Unset, str]):
+        text (Union[Unset, str]):
+        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -136,29 +137,29 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-    editor: Union[Unset, None, str] = UNSET,
-    folder: Union[Unset, None, str] = UNSET,
-    in_trash: Union[Unset, None, bool] = UNSET,
-    is_draft: Union[Unset, None, bool] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    report_kind: Union[Unset, None, str] = UNSET,
-    subscriber: Union[Unset, None, str] = UNSET,
-    text: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    editor: Union[Unset, str] = UNSET,
+    folder: Union[Unset, str] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
+    is_draft: Union[Unset, bool] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    report_kind: Union[Unset, str] = UNSET,
+    subscriber: Union[Unset, str] = UNSET,
+    text: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedDocList]:
     """
     Args:
-        editor (Union[Unset, None, str]):
-        folder (Union[Unset, None, str]):
-        in_trash (Union[Unset, None, bool]):
-        is_draft (Union[Unset, None, bool]):
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
-        report_kind (Union[Unset, None, str]):
-        subscriber (Union[Unset, None, str]):
-        text (Union[Unset, None, str]):
-        title (Union[Unset, None, str]):
+        editor (Union[Unset, str]):
+        folder (Union[Unset, str]):
+        in_trash (Union[Unset, bool]):
+        is_draft (Union[Unset, bool]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        report_kind (Union[Unset, str]):
+        subscriber (Union[Unset, str]):
+        text (Union[Unset, str]):
+        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -186,29 +187,29 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-    editor: Union[Unset, None, str] = UNSET,
-    folder: Union[Unset, None, str] = UNSET,
-    in_trash: Union[Unset, None, bool] = UNSET,
-    is_draft: Union[Unset, None, bool] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    report_kind: Union[Unset, None, str] = UNSET,
-    subscriber: Union[Unset, None, str] = UNSET,
-    text: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    editor: Union[Unset, str] = UNSET,
+    folder: Union[Unset, str] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
+    is_draft: Union[Unset, bool] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    report_kind: Union[Unset, str] = UNSET,
+    subscriber: Union[Unset, str] = UNSET,
+    text: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedDocList]:
     """
     Args:
-        editor (Union[Unset, None, str]):
-        folder (Union[Unset, None, str]):
-        in_trash (Union[Unset, None, bool]):
-        is_draft (Union[Unset, None, bool]):
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
-        report_kind (Union[Unset, None, str]):
-        subscriber (Union[Unset, None, str]):
-        text (Union[Unset, None, str]):
-        title (Union[Unset, None, str]):
+        editor (Union[Unset, str]):
+        folder (Union[Unset, str]):
+        in_trash (Union[Unset, bool]):
+        is_draft (Union[Unset, bool]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        report_kind (Union[Unset, str]):
+        subscriber (Union[Unset, str]):
+        text (Union[Unset, str]):
+        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -239,29 +240,29 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
-    editor: Union[Unset, None, str] = UNSET,
-    folder: Union[Unset, None, str] = UNSET,
-    in_trash: Union[Unset, None, bool] = UNSET,
-    is_draft: Union[Unset, None, bool] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    report_kind: Union[Unset, None, str] = UNSET,
-    subscriber: Union[Unset, None, str] = UNSET,
-    text: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    editor: Union[Unset, str] = UNSET,
+    folder: Union[Unset, str] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
+    is_draft: Union[Unset, bool] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    report_kind: Union[Unset, str] = UNSET,
+    subscriber: Union[Unset, str] = UNSET,
+    text: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedDocList]:
     """
     Args:
-        editor (Union[Unset, None, str]):
-        folder (Union[Unset, None, str]):
-        in_trash (Union[Unset, None, bool]):
-        is_draft (Union[Unset, None, bool]):
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
-        report_kind (Union[Unset, None, str]):
-        subscriber (Union[Unset, None, str]):
-        text (Union[Unset, None, str]):
-        title (Union[Unset, None, str]):
+        editor (Union[Unset, str]):
+        folder (Union[Unset, str]):
+        in_trash (Union[Unset, bool]):
+        is_draft (Union[Unset, bool]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        report_kind (Union[Unset, str]):
+        subscriber (Union[Unset, str]):
+        text (Union[Unset, str]):
+        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

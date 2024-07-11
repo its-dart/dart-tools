@@ -41,10 +41,15 @@ class BrainstormUpdate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         dartboard_duid = self.dartboard_duid
+
         subject = self.subject
+
         ai = self.ai
+
         total_session_ms = self.total_session_ms
+
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
@@ -54,6 +59,7 @@ class BrainstormUpdate:
             state = self.state.value
 
         after_start_ms = self.after_start_ms
+
         created_tasks_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.created_tasks_duids, Unset):
             created_tasks_duids = self.created_tasks_duids

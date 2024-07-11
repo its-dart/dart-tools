@@ -32,13 +32,10 @@ class FilterGroup:
         from ..models.filter_set import FilterSet
 
         filters: Dict[str, Any]
-
         if isinstance(self.filters, FilterAssignee):
             filters = self.filters.to_dict()
-
         elif isinstance(self.filters, FilterSet):
             filters = self.filters.to_dict()
-
         else:
             filters = self.filters.to_dict()
 

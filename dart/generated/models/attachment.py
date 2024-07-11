@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Type, TypeVar
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -42,7 +42,7 @@ class Attachment:
             * `Dark Gray` - DARK_GRAY
             * `Light Brown` - LIGHT_BROWN
             * `Light Gray` - LIGHT_GRAY
-        recommendation_duid (Optional[str]):
+        recommendation_duid (Union[None, str]):
     """
 
     duid: str
@@ -52,18 +52,25 @@ class Attachment:
     file_url: str
     color_hex: str
     color_name: ColorName
-    recommendation_duid: Optional[str]
+    recommendation_duid: Union[None, str]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         order = self.order
+
         name = self.name
+
         kind = self.kind
+
         file_url = self.file_url
+
         color_hex = self.color_hex
+
         color_name = self.color_name.value
 
+        recommendation_duid: Union[None, str]
         recommendation_duid = self.recommendation_duid
 
         field_dict: Dict[str, Any] = {}
@@ -100,7 +107,12 @@ class Attachment:
 
         color_name = ColorName(d.pop("colorName"))
 
-        recommendation_duid = d.pop("recommendationDuid")
+        def _parse_recommendation_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        recommendation_duid = _parse_recommendation_duid(d.pop("recommendationDuid"))
 
         attachment = cls(
             duid=duid,

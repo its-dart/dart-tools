@@ -1,4 +1,4 @@
-""" Contains all the data models used in inputs/outputs """
+"""Contains all the data models used in inputs/outputs"""
 
 from .attachment import Attachment
 from .attachment_create import AttachmentCreate
@@ -131,9 +131,9 @@ from .task_link_create import TaskLinkCreate
 from .task_link_kind import TaskLinkKind
 from .task_link_update import TaskLinkUpdate
 from .task_notion_document import TaskNotionDocument
-from .task_notion_document_block_children_map import TaskNotionDocumentBlockChildrenMap
-from .task_notion_document_block_map import TaskNotionDocumentBlockMap
-from .task_notion_document_page_map import TaskNotionDocumentPageMap
+from .task_notion_document_block_children_map_type_0 import TaskNotionDocumentBlockChildrenMapType0
+from .task_notion_document_block_map_type_0 import TaskNotionDocumentBlockMapType0
+from .task_notion_document_page_map_type_0 import TaskNotionDocumentPageMapType0
 from .task_properties import TaskProperties
 from .task_source_type import TaskSourceType
 from .task_update import TaskUpdate
@@ -290,9 +290,9 @@ __all__ = (
     "TaskLinkKind",
     "TaskLinkUpdate",
     "TaskNotionDocument",
-    "TaskNotionDocumentBlockChildrenMap",
-    "TaskNotionDocumentBlockMap",
-    "TaskNotionDocumentPageMap",
+    "TaskNotionDocumentBlockChildrenMapType0",
+    "TaskNotionDocumentBlockMapType0",
+    "TaskNotionDocumentPageMapType0",
     "TaskProperties",
     "TaskSourceType",
     "TaskUpdate",

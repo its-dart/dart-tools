@@ -63,6 +63,7 @@ class EventKind(str, Enum):
     USAGEOPEN_FULLSCREEN = "usage/open_fullscreen"
     USAGEOPEN_RIGHTBAR = "usage/open_rightbar"
     USAGEOPEN_SEARCH = "usage/open_search"
+    USAGEOPEN_TASK_OVERLAY = "usage/open_task_overlay"
     USAGEREDO = "usage/redo"
     USAGESUBMIT_FEEDBACK = "usage/submit_feedback"
     USAGEUNDO = "usage/undo"

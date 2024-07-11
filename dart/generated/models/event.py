@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Type, TypeVar, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -14,6 +14,7 @@ T = TypeVar("T", bound="Event")
 class Event:
     """
     Attributes:
+        message_frags (Union[List[Any], None]):
         kind (EventKind): * `tasks/create` - TASK_CREATE
             * `tasks/update_assignees` - TASK_UPDATE_ASSIGNEES
             * `tasks/update_status` - TASK_UPDATE_STATUS
@@ -86,6 +87,7 @@ class Event:
             * `usage/open_command_center` - USAGE_OPEN_COMMAND_CENTER
             * `usage/open_rightbar` - USAGE_OPEN_RIGHTBAR
             * `usage/open_fullscreen` - USAGE_OPEN_FULLSCREEN
+            * `usage/open_task_overlay` - USAGE_OPEN_TASK_OVERLAY
             * `usage/copy_task_link` - USAGE_COPY_TASK_LINK
             * `usage/copy_branch` - USAGE_COPY_BRANCH
             * `usage/open_search` - USAGE_OPEN_SEARCH
@@ -93,6 +95,8 @@ class Event:
             * `usage/nlp_raw_delete` - USAGE_NLP_RAW_DELETE
             * `usage/nlp_typeahead_open` - USAGE_NLP_TYPEAHEAD_OPEN
             * `usage/nlp_typeahead_accept` - USAGE_NLP_TYPEAHEAD_ACCEPT
+        actor_duid (Union[None, str]):
+        actor_str (Union[EventActor, None]):
         main_entity_name (EntityName): * `comment` - COMMENT
             * `task` - TASK
             * `dartboard` - DARTBOARD
@@ -107,95 +111,109 @@ class Event:
             * `tenant` - TENANT
             * `user` - USER
             * `UNKNOWN` - UNKNOWN
+        comment_duid (Union[None, str]):
+        task_duid (Union[None, str]):
+        dartboard_duid (Union[None, str]):
+        view_duid (Union[None, str]):
+        space_duid (Union[None, str]):
+        doc_duid (Union[None, str]):
+        folder_duid (Union[None, str]):
+        form_duid (Union[None, str]):
+        brainstorm_duid (Union[None, str]):
+        property_duid (Union[None, str]):
+        status_duid (Union[None, str]):
+        user_duid (Union[None, str]):
         adtl (Any):
-        message_str (Optional[str]):
-        message_frags (Optional[List[Any]]):
-        actor_duid (Optional[str]):
-        actor_str (Optional[EventActor]): * `Dart AI` - DART_AI
-            * `Dart Due Date Bot` - DART_DUE_DATE_BOT
-            * `Dart GitHub Bot` - DART_GITHUB_BOT
-            * `Dart Metrics Bot` - DART_METRICS_BOT
-            * `Dart Recurring Task Bot` - DART_RECURRING_TASK_BOT
-            * `Dart Reminder Bot` - DART_REMINDER_BOT
-            * `Dart Report Bot` - DART_REPORT_BOT
-            * `Dart Slack Bot` - DART_SLACK_BOT
-            * `A form user` - FORM_USER
-            * `An email user` - EMAIL_USER
-            * `Stripe webhook` - STRIPE_WEBHOOK
-        comment_duid (Optional[str]):
-        task_duid (Optional[str]):
-        dartboard_duid (Optional[str]):
-        view_duid (Optional[str]):
-        space_duid (Optional[str]):
-        doc_duid (Optional[str]):
-        folder_duid (Optional[str]):
-        form_duid (Optional[str]):
-        brainstorm_duid (Optional[str]):
-        property_duid (Optional[str]):
-        status_duid (Optional[str]):
-        user_duid (Optional[str]):
     """
 
+    message_frags: Union[List[Any], None]
     kind: EventKind
+    actor_duid: Union[None, str]
+    actor_str: Union[EventActor, None]
     main_entity_name: EntityName
+    comment_duid: Union[None, str]
+    task_duid: Union[None, str]
+    dartboard_duid: Union[None, str]
+    view_duid: Union[None, str]
+    space_duid: Union[None, str]
+    doc_duid: Union[None, str]
+    folder_duid: Union[None, str]
+    form_duid: Union[None, str]
+    brainstorm_duid: Union[None, str]
+    property_duid: Union[None, str]
+    status_duid: Union[None, str]
+    user_duid: Union[None, str]
     adtl: Any
-    message_str: Optional[str]
-    message_frags: Optional[List[Any]]
-    actor_duid: Optional[str]
-    actor_str: Optional[EventActor]
-    comment_duid: Optional[str]
-    task_duid: Optional[str]
-    dartboard_duid: Optional[str]
-    view_duid: Optional[str]
-    space_duid: Optional[str]
-    doc_duid: Optional[str]
-    folder_duid: Optional[str]
-    form_duid: Optional[str]
-    brainstorm_duid: Optional[str]
-    property_duid: Optional[str]
-    status_duid: Optional[str]
-    user_duid: Optional[str]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        kind = self.kind.value
+        message_frags: Union[List[Any], None]
+        if isinstance(self.message_frags, list):
+            message_frags = self.message_frags
 
-        main_entity_name = self.main_entity_name.value
-
-        adtl = self.adtl
-        message_str = self.message_str
-        if self.message_frags is None:
-            message_frags = None
         else:
             message_frags = self.message_frags
 
-        actor_duid = self.actor_duid
-        actor_str = self.actor_str.value if self.actor_str else None
+        kind = self.kind.value
 
+        actor_duid: Union[None, str]
+        actor_duid = self.actor_duid
+
+        actor_str: Union[None, str]
+        if isinstance(self.actor_str, EventActor):
+            actor_str = self.actor_str.value
+        else:
+            actor_str = self.actor_str
+
+        main_entity_name = self.main_entity_name.value
+
+        comment_duid: Union[None, str]
         comment_duid = self.comment_duid
+
+        task_duid: Union[None, str]
         task_duid = self.task_duid
+
+        dartboard_duid: Union[None, str]
         dartboard_duid = self.dartboard_duid
+
+        view_duid: Union[None, str]
         view_duid = self.view_duid
+
+        space_duid: Union[None, str]
         space_duid = self.space_duid
+
+        doc_duid: Union[None, str]
         doc_duid = self.doc_duid
+
+        folder_duid: Union[None, str]
         folder_duid = self.folder_duid
+
+        form_duid: Union[None, str]
         form_duid = self.form_duid
+
+        brainstorm_duid: Union[None, str]
         brainstorm_duid = self.brainstorm_duid
+
+        property_duid: Union[None, str]
         property_duid = self.property_duid
+
+        status_duid: Union[None, str]
         status_duid = self.status_duid
+
+        user_duid: Union[None, str]
         user_duid = self.user_duid
+
+        adtl = self.adtl
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "kind": kind,
-                "mainEntityName": main_entity_name,
-                "adtl": adtl,
-                "messageStr": message_str,
                 "messageFrags": message_frags,
+                "kind": kind,
                 "actorDuid": actor_duid,
                 "actorStr": actor_str,
+                "mainEntityName": main_entity_name,
                 "commentDuid": comment_duid,
                 "taskDuid": task_duid,
                 "dartboardDuid": dartboard_duid,
@@ -208,6 +226,7 @@ class Event:
                 "propertyDuid": property_duid,
                 "statusDuid": status_duid,
                 "userDuid": user_duid,
+                "adtl": adtl,
             }
         )
 
@@ -216,57 +235,140 @@ class Event:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+
+        def _parse_message_frags(data: object) -> Union[List[Any], None]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, list):
+                    raise TypeError()
+                message_frags_type_0 = cast(List[Any], data)
+
+                return message_frags_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[List[Any], None], data)
+
+        message_frags = _parse_message_frags(d.pop("messageFrags"))
+
         kind = EventKind(d.pop("kind"))
+
+        def _parse_actor_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        actor_duid = _parse_actor_duid(d.pop("actorDuid"))
+
+        def _parse_actor_str(data: object) -> Union[EventActor, None]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                actor_str_type_0 = EventActor(data)
+
+                return actor_str_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[EventActor, None], data)
+
+        actor_str = _parse_actor_str(d.pop("actorStr"))
 
         main_entity_name = EntityName(d.pop("mainEntityName"))
 
+        def _parse_comment_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        comment_duid = _parse_comment_duid(d.pop("commentDuid"))
+
+        def _parse_task_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        task_duid = _parse_task_duid(d.pop("taskDuid"))
+
+        def _parse_dartboard_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        dartboard_duid = _parse_dartboard_duid(d.pop("dartboardDuid"))
+
+        def _parse_view_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        view_duid = _parse_view_duid(d.pop("viewDuid"))
+
+        def _parse_space_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        space_duid = _parse_space_duid(d.pop("spaceDuid"))
+
+        def _parse_doc_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        doc_duid = _parse_doc_duid(d.pop("docDuid"))
+
+        def _parse_folder_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        folder_duid = _parse_folder_duid(d.pop("folderDuid"))
+
+        def _parse_form_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        form_duid = _parse_form_duid(d.pop("formDuid"))
+
+        def _parse_brainstorm_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        brainstorm_duid = _parse_brainstorm_duid(d.pop("brainstormDuid"))
+
+        def _parse_property_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        property_duid = _parse_property_duid(d.pop("propertyDuid"))
+
+        def _parse_status_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        status_duid = _parse_status_duid(d.pop("statusDuid"))
+
+        def _parse_user_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        user_duid = _parse_user_duid(d.pop("userDuid"))
+
         adtl = d.pop("adtl")
 
-        message_str = d.pop("messageStr")
-
-        message_frags = cast(List[Any], d.pop("messageFrags"))
-
-        actor_duid = d.pop("actorDuid")
-
-        _actor_str = d.pop("actorStr")
-        actor_str: Optional[EventActor]
-        if _actor_str is None:
-            actor_str = None
-        else:
-            actor_str = EventActor(_actor_str)
-
-        comment_duid = d.pop("commentDuid")
-
-        task_duid = d.pop("taskDuid")
-
-        dartboard_duid = d.pop("dartboardDuid")
-
-        view_duid = d.pop("viewDuid")
-
-        space_duid = d.pop("spaceDuid")
-
-        doc_duid = d.pop("docDuid")
-
-        folder_duid = d.pop("folderDuid")
-
-        form_duid = d.pop("formDuid")
-
-        brainstorm_duid = d.pop("brainstormDuid")
-
-        property_duid = d.pop("propertyDuid")
-
-        status_duid = d.pop("statusDuid")
-
-        user_duid = d.pop("userDuid")
-
         event = cls(
-            kind=kind,
-            main_entity_name=main_entity_name,
-            adtl=adtl,
-            message_str=message_str,
             message_frags=message_frags,
+            kind=kind,
             actor_duid=actor_duid,
             actor_str=actor_str,
+            main_entity_name=main_entity_name,
             comment_duid=comment_duid,
             task_duid=task_duid,
             dartboard_duid=dartboard_duid,
@@ -279,6 +381,7 @@ class Event:
             property_duid=property_duid,
             status_duid=status_duid,
             user_duid=user_duid,
+            adtl=adtl,
         )
 
         event.additional_properties = d

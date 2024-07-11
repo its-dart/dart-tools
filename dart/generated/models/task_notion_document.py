@@ -1,14 +1,14 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Type, TypeVar
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 if TYPE_CHECKING:
-    from ..models.task_notion_document_block_children_map import TaskNotionDocumentBlockChildrenMap
-    from ..models.task_notion_document_block_map import TaskNotionDocumentBlockMap
-    from ..models.task_notion_document_page_map import TaskNotionDocumentPageMap
+    from ..models.task_notion_document_block_children_map_type_0 import TaskNotionDocumentBlockChildrenMapType0
+    from ..models.task_notion_document_block_map_type_0 import TaskNotionDocumentBlockMapType0
+    from ..models.task_notion_document_page_map_type_0 import TaskNotionDocumentPageMapType0
 
 
 T = TypeVar("T", bound="TaskNotionDocument")
@@ -20,33 +20,57 @@ class TaskNotionDocument:
     Attributes:
         page_id (str):
         refreshing (bool):
-        exists_and_access_granted (Optional[bool]):
-        last_refresh_at (Optional[datetime.datetime]):
-        page_map (Optional[TaskNotionDocumentPageMap]):
-        block_map (Optional[TaskNotionDocumentBlockMap]):
-        block_children_map (Optional[TaskNotionDocumentBlockChildrenMap]):
+        exists_and_access_granted (Union[None, bool]):
+        last_refresh_at (Union[None, datetime.datetime]):
+        page_map (Union['TaskNotionDocumentPageMapType0', None]):
+        block_map (Union['TaskNotionDocumentBlockMapType0', None]):
+        block_children_map (Union['TaskNotionDocumentBlockChildrenMapType0', None]):
     """
 
     page_id: str
     refreshing: bool
-    exists_and_access_granted: Optional[bool]
-    last_refresh_at: Optional[datetime.datetime]
-    page_map: Optional["TaskNotionDocumentPageMap"]
-    block_map: Optional["TaskNotionDocumentBlockMap"]
-    block_children_map: Optional["TaskNotionDocumentBlockChildrenMap"]
+    exists_and_access_granted: Union[None, bool]
+    last_refresh_at: Union[None, datetime.datetime]
+    page_map: Union["TaskNotionDocumentPageMapType0", None]
+    block_map: Union["TaskNotionDocumentBlockMapType0", None]
+    block_children_map: Union["TaskNotionDocumentBlockChildrenMapType0", None]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        from ..models.task_notion_document_block_children_map_type_0 import TaskNotionDocumentBlockChildrenMapType0
+        from ..models.task_notion_document_block_map_type_0 import TaskNotionDocumentBlockMapType0
+        from ..models.task_notion_document_page_map_type_0 import TaskNotionDocumentPageMapType0
+
         page_id = self.page_id
+
         refreshing = self.refreshing
+
+        exists_and_access_granted: Union[None, bool]
         exists_and_access_granted = self.exists_and_access_granted
-        last_refresh_at = self.last_refresh_at.isoformat() if self.last_refresh_at else None
 
-        page_map = self.page_map.to_dict() if self.page_map else None
+        last_refresh_at: Union[None, str]
+        if isinstance(self.last_refresh_at, datetime.datetime):
+            last_refresh_at = self.last_refresh_at.isoformat()
+        else:
+            last_refresh_at = self.last_refresh_at
 
-        block_map = self.block_map.to_dict() if self.block_map else None
+        page_map: Union[Dict[str, Any], None]
+        if isinstance(self.page_map, TaskNotionDocumentPageMapType0):
+            page_map = self.page_map.to_dict()
+        else:
+            page_map = self.page_map
 
-        block_children_map = self.block_children_map.to_dict() if self.block_children_map else None
+        block_map: Union[Dict[str, Any], None]
+        if isinstance(self.block_map, TaskNotionDocumentBlockMapType0):
+            block_map = self.block_map.to_dict()
+        else:
+            block_map = self.block_map
+
+        block_children_map: Union[Dict[str, Any], None]
+        if isinstance(self.block_children_map, TaskNotionDocumentBlockChildrenMapType0):
+            block_children_map = self.block_children_map.to_dict()
+        else:
+            block_children_map = self.block_children_map
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -66,44 +90,81 @@ class TaskNotionDocument:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.task_notion_document_block_children_map import TaskNotionDocumentBlockChildrenMap
-        from ..models.task_notion_document_block_map import TaskNotionDocumentBlockMap
-        from ..models.task_notion_document_page_map import TaskNotionDocumentPageMap
+        from ..models.task_notion_document_block_children_map_type_0 import TaskNotionDocumentBlockChildrenMapType0
+        from ..models.task_notion_document_block_map_type_0 import TaskNotionDocumentBlockMapType0
+        from ..models.task_notion_document_page_map_type_0 import TaskNotionDocumentPageMapType0
 
         d = src_dict.copy()
         page_id = d.pop("pageId")
 
         refreshing = d.pop("refreshing")
 
-        exists_and_access_granted = d.pop("existsAndAccessGranted")
+        def _parse_exists_and_access_granted(data: object) -> Union[None, bool]:
+            if data is None:
+                return data
+            return cast(Union[None, bool], data)
 
-        _last_refresh_at = d.pop("lastRefreshAt")
-        last_refresh_at: Optional[datetime.datetime]
-        if _last_refresh_at is None:
-            last_refresh_at = None
-        else:
-            last_refresh_at = isoparse(_last_refresh_at)
+        exists_and_access_granted = _parse_exists_and_access_granted(d.pop("existsAndAccessGranted"))
 
-        _page_map = d.pop("pageMap")
-        page_map: Optional[TaskNotionDocumentPageMap]
-        if _page_map is None:
-            page_map = None
-        else:
-            page_map = TaskNotionDocumentPageMap.from_dict(_page_map)
+        def _parse_last_refresh_at(data: object) -> Union[None, datetime.datetime]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                last_refresh_at_type_0 = isoparse(data)
 
-        _block_map = d.pop("blockMap")
-        block_map: Optional[TaskNotionDocumentBlockMap]
-        if _block_map is None:
-            block_map = None
-        else:
-            block_map = TaskNotionDocumentBlockMap.from_dict(_block_map)
+                return last_refresh_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, datetime.datetime], data)
 
-        _block_children_map = d.pop("blockChildrenMap")
-        block_children_map: Optional[TaskNotionDocumentBlockChildrenMap]
-        if _block_children_map is None:
-            block_children_map = None
-        else:
-            block_children_map = TaskNotionDocumentBlockChildrenMap.from_dict(_block_children_map)
+        last_refresh_at = _parse_last_refresh_at(d.pop("lastRefreshAt"))
+
+        def _parse_page_map(data: object) -> Union["TaskNotionDocumentPageMapType0", None]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                page_map_type_0 = TaskNotionDocumentPageMapType0.from_dict(data)
+
+                return page_map_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union["TaskNotionDocumentPageMapType0", None], data)
+
+        page_map = _parse_page_map(d.pop("pageMap"))
+
+        def _parse_block_map(data: object) -> Union["TaskNotionDocumentBlockMapType0", None]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                block_map_type_0 = TaskNotionDocumentBlockMapType0.from_dict(data)
+
+                return block_map_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union["TaskNotionDocumentBlockMapType0", None], data)
+
+        block_map = _parse_block_map(d.pop("blockMap"))
+
+        def _parse_block_children_map(data: object) -> Union["TaskNotionDocumentBlockChildrenMapType0", None]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                block_children_map_type_0 = TaskNotionDocumentBlockChildrenMapType0.from_dict(data)
+
+                return block_children_map_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union["TaskNotionDocumentBlockChildrenMapType0", None], data)
+
+        block_children_map = _parse_block_children_map(d.pop("blockChildrenMap"))
 
         task_notion_document = cls(
             page_id=page_id,

@@ -11,15 +11,14 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
-    default_only: Union[Unset, None, bool] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    property_: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    default_only: Union[Unset, bool] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    property_: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
-    pass
-
     params: Dict[str, Any] = {}
+
     params["default_only"] = default_only
 
     params["limit"] = limit
@@ -32,11 +31,13 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    return {
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": "/api/v0/options",
         "params": params,
     }
+
+    return _kwargs
 
 
 def _parse_response(
@@ -66,19 +67,19 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    default_only: Union[Unset, None, bool] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    property_: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    default_only: Union[Unset, bool] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    property_: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedOptionList]:
     """
     Args:
-        default_only (Union[Unset, None, bool]):
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
-        property_ (Union[Unset, None, str]):
-        title (Union[Unset, None, str]):
+        default_only (Union[Unset, bool]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        property_ (Union[Unset, str]):
+        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -106,19 +107,19 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-    default_only: Union[Unset, None, bool] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    property_: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    default_only: Union[Unset, bool] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    property_: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedOptionList]:
     """
     Args:
-        default_only (Union[Unset, None, bool]):
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
-        property_ (Union[Unset, None, str]):
-        title (Union[Unset, None, str]):
+        default_only (Union[Unset, bool]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        property_ (Union[Unset, str]):
+        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -141,19 +142,19 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-    default_only: Union[Unset, None, bool] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    property_: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    default_only: Union[Unset, bool] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    property_: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedOptionList]:
     """
     Args:
-        default_only (Union[Unset, None, bool]):
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
-        property_ (Union[Unset, None, str]):
-        title (Union[Unset, None, str]):
+        default_only (Union[Unset, bool]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        property_ (Union[Unset, str]):
+        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -179,19 +180,19 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
-    default_only: Union[Unset, None, bool] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    property_: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    default_only: Union[Unset, bool] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    property_: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedOptionList]:
     """
     Args:
-        default_only (Union[Unset, None, bool]):
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
-        property_ (Union[Unset, None, str]):
-        title (Union[Unset, None, str]):
+        default_only (Union[Unset, bool]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        property_ (Union[Unset, str]):
+        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

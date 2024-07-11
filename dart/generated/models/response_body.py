@@ -24,7 +24,6 @@ class ResponseBody:
         results = []
         for results_item_data in self.results:
             results_item = results_item_data.to_dict()
-
             results.append(results_item)
 
         field_dict: Dict[str, Any] = {}

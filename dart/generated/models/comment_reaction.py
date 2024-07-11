@@ -26,9 +26,11 @@ class CommentReaction:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         created_at = self.created_at.isoformat()
 
         author_duid = self.author_duid
+
         emoji = self.emoji
 
         field_dict: Dict[str, Any] = {}

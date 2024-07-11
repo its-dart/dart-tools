@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -49,90 +49,116 @@ class Task:
             * `AppRoadmapTimeline` - APP_ROADMAP_TIMELINE
             * `ExternalForm` - EXTERNAL_FORM
         created_at (datetime.datetime):
+        created_by_duid (Union[None, str]):
         updated_at (datetime.datetime):
+        updated_by_duid (Union[None, str]):
+        drafter_duid (Union[None, str]):
         in_trash (bool):
         dartboard_duid (str):
         order (str):
         expanded (bool):
         title (str):
         description (Any):
+        notion_document (Union['TaskNotionDocument', None]):
         status_duid (str):
         assigned_to_ai (bool):
+        recommendation_duid (Union[None, str]):
         assignee_duids (List[str]):
         subscriber_duids (List[str]):
         tag_duids (List[str]):
         links (List['TaskLink']):
         attachment_duids (List[str]):
         relationships (List['Relationship']):
-        recurrence (Any):
+        priority (Union[None, Priority]):
+        size (Union[None, int]):
+        start_at (Union[None, datetime.datetime]):
+        due_at (Union[None, datetime.datetime]):
+        remind_at (Union[None, datetime.datetime]):
+        recurrence (Union[Any, None]):
+        recurs_next_at (Union[None, datetime.datetime]):
         properties (TaskProperties):
-        updated_by_client_duid (Union[Unset, None, str]):
-        created_by_duid (Optional[str]):
-        updated_by_duid (Optional[str]):
-        drafter_duid (Optional[str]):
-        notion_document (Optional[TaskNotionDocument]):
-        recommendation_duid (Optional[str]):
-        priority (Optional[Priority]): * `Critical` - CRITICAL
-            * `High` - HIGH
-            * `Medium` - MEDIUM
-            * `Low` - LOW
-        size (Optional[int]):
-        start_at (Optional[datetime.datetime]):
-        due_at (Optional[datetime.datetime]):
-        remind_at (Optional[datetime.datetime]):
-        recurs_next_at (Optional[datetime.datetime]):
+        updated_by_client_duid (Union[None, Unset, str]):
     """
 
     duid: str
     source_type: TaskSourceType
     created_at: datetime.datetime
+    created_by_duid: Union[None, str]
     updated_at: datetime.datetime
+    updated_by_duid: Union[None, str]
+    drafter_duid: Union[None, str]
     in_trash: bool
     dartboard_duid: str
     order: str
     expanded: bool
     title: str
     description: Any
+    notion_document: Union["TaskNotionDocument", None]
     status_duid: str
     assigned_to_ai: bool
+    recommendation_duid: Union[None, str]
     assignee_duids: List[str]
     subscriber_duids: List[str]
     tag_duids: List[str]
     links: List["TaskLink"]
     attachment_duids: List[str]
     relationships: List["Relationship"]
-    recurrence: Any
+    priority: Union[None, Priority]
+    size: Union[None, int]
+    start_at: Union[None, datetime.datetime]
+    due_at: Union[None, datetime.datetime]
+    remind_at: Union[None, datetime.datetime]
+    recurrence: Union[Any, None]
+    recurs_next_at: Union[None, datetime.datetime]
     properties: "TaskProperties"
-    created_by_duid: Optional[str]
-    updated_by_duid: Optional[str]
-    drafter_duid: Optional[str]
-    notion_document: Optional["TaskNotionDocument"]
-    recommendation_duid: Optional[str]
-    priority: Optional[Priority]
-    size: Optional[int]
-    start_at: Optional[datetime.datetime]
-    due_at: Optional[datetime.datetime]
-    remind_at: Optional[datetime.datetime]
-    recurs_next_at: Optional[datetime.datetime]
-    updated_by_client_duid: Union[Unset, None, str] = UNSET
+    updated_by_client_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        from ..models.task_notion_document import TaskNotionDocument
+
         duid = self.duid
+
         source_type = self.source_type.value
 
         created_at = self.created_at.isoformat()
 
+        created_by_duid: Union[None, str]
+        created_by_duid = self.created_by_duid
+
         updated_at = self.updated_at.isoformat()
 
+        updated_by_duid: Union[None, str]
+        updated_by_duid = self.updated_by_duid
+
+        drafter_duid: Union[None, str]
+        drafter_duid = self.drafter_duid
+
         in_trash = self.in_trash
+
         dartboard_duid = self.dartboard_duid
+
         order = self.order
+
         expanded = self.expanded
+
         title = self.title
+
         description = self.description
+
+        notion_document: Union[Dict[str, Any], None]
+        if isinstance(self.notion_document, TaskNotionDocument):
+            notion_document = self.notion_document.to_dict()
+        else:
+            notion_document = self.notion_document
+
         status_duid = self.status_duid
+
         assigned_to_ai = self.assigned_to_ai
+
+        recommendation_duid: Union[None, str]
+        recommendation_duid = self.recommendation_duid
+
         assignee_duids = self.assignee_duids
 
         subscriber_duids = self.subscriber_duids
@@ -142,7 +168,6 @@ class Task:
         links = []
         for links_item_data in self.links:
             links_item = links_item_data.to_dict()
-
             links.append(links_item)
 
         attachment_duids = self.attachment_duids
@@ -150,29 +175,51 @@ class Task:
         relationships = []
         for relationships_item_data in self.relationships:
             relationships_item = relationships_item_data.to_dict()
-
             relationships.append(relationships_item)
 
+        priority: Union[None, str]
+        if isinstance(self.priority, Priority):
+            priority = self.priority.value
+        else:
+            priority = self.priority
+
+        size: Union[None, int]
+        size = self.size
+
+        start_at: Union[None, str]
+        if isinstance(self.start_at, datetime.datetime):
+            start_at = self.start_at.isoformat()
+        else:
+            start_at = self.start_at
+
+        due_at: Union[None, str]
+        if isinstance(self.due_at, datetime.datetime):
+            due_at = self.due_at.isoformat()
+        else:
+            due_at = self.due_at
+
+        remind_at: Union[None, str]
+        if isinstance(self.remind_at, datetime.datetime):
+            remind_at = self.remind_at.isoformat()
+        else:
+            remind_at = self.remind_at
+
+        recurrence: Union[Any, None]
         recurrence = self.recurrence
+
+        recurs_next_at: Union[None, str]
+        if isinstance(self.recurs_next_at, datetime.datetime):
+            recurs_next_at = self.recurs_next_at.isoformat()
+        else:
+            recurs_next_at = self.recurs_next_at
+
         properties = self.properties.to_dict()
 
-        updated_by_client_duid = self.updated_by_client_duid
-        created_by_duid = self.created_by_duid
-        updated_by_duid = self.updated_by_duid
-        drafter_duid = self.drafter_duid
-        notion_document = self.notion_document.to_dict() if self.notion_document else None
-
-        recommendation_duid = self.recommendation_duid
-        priority = self.priority.value if self.priority else None
-
-        size = self.size
-        start_at = self.start_at.isoformat() if self.start_at else None
-
-        due_at = self.due_at.isoformat() if self.due_at else None
-
-        remind_at = self.remind_at.isoformat() if self.remind_at else None
-
-        recurs_next_at = self.recurs_next_at.isoformat() if self.recurs_next_at else None
+        updated_by_client_duid: Union[None, Unset, str]
+        if isinstance(self.updated_by_client_duid, Unset):
+            updated_by_client_duid = UNSET
+        else:
+            updated_by_client_duid = self.updated_by_client_duid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -181,34 +228,34 @@ class Task:
                 "duid": duid,
                 "sourceType": source_type,
                 "createdAt": created_at,
+                "createdByDuid": created_by_duid,
                 "updatedAt": updated_at,
+                "updatedByDuid": updated_by_duid,
+                "drafterDuid": drafter_duid,
                 "inTrash": in_trash,
                 "dartboardDuid": dartboard_duid,
                 "order": order,
                 "expanded": expanded,
                 "title": title,
                 "description": description,
+                "notionDocument": notion_document,
                 "statusDuid": status_duid,
                 "assignedToAi": assigned_to_ai,
+                "recommendationDuid": recommendation_duid,
                 "assigneeDuids": assignee_duids,
                 "subscriberDuids": subscriber_duids,
                 "tagDuids": tag_duids,
                 "links": links,
                 "attachmentDuids": attachment_duids,
                 "relationships": relationships,
-                "recurrence": recurrence,
-                "properties": properties,
-                "createdByDuid": created_by_duid,
-                "updatedByDuid": updated_by_duid,
-                "drafterDuid": drafter_duid,
-                "notionDocument": notion_document,
-                "recommendationDuid": recommendation_duid,
                 "priority": priority,
                 "size": size,
                 "startAt": start_at,
                 "dueAt": due_at,
                 "remindAt": remind_at,
+                "recurrence": recurrence,
                 "recursNextAt": recurs_next_at,
+                "properties": properties,
             }
         )
         if updated_by_client_duid is not UNSET:
@@ -230,7 +277,28 @@ class Task:
 
         created_at = isoparse(d.pop("createdAt"))
 
+        def _parse_created_by_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        created_by_duid = _parse_created_by_duid(d.pop("createdByDuid"))
+
         updated_at = isoparse(d.pop("updatedAt"))
+
+        def _parse_updated_by_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        updated_by_duid = _parse_updated_by_duid(d.pop("updatedByDuid"))
+
+        def _parse_drafter_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        drafter_duid = _parse_drafter_duid(d.pop("drafterDuid"))
 
         in_trash = d.pop("inTrash")
 
@@ -244,9 +312,31 @@ class Task:
 
         description = d.pop("description")
 
+        def _parse_notion_document(data: object) -> Union["TaskNotionDocument", None]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                notion_document_type_0 = TaskNotionDocument.from_dict(data)
+
+                return notion_document_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union["TaskNotionDocument", None], data)
+
+        notion_document = _parse_notion_document(d.pop("notionDocument"))
+
         status_duid = d.pop("statusDuid")
 
         assigned_to_ai = d.pop("assignedToAi")
+
+        def _parse_recommendation_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        recommendation_duid = _parse_recommendation_duid(d.pop("recommendationDuid"))
 
         assignee_duids = cast(List[str], d.pop("assigneeDuids"))
 
@@ -270,97 +360,139 @@ class Task:
 
             relationships.append(relationships_item)
 
-        recurrence = d.pop("recurrence")
+        def _parse_priority(data: object) -> Union[None, Priority]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                priority_type_0 = Priority(data)
+
+                return priority_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Priority], data)
+
+        priority = _parse_priority(d.pop("priority"))
+
+        def _parse_size(data: object) -> Union[None, int]:
+            if data is None:
+                return data
+            return cast(Union[None, int], data)
+
+        size = _parse_size(d.pop("size"))
+
+        def _parse_start_at(data: object) -> Union[None, datetime.datetime]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                start_at_type_0 = isoparse(data)
+
+                return start_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, datetime.datetime], data)
+
+        start_at = _parse_start_at(d.pop("startAt"))
+
+        def _parse_due_at(data: object) -> Union[None, datetime.datetime]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                due_at_type_0 = isoparse(data)
+
+                return due_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, datetime.datetime], data)
+
+        due_at = _parse_due_at(d.pop("dueAt"))
+
+        def _parse_remind_at(data: object) -> Union[None, datetime.datetime]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                remind_at_type_0 = isoparse(data)
+
+                return remind_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, datetime.datetime], data)
+
+        remind_at = _parse_remind_at(d.pop("remindAt"))
+
+        def _parse_recurrence(data: object) -> Union[Any, None]:
+            if data is None:
+                return data
+            return cast(Union[Any, None], data)
+
+        recurrence = _parse_recurrence(d.pop("recurrence"))
+
+        def _parse_recurs_next_at(data: object) -> Union[None, datetime.datetime]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                recurs_next_at_type_0 = isoparse(data)
+
+                return recurs_next_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, datetime.datetime], data)
+
+        recurs_next_at = _parse_recurs_next_at(d.pop("recursNextAt"))
 
         properties = TaskProperties.from_dict(d.pop("properties"))
 
-        updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
+        def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
 
-        created_by_duid = d.pop("createdByDuid")
-
-        updated_by_duid = d.pop("updatedByDuid")
-
-        drafter_duid = d.pop("drafterDuid")
-
-        _notion_document = d.pop("notionDocument")
-        notion_document: Optional[TaskNotionDocument]
-        if _notion_document is None:
-            notion_document = None
-        else:
-            notion_document = TaskNotionDocument.from_dict(_notion_document)
-
-        recommendation_duid = d.pop("recommendationDuid")
-
-        _priority = d.pop("priority")
-        priority: Optional[Priority]
-        if _priority is None:
-            priority = None
-        else:
-            priority = Priority(_priority)
-
-        size = d.pop("size")
-
-        _start_at = d.pop("startAt")
-        start_at: Optional[datetime.datetime]
-        if _start_at is None:
-            start_at = None
-        else:
-            start_at = isoparse(_start_at)
-
-        _due_at = d.pop("dueAt")
-        due_at: Optional[datetime.datetime]
-        if _due_at is None:
-            due_at = None
-        else:
-            due_at = isoparse(_due_at)
-
-        _remind_at = d.pop("remindAt")
-        remind_at: Optional[datetime.datetime]
-        if _remind_at is None:
-            remind_at = None
-        else:
-            remind_at = isoparse(_remind_at)
-
-        _recurs_next_at = d.pop("recursNextAt")
-        recurs_next_at: Optional[datetime.datetime]
-        if _recurs_next_at is None:
-            recurs_next_at = None
-        else:
-            recurs_next_at = isoparse(_recurs_next_at)
+        updated_by_client_duid = _parse_updated_by_client_duid(d.pop("updatedByClientDuid", UNSET))
 
         task = cls(
             duid=duid,
             source_type=source_type,
             created_at=created_at,
+            created_by_duid=created_by_duid,
             updated_at=updated_at,
+            updated_by_duid=updated_by_duid,
+            drafter_duid=drafter_duid,
             in_trash=in_trash,
             dartboard_duid=dartboard_duid,
             order=order,
             expanded=expanded,
             title=title,
             description=description,
+            notion_document=notion_document,
             status_duid=status_duid,
             assigned_to_ai=assigned_to_ai,
+            recommendation_duid=recommendation_duid,
             assignee_duids=assignee_duids,
             subscriber_duids=subscriber_duids,
             tag_duids=tag_duids,
             links=links,
             attachment_duids=attachment_duids,
             relationships=relationships,
-            recurrence=recurrence,
-            properties=properties,
-            updated_by_client_duid=updated_by_client_duid,
-            created_by_duid=created_by_duid,
-            updated_by_duid=updated_by_duid,
-            drafter_duid=drafter_duid,
-            notion_document=notion_document,
-            recommendation_duid=recommendation_duid,
             priority=priority,
             size=size,
             start_at=start_at,
             due_at=due_at,
             remind_at=remind_at,
+            recurrence=recurrence,
             recurs_next_at=recurs_next_at,
+            properties=properties,
+            updated_by_client_duid=updated_by_client_duid,
         )
 
         task.additional_properties = d

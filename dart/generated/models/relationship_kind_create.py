@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -21,25 +21,32 @@ class RelationshipKindCreate:
             * `Relates To` - RELATES_TO
             * `Duplicates` - DUPLICATES
             * `Custom` - CUSTOM
-        backward_text (Union[Unset, None, str]):
+        backward_text (Union[None, Unset, str]):
     """
 
     duid: str
     directed: bool
     forward_text: str
     kind: Union[Unset, RelationshipKindKind] = UNSET
-    backward_text: Union[Unset, None, str] = UNSET
+    backward_text: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         directed = self.directed
+
         forward_text = self.forward_text
+
         kind: Union[Unset, str] = UNSET
         if not isinstance(self.kind, Unset):
             kind = self.kind.value
 
-        backward_text = self.backward_text
+        backward_text: Union[None, Unset, str]
+        if isinstance(self.backward_text, Unset):
+            backward_text = UNSET
+        else:
+            backward_text = self.backward_text
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -73,7 +80,14 @@ class RelationshipKindCreate:
         else:
             kind = RelationshipKindKind(_kind)
 
-        backward_text = d.pop("backwardText", UNSET)
+        def _parse_backward_text(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        backward_text = _parse_backward_text(d.pop("backwardText", UNSET))
 
         relationship_kind_create = cls(
             duid=duid,

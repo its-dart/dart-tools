@@ -201,136 +201,92 @@ class Operation:
         model = self.model.value
 
         data: Dict[str, Any]
-
         if isinstance(self.data, AttachmentCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, AttachmentUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, BrainstormCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, BrainstormUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, CommentCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, CommentUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, CommentReactionCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, CommentReactionUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, DartboardCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, DartboardUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, DocCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, DocUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, EventCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, EventSubscriptionUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, FolderCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, FolderUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, FormCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, FormUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, FormFieldCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, FormFieldUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, LayoutCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, LayoutUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, NotificationUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, OptionCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, OptionUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, PropertyCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, PropertyUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, RelationshipCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, RelationshipKindCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, RelationshipKindUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, SpaceCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, SpaceUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, StatusCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, StatusUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, TaskCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, TaskUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, TaskDocRelationshipCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, TaskLinkCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, TaskLinkUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, TenantUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, UserUpdate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, UserDartboardLayoutCreate):
             data = self.data.to_dict()
-
         elif isinstance(self.data, ViewCreate):
             data = self.data.to_dict()
-
         else:
             data = self.data.to_dict()
 

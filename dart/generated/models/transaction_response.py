@@ -36,8 +36,11 @@ class TransactionResponse:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         success = self.success
+
         message = self.message
+
         models = self.models.to_dict()
 
         field_dict: Dict[str, Any] = {}

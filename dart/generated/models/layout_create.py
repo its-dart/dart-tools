@@ -41,13 +41,17 @@ class LayoutCreate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         kind: Union[Unset, str] = UNSET
         if not isinstance(self.kind, Unset):
             kind = self.kind.value
 
         kind_config_map = self.kind_config_map
+
         filter_group = self.filter_group
+
         sorts = self.sorts
+
         summary_statistic_kind: Union[Unset, str] = UNSET
         if not isinstance(self.summary_statistic_kind, Unset):
             summary_statistic_kind = self.summary_statistic_kind.value

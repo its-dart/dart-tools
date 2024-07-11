@@ -35,15 +35,12 @@ def _get_kwargs(
     entity_kind: UserDataEntityRetrieveEntityKind,
     entity_duid: str,
 ) -> Dict[str, Any]:
-    pass
-
-    return {
+    _kwargs: Dict[str, Any] = {
         "method": "get",
-        "url": "/api/v0/{entityKind}/{entityDuid}".format(
-            entityKind=entity_kind,
-            entityDuid=entity_duid,
-        ),
+        "url": f"/api/v0/{entity_kind}/{entity_duid}",
     }
+
+    return _kwargs
 
 
 def _parse_response(

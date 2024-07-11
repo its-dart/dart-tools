@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -39,7 +39,7 @@ class Layout:
             * `TotalCountPoints` - TOTAL_COUNT_POINTS
             * `IncompleteCountPoints` - INCOMPLETE_COUNT_POINTS
             * `CompletedPercentPoints` - COMPLETED_PERCENT_POINTS
-        updated_by_client_duid (Union[Unset, None, str]):
+        updated_by_client_duid (Union[None, Unset, str]):
     """
 
     duid: str
@@ -50,11 +50,12 @@ class Layout:
     filter_group: "FilterGroup"
     sorts: List["Sort"]
     summary_statistic_kind: SummaryStatisticKind
-    updated_by_client_duid: Union[Unset, None, str] = UNSET
+    updated_by_client_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         created_at = self.created_at.isoformat()
 
         updated_at = self.updated_at.isoformat()
@@ -68,12 +69,15 @@ class Layout:
         sorts = []
         for sorts_item_data in self.sorts:
             sorts_item = sorts_item_data.to_dict()
-
             sorts.append(sorts_item)
 
         summary_statistic_kind = self.summary_statistic_kind.value
 
-        updated_by_client_duid = self.updated_by_client_duid
+        updated_by_client_duid: Union[None, Unset, str]
+        if isinstance(self.updated_by_client_duid, Unset):
+            updated_by_client_duid = UNSET
+        else:
+            updated_by_client_duid = self.updated_by_client_duid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -122,7 +126,14 @@ class Layout:
 
         summary_statistic_kind = SummaryStatisticKind(d.pop("summaryStatisticKind"))
 
-        updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
+        def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        updated_by_client_duid = _parse_updated_by_client_duid(d.pop("updatedByClientDuid", UNSET))
 
         layout = cls(
             duid=duid,

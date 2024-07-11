@@ -59,7 +59,7 @@ class View:
         favorited_by_user_duids (List[str]):
         always_shown_property_duids (List[str]):
         always_hidden_property_duids (List[str]):
-        updated_by_client_duid (Union[Unset, None, str]):
+        updated_by_client_duid (Union[None, Unset, str]):
     """
 
     duid: str
@@ -78,34 +78,47 @@ class View:
     favorited_by_user_duids: List[str]
     always_shown_property_duids: List[str]
     always_hidden_property_duids: List[str]
-    updated_by_client_duid: Union[Unset, None, str] = UNSET
+    updated_by_client_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         kind = self.kind.value
 
         accessible_by_team = self.accessible_by_team
+
         accessible_by_user_duids = self.accessible_by_user_duids
 
         public = self.public
+
         order = self.order
+
         title = self.title
+
         description = self.description
+
         icon_kind = self.icon_kind.value
 
         icon_name_or_emoji = self.icon_name_or_emoji
+
         color_hex = self.color_hex
+
         color_name = self.color_name.value
 
         layout_duid = self.layout_duid
+
         favorited_by_user_duids = self.favorited_by_user_duids
 
         always_shown_property_duids = self.always_shown_property_duids
 
         always_hidden_property_duids = self.always_hidden_property_duids
 
-        updated_by_client_duid = self.updated_by_client_duid
+        updated_by_client_duid: Union[None, Unset, str]
+        if isinstance(self.updated_by_client_duid, Unset):
+            updated_by_client_duid = UNSET
+        else:
+            updated_by_client_duid = self.updated_by_client_duid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -169,7 +182,14 @@ class View:
 
         always_hidden_property_duids = cast(List[str], d.pop("alwaysHiddenPropertyDuids"))
 
-        updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
+        def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        updated_by_client_duid = _parse_updated_by_client_duid(d.pop("updatedByClientDuid", UNSET))
 
         view = cls(
             duid=duid,

@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Type, TypeVar
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -12,20 +12,25 @@ class GoogleData:
     Attributes:
         name (str):
         email (str):
-        picture_url (Optional[str]):
-        organization_domain (Optional[str]):
+        picture_url (Union[None, str]):
+        organization_domain (Union[None, str]):
     """
 
     name: str
     email: str
-    picture_url: Optional[str]
-    organization_domain: Optional[str]
+    picture_url: Union[None, str]
+    organization_domain: Union[None, str]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         name = self.name
+
         email = self.email
+
+        picture_url: Union[None, str]
         picture_url = self.picture_url
+
+        organization_domain: Union[None, str]
         organization_domain = self.organization_domain
 
         field_dict: Dict[str, Any] = {}
@@ -48,9 +53,19 @@ class GoogleData:
 
         email = d.pop("email")
 
-        picture_url = d.pop("pictureUrl")
+        def _parse_picture_url(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
 
-        organization_domain = d.pop("organizationDomain")
+        picture_url = _parse_picture_url(d.pop("pictureUrl"))
+
+        def _parse_organization_domain(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        organization_domain = _parse_organization_domain(d.pop("organizationDomain"))
 
         google_data = cls(
             name=name,

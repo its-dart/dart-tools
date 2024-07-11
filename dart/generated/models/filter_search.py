@@ -24,8 +24,11 @@ class FilterSearch:
 
     def to_dict(self) -> Dict[str, Any]:
         id = self.id
+
         field = self.field
+
         locked = self.locked
+
         values = self.values
 
         field_dict: Dict[str, Any] = {}

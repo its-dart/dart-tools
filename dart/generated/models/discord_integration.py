@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Type, TypeVar
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -11,15 +11,17 @@ class DiscordIntegration:
     """
     Attributes:
         enabled (bool):
-        webhook_url (Optional[str]):
+        webhook_url (Union[None, str]):
     """
 
     enabled: bool
-    webhook_url: Optional[str]
+    webhook_url: Union[None, str]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         enabled = self.enabled
+
+        webhook_url: Union[None, str]
         webhook_url = self.webhook_url
 
         field_dict: Dict[str, Any] = {}
@@ -38,7 +40,12 @@ class DiscordIntegration:
         d = src_dict.copy()
         enabled = d.pop("enabled")
 
-        webhook_url = d.pop("webhookUrl")
+        def _parse_webhook_url(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        webhook_url = _parse_webhook_url(d.pop("webhookUrl"))
 
         discord_integration = cls(
             enabled=enabled,

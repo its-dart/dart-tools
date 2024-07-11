@@ -12,35 +12,33 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
-    assignee: Union[Unset, None, str] = UNSET,
-    dartboard: Union[Unset, None, str] = UNSET,
-    description: Union[Unset, None, str] = UNSET,
-    due_at: Union[Unset, None, datetime.date] = UNSET,
-    in_trash: Union[Unset, None, bool] = UNSET,
-    is_draft: Union[Unset, None, bool] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    priority: Union[Unset, None, str] = UNSET,
-    size: Union[Unset, None, str] = UNSET,
-    start_at: Union[Unset, None, datetime.date] = UNSET,
-    status: Union[Unset, None, str] = UNSET,
-    subscriber: Union[Unset, None, str] = UNSET,
-    tag: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    assignee: Union[Unset, str] = UNSET,
+    dartboard: Union[Unset, str] = UNSET,
+    description: Union[Unset, str] = UNSET,
+    due_at: Union[Unset, datetime.date] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
+    is_draft: Union[Unset, bool] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    priority: Union[Unset, str] = UNSET,
+    size: Union[Unset, str] = UNSET,
+    start_at: Union[Unset, datetime.date] = UNSET,
+    status: Union[Unset, str] = UNSET,
+    subscriber: Union[Unset, str] = UNSET,
+    tag: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
-    pass
-
     params: Dict[str, Any] = {}
+
     params["assignee"] = assignee
 
     params["dartboard"] = dartboard
 
     params["description"] = description
 
-    json_due_at: Union[Unset, None, str] = UNSET
+    json_due_at: Union[Unset, str] = UNSET
     if not isinstance(due_at, Unset):
-        json_due_at = due_at.isoformat() if due_at else None
-
+        json_due_at = due_at.isoformat()
     params["due_at"] = json_due_at
 
     params["in_trash"] = in_trash
@@ -55,10 +53,9 @@ def _get_kwargs(
 
     params["size"] = size
 
-    json_start_at: Union[Unset, None, str] = UNSET
+    json_start_at: Union[Unset, str] = UNSET
     if not isinstance(start_at, Unset):
-        json_start_at = start_at.isoformat() if start_at else None
-
+        json_start_at = start_at.isoformat()
     params["start_at"] = json_start_at
 
     params["status"] = status
@@ -71,11 +68,13 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    return {
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": "/api/v0/tasks",
         "params": params,
     }
+
+    return _kwargs
 
 
 def _parse_response(
@@ -105,39 +104,39 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    assignee: Union[Unset, None, str] = UNSET,
-    dartboard: Union[Unset, None, str] = UNSET,
-    description: Union[Unset, None, str] = UNSET,
-    due_at: Union[Unset, None, datetime.date] = UNSET,
-    in_trash: Union[Unset, None, bool] = UNSET,
-    is_draft: Union[Unset, None, bool] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    priority: Union[Unset, None, str] = UNSET,
-    size: Union[Unset, None, str] = UNSET,
-    start_at: Union[Unset, None, datetime.date] = UNSET,
-    status: Union[Unset, None, str] = UNSET,
-    subscriber: Union[Unset, None, str] = UNSET,
-    tag: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    assignee: Union[Unset, str] = UNSET,
+    dartboard: Union[Unset, str] = UNSET,
+    description: Union[Unset, str] = UNSET,
+    due_at: Union[Unset, datetime.date] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
+    is_draft: Union[Unset, bool] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    priority: Union[Unset, str] = UNSET,
+    size: Union[Unset, str] = UNSET,
+    start_at: Union[Unset, datetime.date] = UNSET,
+    status: Union[Unset, str] = UNSET,
+    subscriber: Union[Unset, str] = UNSET,
+    tag: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedTaskList]:
     """
     Args:
-        assignee (Union[Unset, None, str]):
-        dartboard (Union[Unset, None, str]):
-        description (Union[Unset, None, str]):
-        due_at (Union[Unset, None, datetime.date]):
-        in_trash (Union[Unset, None, bool]):
-        is_draft (Union[Unset, None, bool]):
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
-        priority (Union[Unset, None, str]):
-        size (Union[Unset, None, str]):
-        start_at (Union[Unset, None, datetime.date]):
-        status (Union[Unset, None, str]):
-        subscriber (Union[Unset, None, str]):
-        tag (Union[Unset, None, str]):
-        title (Union[Unset, None, str]):
+        assignee (Union[Unset, str]):
+        dartboard (Union[Unset, str]):
+        description (Union[Unset, str]):
+        due_at (Union[Unset, datetime.date]):
+        in_trash (Union[Unset, bool]):
+        is_draft (Union[Unset, bool]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        priority (Union[Unset, str]):
+        size (Union[Unset, str]):
+        start_at (Union[Unset, datetime.date]):
+        status (Union[Unset, str]):
+        subscriber (Union[Unset, str]):
+        tag (Union[Unset, str]):
+        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -175,39 +174,39 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-    assignee: Union[Unset, None, str] = UNSET,
-    dartboard: Union[Unset, None, str] = UNSET,
-    description: Union[Unset, None, str] = UNSET,
-    due_at: Union[Unset, None, datetime.date] = UNSET,
-    in_trash: Union[Unset, None, bool] = UNSET,
-    is_draft: Union[Unset, None, bool] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    priority: Union[Unset, None, str] = UNSET,
-    size: Union[Unset, None, str] = UNSET,
-    start_at: Union[Unset, None, datetime.date] = UNSET,
-    status: Union[Unset, None, str] = UNSET,
-    subscriber: Union[Unset, None, str] = UNSET,
-    tag: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    assignee: Union[Unset, str] = UNSET,
+    dartboard: Union[Unset, str] = UNSET,
+    description: Union[Unset, str] = UNSET,
+    due_at: Union[Unset, datetime.date] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
+    is_draft: Union[Unset, bool] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    priority: Union[Unset, str] = UNSET,
+    size: Union[Unset, str] = UNSET,
+    start_at: Union[Unset, datetime.date] = UNSET,
+    status: Union[Unset, str] = UNSET,
+    subscriber: Union[Unset, str] = UNSET,
+    tag: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedTaskList]:
     """
     Args:
-        assignee (Union[Unset, None, str]):
-        dartboard (Union[Unset, None, str]):
-        description (Union[Unset, None, str]):
-        due_at (Union[Unset, None, datetime.date]):
-        in_trash (Union[Unset, None, bool]):
-        is_draft (Union[Unset, None, bool]):
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
-        priority (Union[Unset, None, str]):
-        size (Union[Unset, None, str]):
-        start_at (Union[Unset, None, datetime.date]):
-        status (Union[Unset, None, str]):
-        subscriber (Union[Unset, None, str]):
-        tag (Union[Unset, None, str]):
-        title (Union[Unset, None, str]):
+        assignee (Union[Unset, str]):
+        dartboard (Union[Unset, str]):
+        description (Union[Unset, str]):
+        due_at (Union[Unset, datetime.date]):
+        in_trash (Union[Unset, bool]):
+        is_draft (Union[Unset, bool]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        priority (Union[Unset, str]):
+        size (Union[Unset, str]):
+        start_at (Union[Unset, datetime.date]):
+        status (Union[Unset, str]):
+        subscriber (Union[Unset, str]):
+        tag (Union[Unset, str]):
+        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -240,39 +239,39 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-    assignee: Union[Unset, None, str] = UNSET,
-    dartboard: Union[Unset, None, str] = UNSET,
-    description: Union[Unset, None, str] = UNSET,
-    due_at: Union[Unset, None, datetime.date] = UNSET,
-    in_trash: Union[Unset, None, bool] = UNSET,
-    is_draft: Union[Unset, None, bool] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    priority: Union[Unset, None, str] = UNSET,
-    size: Union[Unset, None, str] = UNSET,
-    start_at: Union[Unset, None, datetime.date] = UNSET,
-    status: Union[Unset, None, str] = UNSET,
-    subscriber: Union[Unset, None, str] = UNSET,
-    tag: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    assignee: Union[Unset, str] = UNSET,
+    dartboard: Union[Unset, str] = UNSET,
+    description: Union[Unset, str] = UNSET,
+    due_at: Union[Unset, datetime.date] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
+    is_draft: Union[Unset, bool] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    priority: Union[Unset, str] = UNSET,
+    size: Union[Unset, str] = UNSET,
+    start_at: Union[Unset, datetime.date] = UNSET,
+    status: Union[Unset, str] = UNSET,
+    subscriber: Union[Unset, str] = UNSET,
+    tag: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedTaskList]:
     """
     Args:
-        assignee (Union[Unset, None, str]):
-        dartboard (Union[Unset, None, str]):
-        description (Union[Unset, None, str]):
-        due_at (Union[Unset, None, datetime.date]):
-        in_trash (Union[Unset, None, bool]):
-        is_draft (Union[Unset, None, bool]):
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
-        priority (Union[Unset, None, str]):
-        size (Union[Unset, None, str]):
-        start_at (Union[Unset, None, datetime.date]):
-        status (Union[Unset, None, str]):
-        subscriber (Union[Unset, None, str]):
-        tag (Union[Unset, None, str]):
-        title (Union[Unset, None, str]):
+        assignee (Union[Unset, str]):
+        dartboard (Union[Unset, str]):
+        description (Union[Unset, str]):
+        due_at (Union[Unset, datetime.date]):
+        in_trash (Union[Unset, bool]):
+        is_draft (Union[Unset, bool]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        priority (Union[Unset, str]):
+        size (Union[Unset, str]):
+        start_at (Union[Unset, datetime.date]):
+        status (Union[Unset, str]):
+        subscriber (Union[Unset, str]):
+        tag (Union[Unset, str]):
+        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -308,39 +307,39 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
-    assignee: Union[Unset, None, str] = UNSET,
-    dartboard: Union[Unset, None, str] = UNSET,
-    description: Union[Unset, None, str] = UNSET,
-    due_at: Union[Unset, None, datetime.date] = UNSET,
-    in_trash: Union[Unset, None, bool] = UNSET,
-    is_draft: Union[Unset, None, bool] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    priority: Union[Unset, None, str] = UNSET,
-    size: Union[Unset, None, str] = UNSET,
-    start_at: Union[Unset, None, datetime.date] = UNSET,
-    status: Union[Unset, None, str] = UNSET,
-    subscriber: Union[Unset, None, str] = UNSET,
-    tag: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
+    assignee: Union[Unset, str] = UNSET,
+    dartboard: Union[Unset, str] = UNSET,
+    description: Union[Unset, str] = UNSET,
+    due_at: Union[Unset, datetime.date] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
+    is_draft: Union[Unset, bool] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    priority: Union[Unset, str] = UNSET,
+    size: Union[Unset, str] = UNSET,
+    start_at: Union[Unset, datetime.date] = UNSET,
+    status: Union[Unset, str] = UNSET,
+    subscriber: Union[Unset, str] = UNSET,
+    tag: Union[Unset, str] = UNSET,
+    title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedTaskList]:
     """
     Args:
-        assignee (Union[Unset, None, str]):
-        dartboard (Union[Unset, None, str]):
-        description (Union[Unset, None, str]):
-        due_at (Union[Unset, None, datetime.date]):
-        in_trash (Union[Unset, None, bool]):
-        is_draft (Union[Unset, None, bool]):
-        limit (Union[Unset, None, int]):
-        offset (Union[Unset, None, int]):
-        priority (Union[Unset, None, str]):
-        size (Union[Unset, None, str]):
-        start_at (Union[Unset, None, datetime.date]):
-        status (Union[Unset, None, str]):
-        subscriber (Union[Unset, None, str]):
-        tag (Union[Unset, None, str]):
-        title (Union[Unset, None, str]):
+        assignee (Union[Unset, str]):
+        dartboard (Union[Unset, str]):
+        description (Union[Unset, str]):
+        due_at (Union[Unset, datetime.date]):
+        in_trash (Union[Unset, bool]):
+        is_draft (Union[Unset, bool]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        priority (Union[Unset, str]):
+        size (Union[Unset, str]):
+        start_at (Union[Unset, datetime.date]):
+        status (Union[Unset, str]):
+        subscriber (Union[Unset, str]):
+        tag (Union[Unset, str]):
+        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

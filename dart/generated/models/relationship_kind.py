@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -21,26 +21,35 @@ class RelationshipKind:
             * `Custom` - CUSTOM
         directed (bool):
         forward_text (str):
-        updated_by_client_duid (Union[Unset, None, str]):
-        backward_text (Optional[str]):
+        backward_text (Union[None, str]):
+        updated_by_client_duid (Union[None, Unset, str]):
     """
 
     duid: str
     kind: RelationshipKindKind
     directed: bool
     forward_text: str
-    backward_text: Optional[str]
-    updated_by_client_duid: Union[Unset, None, str] = UNSET
+    backward_text: Union[None, str]
+    updated_by_client_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         kind = self.kind.value
 
         directed = self.directed
+
         forward_text = self.forward_text
-        updated_by_client_duid = self.updated_by_client_duid
+
+        backward_text: Union[None, str]
         backward_text = self.backward_text
+
+        updated_by_client_duid: Union[None, Unset, str]
+        if isinstance(self.updated_by_client_duid, Unset):
+            updated_by_client_duid = UNSET
+        else:
+            updated_by_client_duid = self.updated_by_client_duid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -69,17 +78,29 @@ class RelationshipKind:
 
         forward_text = d.pop("forwardText")
 
-        updated_by_client_duid = d.pop("updatedByClientDuid", UNSET)
+        def _parse_backward_text(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
 
-        backward_text = d.pop("backwardText")
+        backward_text = _parse_backward_text(d.pop("backwardText"))
+
+        def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        updated_by_client_duid = _parse_updated_by_client_duid(d.pop("updatedByClientDuid", UNSET))
 
         relationship_kind = cls(
             duid=duid,
             kind=kind,
             directed=directed,
             forward_text=forward_text,
-            updated_by_client_duid=updated_by_client_duid,
             backward_text=backward_text,
+            updated_by_client_duid=updated_by_client_duid,
         )
 
         relationship_kind.additional_properties = d

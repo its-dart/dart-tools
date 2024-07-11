@@ -65,17 +65,25 @@ class FormUpdate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
+
         hidden = self.hidden
+
         public = self.public
+
         order = self.order
+
         title = self.title
+
         description = self.description
+
         icon_kind: Union[Unset, str] = UNSET
         if not isinstance(self.icon_kind, Unset):
             icon_kind = self.icon_kind.value
 
         icon_name_or_emoji = self.icon_name_or_emoji
+
         color_hex = self.color_hex
+
         color_name: Union[Unset, str] = UNSET
         if not isinstance(self.color_name, Unset):
             color_name = self.color_name.value
