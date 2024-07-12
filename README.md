@@ -114,7 +114,7 @@ response = dart.transact([task_update_op], TransactionKind.TASK_UPDATE)
 
 - [Homepage](https://www.itsdart.com/?nr=1)
 - [Web App](https://app.itsdart.com/)
-- [Help Center](https://its-dart.notion.site/Dart-Help-Center-8206a2aa2956496f8988b7b32cdcd205)
+- [Help Center](https://help.itsdart.com/)
 - [Bugs and Features](https://github.com/its-dart/dart-tools/issues)
 - [Library Source](https://github.com/its-dart/dart-tools/)
 - [Chat on Discord](https://discord.gg/RExv8jEkSh)

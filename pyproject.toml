@@ -1,6 +1,6 @@
 [project]
 name = "dart-tools"
-version = "0.5.10"
+version = "0.5.11"
 description = "The Dart CLI and Python Library"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -42,7 +42,7 @@ dependencies = [
 [project.urls]
 "Homepage" = "https://www.itsdart.com/?nr=1"
 "Web App" = "https://app.itsdart.com/"
-"Help Center" = "https://its-dart.notion.site/Dart-Help-Center-8206a2aa2956496f8988b7b32cdcd205"
+"Help Center" = "https://help.itsdart.com/"
 "Bugs and Features" = "https://github.com/its-dart/dart-tools/issues"
 "Library Source" = "https://github.com/its-dart/dart-tools/"
 
