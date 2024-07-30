@@ -14,7 +14,8 @@ class Property:
     """
     Attributes:
         duid (str):
-        kind (PropertyKind): * `Default: Title` - DEFAULT_TITLE
+        kind (PropertyKind): * `Default: Type` - DEFAULT_TYPE
+            * `Default: Title` - DEFAULT_TITLE
             * `Default: Description` - DEFAULT_DESCRIPTION
             * `Default: Dartboard` - DEFAULT_DARTBOARD
             * `Default: Status` - DEFAULT_STATUS
@@ -23,6 +24,7 @@ class Property:
             * `Default: Priority` - DEFAULT_PRIORITY
             * `Default: Tags` - DEFAULT_TAGS
             * `Default: Size` - DEFAULT_SIZE
+            * `Default: Time tracking` - DEFAULT_TIME_TRACKING
             * `Default: Attachments` - DEFAULT_ATTACHMENTS
             * `Default: Created` - DEFAULT_CREATED_AT
             * `Default: Created by` - DEFAULT_CREATED_BY
@@ -33,6 +35,7 @@ class Property:
             * `Status` - STATUS
             * `User` - USER
             * `Dates` - DATES
+            * `Time tracking` - TIME_TRACKING
             * `Text` - TEXT
             * `Number` - NUMBER
             * `Checkbox` - CHECKBOX

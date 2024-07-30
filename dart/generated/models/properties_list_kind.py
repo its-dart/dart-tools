@@ -17,12 +17,15 @@ class PropertiesListKind(str, Enum):
     DEFAULT_SIZE = "Default: Size"
     DEFAULT_STATUS = "Default: Status"
     DEFAULT_TAGS = "Default: Tags"
+    DEFAULT_TIME_TRACKING = "Default: Time tracking"
     DEFAULT_TITLE = "Default: Title"
+    DEFAULT_TYPE = "Default: Type"
     MULTISELECT = "Multiselect"
     NUMBER = "Number"
     SELECT = "Select"
     STATUS = "Status"
     TEXT = "Text"
+    TIME_TRACKING = "Time tracking"
     USER = "User"
 
     def __str__(self) -> str:

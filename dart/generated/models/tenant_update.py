@@ -21,6 +21,7 @@ class TenantUpdate:
         move_subtasks_on_move_parent (Union[Unset, bool]):
         update_subtasks_status_on_update_parent_status (Union[Unset, bool]):
         copy_parent_fields_on_create (Union[Unset, bool]):
+        update_blockee_dates_on_update_blocker_due_date (Union[Unset, bool]):
         webhook_enabled (Union[Unset, bool]):
         webhook_secret (Union[Unset, str]):
         webhook_url (Union[None, Unset, str]):
@@ -35,6 +36,7 @@ class TenantUpdate:
     move_subtasks_on_move_parent: Union[Unset, bool] = UNSET
     update_subtasks_status_on_update_parent_status: Union[Unset, bool] = UNSET
     copy_parent_fields_on_create: Union[Unset, bool] = UNSET
+    update_blockee_dates_on_update_blocker_due_date: Union[Unset, bool] = UNSET
     webhook_enabled: Union[Unset, bool] = UNSET
     webhook_secret: Union[Unset, str] = UNSET
     webhook_url: Union[None, Unset, str] = UNSET
@@ -58,6 +60,8 @@ class TenantUpdate:
         update_subtasks_status_on_update_parent_status = self.update_subtasks_status_on_update_parent_status
 
         copy_parent_fields_on_create = self.copy_parent_fields_on_create
+
+        update_blockee_dates_on_update_blocker_due_date = self.update_blockee_dates_on_update_blocker_due_date
 
         webhook_enabled = self.webhook_enabled
 
@@ -90,6 +94,8 @@ class TenantUpdate:
             field_dict["updateSubtasksStatusOnUpdateParentStatus"] = update_subtasks_status_on_update_parent_status
         if copy_parent_fields_on_create is not UNSET:
             field_dict["copyParentFieldsOnCreate"] = copy_parent_fields_on_create
+        if update_blockee_dates_on_update_blocker_due_date is not UNSET:
+            field_dict["updateBlockeeDatesOnUpdateBlockerDueDate"] = update_blockee_dates_on_update_blocker_due_date
         if webhook_enabled is not UNSET:
             field_dict["webhookEnabled"] = webhook_enabled
         if webhook_secret is not UNSET:
@@ -120,6 +126,8 @@ class TenantUpdate:
 
         copy_parent_fields_on_create = d.pop("copyParentFieldsOnCreate", UNSET)
 
+        update_blockee_dates_on_update_blocker_due_date = d.pop("updateBlockeeDatesOnUpdateBlockerDueDate", UNSET)
+
         webhook_enabled = d.pop("webhookEnabled", UNSET)
 
         webhook_secret = d.pop("webhookSecret", UNSET)
@@ -143,6 +151,7 @@ class TenantUpdate:
             move_subtasks_on_move_parent=move_subtasks_on_move_parent,
             update_subtasks_status_on_update_parent_status=update_subtasks_status_on_update_parent_status,
             copy_parent_fields_on_create=copy_parent_fields_on_create,
+            update_blockee_dates_on_update_blocker_due_date=update_blockee_dates_on_update_blocker_due_date,
             webhook_enabled=webhook_enabled,
             webhook_secret=webhook_secret,
             webhook_url=webhook_url,

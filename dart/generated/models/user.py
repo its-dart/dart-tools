@@ -4,6 +4,7 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.color_name import ColorName
+from ..models.task_detail_mode import TaskDetailMode
 from ..models.theme import Theme
 from ..models.user_role import UserRole
 from ..models.user_status import UserStatus
@@ -60,6 +61,9 @@ class User:
             * `Dark Gray` - DARK_GRAY
             * `Light Brown` - LIGHT_BROWN
             * `Light Gray` - LIGHT_GRAY
+        task_detail_mode (TaskDetailMode): * `Rightbar` - RIGHTBAR
+            * `Fullscreen` - FULLSCREEN
+            * `Overlay` - OVERLAY
         sections (Any):
         layout (Any):
         image_url (Union[None, str]):
@@ -78,6 +82,7 @@ class User:
     theme: Theme
     color_hex: str
     color_name: ColorName
+    task_detail_mode: TaskDetailMode
     sections: Any
     layout: Any
     image_url: Union[None, str]
@@ -107,6 +112,8 @@ class User:
         color_hex = self.color_hex
 
         color_name = self.color_name.value
+
+        task_detail_mode = self.task_detail_mode.value
 
         sections = self.sections
 
@@ -145,6 +152,7 @@ class User:
                 "theme": theme,
                 "colorHex": color_hex,
                 "colorName": color_name,
+                "taskDetailMode": task_detail_mode,
                 "sections": sections,
                 "layout": layout,
                 "imageUrl": image_url,
@@ -180,6 +188,8 @@ class User:
         color_hex = d.pop("colorHex")
 
         color_name = ColorName(d.pop("colorName"))
+
+        task_detail_mode = TaskDetailMode(d.pop("taskDetailMode"))
 
         sections = d.pop("sections")
 
@@ -235,6 +245,7 @@ class User:
             theme=theme,
             color_hex=color_hex,
             color_name=color_name,
+            task_detail_mode=task_detail_mode,
             sections=sections,
             layout=layout,
             image_url=image_url,

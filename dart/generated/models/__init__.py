@@ -124,8 +124,10 @@ from .subtask_display_mode import SubtaskDisplayMode
 from .summary_statistic_kind import SummaryStatisticKind
 from .task import Task
 from .task_create import TaskCreate
+from .task_detail_mode import TaskDetailMode
 from .task_doc_relationship import TaskDocRelationship
 from .task_doc_relationship_create import TaskDocRelationshipCreate
+from .task_kind import TaskKind
 from .task_link import TaskLink
 from .task_link_create import TaskLinkCreate
 from .task_link_kind import TaskLinkKind
@@ -283,8 +285,10 @@ __all__ = (
     "SummaryStatisticKind",
     "Task",
     "TaskCreate",
+    "TaskDetailMode",
     "TaskDocRelationship",
     "TaskDocRelationshipCreate",
+    "TaskKind",
     "TaskLink",
     "TaskLinkCreate",
     "TaskLinkKind",

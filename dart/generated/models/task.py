@@ -6,6 +6,7 @@ from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..models.priority import Priority
+from ..models.task_kind import TaskKind
 from ..models.task_source_type import TaskSourceType
 from ..types import UNSET, Unset
 
@@ -57,6 +58,16 @@ class Task:
         dartboard_duid (str):
         order (str):
         expanded (bool):
+        kind (TaskKind): * `Task` - TASK
+            * `Subtask` - SUBTASK
+            * `Project` - PROJECT
+            * `Issue` - ISSUE
+            * `Subissue` - SUBISSUE
+            * `Epic` - EPIC
+            * `Item` - ITEM
+            * `Client` - CLIENT
+            * `Milestone` - MILESTONE
+            * `Bug` - BUG
         title (str):
         description (Any):
         notion_document (Union['TaskNotionDocument', None]):
@@ -73,6 +84,7 @@ class Task:
         size (Union[None, int]):
         start_at (Union[None, datetime.datetime]):
         due_at (Union[None, datetime.datetime]):
+        time_tracking (Union[Any, None]):
         remind_at (Union[None, datetime.datetime]):
         recurrence (Union[Any, None]):
         recurs_next_at (Union[None, datetime.datetime]):
@@ -91,6 +103,7 @@ class Task:
     dartboard_duid: str
     order: str
     expanded: bool
+    kind: TaskKind
     title: str
     description: Any
     notion_document: Union["TaskNotionDocument", None]
@@ -107,6 +120,7 @@ class Task:
     size: Union[None, int]
     start_at: Union[None, datetime.datetime]
     due_at: Union[None, datetime.datetime]
+    time_tracking: Union[Any, None]
     remind_at: Union[None, datetime.datetime]
     recurrence: Union[Any, None]
     recurs_next_at: Union[None, datetime.datetime]
@@ -141,6 +155,8 @@ class Task:
         order = self.order
 
         expanded = self.expanded
+
+        kind = self.kind.value
 
         title = self.title
 
@@ -198,6 +214,9 @@ class Task:
         else:
             due_at = self.due_at
 
+        time_tracking: Union[Any, None]
+        time_tracking = self.time_tracking
+
         remind_at: Union[None, str]
         if isinstance(self.remind_at, datetime.datetime):
             remind_at = self.remind_at.isoformat()
@@ -236,6 +255,7 @@ class Task:
                 "dartboardDuid": dartboard_duid,
                 "order": order,
                 "expanded": expanded,
+                "kind": kind,
                 "title": title,
                 "description": description,
                 "notionDocument": notion_document,
@@ -252,6 +272,7 @@ class Task:
                 "size": size,
                 "startAt": start_at,
                 "dueAt": due_at,
+                "timeTracking": time_tracking,
                 "remindAt": remind_at,
                 "recurrence": recurrence,
                 "recursNextAt": recurs_next_at,
@@ -307,6 +328,8 @@ class Task:
         order = d.pop("order")
 
         expanded = d.pop("expanded")
+
+        kind = TaskKind(d.pop("kind"))
 
         title = d.pop("title")
 
@@ -412,6 +435,13 @@ class Task:
 
         due_at = _parse_due_at(d.pop("dueAt"))
 
+        def _parse_time_tracking(data: object) -> Union[Any, None]:
+            if data is None:
+                return data
+            return cast(Union[Any, None], data)
+
+        time_tracking = _parse_time_tracking(d.pop("timeTracking"))
+
         def _parse_remind_at(data: object) -> Union[None, datetime.datetime]:
             if data is None:
                 return data
@@ -472,6 +502,7 @@ class Task:
             dartboard_duid=dartboard_duid,
             order=order,
             expanded=expanded,
+            kind=kind,
             title=title,
             description=description,
             notion_document=notion_document,
@@ -488,6 +519,7 @@ class Task:
             size=size,
             start_at=start_at,
             due_at=due_at,
+            time_tracking=time_tracking,
             remind_at=remind_at,
             recurrence=recurrence,
             recurs_next_at=recurs_next_at,

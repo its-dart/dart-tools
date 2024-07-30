@@ -6,6 +6,7 @@ from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..models.priority import Priority
+from ..models.task_kind import TaskKind
 from ..models.task_source_type import TaskSourceType
 from ..types import UNSET, Unset
 
@@ -51,6 +52,16 @@ class TaskUpdate:
         dartboard_duid (Union[Unset, str]):
         order (Union[Unset, str]):
         expanded (Union[Unset, bool]):
+        kind (Union[Unset, TaskKind]): * `Task` - TASK
+            * `Subtask` - SUBTASK
+            * `Project` - PROJECT
+            * `Issue` - ISSUE
+            * `Subissue` - SUBISSUE
+            * `Epic` - EPIC
+            * `Item` - ITEM
+            * `Client` - CLIENT
+            * `Milestone` - MILESTONE
+            * `Bug` - BUG
         title (Union[Unset, str]):
         description (Union[Unset, Any]):
         description_markdown (Union[Unset, str]):
@@ -65,6 +76,7 @@ class TaskUpdate:
         size (Union[None, Unset, int]):
         start_at (Union[None, Unset, datetime.datetime]):
         due_at (Union[None, Unset, datetime.datetime]):
+        time_tracking (Union[Unset, Any]):
         remind_at (Union[None, Unset, datetime.datetime]):
         recurrence (Union[Any, None, Unset]):
         recurs_next_at (Union[None, Unset, datetime.datetime]):
@@ -83,6 +95,7 @@ class TaskUpdate:
     dartboard_duid: Union[Unset, str] = UNSET
     order: Union[Unset, str] = UNSET
     expanded: Union[Unset, bool] = UNSET
+    kind: Union[Unset, TaskKind] = UNSET
     title: Union[Unset, str] = UNSET
     description: Union[Unset, Any] = UNSET
     description_markdown: Union[Unset, str] = UNSET
@@ -97,6 +110,7 @@ class TaskUpdate:
     size: Union[None, Unset, int] = UNSET
     start_at: Union[None, Unset, datetime.datetime] = UNSET
     due_at: Union[None, Unset, datetime.datetime] = UNSET
+    time_tracking: Union[Unset, Any] = UNSET
     remind_at: Union[None, Unset, datetime.datetime] = UNSET
     recurrence: Union[Any, None, Unset] = UNSET
     recurs_next_at: Union[None, Unset, datetime.datetime] = UNSET
@@ -153,6 +167,10 @@ class TaskUpdate:
         order = self.order
 
         expanded = self.expanded
+
+        kind: Union[Unset, str] = UNSET
+        if not isinstance(self.kind, Unset):
+            kind = self.kind.value
 
         title = self.title
 
@@ -216,6 +234,8 @@ class TaskUpdate:
         else:
             due_at = self.due_at
 
+        time_tracking = self.time_tracking
+
         remind_at: Union[None, Unset, str]
         if isinstance(self.remind_at, Unset):
             remind_at = UNSET
@@ -269,6 +289,8 @@ class TaskUpdate:
             field_dict["order"] = order
         if expanded is not UNSET:
             field_dict["expanded"] = expanded
+        if kind is not UNSET:
+            field_dict["kind"] = kind
         if title is not UNSET:
             field_dict["title"] = title
         if description is not UNSET:
@@ -297,6 +319,8 @@ class TaskUpdate:
             field_dict["startAt"] = start_at
         if due_at is not UNSET:
             field_dict["dueAt"] = due_at
+        if time_tracking is not UNSET:
+            field_dict["timeTracking"] = time_tracking
         if remind_at is not UNSET:
             field_dict["remindAt"] = remind_at
         if recurrence is not UNSET:
@@ -381,6 +405,13 @@ class TaskUpdate:
         order = d.pop("order", UNSET)
 
         expanded = d.pop("expanded", UNSET)
+
+        _kind = d.pop("kind", UNSET)
+        kind: Union[Unset, TaskKind]
+        if isinstance(_kind, Unset):
+            kind = UNSET
+        else:
+            kind = TaskKind(_kind)
 
         title = d.pop("title", UNSET)
 
@@ -469,6 +500,8 @@ class TaskUpdate:
 
         due_at = _parse_due_at(d.pop("dueAt", UNSET))
 
+        time_tracking = d.pop("timeTracking", UNSET)
+
         def _parse_remind_at(data: object) -> Union[None, Unset, datetime.datetime]:
             if data is None:
                 return data
@@ -527,6 +560,7 @@ class TaskUpdate:
             dartboard_duid=dartboard_duid,
             order=order,
             expanded=expanded,
+            kind=kind,
             title=title,
             description=description,
             description_markdown=description_markdown,
@@ -541,6 +575,7 @@ class TaskUpdate:
             size=size,
             start_at=start_at,
             due_at=due_at,
+            time_tracking=time_tracking,
             remind_at=remind_at,
             recurrence=recurrence,
             recurs_next_at=recurs_next_at,

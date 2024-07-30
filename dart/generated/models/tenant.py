@@ -38,6 +38,7 @@ class Tenant:
         move_subtasks_on_move_parent (bool):
         update_subtasks_status_on_update_parent_status (bool):
         copy_parent_fields_on_create (bool):
+        update_blockee_dates_on_update_blocker_due_date (bool):
         webhook_enabled (bool):
         webhook_secret (str):
         webhook_url (Union[None, str]):
@@ -63,6 +64,7 @@ class Tenant:
     move_subtasks_on_move_parent: bool
     update_subtasks_status_on_update_parent_status: bool
     copy_parent_fields_on_create: bool
+    update_blockee_dates_on_update_blocker_due_date: bool
     webhook_enabled: bool
     webhook_secret: str
     webhook_url: Union[None, str]
@@ -110,6 +112,8 @@ class Tenant:
         update_subtasks_status_on_update_parent_status = self.update_subtasks_status_on_update_parent_status
 
         copy_parent_fields_on_create = self.copy_parent_fields_on_create
+
+        update_blockee_dates_on_update_blocker_due_date = self.update_blockee_dates_on_update_blocker_due_date
 
         webhook_enabled = self.webhook_enabled
 
@@ -167,6 +171,7 @@ class Tenant:
                 "moveSubtasksOnMoveParent": move_subtasks_on_move_parent,
                 "updateSubtasksStatusOnUpdateParentStatus": update_subtasks_status_on_update_parent_status,
                 "copyParentFieldsOnCreate": copy_parent_fields_on_create,
+                "updateBlockeeDatesOnUpdateBlockerDueDate": update_blockee_dates_on_update_blocker_due_date,
                 "webhookEnabled": webhook_enabled,
                 "webhookSecret": webhook_secret,
                 "webhookUrl": webhook_url,
@@ -223,6 +228,8 @@ class Tenant:
         update_subtasks_status_on_update_parent_status = d.pop("updateSubtasksStatusOnUpdateParentStatus")
 
         copy_parent_fields_on_create = d.pop("copyParentFieldsOnCreate")
+
+        update_blockee_dates_on_update_blocker_due_date = d.pop("updateBlockeeDatesOnUpdateBlockerDueDate")
 
         webhook_enabled = d.pop("webhookEnabled")
 
@@ -326,6 +333,7 @@ class Tenant:
             move_subtasks_on_move_parent=move_subtasks_on_move_parent,
             update_subtasks_status_on_update_parent_status=update_subtasks_status_on_update_parent_status,
             copy_parent_fields_on_create=copy_parent_fields_on_create,
+            update_blockee_dates_on_update_blocker_due_date=update_blockee_dates_on_update_blocker_due_date,
             webhook_enabled=webhook_enabled,
             webhook_secret=webhook_secret,
             webhook_url=webhook_url,
