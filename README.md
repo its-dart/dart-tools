@@ -105,7 +105,7 @@ task_update_op = Operation(
     data=task_update,
 )
 
-# Call the operation transactionally to preform the update
+# Call the operation transactionally to perform the update
 response = dart.transact([task_update_op], TransactionKind.TASK_UPDATE)
 ```
 

@@ -58,16 +58,18 @@ class Task:
         dartboard_duid (str):
         order (str):
         expanded (bool):
-        kind (TaskKind): * `Task` - TASK
+        kind (TaskKind): * `Project` - PROJECT
+            * `Milestone` - MILESTONE
+            * `Task` - TASK
             * `Subtask` - SUBTASK
-            * `Project` - PROJECT
+            * `Epic` - EPIC
+            * `Story` - STORY
             * `Issue` - ISSUE
             * `Subissue` - SUBISSUE
-            * `Epic` - EPIC
+            * `Bug` - BUG
+            * `Spike` - SPIKE
             * `Item` - ITEM
             * `Client` - CLIENT
-            * `Milestone` - MILESTONE
-            * `Bug` - BUG
         title (str):
         description (Any):
         notion_document (Union['TaskNotionDocument', None]):
@@ -84,7 +86,7 @@ class Task:
         size (Union[None, int]):
         start_at (Union[None, datetime.datetime]):
         due_at (Union[None, datetime.datetime]):
-        time_tracking (Union[Any, None]):
+        time_tracking (Any):
         remind_at (Union[None, datetime.datetime]):
         recurrence (Union[Any, None]):
         recurs_next_at (Union[None, datetime.datetime]):
@@ -120,7 +122,7 @@ class Task:
     size: Union[None, int]
     start_at: Union[None, datetime.datetime]
     due_at: Union[None, datetime.datetime]
-    time_tracking: Union[Any, None]
+    time_tracking: Any
     remind_at: Union[None, datetime.datetime]
     recurrence: Union[Any, None]
     recurs_next_at: Union[None, datetime.datetime]
@@ -214,7 +216,6 @@ class Task:
         else:
             due_at = self.due_at
 
-        time_tracking: Union[Any, None]
         time_tracking = self.time_tracking
 
         remind_at: Union[None, str]
@@ -435,12 +436,7 @@ class Task:
 
         due_at = _parse_due_at(d.pop("dueAt"))
 
-        def _parse_time_tracking(data: object) -> Union[Any, None]:
-            if data is None:
-                return data
-            return cast(Union[Any, None], data)
-
-        time_tracking = _parse_time_tracking(d.pop("timeTracking"))
+        time_tracking = d.pop("timeTracking")
 
         def _parse_remind_at(data: object) -> Union[None, datetime.datetime]:
             if data is None:

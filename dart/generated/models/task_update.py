@@ -52,16 +52,18 @@ class TaskUpdate:
         dartboard_duid (Union[Unset, str]):
         order (Union[Unset, str]):
         expanded (Union[Unset, bool]):
-        kind (Union[Unset, TaskKind]): * `Task` - TASK
+        kind (Union[Unset, TaskKind]): * `Project` - PROJECT
+            * `Milestone` - MILESTONE
+            * `Task` - TASK
             * `Subtask` - SUBTASK
-            * `Project` - PROJECT
+            * `Epic` - EPIC
+            * `Story` - STORY
             * `Issue` - ISSUE
             * `Subissue` - SUBISSUE
-            * `Epic` - EPIC
+            * `Bug` - BUG
+            * `Spike` - SPIKE
             * `Item` - ITEM
             * `Client` - CLIENT
-            * `Milestone` - MILESTONE
-            * `Bug` - BUG
         title (Union[Unset, str]):
         description (Union[Unset, Any]):
         description_markdown (Union[Unset, str]):

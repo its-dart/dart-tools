@@ -3,7 +3,7 @@
 
 """A CLI to interact with the Dart web app."""
 
-import argparse
+from argparse import ArgumentParser
 from functools import wraps
 import json
 import os
@@ -16,7 +16,7 @@ import sys
 from collections import defaultdict
 from datetime import timezone
 from importlib.metadata import version
-from typing import Literal, NoReturn
+from typing import Callable, Literal, NoReturn
 from webbrowser import open_new_tab
 
 import dateparser
@@ -51,8 +51,9 @@ _APP = "dart-tools"
 _PROG = "dart"
 
 _PROD_HOST = "https://app.itsdart.com"
+_STAG_HOST = "https://stag.itsdart.com"
 _DEV_HOST = "http://localhost:5173"
-_HOST_MAP = {"prod": _PROD_HOST, "dev": _DEV_HOST}
+_HOST_MAP = {"prod": _PROD_HOST, "stag": _STAG_HOST, "dev": _DEV_HOST}
 
 _VERSION_CMD = "--version"
 _SET_HOST_CMD = "sethost"
@@ -97,11 +98,11 @@ _is_cli = False
 
 
 # TODO dedupe these functions with other usages elsewhere
-def _make_duid():
+def _make_duid() -> str:
     return "".join(random.choices(_DUID_CHARS, k=12))
 
 
-def trim_slug_str(s: str, length: int, max_under: int | None = None):
+def trim_slug_str(s: str, length: int, max_under: int | None = None) -> str:
     max_under = max_under if max_under is not None else length // 6
     if len(s) <= length:
         return s
@@ -111,26 +112,30 @@ def trim_slug_str(s: str, length: int, max_under: int | None = None):
     return s[:length]
 
 
-def slugify_str(s: str, lower=False, trim_kwargs=None):
+def slugify_str(s: str, lower: bool = False, trim_kwargs: dict = None) -> str:
     lowered = s.lower() if lower else s
     formatted = _NON_ALPHANUM_RE.sub("-", lowered.replace("'", ""))
     formatted = _REPEATED_DASH_RE.sub("-", formatted).strip("-")
-    return trim_slug_str(formatted, **trim_kwargs) if trim_kwargs is not None else formatted
+    return (
+        trim_slug_str(formatted, **trim_kwargs)
+        if trim_kwargs is not None
+        else formatted
+    )
 
 
-def _run_cmd(cmd):
+def _run_cmd(cmd: str) -> str:
     return subprocess.check_output(cmd, shell=True).decode()
 
 
-def _get_space_url(host, duid):
+def _get_space_url(host: str, duid: str) -> str:
     return f"{host}/s/{duid}"
 
 
-def _get_task_url(host, duid):
+def _get_task_url(host: str, duid: str) -> str:
     return f"{host}/t/{duid}"
 
 
-def _suppress_exception(fn):
+def _suppress_exception(fn: Callable) -> Callable:
     @wraps(fn)
     def wrapper(*args, **kwargs):
         try:
@@ -141,7 +146,7 @@ def _suppress_exception(fn):
     return wrapper
 
 
-def _dart_exit(message):
+def _dart_exit(message: str) -> NoReturn:
     if _is_cli:
         sys.exit(message)
     raise DartException(message)
@@ -151,7 +156,7 @@ def _exit_gracefully(_signal_received, _frame) -> None:
     _dart_exit("Quitting.")
 
 
-def _log(s):
+def _log(s: str) -> None:
     if not _is_cli:
         return
     print(s)
@@ -279,7 +284,7 @@ class Dart(Client):
         return transactions_create.sync(
             client=self,
             x_csrftoken=self._session.get_csrf_token(),
-            json_body=request_body,
+            body=request_body,
         )
 
 
@@ -411,7 +416,7 @@ class _Git:
         _run_cmd(f"git checkout -b {branch}")
 
 
-def set_host(host):
+def set_host(host: str) -> bool:
     config = _Config()
 
     new_host = _HOST_MAP.get(host, host)
@@ -422,7 +427,7 @@ def set_host(host):
     return True
 
 
-def _auth_failure_exit():
+def _auth_failure_exit() -> NoReturn:
     _dart_exit(f"Not logged in, run\n\n  {_PROG} {_LOGIN_CMD}\n\nto log in.")
 
 
@@ -430,7 +435,7 @@ def _unknown_failure_exit() -> NoReturn:
     _dart_exit("Unknown failure, email\n\n  support@itsdart.com\n\nfor help.")
 
 
-def _check_request_response_and_maybe_exit(response):
+def _check_request_response_and_maybe_exit(response) -> None:
     try:
         response.raise_for_status()
     except requests.exceptions.HTTPError:
@@ -457,14 +462,14 @@ def _parse_transaction_response_and_maybe_exit(
     return model
 
 
-def print_version():
+def print_version() -> str:
     result = f"dart-tools version {_VERSION}"
     _log(result)
     return result
 
 
 @_suppress_exception
-def print_version_update_message_maybe():
+def print_version_update_message_maybe() -> None:
     latest = (
         _run_cmd("pip --disable-pip-version-check index versions dart-tools 2>&1")
         .rsplit("LATEST:", maxsplit=1)[-1]
@@ -481,12 +486,12 @@ def print_version_update_message_maybe():
     )
 
 
-def _get_is_logged_in(session):
+def _get_is_logged_in(session: _Session) -> bool:
     response = session.get(_USER_STATUS_URL_FRAG)
     return response.json().get("isLoggedIn", False)
 
 
-def is_logged_in(should_raise=False):
+def is_logged_in(should_raise: bool = False) -> bool:
     config = _Config()
     session = _Session(config)
 
@@ -498,7 +503,7 @@ def is_logged_in(should_raise=False):
     return result
 
 
-def login(token=None):
+def login(token: str | None = None) -> bool:
     config = _Config()
     session = _Session(config)
 
@@ -522,7 +527,9 @@ def login(token=None):
     return True
 
 
-def _begin_task(config, session, user_email, get_task):
+def _begin_task(
+    config: _Config, session: _Session, user_email: str, get_task: Callable
+) -> bool:
     _Git.ensure_in_repo()
     _Git.ensure_no_unstaged_changes()
     _Git.ensure_on_main_or_intended()
@@ -541,7 +548,7 @@ def _begin_task(config, session, user_email, get_task):
     return True
 
 
-def begin_task():
+def begin_task() -> bool:
     config = _Config()
     session = _Session(config)
 
@@ -592,17 +599,17 @@ def begin_task():
 
 
 def create_task(
-    title,
+    title: str,
     *,
-    should_begin=False,
-    dartboard_title=None,
-    status_title=None,
-    assignee_emails=None,
-    tag_titles=None,
-    priority_int=None,
-    size_int=None,
-    due_at_str=None,
-):
+    should_begin: bool = False,
+    dartboard_title: str | None = None,
+    status_title: str | None = None,
+    assignee_emails: list[str] | None = None,
+    tag_titles: list[str] | None = None,
+    priority_int: int | None = None,
+    size_int: int | None = None,
+    due_at_str: str | None = None,
+) -> Task:
     config = _Config()
     session = _Session(config)
     dart = Dart(session)
@@ -726,17 +733,17 @@ def create_task(
 
 
 def update_task(
-    duid,
+    duid: str,
     *,
-    title=None,
-    dartboard_title=None,
-    status_title=None,
-    assignee_emails=None,
-    tag_titles=None,
-    priority_int=None,
-    size_int=None,
-    due_at_str=None,
-):
+    title: str | None = None,
+    dartboard_title: str | None = None,
+    status_title: str | None = None,
+    assignee_emails: list[str] | None = None,
+    tag_titles: list[str] | None = None,
+    priority_int: int | None = None,
+    size_int: int | None = None,
+    due_at_str: str | None = None,
+) -> Task:
     config = _Config()
     session = _Session(config)
     dart = Dart(session)
@@ -856,7 +863,7 @@ def update_task(
     return task
 
 
-def replicate_space(duid):
+def replicate_space(duid: str) -> Space:
     config = _Config()
     session = _Session(config)
 
@@ -870,7 +877,7 @@ def replicate_space(duid):
     return space
 
 
-def _add_standard_task_arguments(parser):
+def _add_standard_task_arguments(parser: ArgumentParser) -> None:
     parser.add_argument(
         "-d", "--dartboard", dest="dartboard_title", help="dartboard title"
     )
@@ -905,7 +912,7 @@ def _add_standard_task_arguments(parser):
     parser.add_argument("-r", "--duedate", dest="due_at_str", help="due date")
 
 
-def cli():
+def cli() -> None:
     signal.signal(signal.SIGINT, _exit_gracefully)
     global _is_cli
     _is_cli = True
@@ -916,9 +923,7 @@ def cli():
         print_version()
         return
 
-    parser = argparse.ArgumentParser(
-        prog=_PROG, description="A CLI to interact with Dart"
-    )
+    parser = ArgumentParser(prog=_PROG, description="A CLI to interact with Dart")
     subparsers = parser.add_subparsers(
         title="command",
         required=True,
@@ -926,7 +931,7 @@ def cli():
     )
 
     set_host_parser = subparsers.add_parser(_SET_HOST_CMD, aliases="s")
-    set_host_parser.add_argument("host", help="the new host: {prod|dev|[URL]}")
+    set_host_parser.add_argument("host", help="the new host: {prod|stag|dev|[URL]}")
     set_host_parser.set_defaults(func=set_host)
 
     login_parser = subparsers.add_parser(_LOGIN_CMD, aliases="l", help="login")

@@ -9,6 +9,8 @@ class TaskKind(str, Enum):
     ITEM = "Item"
     MILESTONE = "Milestone"
     PROJECT = "Project"
+    SPIKE = "Spike"
+    STORY = "Story"
     SUBISSUE = "Subissue"
     SUBTASK = "Subtask"
     TASK = "Task"
