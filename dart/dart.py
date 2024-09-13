@@ -27,6 +27,7 @@ import platformdirs
 from .exception import DartException
 from .generated import Client
 from .generated.models import (
+    Dartboard,
     DartboardKind,
     Operation,
     OperationKind,
@@ -64,20 +65,18 @@ _BEGIN_TASK_CMD = "begintask"
 
 _PROFILE_SETTINGS_URL_FRAG = "/?settings=account"
 _ROOT_API_URL_FRAG = "/api/v0"
-_CSRF_URL_FRAG = _ROOT_API_URL_FRAG + "/csrf-token"
 _USER_STATUS_URL_FRAG = _ROOT_API_URL_FRAG + "/user-status"
 _USER_DATA_URL_FRAG = _ROOT_API_URL_FRAG + "/user-data?mode=auto"
 _COPY_BRANCH_URL_FRAG = _ROOT_API_URL_FRAG + "/vcs/copy-branch-link"
 _REPLICATE_SPACE_URL_FRAG_FMT = _ROOT_API_URL_FRAG + "/spaces/replicate/{duid}"
+_REPLICATE_DARTBOARD_URL_FRAG_FMT = _ROOT_API_URL_FRAG + "/dartboards/replicate/{duid}"
 
 _AUTH_TOKEN_ENVVAR_KEY = "DART_TOKEN"
 _CONFIG_FPATH = platformdirs.user_config_path(_APP, roaming=False, ensure_exists=False)
-_CSRF_TOKEN_COOKIE = "csrftoken"
 _CLIENT_DUID_KEY = "clientDuid"
 _HOST_KEY = "host"
 _HOSTS_KEY = "hosts"
 _AUTH_TOKEN_KEY = "authToken"
-_CSRF_TOKEN_KEY = "csrfToken"
 
 _DUID_CHARS = string.ascii_lowercase + string.ascii_uppercase + string.digits
 _NON_ALPHANUM_RE = re.compile(r"[^a-zA-Z0-9-]+")
@@ -112,7 +111,7 @@ def trim_slug_str(s: str, length: int, max_under: int | None = None) -> str:
     return s[:length]
 
 
-def slugify_str(s: str, lower: bool = False, trim_kwargs: dict = None) -> str:
+def slugify_str(s: str, lower: bool = False, trim_kwargs: dict | None = None) -> str:
     lowered = s.lower() if lower else s
     formatted = _NON_ALPHANUM_RE.sub("-", lowered.replace("'", ""))
     formatted = _REPEATED_DASH_RE.sub("-", formatted).strip("-")
@@ -129,6 +128,10 @@ def _run_cmd(cmd: str) -> str:
 
 def _get_space_url(host: str, duid: str) -> str:
     return f"{host}/s/{duid}"
+
+
+def _get_dartboard_url(host: str, duid: str) -> str:
+    return f"{host}/d/{duid}"
 
 
 def _get_task_url(host: str, duid: str) -> str:
@@ -205,8 +208,6 @@ class _Session:
     def __init__(self, config=None):
         self._config = config or _Config()
         self._session = requests.Session()
-        if (csrf_token := self._config.get(_CSRF_TOKEN_KEY)) is not None:
-            self._session.cookies.set(_CSRF_TOKEN_COOKIE, csrf_token)
 
     def get_base_url(self):
         return self._config.host
@@ -220,33 +221,14 @@ class _Session:
             return result
         return _AUTH_TOKEN_ENVVAR
 
-    def _refresh_csrf(self):
-        response = self._session.get(self._config.host + _CSRF_URL_FRAG)
-        response.raise_for_status()
-        csrf_token = response.cookies.get_dict().get(_CSRF_TOKEN_COOKIE)
-        self._config.set(_CSRF_TOKEN_KEY, csrf_token)
-        return csrf_token
-
-    def get_csrf_token(self):
-        csrf_token = self._config.get(_CSRF_TOKEN_KEY)
-        if csrf_token is None:
-            csrf_token = self._refresh_csrf()
-        return csrf_token
-
     def get_headers(self):
         result = {
             "Origin": self._config.host,
             "client-duid": self.get_client_duid(),
-            "x-csrftoken": self.get_csrf_token(),
         }
         if (auth_token := self.get_auth_token()) is not None:
             result["Authorization"] = f"Bearer {auth_token}"
         return result
-
-    def get_cookies(self):
-        return {
-            _CSRF_TOKEN_COOKIE: self.get_csrf_token(),
-        }
 
     def get(self, url_frag, *args, **kwargs):
         kwargs["headers"] = self.get_headers() | kwargs.get("headers", {})
@@ -257,7 +239,6 @@ class _Session:
         result = self._session.post(self._config.host + url_frag, *args, **kwargs)
         if result.status_code != 403:
             return result
-        self._refresh_csrf()
         kwargs["headers"] = self.get_headers() | kwargs.get("headers", {})
         return self._session.post(self._config.host + url_frag, *args, **kwargs)
 
@@ -267,7 +248,6 @@ class Dart(Client):
         self._session = session or _Session()
         super().__init__(
             base_url=self._session.get_base_url(),
-            cookies=self._session.get_cookies(),
             headers=self._session.get_headers(),
         )
 
@@ -283,7 +263,6 @@ class Dart(Client):
         )
         return transactions_create.sync(
             client=self,
-            x_csrftoken=self._session.get_csrf_token(),
             body=request_body,
         )
 
@@ -312,6 +291,10 @@ class UserBundle:
     @property
     def properties(self):
         return self._raw["properties"]
+
+    @property
+    def task_kinds(self):
+        return self._raw["taskKinds"]
 
     @property
     def default_statuses(self):
@@ -603,6 +586,7 @@ def create_task(
     *,
     should_begin: bool = False,
     dartboard_title: str | None = None,
+    kind_title: str | None = None,
     status_title: str | None = None,
     assignee_emails: list[str] | None = None,
     tag_titles: list[str] | None = None,
@@ -641,6 +625,16 @@ def create_task(
     ]
     first_order = min(orders) if len(orders) > 0 else None
     order = get_orders_between(None, first_order, 1)[0]
+
+    kinds = user_bundle.task_kinds
+    if kind_title is not None:
+        kind_title_norm = kind_title.strip().lower()
+        kind = next((e for e in kinds if e["title"].lower() == kind_title_norm), None)
+        if kind is None:
+            _dart_exit(f"No status found with title '{status_title}'.")
+    else:
+        kind = next(e for e in kinds if e["locked"])
+    kind_duid = kind["duid"]
 
     statuses = user_bundle.default_statuses
     if status_title is not None:
@@ -704,6 +698,7 @@ def create_task(
         drafter_duid=None,
         dartboard_duid=dartboard_duid,
         order=order,
+        kind_duid=kind_duid,
         title=title,
         status_duid=status_duid,
         assignee_duids=assignee_duids,
@@ -863,11 +858,16 @@ def update_task(
     return task
 
 
-def replicate_space(duid: str) -> Space:
+def replicate_space(duid: str, title: str | None = None) -> Space:
     config = _Config()
     session = _Session(config)
 
-    response = session.post(_REPLICATE_SPACE_URL_FRAG_FMT.format(duid=duid))
+    content = {}
+    if title is not None:
+        content["title"] = title
+    response = session.post(
+        _REPLICATE_SPACE_URL_FRAG_FMT.format(duid=duid), json=content
+    )
     _check_request_response_and_maybe_exit(response)
 
     space = Space.from_dict(response.json()["item"])
@@ -875,6 +875,27 @@ def replicate_space(duid: str) -> Space:
     _log(f"Replicated space {space.title} at {_get_space_url(config.host, space.duid)}")
     _log("Done.")
     return space
+
+
+def replicate_dartboard(duid: str, title: str | None = None) -> Dartboard:
+    config = _Config()
+    session = _Session(config)
+
+    content = {}
+    if title is not None:
+        content["title"] = title
+    response = session.post(
+        _REPLICATE_DARTBOARD_URL_FRAG_FMT.format(duid=duid), json=content
+    )
+    _check_request_response_and_maybe_exit(response)
+
+    dartboard = Dartboard.from_dict(response.json()["item"])
+
+    _log(
+        f"Replicated dartboard {dartboard.title} at {_get_dartboard_url(config.host, dartboard.duid)}"
+    )
+    _log("Done.")
+    return dartboard
 
 
 def _add_standard_task_arguments(parser: ArgumentParser) -> None:

@@ -8,16 +8,17 @@ from ...client import AuthenticatedClient, Client
 from ...models.request_body import RequestBody
 from ...models.response_body import ResponseBody
 from ...models.validation_error_response import ValidationErrorResponse
-from ...types import Response
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     *,
     body: RequestBody,
-    x_csrftoken: str,
+    x_csrftoken: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
-    headers["x-csrftoken"] = x_csrftoken
+    if not isinstance(x_csrftoken, Unset):
+        headers["x-csrftoken"] = x_csrftoken
 
     _kwargs: Dict[str, Any] = {
         "method": "post",
@@ -65,11 +66,11 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: RequestBody,
-    x_csrftoken: str,
+    x_csrftoken: Union[Unset, str] = UNSET,
 ) -> Response[Union[ResponseBody, ValidationErrorResponse]]:
     """
     Args:
-        x_csrftoken (str):
+        x_csrftoken (Union[Unset, str]):
         body (RequestBody):
 
     Raises:
@@ -96,11 +97,11 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: RequestBody,
-    x_csrftoken: str,
+    x_csrftoken: Union[Unset, str] = UNSET,
 ) -> Optional[Union[ResponseBody, ValidationErrorResponse]]:
     """
     Args:
-        x_csrftoken (str):
+        x_csrftoken (Union[Unset, str]):
         body (RequestBody):
 
     Raises:
@@ -122,11 +123,11 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: RequestBody,
-    x_csrftoken: str,
+    x_csrftoken: Union[Unset, str] = UNSET,
 ) -> Response[Union[ResponseBody, ValidationErrorResponse]]:
     """
     Args:
-        x_csrftoken (str):
+        x_csrftoken (Union[Unset, str]):
         body (RequestBody):
 
     Raises:
@@ -151,11 +152,11 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: RequestBody,
-    x_csrftoken: str,
+    x_csrftoken: Union[Unset, str] = UNSET,
 ) -> Optional[Union[ResponseBody, ValidationErrorResponse]]:
     """
     Args:
-        x_csrftoken (str):
+        x_csrftoken (Union[Unset, str]):
         body (RequestBody):
 
     Raises:
