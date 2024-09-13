@@ -20,6 +20,7 @@ class UserDataEntityRetrieveEntityKind(str, Enum):
     STATUSES = "statuses"
     TASKS = "tasks"
     TASK_DOC_RELATIONSHIPS = "task-doc-relationships"
+    TASK_KINDS = "task-kinds"
     TENANTS = "tenants"
     USERS = "users"
     USER_DARTBOARD_LAYOUTS = "user-dartboard-layouts"

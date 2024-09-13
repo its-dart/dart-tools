@@ -39,6 +39,7 @@ class EventSubscriptionUpdate:
             * `pages/delete` - PAGE_DELETE
             * `workspace/invite` - WORKSPACE_INVITE
             * `workspace/join` - WORKSPACE_JOIN
+            * `workspace/update_role` - WORKSPACE_UPDATE_ROLE
             * `workspace/leave` - WORKSPACE_LEAVE
             * `workspace/update_property` - WORKSPACE_UPDATE_PROPERTY
             * `workspace/update_status` - WORKSPACE_UPDATE_STATUS

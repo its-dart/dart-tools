@@ -18,6 +18,7 @@ def _get_kwargs(
     due_at: Union[Unset, datetime.date] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
+    kind: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
@@ -44,6 +45,8 @@ def _get_kwargs(
     params["in_trash"] = in_trash
 
     params["is_draft"] = is_draft
+
+    params["kind"] = kind
 
     params["limit"] = limit
 
@@ -110,6 +113,7 @@ def sync_detailed(
     due_at: Union[Unset, datetime.date] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
+    kind: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
@@ -128,6 +132,7 @@ def sync_detailed(
         due_at (Union[Unset, datetime.date]):
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
+        kind (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
@@ -153,6 +158,7 @@ def sync_detailed(
         due_at=due_at,
         in_trash=in_trash,
         is_draft=is_draft,
+        kind=kind,
         limit=limit,
         offset=offset,
         priority=priority,
@@ -180,6 +186,7 @@ def sync(
     due_at: Union[Unset, datetime.date] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
+    kind: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
@@ -198,6 +205,7 @@ def sync(
         due_at (Union[Unset, datetime.date]):
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
+        kind (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
@@ -224,6 +232,7 @@ def sync(
         due_at=due_at,
         in_trash=in_trash,
         is_draft=is_draft,
+        kind=kind,
         limit=limit,
         offset=offset,
         priority=priority,
@@ -245,6 +254,7 @@ async def asyncio_detailed(
     due_at: Union[Unset, datetime.date] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
+    kind: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
@@ -263,6 +273,7 @@ async def asyncio_detailed(
         due_at (Union[Unset, datetime.date]):
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
+        kind (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
@@ -288,6 +299,7 @@ async def asyncio_detailed(
         due_at=due_at,
         in_trash=in_trash,
         is_draft=is_draft,
+        kind=kind,
         limit=limit,
         offset=offset,
         priority=priority,
@@ -313,6 +325,7 @@ async def asyncio(
     due_at: Union[Unset, datetime.date] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
+    kind: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
@@ -331,6 +344,7 @@ async def asyncio(
         due_at (Union[Unset, datetime.date]):
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
+        kind (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
@@ -358,6 +372,7 @@ async def asyncio(
             due_at=due_at,
             in_trash=in_trash,
             is_draft=is_draft,
+            kind=kind,
             limit=limit,
             offset=offset,
             priority=priority,

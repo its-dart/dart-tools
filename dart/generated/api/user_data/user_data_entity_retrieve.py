@@ -22,6 +22,7 @@ from ...models.space import Space
 from ...models.status import Status
 from ...models.task import Task
 from ...models.task_doc_relationship import TaskDocRelationship
+from ...models.task_kind import TaskKind
 from ...models.task_link import TaskLink
 from ...models.tenant import Tenant
 from ...models.user import User
@@ -64,6 +65,7 @@ def _parse_response(
         "Status",
         "Task",
         "TaskDocRelationship",
+        "TaskKind",
         "TaskLink",
         "Tenant",
         "User",
@@ -93,6 +95,7 @@ def _parse_response(
             "Status",
             "Task",
             "TaskDocRelationship",
+            "TaskKind",
             "TaskLink",
             "Tenant",
             "User",
@@ -246,7 +249,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_18 = TaskLink.from_dict(data)
+                componentsschemas_user_data_entity_type_18 = TaskKind.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_18
             except:  # noqa: E722
@@ -254,7 +257,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_19 = Tenant.from_dict(data)
+                componentsschemas_user_data_entity_type_19 = TaskLink.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_19
             except:  # noqa: E722
@@ -262,16 +265,24 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_20 = UserDartboardLayout.from_dict(data)
+                componentsschemas_user_data_entity_type_20 = Tenant.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_20
             except:  # noqa: E722
                 pass
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                componentsschemas_user_data_entity_type_21 = UserDartboardLayout.from_dict(data)
+
+                return componentsschemas_user_data_entity_type_21
+            except:  # noqa: E722
+                pass
             if not isinstance(data, dict):
                 raise TypeError()
-            componentsschemas_user_data_entity_type_21 = View.from_dict(data)
+            componentsschemas_user_data_entity_type_22 = View.from_dict(data)
 
-            return componentsschemas_user_data_entity_type_21
+            return componentsschemas_user_data_entity_type_22
 
         response_200 = _parse_response_200(response.json())
 
@@ -303,6 +314,7 @@ def _build_response(
         "Status",
         "Task",
         "TaskDocRelationship",
+        "TaskKind",
         "TaskLink",
         "Tenant",
         "User",
@@ -342,6 +354,7 @@ def sync_detailed(
         "Status",
         "Task",
         "TaskDocRelationship",
+        "TaskKind",
         "TaskLink",
         "Tenant",
         "User",
@@ -359,7 +372,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union['Attachment', 'Comment', 'CommentReaction', 'Dartboard', 'Doc', 'Folder', 'Form', 'FormField', 'Layout', 'Option', 'Property', 'Relationship', 'RelationshipKind', 'Space', 'Status', 'Task', 'TaskDocRelationship', 'TaskLink', 'Tenant', 'User', 'UserDartboardLayout', 'View']]
+        Response[Union['Attachment', 'Comment', 'CommentReaction', 'Dartboard', 'Doc', 'Folder', 'Form', 'FormField', 'Layout', 'Option', 'Property', 'Relationship', 'RelationshipKind', 'Space', 'Status', 'Task', 'TaskDocRelationship', 'TaskKind', 'TaskLink', 'Tenant', 'User', 'UserDartboardLayout', 'View']]
     """
 
     kwargs = _get_kwargs(
@@ -398,6 +411,7 @@ def sync(
         "Status",
         "Task",
         "TaskDocRelationship",
+        "TaskKind",
         "TaskLink",
         "Tenant",
         "User",
@@ -415,7 +429,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union['Attachment', 'Comment', 'CommentReaction', 'Dartboard', 'Doc', 'Folder', 'Form', 'FormField', 'Layout', 'Option', 'Property', 'Relationship', 'RelationshipKind', 'Space', 'Status', 'Task', 'TaskDocRelationship', 'TaskLink', 'Tenant', 'User', 'UserDartboardLayout', 'View']
+        Union['Attachment', 'Comment', 'CommentReaction', 'Dartboard', 'Doc', 'Folder', 'Form', 'FormField', 'Layout', 'Option', 'Property', 'Relationship', 'RelationshipKind', 'Space', 'Status', 'Task', 'TaskDocRelationship', 'TaskKind', 'TaskLink', 'Tenant', 'User', 'UserDartboardLayout', 'View']
     """
 
     return sync_detailed(
@@ -449,6 +463,7 @@ async def asyncio_detailed(
         "Status",
         "Task",
         "TaskDocRelationship",
+        "TaskKind",
         "TaskLink",
         "Tenant",
         "User",
@@ -466,7 +481,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union['Attachment', 'Comment', 'CommentReaction', 'Dartboard', 'Doc', 'Folder', 'Form', 'FormField', 'Layout', 'Option', 'Property', 'Relationship', 'RelationshipKind', 'Space', 'Status', 'Task', 'TaskDocRelationship', 'TaskLink', 'Tenant', 'User', 'UserDartboardLayout', 'View']]
+        Response[Union['Attachment', 'Comment', 'CommentReaction', 'Dartboard', 'Doc', 'Folder', 'Form', 'FormField', 'Layout', 'Option', 'Property', 'Relationship', 'RelationshipKind', 'Space', 'Status', 'Task', 'TaskDocRelationship', 'TaskKind', 'TaskLink', 'Tenant', 'User', 'UserDartboardLayout', 'View']]
     """
 
     kwargs = _get_kwargs(
@@ -503,6 +518,7 @@ async def asyncio(
         "Status",
         "Task",
         "TaskDocRelationship",
+        "TaskKind",
         "TaskLink",
         "Tenant",
         "User",
@@ -520,7 +536,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union['Attachment', 'Comment', 'CommentReaction', 'Dartboard', 'Doc', 'Folder', 'Form', 'FormField', 'Layout', 'Option', 'Property', 'Relationship', 'RelationshipKind', 'Space', 'Status', 'Task', 'TaskDocRelationship', 'TaskLink', 'Tenant', 'User', 'UserDartboardLayout', 'View']
+        Union['Attachment', 'Comment', 'CommentReaction', 'Dartboard', 'Doc', 'Folder', 'Form', 'FormField', 'Layout', 'Option', 'Property', 'Relationship', 'RelationshipKind', 'Space', 'Status', 'Task', 'TaskDocRelationship', 'TaskKind', 'TaskLink', 'Tenant', 'User', 'UserDartboardLayout', 'View']
     """
 
     return (

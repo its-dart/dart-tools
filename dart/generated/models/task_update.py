@@ -6,7 +6,6 @@ from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..models.priority import Priority
-from ..models.task_kind import TaskKind
 from ..models.task_source_type import TaskSourceType
 from ..types import UNSET, Unset
 
@@ -52,18 +51,7 @@ class TaskUpdate:
         dartboard_duid (Union[Unset, str]):
         order (Union[Unset, str]):
         expanded (Union[Unset, bool]):
-        kind (Union[Unset, TaskKind]): * `Project` - PROJECT
-            * `Milestone` - MILESTONE
-            * `Task` - TASK
-            * `Subtask` - SUBTASK
-            * `Epic` - EPIC
-            * `Story` - STORY
-            * `Issue` - ISSUE
-            * `Subissue` - SUBISSUE
-            * `Bug` - BUG
-            * `Spike` - SPIKE
-            * `Item` - ITEM
-            * `Client` - CLIENT
+        kind_duid (Union[Unset, str]):
         title (Union[Unset, str]):
         description (Union[Unset, Any]):
         description_markdown (Union[Unset, str]):
@@ -97,7 +85,7 @@ class TaskUpdate:
     dartboard_duid: Union[Unset, str] = UNSET
     order: Union[Unset, str] = UNSET
     expanded: Union[Unset, bool] = UNSET
-    kind: Union[Unset, TaskKind] = UNSET
+    kind_duid: Union[Unset, str] = UNSET
     title: Union[Unset, str] = UNSET
     description: Union[Unset, Any] = UNSET
     description_markdown: Union[Unset, str] = UNSET
@@ -170,9 +158,7 @@ class TaskUpdate:
 
         expanded = self.expanded
 
-        kind: Union[Unset, str] = UNSET
-        if not isinstance(self.kind, Unset):
-            kind = self.kind.value
+        kind_duid = self.kind_duid
 
         title = self.title
 
@@ -291,8 +277,8 @@ class TaskUpdate:
             field_dict["order"] = order
         if expanded is not UNSET:
             field_dict["expanded"] = expanded
-        if kind is not UNSET:
-            field_dict["kind"] = kind
+        if kind_duid is not UNSET:
+            field_dict["kindDuid"] = kind_duid
         if title is not UNSET:
             field_dict["title"] = title
         if description is not UNSET:
@@ -408,12 +394,7 @@ class TaskUpdate:
 
         expanded = d.pop("expanded", UNSET)
 
-        _kind = d.pop("kind", UNSET)
-        kind: Union[Unset, TaskKind]
-        if isinstance(_kind, Unset):
-            kind = UNSET
-        else:
-            kind = TaskKind(_kind)
+        kind_duid = d.pop("kindDuid", UNSET)
 
         title = d.pop("title", UNSET)
 
@@ -562,7 +543,7 @@ class TaskUpdate:
             dartboard_duid=dartboard_duid,
             order=order,
             expanded=expanded,
-            kind=kind,
+            kind_duid=kind_duid,
             title=title,
             description=description,
             description_markdown=description_markdown,

@@ -3,7 +3,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.color_name import ColorName
 from ..models.theme import Theme
 from ..models.user_role import UserRole
 from ..types import UNSET, Unset
@@ -24,30 +23,6 @@ class UserUpdate:
             * `Light` - LIGHT
             * `Dark` - DARK
         color_hex (Union[Unset, str]):
-        color_name (Union[Unset, ColorName]): * `Red` - RED
-            * `Dark Blue` - DARK_BLUE
-            * `Dark Orange` - DARK_ORANGE
-            * `Dark Green` - DARK_GREEN
-            * `Purple` - PURPLE
-            * `Dark Teal` - DARK_TEAL
-            * `Pink` - PINK
-            * `Orange` - ORANGE
-            * `Green` - GREEN
-            * `Yellow` - YELLOW
-            * `Brown` - BROWN
-            * `Dark Red` - DARK_RED
-            * `Flat Green` - FLAT_GREEN
-            * `Red Orange` - RED_ORANGE
-            * `Teal` - TEAL
-            * `Light Green` - LIGHT_GREEN
-            * `Light Blue` - LIGHT_BLUE
-            * `Light Purple` - LIGHT_PURPLE
-            * `Light Orange` - LIGHT_ORANGE
-            * `Light Pink` - LIGHT_PINK
-            * `Tan` - TAN
-            * `Dark Gray` - DARK_GRAY
-            * `Light Brown` - LIGHT_BROWN
-            * `Light Gray` - LIGHT_GRAY
         open_in_native_app (Union[Unset, bool]):
         first_day_of_week (Union[Unset, int]):
         sections (Union[Unset, Any]):
@@ -63,7 +38,6 @@ class UserUpdate:
     name: Union[Unset, str] = UNSET
     theme: Union[Unset, Theme] = UNSET
     color_hex: Union[Unset, str] = UNSET
-    color_name: Union[Unset, ColorName] = UNSET
     open_in_native_app: Union[Unset, bool] = UNSET
     first_day_of_week: Union[Unset, int] = UNSET
     sections: Union[Unset, Any] = UNSET
@@ -88,10 +62,6 @@ class UserUpdate:
             theme = self.theme.value
 
         color_hex = self.color_hex
-
-        color_name: Union[Unset, str] = UNSET
-        if not isinstance(self.color_name, Unset):
-            color_name = self.color_name.value
 
         open_in_native_app = self.open_in_native_app
 
@@ -124,8 +94,6 @@ class UserUpdate:
             field_dict["theme"] = theme
         if color_hex is not UNSET:
             field_dict["colorHex"] = color_hex
-        if color_name is not UNSET:
-            field_dict["colorName"] = color_name
         if open_in_native_app is not UNSET:
             field_dict["openInNativeApp"] = open_in_native_app
         if first_day_of_week is not UNSET:
@@ -168,13 +136,6 @@ class UserUpdate:
 
         color_hex = d.pop("colorHex", UNSET)
 
-        _color_name = d.pop("colorName", UNSET)
-        color_name: Union[Unset, ColorName]
-        if isinstance(_color_name, Unset):
-            color_name = UNSET
-        else:
-            color_name = ColorName(_color_name)
-
         open_in_native_app = d.pop("openInNativeApp", UNSET)
 
         first_day_of_week = d.pop("firstDayOfWeek", UNSET)
@@ -197,7 +158,6 @@ class UserUpdate:
             name=name,
             theme=theme,
             color_hex=color_hex,
-            color_name=color_name,
             open_in_native_app=open_in_native_app,
             first_day_of_week=first_day_of_week,
             sections=sections,

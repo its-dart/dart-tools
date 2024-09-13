@@ -11,6 +11,7 @@ if TYPE_CHECKING:
     from ..models.comment import Comment
     from ..models.comment_reaction import CommentReaction
     from ..models.dartboard import Dartboard
+    from ..models.dashboard import Dashboard
     from ..models.doc import Doc
     from ..models.event import Event
     from ..models.event_subscription import EventSubscription
@@ -27,6 +28,7 @@ if TYPE_CHECKING:
     from ..models.status import Status
     from ..models.task import Task
     from ..models.task_doc_relationship import TaskDocRelationship
+    from ..models.task_kind import TaskKind
     from ..models.task_link import TaskLink
     from ..models.tenant import Tenant
     from ..models.user import User
@@ -55,6 +57,7 @@ class ModelsResponse:
             comments (Union[Unset, List['Comment']]):
             reactions (Union[Unset, List['CommentReaction']]):
             dartboards (Union[Unset, List['Dartboard']]):
+            dashboards (Union[Unset, List['Dashboard']]):
             docs (Union[Unset, List['Doc']]):
             events (Union[Unset, List['Event']]):
             event_subscriptions (Union[Unset, List['EventSubscription']]):
@@ -71,6 +74,7 @@ class ModelsResponse:
             statuses (Union[Unset, List['Status']]):
             tasks (Union[Unset, List['Task']]):
             task_doc_relationships (Union[Unset, List['TaskDocRelationship']]):
+            task_kinds (Union[Unset, List['TaskKind']]):
             links (Union[Unset, List['TaskLink']]):
             tenants (Union[Unset, List['Tenant']]):
             users (Union[Unset, List['User']]):
@@ -83,6 +87,7 @@ class ModelsResponse:
     comments: Union[Unset, List["Comment"]] = UNSET
     reactions: Union[Unset, List["CommentReaction"]] = UNSET
     dartboards: Union[Unset, List["Dartboard"]] = UNSET
+    dashboards: Union[Unset, List["Dashboard"]] = UNSET
     docs: Union[Unset, List["Doc"]] = UNSET
     events: Union[Unset, List["Event"]] = UNSET
     event_subscriptions: Union[Unset, List["EventSubscription"]] = UNSET
@@ -99,6 +104,7 @@ class ModelsResponse:
     statuses: Union[Unset, List["Status"]] = UNSET
     tasks: Union[Unset, List["Task"]] = UNSET
     task_doc_relationships: Union[Unset, List["TaskDocRelationship"]] = UNSET
+    task_kinds: Union[Unset, List["TaskKind"]] = UNSET
     links: Union[Unset, List["TaskLink"]] = UNSET
     tenants: Union[Unset, List["Tenant"]] = UNSET
     users: Union[Unset, List["User"]] = UNSET
@@ -141,6 +147,13 @@ class ModelsResponse:
             for dartboards_item_data in self.dartboards:
                 dartboards_item = dartboards_item_data.to_dict()
                 dartboards.append(dartboards_item)
+
+        dashboards: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.dashboards, Unset):
+            dashboards = []
+            for dashboards_item_data in self.dashboards:
+                dashboards_item = dashboards_item_data.to_dict()
+                dashboards.append(dashboards_item)
 
         docs: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.docs, Unset):
@@ -254,6 +267,13 @@ class ModelsResponse:
                 task_doc_relationships_item = task_doc_relationships_item_data.to_dict()
                 task_doc_relationships.append(task_doc_relationships_item)
 
+        task_kinds: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.task_kinds, Unset):
+            task_kinds = []
+            for task_kinds_item_data in self.task_kinds:
+                task_kinds_item = task_kinds_item_data.to_dict()
+                task_kinds.append(task_kinds_item)
+
         links: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.links, Unset):
             links = []
@@ -302,6 +322,8 @@ class ModelsResponse:
             field_dict["reactions"] = reactions
         if dartboards is not UNSET:
             field_dict["dartboards"] = dartboards
+        if dashboards is not UNSET:
+            field_dict["dashboards"] = dashboards
         if docs is not UNSET:
             field_dict["docs"] = docs
         if events is not UNSET:
@@ -334,6 +356,8 @@ class ModelsResponse:
             field_dict["tasks"] = tasks
         if task_doc_relationships is not UNSET:
             field_dict["taskDocRelationships"] = task_doc_relationships
+        if task_kinds is not UNSET:
+            field_dict["taskKinds"] = task_kinds
         if links is not UNSET:
             field_dict["links"] = links
         if tenants is not UNSET:
@@ -354,6 +378,7 @@ class ModelsResponse:
         from ..models.comment import Comment
         from ..models.comment_reaction import CommentReaction
         from ..models.dartboard import Dartboard
+        from ..models.dashboard import Dashboard
         from ..models.doc import Doc
         from ..models.event import Event
         from ..models.event_subscription import EventSubscription
@@ -370,6 +395,7 @@ class ModelsResponse:
         from ..models.status import Status
         from ..models.task import Task
         from ..models.task_doc_relationship import TaskDocRelationship
+        from ..models.task_kind import TaskKind
         from ..models.task_link import TaskLink
         from ..models.tenant import Tenant
         from ..models.user import User
@@ -411,6 +437,13 @@ class ModelsResponse:
             dartboards_item = Dartboard.from_dict(dartboards_item_data)
 
             dartboards.append(dartboards_item)
+
+        dashboards = []
+        _dashboards = d.pop("dashboards", UNSET)
+        for dashboards_item_data in _dashboards or []:
+            dashboards_item = Dashboard.from_dict(dashboards_item_data)
+
+            dashboards.append(dashboards_item)
 
         docs = []
         _docs = d.pop("docs", UNSET)
@@ -524,6 +557,13 @@ class ModelsResponse:
 
             task_doc_relationships.append(task_doc_relationships_item)
 
+        task_kinds = []
+        _task_kinds = d.pop("taskKinds", UNSET)
+        for task_kinds_item_data in _task_kinds or []:
+            task_kinds_item = TaskKind.from_dict(task_kinds_item_data)
+
+            task_kinds.append(task_kinds_item)
+
         links = []
         _links = d.pop("links", UNSET)
         for links_item_data in _links or []:
@@ -565,6 +605,7 @@ class ModelsResponse:
             comments=comments,
             reactions=reactions,
             dartboards=dartboards,
+            dashboards=dashboards,
             docs=docs,
             events=events,
             event_subscriptions=event_subscriptions,
@@ -581,6 +622,7 @@ class ModelsResponse:
             statuses=statuses,
             tasks=tasks,
             task_doc_relationships=task_doc_relationships,
+            task_kinds=task_kinds,
             links=links,
             tenants=tenants,
             users=users,

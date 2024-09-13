@@ -14,7 +14,7 @@ class PropertyCreate:
     """
     Attributes:
         duid (str):
-        kind (PropertyKind): * `Default: Type` - DEFAULT_TYPE
+        kind (PropertyKind): * `Default: Type` - DEFAULT_KIND
             * `Default: Title` - DEFAULT_TITLE
             * `Default: Description` - DEFAULT_DESCRIPTION
             * `Default: Dartboard` - DEFAULT_DARTBOARD

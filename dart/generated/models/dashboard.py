@@ -1,56 +1,66 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.icon_kind import IconKind
-from ..models.task_kind_kind import TaskKindKind
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="TaskKind")
+if TYPE_CHECKING:
+    from ..models.chart import Chart
+
+
+T = TypeVar("T", bound="Dashboard")
 
 
 @_attrs_define
-class TaskKind:
+class Dashboard:
     """
     Attributes:
         duid (str):
-        kind (TaskKindKind): * `Default` - DEFAULT
-            * `Milestone` - MILESTONE
-        locked (bool):
+        accessible_by_team (bool):
+        accessible_by_user_duids (List[str]):
         order (str):
         title (str):
+        description (str):
         icon_kind (IconKind): * `None` - NONE
             * `Icon` - ICON
             * `Emoji` - EMOJI
         icon_name_or_emoji (str):
         color_hex (str):
-        hidden_status_duids (List[str]):
+        layout_duid (str):
+        favorited_by_user_duids (List[str]):
+        charts (List['Chart']):
         updated_by_client_duid (Union[None, Unset, str]):
     """
 
     duid: str
-    kind: TaskKindKind
-    locked: bool
+    accessible_by_team: bool
+    accessible_by_user_duids: List[str]
     order: str
     title: str
+    description: str
     icon_kind: IconKind
     icon_name_or_emoji: str
     color_hex: str
-    hidden_status_duids: List[str]
+    layout_duid: str
+    favorited_by_user_duids: List[str]
+    charts: List["Chart"]
     updated_by_client_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
 
-        kind = self.kind.value
+        accessible_by_team = self.accessible_by_team
 
-        locked = self.locked
+        accessible_by_user_duids = self.accessible_by_user_duids
 
         order = self.order
 
         title = self.title
+
+        description = self.description
 
         icon_kind = self.icon_kind.value
 
@@ -58,7 +68,14 @@ class TaskKind:
 
         color_hex = self.color_hex
 
-        hidden_status_duids = self.hidden_status_duids
+        layout_duid = self.layout_duid
+
+        favorited_by_user_duids = self.favorited_by_user_duids
+
+        charts = []
+        for charts_item_data in self.charts:
+            charts_item = charts_item_data.to_dict()
+            charts.append(charts_item)
 
         updated_by_client_duid: Union[None, Unset, str]
         if isinstance(self.updated_by_client_duid, Unset):
@@ -71,14 +88,17 @@ class TaskKind:
         field_dict.update(
             {
                 "duid": duid,
-                "kind": kind,
-                "locked": locked,
+                "accessibleByTeam": accessible_by_team,
+                "accessibleByUserDuids": accessible_by_user_duids,
                 "order": order,
                 "title": title,
+                "description": description,
                 "iconKind": icon_kind,
                 "iconNameOrEmoji": icon_name_or_emoji,
                 "colorHex": color_hex,
-                "hiddenStatusDuids": hidden_status_duids,
+                "layoutDuid": layout_duid,
+                "favoritedByUserDuids": favorited_by_user_duids,
+                "charts": charts,
             }
         )
         if updated_by_client_duid is not UNSET:
@@ -88,16 +108,20 @@ class TaskKind:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.chart import Chart
+
         d = src_dict.copy()
         duid = d.pop("duid")
 
-        kind = TaskKindKind(d.pop("kind"))
+        accessible_by_team = d.pop("accessibleByTeam")
 
-        locked = d.pop("locked")
+        accessible_by_user_duids = cast(List[str], d.pop("accessibleByUserDuids"))
 
         order = d.pop("order")
 
         title = d.pop("title")
+
+        description = d.pop("description")
 
         icon_kind = IconKind(d.pop("iconKind"))
 
@@ -105,7 +129,16 @@ class TaskKind:
 
         color_hex = d.pop("colorHex")
 
-        hidden_status_duids = cast(List[str], d.pop("hiddenStatusDuids"))
+        layout_duid = d.pop("layoutDuid")
+
+        favorited_by_user_duids = cast(List[str], d.pop("favoritedByUserDuids"))
+
+        charts = []
+        _charts = d.pop("charts")
+        for charts_item_data in _charts:
+            charts_item = Chart.from_dict(charts_item_data)
+
+            charts.append(charts_item)
 
         def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
             if data is None:
@@ -116,21 +149,24 @@ class TaskKind:
 
         updated_by_client_duid = _parse_updated_by_client_duid(d.pop("updatedByClientDuid", UNSET))
 
-        task_kind = cls(
+        dashboard = cls(
             duid=duid,
-            kind=kind,
-            locked=locked,
+            accessible_by_team=accessible_by_team,
+            accessible_by_user_duids=accessible_by_user_duids,
             order=order,
             title=title,
+            description=description,
             icon_kind=icon_kind,
             icon_name_or_emoji=icon_name_or_emoji,
             color_hex=color_hex,
-            hidden_status_duids=hidden_status_duids,
+            layout_duid=layout_duid,
+            favorited_by_user_duids=favorited_by_user_duids,
+            charts=charts,
             updated_by_client_duid=updated_by_client_duid,
         )
 
-        task_kind.additional_properties = d
-        return task_kind
+        dashboard.additional_properties = d
+        return dashboard
 
     @property
     def additional_keys(self) -> List[str]:

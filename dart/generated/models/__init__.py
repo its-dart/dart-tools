@@ -3,11 +3,13 @@
 from .attachment import Attachment
 from .attachment_create import AttachmentCreate
 from .attachment_update import AttachmentUpdate
+from .bar_chart_adtl import BarChartAdtl
 from .brainstorm import Brainstorm
 from .brainstorm_create import BrainstormCreate
 from .brainstorm_state import BrainstormState
 from .brainstorm_update import BrainstormUpdate
-from .color_name import ColorName
+from .chart import Chart
+from .chart_type import ChartType
 from .comment import Comment
 from .comment_create import CommentCreate
 from .comment_reaction import CommentReaction
@@ -19,6 +21,9 @@ from .dartboard_create import DartboardCreate
 from .dartboard_kind import DartboardKind
 from .dartboard_update import DartboardUpdate
 from .dartboards_list_kind import DartboardsListKind
+from .dashboard import Dashboard
+from .dashboard_create import DashboardCreate
+from .dashboard_update import DashboardUpdate
 from .discord_integration import DiscordIntegration
 from .doc import Doc
 from .doc_create import DocCreate
@@ -58,11 +63,14 @@ from .layout_create import LayoutCreate
 from .layout_kind import LayoutKind
 from .layout_kind_config_map import LayoutKindConfigMap
 from .layout_update import LayoutUpdate
+from .line_chart_adtl import LineChartAdtl
 from .models_response import ModelsResponse
 from .notification import Notification
 from .notification_update import NotificationUpdate
 from .notion_integration import NotionIntegration
 from .notion_integration_tenant_extension_status import NotionIntegrationTenantExtensionStatus
+from .number_chart_adtl import NumberChartAdtl
+from .number_chart_aggregation import NumberChartAggregation
 from .operation import Operation
 from .operation_kind import OperationKind
 from .operation_model_kind import OperationModelKind
@@ -85,12 +93,15 @@ from .paginated_relationship_list import PaginatedRelationshipList
 from .paginated_space_list import PaginatedSpaceList
 from .paginated_status_list import PaginatedStatusList
 from .paginated_task_doc_relationship_list import PaginatedTaskDocRelationshipList
+from .paginated_task_kind_list import PaginatedTaskKindList
 from .paginated_task_link_list import PaginatedTaskLinkList
 from .paginated_task_list import PaginatedTaskList
 from .paginated_tenant_list import PaginatedTenantList
 from .paginated_user_dartboard_layout_list import PaginatedUserDartboardLayoutList
 from .paginated_user_list import PaginatedUserList
 from .paginated_view_list import PaginatedViewList
+from .pie_chart_adtl import PieChartAdtl
+from .pie_chart_display_metric import PieChartDisplayMetric
 from .priority import Priority
 from .properties_list_kind import PropertiesListKind
 from .property_ import Property
@@ -122,12 +133,16 @@ from .statuses_list_kind import StatusesListKind
 from .subscription import Subscription
 from .subtask_display_mode import SubtaskDisplayMode
 from .summary_statistic_kind import SummaryStatisticKind
+from .table_chart_adtl import TableChartAdtl
 from .task import Task
 from .task_create import TaskCreate
 from .task_detail_mode import TaskDetailMode
 from .task_doc_relationship import TaskDocRelationship
 from .task_doc_relationship_create import TaskDocRelationshipCreate
 from .task_kind import TaskKind
+from .task_kind_create import TaskKindCreate
+from .task_kind_kind import TaskKindKind
+from .task_kind_update import TaskKindUpdate
 from .task_link import TaskLink
 from .task_link_create import TaskLinkCreate
 from .task_link_kind import TaskLinkKind
@@ -164,11 +179,13 @@ __all__ = (
     "Attachment",
     "AttachmentCreate",
     "AttachmentUpdate",
+    "BarChartAdtl",
     "Brainstorm",
     "BrainstormCreate",
     "BrainstormState",
     "BrainstormUpdate",
-    "ColorName",
+    "Chart",
+    "ChartType",
     "Comment",
     "CommentCreate",
     "CommentReaction",
@@ -180,6 +197,9 @@ __all__ = (
     "DartboardKind",
     "DartboardsListKind",
     "DartboardUpdate",
+    "Dashboard",
+    "DashboardCreate",
+    "DashboardUpdate",
     "DiscordIntegration",
     "Doc",
     "DocCreate",
@@ -219,11 +239,14 @@ __all__ = (
     "LayoutKind",
     "LayoutKindConfigMap",
     "LayoutUpdate",
+    "LineChartAdtl",
     "ModelsResponse",
     "Notification",
     "NotificationUpdate",
     "NotionIntegration",
     "NotionIntegrationTenantExtensionStatus",
+    "NumberChartAdtl",
+    "NumberChartAggregation",
     "Operation",
     "OperationKind",
     "OperationModelKind",
@@ -246,12 +269,15 @@ __all__ = (
     "PaginatedSpaceList",
     "PaginatedStatusList",
     "PaginatedTaskDocRelationshipList",
+    "PaginatedTaskKindList",
     "PaginatedTaskLinkList",
     "PaginatedTaskList",
     "PaginatedTenantList",
     "PaginatedUserDartboardLayoutList",
     "PaginatedUserList",
     "PaginatedViewList",
+    "PieChartAdtl",
+    "PieChartDisplayMetric",
     "Priority",
     "PropertiesListKind",
     "Property",
@@ -283,12 +309,16 @@ __all__ = (
     "Subscription",
     "SubtaskDisplayMode",
     "SummaryStatisticKind",
+    "TableChartAdtl",
     "Task",
     "TaskCreate",
     "TaskDetailMode",
     "TaskDocRelationship",
     "TaskDocRelationshipCreate",
     "TaskKind",
+    "TaskKindCreate",
+    "TaskKindKind",
+    "TaskKindUpdate",
     "TaskLink",
     "TaskLinkCreate",
     "TaskLinkKind",

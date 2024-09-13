@@ -1,46 +1,46 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.status_kind import StatusKind
+from ..models.icon_kind import IconKind
+from ..models.task_kind_kind import TaskKindKind
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="StatusCreate")
+T = TypeVar("T", bound="TaskKindCreate")
 
 
 @_attrs_define
-class StatusCreate:
+class TaskKindCreate:
     """
     Attributes:
         duid (str):
-        property_duid (str):
-        kind (StatusKind): * `Unstarted` - UNSTARTED
-            * `Started` - STARTED
-            * `Blocked` - BLOCKED
-            * `Finished` - FINISHED
-            * `Canceled` - CANCELED
+        kind (TaskKindKind): * `Default` - DEFAULT
+            * `Milestone` - MILESTONE
         order (str):
         locked (Union[Unset, bool]):
         title (Union[Unset, str]):
+        icon_kind (Union[Unset, IconKind]): * `None` - NONE
+            * `Icon` - ICON
+            * `Emoji` - EMOJI
+        icon_name_or_emoji (Union[Unset, str]):
         color_hex (Union[Unset, str]):
-        description (Union[Unset, str]):
+        hidden_status_duids (Union[Unset, List[str]]):
     """
 
     duid: str
-    property_duid: str
-    kind: StatusKind
+    kind: TaskKindKind
     order: str
     locked: Union[Unset, bool] = UNSET
     title: Union[Unset, str] = UNSET
+    icon_kind: Union[Unset, IconKind] = UNSET
+    icon_name_or_emoji: Union[Unset, str] = UNSET
     color_hex: Union[Unset, str] = UNSET
-    description: Union[Unset, str] = UNSET
+    hidden_status_duids: Union[Unset, List[str]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
-
-        property_duid = self.property_duid
 
         kind = self.kind.value
 
@@ -50,16 +50,23 @@ class StatusCreate:
 
         title = self.title
 
+        icon_kind: Union[Unset, str] = UNSET
+        if not isinstance(self.icon_kind, Unset):
+            icon_kind = self.icon_kind.value
+
+        icon_name_or_emoji = self.icon_name_or_emoji
+
         color_hex = self.color_hex
 
-        description = self.description
+        hidden_status_duids: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.hidden_status_duids, Unset):
+            hidden_status_duids = self.hidden_status_duids
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "duid": duid,
-                "propertyDuid": property_duid,
                 "kind": kind,
                 "order": order,
             }
@@ -68,10 +75,14 @@ class StatusCreate:
             field_dict["locked"] = locked
         if title is not UNSET:
             field_dict["title"] = title
+        if icon_kind is not UNSET:
+            field_dict["iconKind"] = icon_kind
+        if icon_name_or_emoji is not UNSET:
+            field_dict["iconNameOrEmoji"] = icon_name_or_emoji
         if color_hex is not UNSET:
             field_dict["colorHex"] = color_hex
-        if description is not UNSET:
-            field_dict["description"] = description
+        if hidden_status_duids is not UNSET:
+            field_dict["hiddenStatusDuids"] = hidden_status_duids
 
         return field_dict
 
@@ -80,9 +91,7 @@ class StatusCreate:
         d = src_dict.copy()
         duid = d.pop("duid")
 
-        property_duid = d.pop("propertyDuid")
-
-        kind = StatusKind(d.pop("kind"))
+        kind = TaskKindKind(d.pop("kind"))
 
         order = d.pop("order")
 
@@ -90,23 +99,33 @@ class StatusCreate:
 
         title = d.pop("title", UNSET)
 
+        _icon_kind = d.pop("iconKind", UNSET)
+        icon_kind: Union[Unset, IconKind]
+        if isinstance(_icon_kind, Unset):
+            icon_kind = UNSET
+        else:
+            icon_kind = IconKind(_icon_kind)
+
+        icon_name_or_emoji = d.pop("iconNameOrEmoji", UNSET)
+
         color_hex = d.pop("colorHex", UNSET)
 
-        description = d.pop("description", UNSET)
+        hidden_status_duids = cast(List[str], d.pop("hiddenStatusDuids", UNSET))
 
-        status_create = cls(
+        task_kind_create = cls(
             duid=duid,
-            property_duid=property_duid,
             kind=kind,
             order=order,
             locked=locked,
             title=title,
+            icon_kind=icon_kind,
+            icon_name_or_emoji=icon_name_or_emoji,
             color_hex=color_hex,
-            description=description,
+            hidden_status_duids=hidden_status_duids,
         )
 
-        status_create.additional_properties = d
-        return status_create
+        task_kind_create.additional_properties = d
+        return task_kind_create
 
     @property
     def additional_keys(self) -> List[str]:

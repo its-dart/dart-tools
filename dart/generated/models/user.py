@@ -3,7 +3,6 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.color_name import ColorName
 from ..models.task_detail_mode import TaskDetailMode
 from ..models.theme import Theme
 from ..models.user_role import UserRole
@@ -37,30 +36,6 @@ class User:
             * `Light` - LIGHT
             * `Dark` - DARK
         color_hex (str):
-        color_name (ColorName): * `Red` - RED
-            * `Dark Blue` - DARK_BLUE
-            * `Dark Orange` - DARK_ORANGE
-            * `Dark Green` - DARK_GREEN
-            * `Purple` - PURPLE
-            * `Dark Teal` - DARK_TEAL
-            * `Pink` - PINK
-            * `Orange` - ORANGE
-            * `Green` - GREEN
-            * `Yellow` - YELLOW
-            * `Brown` - BROWN
-            * `Dark Red` - DARK_RED
-            * `Flat Green` - FLAT_GREEN
-            * `Red Orange` - RED_ORANGE
-            * `Teal` - TEAL
-            * `Light Green` - LIGHT_GREEN
-            * `Light Blue` - LIGHT_BLUE
-            * `Light Purple` - LIGHT_PURPLE
-            * `Light Orange` - LIGHT_ORANGE
-            * `Light Pink` - LIGHT_PINK
-            * `Tan` - TAN
-            * `Dark Gray` - DARK_GRAY
-            * `Light Brown` - LIGHT_BROWN
-            * `Light Gray` - LIGHT_GRAY
         task_detail_mode (TaskDetailMode): * `Rightbar` - RIGHTBAR
             * `Fullscreen` - FULLSCREEN
             * `Overlay` - OVERLAY
@@ -81,7 +56,6 @@ class User:
     abrev: str
     theme: Theme
     color_hex: str
-    color_name: ColorName
     task_detail_mode: TaskDetailMode
     sections: Any
     layout: Any
@@ -110,8 +84,6 @@ class User:
         theme = self.theme.value
 
         color_hex = self.color_hex
-
-        color_name = self.color_name.value
 
         task_detail_mode = self.task_detail_mode.value
 
@@ -151,7 +123,6 @@ class User:
                 "abrev": abrev,
                 "theme": theme,
                 "colorHex": color_hex,
-                "colorName": color_name,
                 "taskDetailMode": task_detail_mode,
                 "sections": sections,
                 "layout": layout,
@@ -186,8 +157,6 @@ class User:
         theme = Theme(d.pop("theme"))
 
         color_hex = d.pop("colorHex")
-
-        color_name = ColorName(d.pop("colorName"))
 
         task_detail_mode = TaskDetailMode(d.pop("taskDetailMode"))
 
@@ -244,7 +213,6 @@ class User:
             abrev=abrev,
             theme=theme,
             color_hex=color_hex,
-            color_name=color_name,
             task_detail_mode=task_detail_mode,
             sections=sections,
             layout=layout,

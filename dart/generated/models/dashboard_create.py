@@ -1,25 +1,23 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.folder_kind import FolderKind
 from ..models.icon_kind import IconKind
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="FolderUpdate")
+T = TypeVar("T", bound="DashboardCreate")
 
 
 @_attrs_define
-class FolderUpdate:
+class DashboardCreate:
     """
     Attributes:
         duid (str):
-        space_duid (Union[Unset, str]):
-        kind (Union[Unset, FolderKind]): * `Other` - OTHER
-            * `Default` - DEFAULT
-            * `Reports` - REPORTS
-        order (Union[Unset, str]):
+        order (str):
+        layout_duid (str):
+        accessible_by_team (Union[Unset, bool]):
+        accessible_by_user_duids (Union[Unset, List[str]]):
         title (Union[Unset, str]):
         description (Union[Unset, str]):
         icon_kind (Union[Unset, IconKind]): * `None` - NONE
@@ -27,29 +25,36 @@ class FolderUpdate:
             * `Emoji` - EMOJI
         icon_name_or_emoji (Union[Unset, str]):
         color_hex (Union[Unset, str]):
+        favorited_by_user_duids (Union[Unset, List[str]]):
+        charts (Union[Unset, Any]):
     """
 
     duid: str
-    space_duid: Union[Unset, str] = UNSET
-    kind: Union[Unset, FolderKind] = UNSET
-    order: Union[Unset, str] = UNSET
+    order: str
+    layout_duid: str
+    accessible_by_team: Union[Unset, bool] = UNSET
+    accessible_by_user_duids: Union[Unset, List[str]] = UNSET
     title: Union[Unset, str] = UNSET
     description: Union[Unset, str] = UNSET
     icon_kind: Union[Unset, IconKind] = UNSET
     icon_name_or_emoji: Union[Unset, str] = UNSET
     color_hex: Union[Unset, str] = UNSET
+    favorited_by_user_duids: Union[Unset, List[str]] = UNSET
+    charts: Union[Unset, Any] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
 
-        space_duid = self.space_duid
-
-        kind: Union[Unset, str] = UNSET
-        if not isinstance(self.kind, Unset):
-            kind = self.kind.value
-
         order = self.order
+
+        layout_duid = self.layout_duid
+
+        accessible_by_team = self.accessible_by_team
+
+        accessible_by_user_duids: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.accessible_by_user_duids, Unset):
+            accessible_by_user_duids = self.accessible_by_user_duids
 
         title = self.title
 
@@ -63,19 +68,25 @@ class FolderUpdate:
 
         color_hex = self.color_hex
 
+        favorited_by_user_duids: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.favorited_by_user_duids, Unset):
+            favorited_by_user_duids = self.favorited_by_user_duids
+
+        charts = self.charts
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "duid": duid,
+                "order": order,
+                "layoutDuid": layout_duid,
             }
         )
-        if space_duid is not UNSET:
-            field_dict["spaceDuid"] = space_duid
-        if kind is not UNSET:
-            field_dict["kind"] = kind
-        if order is not UNSET:
-            field_dict["order"] = order
+        if accessible_by_team is not UNSET:
+            field_dict["accessibleByTeam"] = accessible_by_team
+        if accessible_by_user_duids is not UNSET:
+            field_dict["accessibleByUserDuids"] = accessible_by_user_duids
         if title is not UNSET:
             field_dict["title"] = title
         if description is not UNSET:
@@ -86,6 +97,10 @@ class FolderUpdate:
             field_dict["iconNameOrEmoji"] = icon_name_or_emoji
         if color_hex is not UNSET:
             field_dict["colorHex"] = color_hex
+        if favorited_by_user_duids is not UNSET:
+            field_dict["favoritedByUserDuids"] = favorited_by_user_duids
+        if charts is not UNSET:
+            field_dict["charts"] = charts
 
         return field_dict
 
@@ -94,16 +109,13 @@ class FolderUpdate:
         d = src_dict.copy()
         duid = d.pop("duid")
 
-        space_duid = d.pop("spaceDuid", UNSET)
+        order = d.pop("order")
 
-        _kind = d.pop("kind", UNSET)
-        kind: Union[Unset, FolderKind]
-        if isinstance(_kind, Unset):
-            kind = UNSET
-        else:
-            kind = FolderKind(_kind)
+        layout_duid = d.pop("layoutDuid")
 
-        order = d.pop("order", UNSET)
+        accessible_by_team = d.pop("accessibleByTeam", UNSET)
+
+        accessible_by_user_duids = cast(List[str], d.pop("accessibleByUserDuids", UNSET))
 
         title = d.pop("title", UNSET)
 
@@ -120,20 +132,27 @@ class FolderUpdate:
 
         color_hex = d.pop("colorHex", UNSET)
 
-        folder_update = cls(
+        favorited_by_user_duids = cast(List[str], d.pop("favoritedByUserDuids", UNSET))
+
+        charts = d.pop("charts", UNSET)
+
+        dashboard_create = cls(
             duid=duid,
-            space_duid=space_duid,
-            kind=kind,
             order=order,
+            layout_duid=layout_duid,
+            accessible_by_team=accessible_by_team,
+            accessible_by_user_duids=accessible_by_user_duids,
             title=title,
             description=description,
             icon_kind=icon_kind,
             icon_name_or_emoji=icon_name_or_emoji,
             color_hex=color_hex,
+            favorited_by_user_duids=favorited_by_user_duids,
+            charts=charts,
         )
 
-        folder_update.additional_properties = d
-        return folder_update
+        dashboard_create.additional_properties = d
+        return dashboard_create
 
     @property
     def additional_keys(self) -> List[str]:

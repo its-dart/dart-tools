@@ -41,6 +41,7 @@ class Event:
             * `pages/delete` - PAGE_DELETE
             * `workspace/invite` - WORKSPACE_INVITE
             * `workspace/join` - WORKSPACE_JOIN
+            * `workspace/update_role` - WORKSPACE_UPDATE_ROLE
             * `workspace/leave` - WORKSPACE_LEAVE
             * `workspace/update_property` - WORKSPACE_UPDATE_PROPERTY
             * `workspace/update_status` - WORKSPACE_UPDATE_STATUS
@@ -100,6 +101,7 @@ class Event:
         main_entity_name (EntityName): * `comment` - COMMENT
             * `task` - TASK
             * `dartboard` - DARTBOARD
+            * `dashboard` - DASHBOARD
             * `view` - VIEW
             * `space` - SPACE
             * `doc` - DOC
@@ -114,6 +116,7 @@ class Event:
         comment_duid (Union[None, str]):
         task_duid (Union[None, str]):
         dartboard_duid (Union[None, str]):
+        dashboard_duid (Union[None, str]):
         view_duid (Union[None, str]):
         space_duid (Union[None, str]):
         doc_duid (Union[None, str]):
@@ -134,6 +137,7 @@ class Event:
     comment_duid: Union[None, str]
     task_duid: Union[None, str]
     dartboard_duid: Union[None, str]
+    dashboard_duid: Union[None, str]
     view_duid: Union[None, str]
     space_duid: Union[None, str]
     doc_duid: Union[None, str]
@@ -176,6 +180,9 @@ class Event:
         dartboard_duid: Union[None, str]
         dartboard_duid = self.dartboard_duid
 
+        dashboard_duid: Union[None, str]
+        dashboard_duid = self.dashboard_duid
+
         view_duid: Union[None, str]
         view_duid = self.view_duid
 
@@ -217,6 +224,7 @@ class Event:
                 "commentDuid": comment_duid,
                 "taskDuid": task_duid,
                 "dartboardDuid": dartboard_duid,
+                "dashboardDuid": dashboard_duid,
                 "viewDuid": view_duid,
                 "spaceDuid": space_duid,
                 "docDuid": doc_duid,
@@ -298,6 +306,13 @@ class Event:
 
         dartboard_duid = _parse_dartboard_duid(d.pop("dartboardDuid"))
 
+        def _parse_dashboard_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        dashboard_duid = _parse_dashboard_duid(d.pop("dashboardDuid"))
+
         def _parse_view_duid(data: object) -> Union[None, str]:
             if data is None:
                 return data
@@ -372,6 +387,7 @@ class Event:
             comment_duid=comment_duid,
             task_duid=task_duid,
             dartboard_duid=dartboard_duid,
+            dashboard_duid=dashboard_duid,
             view_duid=view_duid,
             space_duid=space_duid,
             doc_duid=doc_duid,

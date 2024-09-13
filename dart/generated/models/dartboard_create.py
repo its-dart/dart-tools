@@ -5,7 +5,6 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
-from ..models.color_name import ColorName
 from ..models.dartboard_kind import DartboardKind
 from ..models.icon_kind import IconKind
 from ..types import UNSET, Unset
@@ -32,35 +31,12 @@ class DartboardCreate:
             * `Emoji` - EMOJI
         icon_name_or_emoji (Union[Unset, str]):
         color_hex (Union[Unset, str]):
-        color_name (Union[Unset, ColorName]): * `Red` - RED
-            * `Dark Blue` - DARK_BLUE
-            * `Dark Orange` - DARK_ORANGE
-            * `Dark Green` - DARK_GREEN
-            * `Purple` - PURPLE
-            * `Dark Teal` - DARK_TEAL
-            * `Pink` - PINK
-            * `Orange` - ORANGE
-            * `Green` - GREEN
-            * `Yellow` - YELLOW
-            * `Brown` - BROWN
-            * `Dark Red` - DARK_RED
-            * `Flat Green` - FLAT_GREEN
-            * `Red Orange` - RED_ORANGE
-            * `Teal` - TEAL
-            * `Light Green` - LIGHT_GREEN
-            * `Light Blue` - LIGHT_BLUE
-            * `Light Purple` - LIGHT_PURPLE
-            * `Light Orange` - LIGHT_ORANGE
-            * `Light Pink` - LIGHT_PINK
-            * `Tan` - TAN
-            * `Dark Gray` - DARK_GRAY
-            * `Light Brown` - LIGHT_BROWN
-            * `Light Gray` - LIGHT_GRAY
         index (Union[None, Unset, int]):
         started_at (Union[None, Unset, datetime.datetime]):
         finished_at (Union[None, Unset, datetime.datetime]):
         always_shown_property_duids (Union[Unset, List[str]]):
         always_hidden_property_duids (Union[Unset, List[str]]):
+        property_order_duids (Union[Unset, List[str]]):
     """
 
     duid: str
@@ -72,12 +48,12 @@ class DartboardCreate:
     icon_kind: Union[Unset, IconKind] = UNSET
     icon_name_or_emoji: Union[Unset, str] = UNSET
     color_hex: Union[Unset, str] = UNSET
-    color_name: Union[Unset, ColorName] = UNSET
     index: Union[None, Unset, int] = UNSET
     started_at: Union[None, Unset, datetime.datetime] = UNSET
     finished_at: Union[None, Unset, datetime.datetime] = UNSET
     always_shown_property_duids: Union[Unset, List[str]] = UNSET
     always_hidden_property_duids: Union[Unset, List[str]] = UNSET
+    property_order_duids: Union[Unset, List[str]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -102,10 +78,6 @@ class DartboardCreate:
         icon_name_or_emoji = self.icon_name_or_emoji
 
         color_hex = self.color_hex
-
-        color_name: Union[Unset, str] = UNSET
-        if not isinstance(self.color_name, Unset):
-            color_name = self.color_name.value
 
         index: Union[None, Unset, int]
         if isinstance(self.index, Unset):
@@ -137,6 +109,10 @@ class DartboardCreate:
         if not isinstance(self.always_hidden_property_duids, Unset):
             always_hidden_property_duids = self.always_hidden_property_duids
 
+        property_order_duids: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.property_order_duids, Unset):
+            property_order_duids = self.property_order_duids
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -158,8 +134,6 @@ class DartboardCreate:
             field_dict["iconNameOrEmoji"] = icon_name_or_emoji
         if color_hex is not UNSET:
             field_dict["colorHex"] = color_hex
-        if color_name is not UNSET:
-            field_dict["colorName"] = color_name
         if index is not UNSET:
             field_dict["index"] = index
         if started_at is not UNSET:
@@ -170,6 +144,8 @@ class DartboardCreate:
             field_dict["alwaysShownPropertyDuids"] = always_shown_property_duids
         if always_hidden_property_duids is not UNSET:
             field_dict["alwaysHiddenPropertyDuids"] = always_hidden_property_duids
+        if property_order_duids is not UNSET:
+            field_dict["propertyOrderDuids"] = property_order_duids
 
         return field_dict
 
@@ -203,13 +179,6 @@ class DartboardCreate:
         icon_name_or_emoji = d.pop("iconNameOrEmoji", UNSET)
 
         color_hex = d.pop("colorHex", UNSET)
-
-        _color_name = d.pop("colorName", UNSET)
-        color_name: Union[Unset, ColorName]
-        if isinstance(_color_name, Unset):
-            color_name = UNSET
-        else:
-            color_name = ColorName(_color_name)
 
         def _parse_index(data: object) -> Union[None, Unset, int]:
             if data is None:
@@ -258,6 +227,8 @@ class DartboardCreate:
 
         always_hidden_property_duids = cast(List[str], d.pop("alwaysHiddenPropertyDuids", UNSET))
 
+        property_order_duids = cast(List[str], d.pop("propertyOrderDuids", UNSET))
+
         dartboard_create = cls(
             duid=duid,
             space_duid=space_duid,
@@ -268,12 +239,12 @@ class DartboardCreate:
             icon_kind=icon_kind,
             icon_name_or_emoji=icon_name_or_emoji,
             color_hex=color_hex,
-            color_name=color_name,
             index=index,
             started_at=started_at,
             finished_at=finished_at,
             always_shown_property_duids=always_shown_property_duids,
             always_hidden_property_duids=always_hidden_property_duids,
+            property_order_duids=property_order_duids,
         )
 
         dartboard_create.additional_properties = d

@@ -1,72 +1,53 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..types import UNSET, Unset
-
-T = TypeVar("T", bound="OptionCreate")
+T = TypeVar("T", bound="LineChartAdtl")
 
 
 @_attrs_define
-class OptionCreate:
+class LineChartAdtl:
     """
     Attributes:
-        duid (str):
-        property_duid (str):
-        title (str):
-        color_hex (Union[Unset, str]):
+        x_property_duid (str):
+        group_by_property_duid (str):
     """
 
-    duid: str
-    property_duid: str
-    title: str
-    color_hex: Union[Unset, str] = UNSET
+    x_property_duid: str
+    group_by_property_duid: str
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        duid = self.duid
+        x_property_duid = self.x_property_duid
 
-        property_duid = self.property_duid
-
-        title = self.title
-
-        color_hex = self.color_hex
+        group_by_property_duid = self.group_by_property_duid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "duid": duid,
-                "propertyDuid": property_duid,
-                "title": title,
+                "xPropertyDuid": x_property_duid,
+                "groupByPropertyDuid": group_by_property_duid,
             }
         )
-        if color_hex is not UNSET:
-            field_dict["colorHex"] = color_hex
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        duid = d.pop("duid")
+        x_property_duid = d.pop("xPropertyDuid")
 
-        property_duid = d.pop("propertyDuid")
+        group_by_property_duid = d.pop("groupByPropertyDuid")
 
-        title = d.pop("title")
-
-        color_hex = d.pop("colorHex", UNSET)
-
-        option_create = cls(
-            duid=duid,
-            property_duid=property_duid,
-            title=title,
-            color_hex=color_hex,
+        line_chart_adtl = cls(
+            x_property_duid=x_property_duid,
+            group_by_property_duid=group_by_property_duid,
         )
 
-        option_create.additional_properties = d
-        return option_create
+        line_chart_adtl.additional_properties = d
+        return line_chart_adtl
 
     @property
     def additional_keys(self) -> List[str]:

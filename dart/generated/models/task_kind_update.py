@@ -1,46 +1,46 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.status_kind import StatusKind
+from ..models.icon_kind import IconKind
+from ..models.task_kind_kind import TaskKindKind
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="StatusUpdate")
+T = TypeVar("T", bound="TaskKindUpdate")
 
 
 @_attrs_define
-class StatusUpdate:
+class TaskKindUpdate:
     """
     Attributes:
         duid (str):
-        property_duid (Union[Unset, str]):
-        kind (Union[Unset, StatusKind]): * `Unstarted` - UNSTARTED
-            * `Started` - STARTED
-            * `Blocked` - BLOCKED
-            * `Finished` - FINISHED
-            * `Canceled` - CANCELED
+        kind (Union[Unset, TaskKindKind]): * `Default` - DEFAULT
+            * `Milestone` - MILESTONE
         locked (Union[Unset, bool]):
         order (Union[Unset, str]):
         title (Union[Unset, str]):
+        icon_kind (Union[Unset, IconKind]): * `None` - NONE
+            * `Icon` - ICON
+            * `Emoji` - EMOJI
+        icon_name_or_emoji (Union[Unset, str]):
         color_hex (Union[Unset, str]):
-        description (Union[Unset, str]):
+        hidden_status_duids (Union[Unset, List[str]]):
     """
 
     duid: str
-    property_duid: Union[Unset, str] = UNSET
-    kind: Union[Unset, StatusKind] = UNSET
+    kind: Union[Unset, TaskKindKind] = UNSET
     locked: Union[Unset, bool] = UNSET
     order: Union[Unset, str] = UNSET
     title: Union[Unset, str] = UNSET
+    icon_kind: Union[Unset, IconKind] = UNSET
+    icon_name_or_emoji: Union[Unset, str] = UNSET
     color_hex: Union[Unset, str] = UNSET
-    description: Union[Unset, str] = UNSET
+    hidden_status_duids: Union[Unset, List[str]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
-
-        property_duid = self.property_duid
 
         kind: Union[Unset, str] = UNSET
         if not isinstance(self.kind, Unset):
@@ -52,9 +52,17 @@ class StatusUpdate:
 
         title = self.title
 
+        icon_kind: Union[Unset, str] = UNSET
+        if not isinstance(self.icon_kind, Unset):
+            icon_kind = self.icon_kind.value
+
+        icon_name_or_emoji = self.icon_name_or_emoji
+
         color_hex = self.color_hex
 
-        description = self.description
+        hidden_status_duids: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.hidden_status_duids, Unset):
+            hidden_status_duids = self.hidden_status_duids
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -63,8 +71,6 @@ class StatusUpdate:
                 "duid": duid,
             }
         )
-        if property_duid is not UNSET:
-            field_dict["propertyDuid"] = property_duid
         if kind is not UNSET:
             field_dict["kind"] = kind
         if locked is not UNSET:
@@ -73,10 +79,14 @@ class StatusUpdate:
             field_dict["order"] = order
         if title is not UNSET:
             field_dict["title"] = title
+        if icon_kind is not UNSET:
+            field_dict["iconKind"] = icon_kind
+        if icon_name_or_emoji is not UNSET:
+            field_dict["iconNameOrEmoji"] = icon_name_or_emoji
         if color_hex is not UNSET:
             field_dict["colorHex"] = color_hex
-        if description is not UNSET:
-            field_dict["description"] = description
+        if hidden_status_duids is not UNSET:
+            field_dict["hiddenStatusDuids"] = hidden_status_duids
 
         return field_dict
 
@@ -85,14 +95,12 @@ class StatusUpdate:
         d = src_dict.copy()
         duid = d.pop("duid")
 
-        property_duid = d.pop("propertyDuid", UNSET)
-
         _kind = d.pop("kind", UNSET)
-        kind: Union[Unset, StatusKind]
+        kind: Union[Unset, TaskKindKind]
         if isinstance(_kind, Unset):
             kind = UNSET
         else:
-            kind = StatusKind(_kind)
+            kind = TaskKindKind(_kind)
 
         locked = d.pop("locked", UNSET)
 
@@ -100,23 +108,33 @@ class StatusUpdate:
 
         title = d.pop("title", UNSET)
 
+        _icon_kind = d.pop("iconKind", UNSET)
+        icon_kind: Union[Unset, IconKind]
+        if isinstance(_icon_kind, Unset):
+            icon_kind = UNSET
+        else:
+            icon_kind = IconKind(_icon_kind)
+
+        icon_name_or_emoji = d.pop("iconNameOrEmoji", UNSET)
+
         color_hex = d.pop("colorHex", UNSET)
 
-        description = d.pop("description", UNSET)
+        hidden_status_duids = cast(List[str], d.pop("hiddenStatusDuids", UNSET))
 
-        status_update = cls(
+        task_kind_update = cls(
             duid=duid,
-            property_duid=property_duid,
             kind=kind,
             locked=locked,
             order=order,
             title=title,
+            icon_kind=icon_kind,
+            icon_name_or_emoji=icon_name_or_emoji,
             color_hex=color_hex,
-            description=description,
+            hidden_status_duids=hidden_status_duids,
         )
 
-        status_update.additional_properties = d
-        return status_update
+        task_kind_update.additional_properties = d
+        return task_kind_update
 
     @property
     def additional_keys(self) -> List[str]:

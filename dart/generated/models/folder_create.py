@@ -3,7 +3,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.color_name import ColorName
 from ..models.folder_kind import FolderKind
 from ..models.icon_kind import IconKind
 from ..types import UNSET, Unset
@@ -28,30 +27,6 @@ class FolderCreate:
             * `Emoji` - EMOJI
         icon_name_or_emoji (Union[Unset, str]):
         color_hex (Union[Unset, str]):
-        color_name (Union[Unset, ColorName]): * `Red` - RED
-            * `Dark Blue` - DARK_BLUE
-            * `Dark Orange` - DARK_ORANGE
-            * `Dark Green` - DARK_GREEN
-            * `Purple` - PURPLE
-            * `Dark Teal` - DARK_TEAL
-            * `Pink` - PINK
-            * `Orange` - ORANGE
-            * `Green` - GREEN
-            * `Yellow` - YELLOW
-            * `Brown` - BROWN
-            * `Dark Red` - DARK_RED
-            * `Flat Green` - FLAT_GREEN
-            * `Red Orange` - RED_ORANGE
-            * `Teal` - TEAL
-            * `Light Green` - LIGHT_GREEN
-            * `Light Blue` - LIGHT_BLUE
-            * `Light Purple` - LIGHT_PURPLE
-            * `Light Orange` - LIGHT_ORANGE
-            * `Light Pink` - LIGHT_PINK
-            * `Tan` - TAN
-            * `Dark Gray` - DARK_GRAY
-            * `Light Brown` - LIGHT_BROWN
-            * `Light Gray` - LIGHT_GRAY
     """
 
     duid: str
@@ -63,7 +38,6 @@ class FolderCreate:
     icon_kind: Union[Unset, IconKind] = UNSET
     icon_name_or_emoji: Union[Unset, str] = UNSET
     color_hex: Union[Unset, str] = UNSET
-    color_name: Union[Unset, ColorName] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -89,10 +63,6 @@ class FolderCreate:
 
         color_hex = self.color_hex
 
-        color_name: Union[Unset, str] = UNSET
-        if not isinstance(self.color_name, Unset):
-            color_name = self.color_name.value
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -114,8 +84,6 @@ class FolderCreate:
             field_dict["iconNameOrEmoji"] = icon_name_or_emoji
         if color_hex is not UNSET:
             field_dict["colorHex"] = color_hex
-        if color_name is not UNSET:
-            field_dict["colorName"] = color_name
 
         return field_dict
 
@@ -150,13 +118,6 @@ class FolderCreate:
 
         color_hex = d.pop("colorHex", UNSET)
 
-        _color_name = d.pop("colorName", UNSET)
-        color_name: Union[Unset, ColorName]
-        if isinstance(_color_name, Unset):
-            color_name = UNSET
-        else:
-            color_name = ColorName(_color_name)
-
         folder_create = cls(
             duid=duid,
             space_duid=space_duid,
@@ -167,7 +128,6 @@ class FolderCreate:
             icon_kind=icon_kind,
             icon_name_or_emoji=icon_name_or_emoji,
             color_hex=color_hex,
-            color_name=color_name,
         )
 
         folder_create.additional_properties = d

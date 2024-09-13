@@ -5,7 +5,6 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
-from ..models.color_name import ColorName
 from ..models.dartboard_kind import DartboardKind
 from ..models.icon_kind import IconKind
 from ..types import UNSET, Unset
@@ -36,36 +35,13 @@ class Dartboard:
             * `Emoji` - EMOJI
         icon_name_or_emoji (str):
         color_hex (str):
-        color_name (ColorName): * `Red` - RED
-            * `Dark Blue` - DARK_BLUE
-            * `Dark Orange` - DARK_ORANGE
-            * `Dark Green` - DARK_GREEN
-            * `Purple` - PURPLE
-            * `Dark Teal` - DARK_TEAL
-            * `Pink` - PINK
-            * `Orange` - ORANGE
-            * `Green` - GREEN
-            * `Yellow` - YELLOW
-            * `Brown` - BROWN
-            * `Dark Red` - DARK_RED
-            * `Flat Green` - FLAT_GREEN
-            * `Red Orange` - RED_ORANGE
-            * `Teal` - TEAL
-            * `Light Green` - LIGHT_GREEN
-            * `Light Blue` - LIGHT_BLUE
-            * `Light Purple` - LIGHT_PURPLE
-            * `Light Orange` - LIGHT_ORANGE
-            * `Light Pink` - LIGHT_PINK
-            * `Tan` - TAN
-            * `Dark Gray` - DARK_GRAY
-            * `Light Brown` - LIGHT_BROWN
-            * `Light Gray` - LIGHT_GRAY
         user_duids_to_layout_duids (List['UserDartboardLayout']):
         index (Union[None, int]):
         started_at (Union[None, datetime.datetime]):
         finished_at (Union[None, datetime.datetime]):
         always_shown_property_duids (List[str]):
         always_hidden_property_duids (List[str]):
+        property_order_duids (List[str]):
         updated_by_client_duid (Union[None, Unset, str]):
     """
 
@@ -78,13 +54,13 @@ class Dartboard:
     icon_kind: IconKind
     icon_name_or_emoji: str
     color_hex: str
-    color_name: ColorName
     user_duids_to_layout_duids: List["UserDartboardLayout"]
     index: Union[None, int]
     started_at: Union[None, datetime.datetime]
     finished_at: Union[None, datetime.datetime]
     always_shown_property_duids: List[str]
     always_hidden_property_duids: List[str]
+    property_order_duids: List[str]
     updated_by_client_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -106,8 +82,6 @@ class Dartboard:
         icon_name_or_emoji = self.icon_name_or_emoji
 
         color_hex = self.color_hex
-
-        color_name = self.color_name.value
 
         user_duids_to_layout_duids = []
         for user_duids_to_layout_duids_item_data in self.user_duids_to_layout_duids:
@@ -133,6 +107,8 @@ class Dartboard:
 
         always_hidden_property_duids = self.always_hidden_property_duids
 
+        property_order_duids = self.property_order_duids
+
         updated_by_client_duid: Union[None, Unset, str]
         if isinstance(self.updated_by_client_duid, Unset):
             updated_by_client_duid = UNSET
@@ -152,13 +128,13 @@ class Dartboard:
                 "iconKind": icon_kind,
                 "iconNameOrEmoji": icon_name_or_emoji,
                 "colorHex": color_hex,
-                "colorName": color_name,
                 "userDuidsToLayoutDuids": user_duids_to_layout_duids,
                 "index": index,
                 "startedAt": started_at,
                 "finishedAt": finished_at,
                 "alwaysShownPropertyDuids": always_shown_property_duids,
                 "alwaysHiddenPropertyDuids": always_hidden_property_duids,
+                "propertyOrderDuids": property_order_duids,
             }
         )
         if updated_by_client_duid is not UNSET:
@@ -188,8 +164,6 @@ class Dartboard:
         icon_name_or_emoji = d.pop("iconNameOrEmoji")
 
         color_hex = d.pop("colorHex")
-
-        color_name = ColorName(d.pop("colorName"))
 
         user_duids_to_layout_duids = []
         _user_duids_to_layout_duids = d.pop("userDuidsToLayoutDuids")
@@ -239,6 +213,8 @@ class Dartboard:
 
         always_hidden_property_duids = cast(List[str], d.pop("alwaysHiddenPropertyDuids"))
 
+        property_order_duids = cast(List[str], d.pop("propertyOrderDuids"))
+
         def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
@@ -258,13 +234,13 @@ class Dartboard:
             icon_kind=icon_kind,
             icon_name_or_emoji=icon_name_or_emoji,
             color_hex=color_hex,
-            color_name=color_name,
             user_duids_to_layout_duids=user_duids_to_layout_duids,
             index=index,
             started_at=started_at,
             finished_at=finished_at,
             always_shown_property_duids=always_shown_property_duids,
             always_hidden_property_duids=always_hidden_property_duids,
+            property_order_duids=property_order_duids,
             updated_by_client_duid=updated_by_client_duid,
         )
 

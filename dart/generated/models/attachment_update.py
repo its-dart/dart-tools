@@ -3,7 +3,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.color_name import ColorName
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="AttachmentUpdate")
@@ -19,30 +18,6 @@ class AttachmentUpdate:
         kind (Union[Unset, str]):
         file_path (Union[Unset, str]):
         color_hex (Union[Unset, str]):
-        color_name (Union[Unset, ColorName]): * `Red` - RED
-            * `Dark Blue` - DARK_BLUE
-            * `Dark Orange` - DARK_ORANGE
-            * `Dark Green` - DARK_GREEN
-            * `Purple` - PURPLE
-            * `Dark Teal` - DARK_TEAL
-            * `Pink` - PINK
-            * `Orange` - ORANGE
-            * `Green` - GREEN
-            * `Yellow` - YELLOW
-            * `Brown` - BROWN
-            * `Dark Red` - DARK_RED
-            * `Flat Green` - FLAT_GREEN
-            * `Red Orange` - RED_ORANGE
-            * `Teal` - TEAL
-            * `Light Green` - LIGHT_GREEN
-            * `Light Blue` - LIGHT_BLUE
-            * `Light Purple` - LIGHT_PURPLE
-            * `Light Orange` - LIGHT_ORANGE
-            * `Light Pink` - LIGHT_PINK
-            * `Tan` - TAN
-            * `Dark Gray` - DARK_GRAY
-            * `Light Brown` - LIGHT_BROWN
-            * `Light Gray` - LIGHT_GRAY
         recommendation_duid (Union[None, Unset, str]):
     """
 
@@ -52,7 +27,6 @@ class AttachmentUpdate:
     kind: Union[Unset, str] = UNSET
     file_path: Union[Unset, str] = UNSET
     color_hex: Union[Unset, str] = UNSET
-    color_name: Union[Unset, ColorName] = UNSET
     recommendation_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -68,10 +42,6 @@ class AttachmentUpdate:
         file_path = self.file_path
 
         color_hex = self.color_hex
-
-        color_name: Union[Unset, str] = UNSET
-        if not isinstance(self.color_name, Unset):
-            color_name = self.color_name.value
 
         recommendation_duid: Union[None, Unset, str]
         if isinstance(self.recommendation_duid, Unset):
@@ -96,8 +66,6 @@ class AttachmentUpdate:
             field_dict["filePath"] = file_path
         if color_hex is not UNSET:
             field_dict["colorHex"] = color_hex
-        if color_name is not UNSET:
-            field_dict["colorName"] = color_name
         if recommendation_duid is not UNSET:
             field_dict["recommendationDuid"] = recommendation_duid
 
@@ -118,13 +86,6 @@ class AttachmentUpdate:
 
         color_hex = d.pop("colorHex", UNSET)
 
-        _color_name = d.pop("colorName", UNSET)
-        color_name: Union[Unset, ColorName]
-        if isinstance(_color_name, Unset):
-            color_name = UNSET
-        else:
-            color_name = ColorName(_color_name)
-
         def _parse_recommendation_duid(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
@@ -141,7 +102,6 @@ class AttachmentUpdate:
             kind=kind,
             file_path=file_path,
             color_hex=color_hex,
-            color_name=color_name,
             recommendation_duid=recommendation_duid,
         )
 

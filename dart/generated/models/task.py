@@ -6,7 +6,6 @@ from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..models.priority import Priority
-from ..models.task_kind import TaskKind
 from ..models.task_source_type import TaskSourceType
 from ..types import UNSET, Unset
 
@@ -58,18 +57,7 @@ class Task:
         dartboard_duid (str):
         order (str):
         expanded (bool):
-        kind (TaskKind): * `Project` - PROJECT
-            * `Milestone` - MILESTONE
-            * `Task` - TASK
-            * `Subtask` - SUBTASK
-            * `Epic` - EPIC
-            * `Story` - STORY
-            * `Issue` - ISSUE
-            * `Subissue` - SUBISSUE
-            * `Bug` - BUG
-            * `Spike` - SPIKE
-            * `Item` - ITEM
-            * `Client` - CLIENT
+        kind_duid (str):
         title (str):
         description (Any):
         notion_document (Union['TaskNotionDocument', None]):
@@ -105,7 +93,7 @@ class Task:
     dartboard_duid: str
     order: str
     expanded: bool
-    kind: TaskKind
+    kind_duid: str
     title: str
     description: Any
     notion_document: Union["TaskNotionDocument", None]
@@ -158,7 +146,7 @@ class Task:
 
         expanded = self.expanded
 
-        kind = self.kind.value
+        kind_duid = self.kind_duid
 
         title = self.title
 
@@ -256,7 +244,7 @@ class Task:
                 "dartboardDuid": dartboard_duid,
                 "order": order,
                 "expanded": expanded,
-                "kind": kind,
+                "kindDuid": kind_duid,
                 "title": title,
                 "description": description,
                 "notionDocument": notion_document,
@@ -330,7 +318,7 @@ class Task:
 
         expanded = d.pop("expanded")
 
-        kind = TaskKind(d.pop("kind"))
+        kind_duid = d.pop("kindDuid")
 
         title = d.pop("title")
 
@@ -498,7 +486,7 @@ class Task:
             dartboard_duid=dartboard_duid,
             order=order,
             expanded=expanded,
-            kind=kind,
+            kind_duid=kind_duid,
             title=title,
             description=description,
             notion_document=notion_document,

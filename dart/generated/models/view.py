@@ -3,7 +3,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.color_name import ColorName
 from ..models.icon_kind import IconKind
 from ..models.view_kind import ViewKind
 from ..types import UNSET, Unset
@@ -31,34 +30,11 @@ class View:
             * `Emoji` - EMOJI
         icon_name_or_emoji (str):
         color_hex (str):
-        color_name (ColorName): * `Red` - RED
-            * `Dark Blue` - DARK_BLUE
-            * `Dark Orange` - DARK_ORANGE
-            * `Dark Green` - DARK_GREEN
-            * `Purple` - PURPLE
-            * `Dark Teal` - DARK_TEAL
-            * `Pink` - PINK
-            * `Orange` - ORANGE
-            * `Green` - GREEN
-            * `Yellow` - YELLOW
-            * `Brown` - BROWN
-            * `Dark Red` - DARK_RED
-            * `Flat Green` - FLAT_GREEN
-            * `Red Orange` - RED_ORANGE
-            * `Teal` - TEAL
-            * `Light Green` - LIGHT_GREEN
-            * `Light Blue` - LIGHT_BLUE
-            * `Light Purple` - LIGHT_PURPLE
-            * `Light Orange` - LIGHT_ORANGE
-            * `Light Pink` - LIGHT_PINK
-            * `Tan` - TAN
-            * `Dark Gray` - DARK_GRAY
-            * `Light Brown` - LIGHT_BROWN
-            * `Light Gray` - LIGHT_GRAY
         layout_duid (str):
         favorited_by_user_duids (List[str]):
         always_shown_property_duids (List[str]):
         always_hidden_property_duids (List[str]):
+        property_order_duids (List[str]):
         updated_by_client_duid (Union[None, Unset, str]):
     """
 
@@ -73,11 +49,11 @@ class View:
     icon_kind: IconKind
     icon_name_or_emoji: str
     color_hex: str
-    color_name: ColorName
     layout_duid: str
     favorited_by_user_duids: List[str]
     always_shown_property_duids: List[str]
     always_hidden_property_duids: List[str]
+    property_order_duids: List[str]
     updated_by_client_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -104,8 +80,6 @@ class View:
 
         color_hex = self.color_hex
 
-        color_name = self.color_name.value
-
         layout_duid = self.layout_duid
 
         favorited_by_user_duids = self.favorited_by_user_duids
@@ -113,6 +87,8 @@ class View:
         always_shown_property_duids = self.always_shown_property_duids
 
         always_hidden_property_duids = self.always_hidden_property_duids
+
+        property_order_duids = self.property_order_duids
 
         updated_by_client_duid: Union[None, Unset, str]
         if isinstance(self.updated_by_client_duid, Unset):
@@ -135,11 +111,11 @@ class View:
                 "iconKind": icon_kind,
                 "iconNameOrEmoji": icon_name_or_emoji,
                 "colorHex": color_hex,
-                "colorName": color_name,
                 "layoutDuid": layout_duid,
                 "favoritedByUserDuids": favorited_by_user_duids,
                 "alwaysShownPropertyDuids": always_shown_property_duids,
                 "alwaysHiddenPropertyDuids": always_hidden_property_duids,
+                "propertyOrderDuids": property_order_duids,
             }
         )
         if updated_by_client_duid is not UNSET:
@@ -172,8 +148,6 @@ class View:
 
         color_hex = d.pop("colorHex")
 
-        color_name = ColorName(d.pop("colorName"))
-
         layout_duid = d.pop("layoutDuid")
 
         favorited_by_user_duids = cast(List[str], d.pop("favoritedByUserDuids"))
@@ -181,6 +155,8 @@ class View:
         always_shown_property_duids = cast(List[str], d.pop("alwaysShownPropertyDuids"))
 
         always_hidden_property_duids = cast(List[str], d.pop("alwaysHiddenPropertyDuids"))
+
+        property_order_duids = cast(List[str], d.pop("propertyOrderDuids"))
 
         def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
             if data is None:
@@ -203,11 +179,11 @@ class View:
             icon_kind=icon_kind,
             icon_name_or_emoji=icon_name_or_emoji,
             color_hex=color_hex,
-            color_name=color_name,
             layout_duid=layout_duid,
             favorited_by_user_duids=favorited_by_user_duids,
             always_shown_property_duids=always_shown_property_duids,
             always_hidden_property_duids=always_hidden_property_duids,
+            property_order_duids=property_order_duids,
             updated_by_client_duid=updated_by_client_duid,
         )
 

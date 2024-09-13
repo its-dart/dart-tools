@@ -29,6 +29,9 @@ class Transaction:
             * `dartboard_create` - DARTBOARD_CREATE
             * `dartboard_delete` - DARTBOARD_DELETE
             * `dartboard_update` - DARTBOARD_UPDATE
+            * `dashboard_create` - DASHBOARD_CREATE
+            * `dashboard_delete` - DASHBOARD_DELETE
+            * `dashboard_update` - DASHBOARD_UPDATE
             * `doc_create` - DOC_CREATE
             * `doc_delete` - DOC_DELETE
             * `doc_update` - DOC_UPDATE
@@ -66,6 +69,9 @@ class Transaction:
             * `task_update` - TASK_UPDATE
             * `task_doc_relationship_create` - TASK_DOC_RELATIONSHIP_CREATE
             * `task_doc_relationship_delete` - TASK_DOC_RELATIONSHIP_DELETE
+            * `task_kind_create` - TASK_KIND_CREATE
+            * `task_kind_delete` - TASK_KIND_DELETE
+            * `task_kind_update` - TASK_KIND_UPDATE
             * `tenant_update` - TENANT_UPDATE
             * `user_dartboard_layout_create` - USER_DARTBOARD_LAYOUT_CREATE
             * `user_dartboard_layout_delete` - USER_DARTBOARD_LAYOUT_DELETE

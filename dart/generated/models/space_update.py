@@ -5,7 +5,6 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
-from ..models.color_name import ColorName
 from ..models.icon_kind import IconKind
 from ..models.sprint_mode import SprintMode
 from ..types import UNSET, Unset
@@ -30,32 +29,10 @@ class SpaceUpdate:
             * `Emoji` - EMOJI
         icon_name_or_emoji (Union[Unset, str]):
         color_hex (Union[Unset, str]):
-        color_name (Union[Unset, ColorName]): * `Red` - RED
-            * `Dark Blue` - DARK_BLUE
-            * `Dark Orange` - DARK_ORANGE
-            * `Dark Green` - DARK_GREEN
-            * `Purple` - PURPLE
-            * `Dark Teal` - DARK_TEAL
-            * `Pink` - PINK
-            * `Orange` - ORANGE
-            * `Green` - GREEN
-            * `Yellow` - YELLOW
-            * `Brown` - BROWN
-            * `Dark Red` - DARK_RED
-            * `Flat Green` - FLAT_GREEN
-            * `Red Orange` - RED_ORANGE
-            * `Teal` - TEAL
-            * `Light Green` - LIGHT_GREEN
-            * `Light Blue` - LIGHT_BLUE
-            * `Light Purple` - LIGHT_PURPLE
-            * `Light Orange` - LIGHT_ORANGE
-            * `Light Pink` - LIGHT_PINK
-            * `Tan` - TAN
-            * `Dark Gray` - DARK_GRAY
-            * `Light Brown` - LIGHT_BROWN
-            * `Light Gray` - LIGHT_GRAY
         sprint_mode (Union[Unset, SprintMode]): * `None` - NONE
             * `ANBA` - ANBA
+        sprint_replicate_on_rollover (Union[Unset, bool]):
+        sprint_name_fmt (Union[Unset, str]):
         standup_recurrence (Union[Any, None, Unset]):
         standup_recurs_next_at (Union[None, Unset, datetime.datetime]):
         changelog_recurrence (Union[Any, None, Unset]):
@@ -73,8 +50,9 @@ class SpaceUpdate:
     icon_kind: Union[Unset, IconKind] = UNSET
     icon_name_or_emoji: Union[Unset, str] = UNSET
     color_hex: Union[Unset, str] = UNSET
-    color_name: Union[Unset, ColorName] = UNSET
     sprint_mode: Union[Unset, SprintMode] = UNSET
+    sprint_replicate_on_rollover: Union[Unset, bool] = UNSET
+    sprint_name_fmt: Union[Unset, str] = UNSET
     standup_recurrence: Union[Any, None, Unset] = UNSET
     standup_recurs_next_at: Union[None, Unset, datetime.datetime] = UNSET
     changelog_recurrence: Union[Any, None, Unset] = UNSET
@@ -112,13 +90,13 @@ class SpaceUpdate:
 
         color_hex = self.color_hex
 
-        color_name: Union[Unset, str] = UNSET
-        if not isinstance(self.color_name, Unset):
-            color_name = self.color_name.value
-
         sprint_mode: Union[Unset, str] = UNSET
         if not isinstance(self.sprint_mode, Unset):
             sprint_mode = self.sprint_mode.value
+
+        sprint_replicate_on_rollover = self.sprint_replicate_on_rollover
+
+        sprint_name_fmt = self.sprint_name_fmt
 
         standup_recurrence: Union[Any, None, Unset]
         if isinstance(self.standup_recurrence, Unset):
@@ -175,10 +153,12 @@ class SpaceUpdate:
             field_dict["iconNameOrEmoji"] = icon_name_or_emoji
         if color_hex is not UNSET:
             field_dict["colorHex"] = color_hex
-        if color_name is not UNSET:
-            field_dict["colorName"] = color_name
         if sprint_mode is not UNSET:
             field_dict["sprintMode"] = sprint_mode
+        if sprint_replicate_on_rollover is not UNSET:
+            field_dict["sprintReplicateOnRollover"] = sprint_replicate_on_rollover
+        if sprint_name_fmt is not UNSET:
+            field_dict["sprintNameFmt"] = sprint_name_fmt
         if standup_recurrence is not UNSET:
             field_dict["standupRecurrence"] = standup_recurrence
         if standup_recurs_next_at is not UNSET:
@@ -227,19 +207,16 @@ class SpaceUpdate:
 
         color_hex = d.pop("colorHex", UNSET)
 
-        _color_name = d.pop("colorName", UNSET)
-        color_name: Union[Unset, ColorName]
-        if isinstance(_color_name, Unset):
-            color_name = UNSET
-        else:
-            color_name = ColorName(_color_name)
-
         _sprint_mode = d.pop("sprintMode", UNSET)
         sprint_mode: Union[Unset, SprintMode]
         if isinstance(_sprint_mode, Unset):
             sprint_mode = UNSET
         else:
             sprint_mode = SprintMode(_sprint_mode)
+
+        sprint_replicate_on_rollover = d.pop("sprintReplicateOnRollover", UNSET)
+
+        sprint_name_fmt = d.pop("sprintNameFmt", UNSET)
 
         def _parse_standup_recurrence(data: object) -> Union[Any, None, Unset]:
             if data is None:
@@ -305,8 +282,9 @@ class SpaceUpdate:
             icon_kind=icon_kind,
             icon_name_or_emoji=icon_name_or_emoji,
             color_hex=color_hex,
-            color_name=color_name,
             sprint_mode=sprint_mode,
+            sprint_replicate_on_rollover=sprint_replicate_on_rollover,
+            sprint_name_fmt=sprint_name_fmt,
             standup_recurrence=standup_recurrence,
             standup_recurs_next_at=standup_recurs_next_at,
             changelog_recurrence=changelog_recurrence,

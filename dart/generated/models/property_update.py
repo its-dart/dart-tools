@@ -14,7 +14,7 @@ class PropertyUpdate:
     """
     Attributes:
         duid (str):
-        kind (Union[Unset, PropertyKind]): * `Default: Type` - DEFAULT_TYPE
+        kind (Union[Unset, PropertyKind]): * `Default: Type` - DEFAULT_KIND
             * `Default: Title` - DEFAULT_TITLE
             * `Default: Description` - DEFAULT_DESCRIPTION
             * `Default: Dartboard` - DEFAULT_DARTBOARD

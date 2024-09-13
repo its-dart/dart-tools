@@ -1,72 +1,56 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..types import UNSET, Unset
+from ..models.pie_chart_display_metric import PieChartDisplayMetric
 
-T = TypeVar("T", bound="OptionCreate")
+T = TypeVar("T", bound="PieChartAdtl")
 
 
 @_attrs_define
-class OptionCreate:
+class PieChartAdtl:
     """
     Attributes:
-        duid (str):
         property_duid (str):
-        title (str):
-        color_hex (Union[Unset, str]):
+        display_metric (PieChartDisplayMetric): * `count` - COUNT
+            * `pct` - PCT
     """
 
-    duid: str
     property_duid: str
-    title: str
-    color_hex: Union[Unset, str] = UNSET
+    display_metric: PieChartDisplayMetric
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        duid = self.duid
-
         property_duid = self.property_duid
 
-        title = self.title
-
-        color_hex = self.color_hex
+        display_metric = self.display_metric.value
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "duid": duid,
                 "propertyDuid": property_duid,
-                "title": title,
+                "displayMetric": display_metric,
             }
         )
-        if color_hex is not UNSET:
-            field_dict["colorHex"] = color_hex
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        duid = d.pop("duid")
-
         property_duid = d.pop("propertyDuid")
 
-        title = d.pop("title")
+        display_metric = PieChartDisplayMetric(d.pop("displayMetric"))
 
-        color_hex = d.pop("colorHex", UNSET)
-
-        option_create = cls(
-            duid=duid,
+        pie_chart_adtl = cls(
             property_duid=property_duid,
-            title=title,
-            color_hex=color_hex,
+            display_metric=display_metric,
         )
 
-        option_create.additional_properties = d
-        return option_create
+        pie_chart_adtl.additional_properties = d
+        return pie_chart_adtl
 
     @property
     def additional_keys(self) -> List[str]:

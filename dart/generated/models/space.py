@@ -5,7 +5,6 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
-from ..models.color_name import ColorName
 from ..models.icon_kind import IconKind
 from ..models.space_kind import SpaceKind
 from ..models.sprint_mode import SprintMode
@@ -34,32 +33,10 @@ class Space:
             * `Emoji` - EMOJI
         icon_name_or_emoji (str):
         color_hex (str):
-        color_name (ColorName): * `Red` - RED
-            * `Dark Blue` - DARK_BLUE
-            * `Dark Orange` - DARK_ORANGE
-            * `Dark Green` - DARK_GREEN
-            * `Purple` - PURPLE
-            * `Dark Teal` - DARK_TEAL
-            * `Pink` - PINK
-            * `Orange` - ORANGE
-            * `Green` - GREEN
-            * `Yellow` - YELLOW
-            * `Brown` - BROWN
-            * `Dark Red` - DARK_RED
-            * `Flat Green` - FLAT_GREEN
-            * `Red Orange` - RED_ORANGE
-            * `Teal` - TEAL
-            * `Light Green` - LIGHT_GREEN
-            * `Light Blue` - LIGHT_BLUE
-            * `Light Purple` - LIGHT_PURPLE
-            * `Light Orange` - LIGHT_ORANGE
-            * `Light Pink` - LIGHT_PINK
-            * `Tan` - TAN
-            * `Dark Gray` - DARK_GRAY
-            * `Light Brown` - LIGHT_BROWN
-            * `Light Gray` - LIGHT_GRAY
         sprint_mode (SprintMode): * `None` - NONE
             * `ANBA` - ANBA
+        sprint_replicate_on_rollover (bool):
+        sprint_name_fmt (str):
         standup_recurrence (Union[Any, None]):
         standup_recurs_next_at (Union[None, datetime.datetime]):
         changelog_recurrence (Union[Any, None]):
@@ -79,8 +56,9 @@ class Space:
     icon_kind: IconKind
     icon_name_or_emoji: str
     color_hex: str
-    color_name: ColorName
     sprint_mode: SprintMode
+    sprint_replicate_on_rollover: bool
+    sprint_name_fmt: str
     standup_recurrence: Union[Any, None]
     standup_recurs_next_at: Union[None, datetime.datetime]
     changelog_recurrence: Union[Any, None]
@@ -114,9 +92,11 @@ class Space:
 
         color_hex = self.color_hex
 
-        color_name = self.color_name.value
-
         sprint_mode = self.sprint_mode.value
+
+        sprint_replicate_on_rollover = self.sprint_replicate_on_rollover
+
+        sprint_name_fmt = self.sprint_name_fmt
 
         standup_recurrence: Union[Any, None]
         standup_recurrence = self.standup_recurrence
@@ -158,8 +138,9 @@ class Space:
                 "iconKind": icon_kind,
                 "iconNameOrEmoji": icon_name_or_emoji,
                 "colorHex": color_hex,
-                "colorName": color_name,
                 "sprintMode": sprint_mode,
+                "sprintReplicateOnRollover": sprint_replicate_on_rollover,
+                "sprintNameFmt": sprint_name_fmt,
                 "standupRecurrence": standup_recurrence,
                 "standupRecursNextAt": standup_recurs_next_at,
                 "changelogRecurrence": changelog_recurrence,
@@ -203,9 +184,11 @@ class Space:
 
         color_hex = d.pop("colorHex")
 
-        color_name = ColorName(d.pop("colorName"))
-
         sprint_mode = SprintMode(d.pop("sprintMode"))
+
+        sprint_replicate_on_rollover = d.pop("sprintReplicateOnRollover")
+
+        sprint_name_fmt = d.pop("sprintNameFmt")
 
         def _parse_standup_recurrence(data: object) -> Union[Any, None]:
             if data is None:
@@ -273,8 +256,9 @@ class Space:
             icon_kind=icon_kind,
             icon_name_or_emoji=icon_name_or_emoji,
             color_hex=color_hex,
-            color_name=color_name,
             sprint_mode=sprint_mode,
+            sprint_replicate_on_rollover=sprint_replicate_on_rollover,
+            sprint_name_fmt=sprint_name_fmt,
             standup_recurrence=standup_recurrence,
             standup_recurs_next_at=standup_recurs_next_at,
             changelog_recurrence=changelog_recurrence,

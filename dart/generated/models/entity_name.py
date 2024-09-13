@@ -5,6 +5,7 @@ class EntityName(str, Enum):
     BRAINSTORM = "brainstorm"
     COMMENT = "comment"
     DARTBOARD = "dartboard"
+    DASHBOARD = "dashboard"
     DOC = "doc"
     FOLDER = "folder"
     FORM = "form"

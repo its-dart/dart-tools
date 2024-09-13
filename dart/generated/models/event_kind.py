@@ -80,6 +80,7 @@ class EventKind(str, Enum):
     WORKSPACELEAVE = "workspace/leave"
     WORKSPACEUPDATE_OTHER = "workspace/update_other"
     WORKSPACEUPDATE_PROPERTY = "workspace/update_property"
+    WORKSPACEUPDATE_ROLE = "workspace/update_role"
     WORKSPACEUPDATE_STATUS = "workspace/update_status"
     WORKSPACEUPGRADE = "workspace/upgrade"
 
