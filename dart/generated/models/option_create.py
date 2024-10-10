@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -15,12 +15,14 @@ class OptionCreate:
         duid (str):
         property_duid (str):
         title (str):
+        parent_duid (Union[None, Unset, str]):
         color_hex (Union[Unset, str]):
     """
 
     duid: str
     property_duid: str
     title: str
+    parent_duid: Union[None, Unset, str] = UNSET
     color_hex: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -30,6 +32,12 @@ class OptionCreate:
         property_duid = self.property_duid
 
         title = self.title
+
+        parent_duid: Union[None, Unset, str]
+        if isinstance(self.parent_duid, Unset):
+            parent_duid = UNSET
+        else:
+            parent_duid = self.parent_duid
 
         color_hex = self.color_hex
 
@@ -42,6 +50,8 @@ class OptionCreate:
                 "title": title,
             }
         )
+        if parent_duid is not UNSET:
+            field_dict["parentDuid"] = parent_duid
         if color_hex is not UNSET:
             field_dict["colorHex"] = color_hex
 
@@ -56,12 +66,22 @@ class OptionCreate:
 
         title = d.pop("title")
 
+        def _parse_parent_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        parent_duid = _parse_parent_duid(d.pop("parentDuid", UNSET))
+
         color_hex = d.pop("colorHex", UNSET)
 
         option_create = cls(
             duid=duid,
             property_duid=property_duid,
             title=title,
+            parent_duid=parent_duid,
             color_hex=color_hex,
         )
 

@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -24,7 +24,6 @@ class TenantUpdate:
         update_blockee_dates_on_update_blocker_due_date (Union[Unset, bool]):
         webhook_enabled (Union[Unset, bool]):
         webhook_secret (Union[Unset, str]):
-        webhook_url (Union[None, Unset, str]):
     """
 
     name: Union[Unset, str] = UNSET
@@ -39,7 +38,6 @@ class TenantUpdate:
     update_blockee_dates_on_update_blocker_due_date: Union[Unset, bool] = UNSET
     webhook_enabled: Union[Unset, bool] = UNSET
     webhook_secret: Union[Unset, str] = UNSET
-    webhook_url: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -66,12 +64,6 @@ class TenantUpdate:
         webhook_enabled = self.webhook_enabled
 
         webhook_secret = self.webhook_secret
-
-        webhook_url: Union[None, Unset, str]
-        if isinstance(self.webhook_url, Unset):
-            webhook_url = UNSET
-        else:
-            webhook_url = self.webhook_url
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -100,8 +92,6 @@ class TenantUpdate:
             field_dict["webhookEnabled"] = webhook_enabled
         if webhook_secret is not UNSET:
             field_dict["webhookSecret"] = webhook_secret
-        if webhook_url is not UNSET:
-            field_dict["webhookUrl"] = webhook_url
 
         return field_dict
 
@@ -132,15 +122,6 @@ class TenantUpdate:
 
         webhook_secret = d.pop("webhookSecret", UNSET)
 
-        def _parse_webhook_url(data: object) -> Union[None, Unset, str]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            return cast(Union[None, Unset, str], data)
-
-        webhook_url = _parse_webhook_url(d.pop("webhookUrl", UNSET))
-
         tenant_update = cls(
             name=name,
             timezone=timezone,
@@ -154,7 +135,6 @@ class TenantUpdate:
             update_blockee_dates_on_update_blocker_due_date=update_blockee_dates_on_update_blocker_due_date,
             webhook_enabled=webhook_enabled,
             webhook_secret=webhook_secret,
-            webhook_url=webhook_url,
         )
 
         tenant_update.additional_properties = d

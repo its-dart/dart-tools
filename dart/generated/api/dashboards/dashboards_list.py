@@ -5,25 +5,17 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.paginated_task_kind_list import PaginatedTaskKindList
-from ...models.task_kinds_list_kind import TaskKindsListKind
+from ...models.paginated_dashboard_list import PaginatedDashboardList
 from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     *,
-    kind: Union[Unset, TaskKindsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     params: Dict[str, Any] = {}
-
-    json_kind: Union[Unset, str] = UNSET
-    if not isinstance(kind, Unset):
-        json_kind = kind.value
-
-    params["kind"] = json_kind
 
     params["limit"] = limit
 
@@ -35,7 +27,7 @@ def _get_kwargs(
 
     _kwargs: Dict[str, Any] = {
         "method": "get",
-        "url": "/api/v0/task-kinds",
+        "url": "/api/v0/dashboards",
         "params": params,
     }
 
@@ -44,9 +36,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[PaginatedTaskKindList]:
+) -> Optional[PaginatedDashboardList]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = PaginatedTaskKindList.from_dict(response.json())
+        response_200 = PaginatedDashboardList.from_dict(response.json())
 
         return response_200
     if client.raise_on_unexpected_status:
@@ -57,7 +49,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[PaginatedTaskKindList]:
+) -> Response[PaginatedDashboardList]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -69,14 +61,12 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    kind: Union[Unset, TaskKindsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     title: Union[Unset, str] = UNSET,
-) -> Response[PaginatedTaskKindList]:
+) -> Response[PaginatedDashboardList]:
     """
     Args:
-        kind (Union[Unset, TaskKindsListKind]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         title (Union[Unset, str]):
@@ -86,11 +76,10 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[PaginatedTaskKindList]
+        Response[PaginatedDashboardList]
     """
 
     kwargs = _get_kwargs(
-        kind=kind,
         limit=limit,
         offset=offset,
         title=title,
@@ -106,14 +95,12 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-    kind: Union[Unset, TaskKindsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     title: Union[Unset, str] = UNSET,
-) -> Optional[PaginatedTaskKindList]:
+) -> Optional[PaginatedDashboardList]:
     """
     Args:
-        kind (Union[Unset, TaskKindsListKind]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         title (Union[Unset, str]):
@@ -123,12 +110,11 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        PaginatedTaskKindList
+        PaginatedDashboardList
     """
 
     return sync_detailed(
         client=client,
-        kind=kind,
         limit=limit,
         offset=offset,
         title=title,
@@ -138,14 +124,12 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-    kind: Union[Unset, TaskKindsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     title: Union[Unset, str] = UNSET,
-) -> Response[PaginatedTaskKindList]:
+) -> Response[PaginatedDashboardList]:
     """
     Args:
-        kind (Union[Unset, TaskKindsListKind]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         title (Union[Unset, str]):
@@ -155,11 +139,10 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[PaginatedTaskKindList]
+        Response[PaginatedDashboardList]
     """
 
     kwargs = _get_kwargs(
-        kind=kind,
         limit=limit,
         offset=offset,
         title=title,
@@ -173,14 +156,12 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
-    kind: Union[Unset, TaskKindsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     title: Union[Unset, str] = UNSET,
-) -> Optional[PaginatedTaskKindList]:
+) -> Optional[PaginatedDashboardList]:
     """
     Args:
-        kind (Union[Unset, TaskKindsListKind]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         title (Union[Unset, str]):
@@ -190,13 +171,12 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        PaginatedTaskKindList
+        PaginatedDashboardList
     """
 
     return (
         await asyncio_detailed(
             client=client,
-            kind=kind,
             limit=limit,
             offset=offset,
             title=title,

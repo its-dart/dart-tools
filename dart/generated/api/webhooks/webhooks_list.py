@@ -5,37 +5,26 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.paginated_task_kind_list import PaginatedTaskKindList
-from ...models.task_kinds_list_kind import TaskKindsListKind
+from ...models.paginated_webhook_list import PaginatedWebhookList
 from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     *,
-    kind: Union[Unset, TaskKindsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
-    title: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     params: Dict[str, Any] = {}
-
-    json_kind: Union[Unset, str] = UNSET
-    if not isinstance(kind, Unset):
-        json_kind = kind.value
-
-    params["kind"] = json_kind
 
     params["limit"] = limit
 
     params["offset"] = offset
 
-    params["title"] = title
-
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     _kwargs: Dict[str, Any] = {
         "method": "get",
-        "url": "/api/v0/task-kinds",
+        "url": "/api/v0/webhooks",
         "params": params,
     }
 
@@ -44,9 +33,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[PaginatedTaskKindList]:
+) -> Optional[PaginatedWebhookList]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = PaginatedTaskKindList.from_dict(response.json())
+        response_200 = PaginatedWebhookList.from_dict(response.json())
 
         return response_200
     if client.raise_on_unexpected_status:
@@ -57,7 +46,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[PaginatedTaskKindList]:
+) -> Response[PaginatedWebhookList]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -69,31 +58,25 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    kind: Union[Unset, TaskKindsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
-    title: Union[Unset, str] = UNSET,
-) -> Response[PaginatedTaskKindList]:
+) -> Response[PaginatedWebhookList]:
     """
     Args:
-        kind (Union[Unset, TaskKindsListKind]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
-        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[PaginatedTaskKindList]
+        Response[PaginatedWebhookList]
     """
 
     kwargs = _get_kwargs(
-        kind=kind,
         limit=limit,
         offset=offset,
-        title=title,
     )
 
     response = client.get_httpx_client().request(
@@ -106,63 +89,51 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-    kind: Union[Unset, TaskKindsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
-    title: Union[Unset, str] = UNSET,
-) -> Optional[PaginatedTaskKindList]:
+) -> Optional[PaginatedWebhookList]:
     """
     Args:
-        kind (Union[Unset, TaskKindsListKind]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
-        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        PaginatedTaskKindList
+        PaginatedWebhookList
     """
 
     return sync_detailed(
         client=client,
-        kind=kind,
         limit=limit,
         offset=offset,
-        title=title,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-    kind: Union[Unset, TaskKindsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
-    title: Union[Unset, str] = UNSET,
-) -> Response[PaginatedTaskKindList]:
+) -> Response[PaginatedWebhookList]:
     """
     Args:
-        kind (Union[Unset, TaskKindsListKind]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
-        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[PaginatedTaskKindList]
+        Response[PaginatedWebhookList]
     """
 
     kwargs = _get_kwargs(
-        kind=kind,
         limit=limit,
         offset=offset,
-        title=title,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -173,32 +144,26 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
-    kind: Union[Unset, TaskKindsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
-    title: Union[Unset, str] = UNSET,
-) -> Optional[PaginatedTaskKindList]:
+) -> Optional[PaginatedWebhookList]:
     """
     Args:
-        kind (Union[Unset, TaskKindsListKind]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
-        title (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        PaginatedTaskKindList
+        PaginatedWebhookList
     """
 
     return (
         await asyncio_detailed(
             client=client,
-            kind=kind,
             limit=limit,
             offset=offset,
-            title=title,
         )
     ).parsed

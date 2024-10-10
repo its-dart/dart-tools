@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -14,12 +14,14 @@ class OptionUpdate:
     Attributes:
         duid (str):
         property_duid (Union[Unset, str]):
+        parent_duid (Union[None, Unset, str]):
         title (Union[Unset, str]):
         color_hex (Union[Unset, str]):
     """
 
     duid: str
     property_duid: Union[Unset, str] = UNSET
+    parent_duid: Union[None, Unset, str] = UNSET
     title: Union[Unset, str] = UNSET
     color_hex: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -28,6 +30,12 @@ class OptionUpdate:
         duid = self.duid
 
         property_duid = self.property_duid
+
+        parent_duid: Union[None, Unset, str]
+        if isinstance(self.parent_duid, Unset):
+            parent_duid = UNSET
+        else:
+            parent_duid = self.parent_duid
 
         title = self.title
 
@@ -42,6 +50,8 @@ class OptionUpdate:
         )
         if property_duid is not UNSET:
             field_dict["propertyDuid"] = property_duid
+        if parent_duid is not UNSET:
+            field_dict["parentDuid"] = parent_duid
         if title is not UNSET:
             field_dict["title"] = title
         if color_hex is not UNSET:
@@ -56,6 +66,15 @@ class OptionUpdate:
 
         property_duid = d.pop("propertyDuid", UNSET)
 
+        def _parse_parent_duid(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        parent_duid = _parse_parent_duid(d.pop("parentDuid", UNSET))
+
         title = d.pop("title", UNSET)
 
         color_hex = d.pop("colorHex", UNSET)
@@ -63,6 +82,7 @@ class OptionUpdate:
         option_update = cls(
             duid=duid,
             property_duid=property_duid,
+            parent_duid=parent_duid,
             title=title,
             color_hex=color_hex,
         )

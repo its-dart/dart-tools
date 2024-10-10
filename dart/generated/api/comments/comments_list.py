@@ -13,16 +13,20 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     *,
     author: Union[Unset, str] = UNSET,
+    author_duid: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     published_at: Union[Unset, datetime.date] = UNSET,
     task: Union[Unset, str] = UNSET,
+    task_duid: Union[Unset, str] = UNSET,
     text: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     params: Dict[str, Any] = {}
 
     params["author"] = author
+
+    params["author_duid"] = author_duid
 
     params["limit"] = limit
 
@@ -34,6 +38,8 @@ def _get_kwargs(
     params["published_at"] = json_published_at
 
     params["task"] = task
+
+    params["task_duid"] = task_duid
 
     params["text"] = text
 
@@ -78,20 +84,24 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     author: Union[Unset, str] = UNSET,
+    author_duid: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     published_at: Union[Unset, datetime.date] = UNSET,
     task: Union[Unset, str] = UNSET,
+    task_duid: Union[Unset, str] = UNSET,
     text: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedCommentList]:
     """
     Args:
         author (Union[Unset, str]):
+        author_duid (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         published_at (Union[Unset, datetime.date]):
         task (Union[Unset, str]):
+        task_duid (Union[Unset, str]):
         text (Union[Unset, str]):
         title (Union[Unset, str]):
 
@@ -105,10 +115,12 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         author=author,
+        author_duid=author_duid,
         limit=limit,
         offset=offset,
         published_at=published_at,
         task=task,
+        task_duid=task_duid,
         text=text,
         title=title,
     )
@@ -124,20 +136,24 @@ def sync(
     *,
     client: AuthenticatedClient,
     author: Union[Unset, str] = UNSET,
+    author_duid: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     published_at: Union[Unset, datetime.date] = UNSET,
     task: Union[Unset, str] = UNSET,
+    task_duid: Union[Unset, str] = UNSET,
     text: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedCommentList]:
     """
     Args:
         author (Union[Unset, str]):
+        author_duid (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         published_at (Union[Unset, datetime.date]):
         task (Union[Unset, str]):
+        task_duid (Union[Unset, str]):
         text (Union[Unset, str]):
         title (Union[Unset, str]):
 
@@ -152,10 +168,12 @@ def sync(
     return sync_detailed(
         client=client,
         author=author,
+        author_duid=author_duid,
         limit=limit,
         offset=offset,
         published_at=published_at,
         task=task,
+        task_duid=task_duid,
         text=text,
         title=title,
     ).parsed
@@ -165,20 +183,24 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     author: Union[Unset, str] = UNSET,
+    author_duid: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     published_at: Union[Unset, datetime.date] = UNSET,
     task: Union[Unset, str] = UNSET,
+    task_duid: Union[Unset, str] = UNSET,
     text: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedCommentList]:
     """
     Args:
         author (Union[Unset, str]):
+        author_duid (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         published_at (Union[Unset, datetime.date]):
         task (Union[Unset, str]):
+        task_duid (Union[Unset, str]):
         text (Union[Unset, str]):
         title (Union[Unset, str]):
 
@@ -192,10 +214,12 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         author=author,
+        author_duid=author_duid,
         limit=limit,
         offset=offset,
         published_at=published_at,
         task=task,
+        task_duid=task_duid,
         text=text,
         title=title,
     )
@@ -209,20 +233,24 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     author: Union[Unset, str] = UNSET,
+    author_duid: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     published_at: Union[Unset, datetime.date] = UNSET,
     task: Union[Unset, str] = UNSET,
+    task_duid: Union[Unset, str] = UNSET,
     text: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedCommentList]:
     """
     Args:
         author (Union[Unset, str]):
+        author_duid (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         published_at (Union[Unset, datetime.date]):
         task (Union[Unset, str]):
+        task_duid (Union[Unset, str]):
         text (Union[Unset, str]):
         title (Union[Unset, str]):
 
@@ -238,10 +266,12 @@ async def asyncio(
         await asyncio_detailed(
             client=client,
             author=author,
+            author_duid=author_duid,
             limit=limit,
             offset=offset,
             published_at=published_at,
             task=task,
+            task_duid=task_duid,
             text=text,
             title=title,
         )

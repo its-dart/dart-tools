@@ -34,6 +34,7 @@ if TYPE_CHECKING:
     from ..models.user import User
     from ..models.user_dartboard_layout import UserDartboardLayout
     from ..models.view import View
+    from ..models.webhook import Webhook
 
 
 T = TypeVar("T", bound="ModelsResponse")
@@ -80,6 +81,7 @@ class ModelsResponse:
             users (Union[Unset, List['User']]):
             user_dartboard_layouts (Union[Unset, List['UserDartboardLayout']]):
             views (Union[Unset, List['View']]):
+            webhooks (Union[Unset, List['Webhook']]):
     """
 
     attachments: Union[Unset, List["Attachment"]] = UNSET
@@ -110,6 +112,7 @@ class ModelsResponse:
     users: Union[Unset, List["User"]] = UNSET
     user_dartboard_layouts: Union[Unset, List["UserDartboardLayout"]] = UNSET
     views: Union[Unset, List["View"]] = UNSET
+    webhooks: Union[Unset, List["Webhook"]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -309,6 +312,13 @@ class ModelsResponse:
                 views_item = views_item_data.to_dict()
                 views.append(views_item)
 
+        webhooks: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.webhooks, Unset):
+            webhooks = []
+            for webhooks_item_data in self.webhooks:
+                webhooks_item = webhooks_item_data.to_dict()
+                webhooks.append(webhooks_item)
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -368,6 +378,8 @@ class ModelsResponse:
             field_dict["userDartboardLayouts"] = user_dartboard_layouts
         if views is not UNSET:
             field_dict["views"] = views
+        if webhooks is not UNSET:
+            field_dict["webhooks"] = webhooks
 
         return field_dict
 
@@ -401,6 +413,7 @@ class ModelsResponse:
         from ..models.user import User
         from ..models.user_dartboard_layout import UserDartboardLayout
         from ..models.view import View
+        from ..models.webhook import Webhook
 
         d = src_dict.copy()
         attachments = []
@@ -599,6 +612,13 @@ class ModelsResponse:
 
             views.append(views_item)
 
+        webhooks = []
+        _webhooks = d.pop("webhooks", UNSET)
+        for webhooks_item_data in _webhooks or []:
+            webhooks_item = Webhook.from_dict(webhooks_item_data)
+
+            webhooks.append(webhooks_item)
+
         models_response = cls(
             attachments=attachments,
             brainstorms=brainstorms,
@@ -628,6 +648,7 @@ class ModelsResponse:
             users=users,
             user_dartboard_layouts=user_dartboard_layouts,
             views=views,
+            webhooks=webhooks,
         )
 
         models_response.additional_properties = d

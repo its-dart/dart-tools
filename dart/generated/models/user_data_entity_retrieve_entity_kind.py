@@ -5,6 +5,7 @@ class UserDataEntityRetrieveEntityKind(str, Enum):
     ATTACHMENTS = "attachments"
     COMMENTS = "comments"
     DARTBOARDS = "dartboards"
+    DASHBOARDS = "dashboards"
     DOCS = "docs"
     FOLDERS = "folders"
     FORMS = "forms"
@@ -25,6 +26,7 @@ class UserDataEntityRetrieveEntityKind(str, Enum):
     USERS = "users"
     USER_DARTBOARD_LAYOUTS = "user-dartboard-layouts"
     VIEWS = "views"
+    WEBHOOKS = "webhooks"
 
     def __str__(self) -> str:
         return str(self.value)

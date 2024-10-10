@@ -16,6 +16,7 @@ def _get_kwargs(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     space: Union[Unset, str] = UNSET,
+    space_duid: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     params: Dict[str, Any] = {}
@@ -31,6 +32,8 @@ def _get_kwargs(
     params["offset"] = offset
 
     params["space"] = space
+
+    params["space_duid"] = space_duid
 
     params["title"] = title
 
@@ -76,6 +79,7 @@ def sync_detailed(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     space: Union[Unset, str] = UNSET,
+    space_duid: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedFolderList]:
     """
@@ -84,6 +88,7 @@ def sync_detailed(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         space (Union[Unset, str]):
+        space_duid (Union[Unset, str]):
         title (Union[Unset, str]):
 
     Raises:
@@ -99,6 +104,7 @@ def sync_detailed(
         limit=limit,
         offset=offset,
         space=space,
+        space_duid=space_duid,
         title=title,
     )
 
@@ -116,6 +122,7 @@ def sync(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     space: Union[Unset, str] = UNSET,
+    space_duid: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedFolderList]:
     """
@@ -124,6 +131,7 @@ def sync(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         space (Union[Unset, str]):
+        space_duid (Union[Unset, str]):
         title (Union[Unset, str]):
 
     Raises:
@@ -140,6 +148,7 @@ def sync(
         limit=limit,
         offset=offset,
         space=space,
+        space_duid=space_duid,
         title=title,
     ).parsed
 
@@ -151,6 +160,7 @@ async def asyncio_detailed(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     space: Union[Unset, str] = UNSET,
+    space_duid: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedFolderList]:
     """
@@ -159,6 +169,7 @@ async def asyncio_detailed(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         space (Union[Unset, str]):
+        space_duid (Union[Unset, str]):
         title (Union[Unset, str]):
 
     Raises:
@@ -174,6 +185,7 @@ async def asyncio_detailed(
         limit=limit,
         offset=offset,
         space=space,
+        space_duid=space_duid,
         title=title,
     )
 
@@ -189,6 +201,7 @@ async def asyncio(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     space: Union[Unset, str] = UNSET,
+    space_duid: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedFolderList]:
     """
@@ -197,6 +210,7 @@ async def asyncio(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         space (Union[Unset, str]):
+        space_duid (Union[Unset, str]):
         title (Union[Unset, str]):
 
     Raises:
@@ -214,6 +228,7 @@ async def asyncio(
             limit=limit,
             offset=offset,
             space=space,
+            space_duid=space_duid,
             title=title,
         )
     ).parsed

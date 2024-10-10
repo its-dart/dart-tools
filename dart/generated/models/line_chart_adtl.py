@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -11,16 +11,17 @@ class LineChartAdtl:
     """
     Attributes:
         x_property_duid (str):
-        group_by_property_duid (str):
+        group_by_property_duid (Union[None, str]):
     """
 
     x_property_duid: str
-    group_by_property_duid: str
+    group_by_property_duid: Union[None, str]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         x_property_duid = self.x_property_duid
 
+        group_by_property_duid: Union[None, str]
         group_by_property_duid = self.group_by_property_duid
 
         field_dict: Dict[str, Any] = {}
@@ -39,7 +40,12 @@ class LineChartAdtl:
         d = src_dict.copy()
         x_property_duid = d.pop("xPropertyDuid")
 
-        group_by_property_duid = d.pop("groupByPropertyDuid")
+        def _parse_group_by_property_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        group_by_property_duid = _parse_group_by_property_duid(d.pop("groupByPropertyDuid"))
 
         line_chart_adtl = cls(
             x_property_duid=x_property_duid,

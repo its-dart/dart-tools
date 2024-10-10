@@ -18,6 +18,7 @@ def _get_kwargs(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     space: Union[Unset, str] = UNSET,
+    space_duid: Union[Unset, str] = UNSET,
     started_at: Union[Unset, datetime.date] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
@@ -39,6 +40,8 @@ def _get_kwargs(
     params["offset"] = offset
 
     params["space"] = space
+
+    params["space_duid"] = space_duid
 
     json_started_at: Union[Unset, str] = UNSET
     if not isinstance(started_at, Unset):
@@ -90,6 +93,7 @@ def sync_detailed(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     space: Union[Unset, str] = UNSET,
+    space_duid: Union[Unset, str] = UNSET,
     started_at: Union[Unset, datetime.date] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedDartboardList]:
@@ -100,6 +104,7 @@ def sync_detailed(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         space (Union[Unset, str]):
+        space_duid (Union[Unset, str]):
         started_at (Union[Unset, datetime.date]):
         title (Union[Unset, str]):
 
@@ -117,6 +122,7 @@ def sync_detailed(
         limit=limit,
         offset=offset,
         space=space,
+        space_duid=space_duid,
         started_at=started_at,
         title=title,
     )
@@ -136,6 +142,7 @@ def sync(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     space: Union[Unset, str] = UNSET,
+    space_duid: Union[Unset, str] = UNSET,
     started_at: Union[Unset, datetime.date] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedDartboardList]:
@@ -146,6 +153,7 @@ def sync(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         space (Union[Unset, str]):
+        space_duid (Union[Unset, str]):
         started_at (Union[Unset, datetime.date]):
         title (Union[Unset, str]):
 
@@ -164,6 +172,7 @@ def sync(
         limit=limit,
         offset=offset,
         space=space,
+        space_duid=space_duid,
         started_at=started_at,
         title=title,
     ).parsed
@@ -177,6 +186,7 @@ async def asyncio_detailed(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     space: Union[Unset, str] = UNSET,
+    space_duid: Union[Unset, str] = UNSET,
     started_at: Union[Unset, datetime.date] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedDartboardList]:
@@ -187,6 +197,7 @@ async def asyncio_detailed(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         space (Union[Unset, str]):
+        space_duid (Union[Unset, str]):
         started_at (Union[Unset, datetime.date]):
         title (Union[Unset, str]):
 
@@ -204,6 +215,7 @@ async def asyncio_detailed(
         limit=limit,
         offset=offset,
         space=space,
+        space_duid=space_duid,
         started_at=started_at,
         title=title,
     )
@@ -221,6 +233,7 @@ async def asyncio(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     space: Union[Unset, str] = UNSET,
+    space_duid: Union[Unset, str] = UNSET,
     started_at: Union[Unset, datetime.date] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedDartboardList]:
@@ -231,6 +244,7 @@ async def asyncio(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         space (Union[Unset, str]):
+        space_duid (Union[Unset, str]):
         started_at (Union[Unset, datetime.date]):
         title (Union[Unset, str]):
 
@@ -250,6 +264,7 @@ async def asyncio(
             limit=limit,
             offset=offset,
             space=space,
+            space_duid=space_duid,
             started_at=started_at,
             title=title,
         )

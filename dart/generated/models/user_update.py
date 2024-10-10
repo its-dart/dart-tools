@@ -18,6 +18,8 @@ class UserUpdate:
         role (Union[Unset, UserRole]): * `Admin` - ADMIN
             * `Member` - MEMBER
             * `Guest` - GUEST
+            * `Technical admin` - TECHNICAL_ADMIN
+            * `Financial admin` - FINANCIAL_ADMIN
         name (Union[Unset, str]):
         theme (Union[Unset, Theme]): * `System Default` - SYSTEM_DEFAULT
             * `Light` - LIGHT

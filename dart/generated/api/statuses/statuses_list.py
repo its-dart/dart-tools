@@ -17,6 +17,7 @@ def _get_kwargs(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     property_: Union[Unset, str] = UNSET,
+    property_duid: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     params: Dict[str, Any] = {}
@@ -34,6 +35,8 @@ def _get_kwargs(
     params["offset"] = offset
 
     params["property"] = property_
+
+    params["property_duid"] = property_duid
 
     params["title"] = title
 
@@ -80,6 +83,7 @@ def sync_detailed(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     property_: Union[Unset, str] = UNSET,
+    property_duid: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedStatusList]:
     """
@@ -89,6 +93,7 @@ def sync_detailed(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         property_ (Union[Unset, str]):
+        property_duid (Union[Unset, str]):
         title (Union[Unset, str]):
 
     Raises:
@@ -105,6 +110,7 @@ def sync_detailed(
         limit=limit,
         offset=offset,
         property_=property_,
+        property_duid=property_duid,
         title=title,
     )
 
@@ -123,6 +129,7 @@ def sync(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     property_: Union[Unset, str] = UNSET,
+    property_duid: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedStatusList]:
     """
@@ -132,6 +139,7 @@ def sync(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         property_ (Union[Unset, str]):
+        property_duid (Union[Unset, str]):
         title (Union[Unset, str]):
 
     Raises:
@@ -149,6 +157,7 @@ def sync(
         limit=limit,
         offset=offset,
         property_=property_,
+        property_duid=property_duid,
         title=title,
     ).parsed
 
@@ -161,6 +170,7 @@ async def asyncio_detailed(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     property_: Union[Unset, str] = UNSET,
+    property_duid: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedStatusList]:
     """
@@ -170,6 +180,7 @@ async def asyncio_detailed(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         property_ (Union[Unset, str]):
+        property_duid (Union[Unset, str]):
         title (Union[Unset, str]):
 
     Raises:
@@ -186,6 +197,7 @@ async def asyncio_detailed(
         limit=limit,
         offset=offset,
         property_=property_,
+        property_duid=property_duid,
         title=title,
     )
 
@@ -202,6 +214,7 @@ async def asyncio(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     property_: Union[Unset, str] = UNSET,
+    property_duid: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedStatusList]:
     """
@@ -211,6 +224,7 @@ async def asyncio(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         property_ (Union[Unset, str]):
+        property_duid (Union[Unset, str]):
         title (Union[Unset, str]):
 
     Raises:
@@ -229,6 +243,7 @@ async def asyncio(
             limit=limit,
             offset=offset,
             property_=property_,
+            property_duid=property_duid,
             title=title,
         )
     ).parsed

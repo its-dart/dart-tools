@@ -65,6 +65,9 @@ class TransactionKind(str, Enum):
     VIEW_CREATE = "view_create"
     VIEW_DELETE = "view_delete"
     VIEW_UPDATE = "view_update"
+    WEBHOOK_CREATE = "webhook_create"
+    WEBHOOK_DELETE = "webhook_delete"
+    WEBHOOK_UPDATE = "webhook_update"
 
     def __str__(self) -> str:
         return str(self.value)

@@ -12,13 +12,16 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     *,
     editor: Union[Unset, str] = UNSET,
+    editor_duid: Union[Unset, str] = UNSET,
     folder: Union[Unset, str] = UNSET,
+    folder_duid: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     report_kind: Union[Unset, str] = UNSET,
     subscriber: Union[Unset, str] = UNSET,
+    subscriber_duid: Union[Unset, str] = UNSET,
     text: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
@@ -26,7 +29,11 @@ def _get_kwargs(
 
     params["editor"] = editor
 
+    params["editor_duid"] = editor_duid
+
     params["folder"] = folder
+
+    params["folder_duid"] = folder_duid
 
     params["in_trash"] = in_trash
 
@@ -39,6 +46,8 @@ def _get_kwargs(
     params["report_kind"] = report_kind
 
     params["subscriber"] = subscriber
+
+    params["subscriber_duid"] = subscriber_duid
 
     params["text"] = text
 
@@ -83,26 +92,32 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     editor: Union[Unset, str] = UNSET,
+    editor_duid: Union[Unset, str] = UNSET,
     folder: Union[Unset, str] = UNSET,
+    folder_duid: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     report_kind: Union[Unset, str] = UNSET,
     subscriber: Union[Unset, str] = UNSET,
+    subscriber_duid: Union[Unset, str] = UNSET,
     text: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedDocList]:
     """
     Args:
         editor (Union[Unset, str]):
+        editor_duid (Union[Unset, str]):
         folder (Union[Unset, str]):
+        folder_duid (Union[Unset, str]):
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         report_kind (Union[Unset, str]):
         subscriber (Union[Unset, str]):
+        subscriber_duid (Union[Unset, str]):
         text (Union[Unset, str]):
         title (Union[Unset, str]):
 
@@ -116,13 +131,16 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         editor=editor,
+        editor_duid=editor_duid,
         folder=folder,
+        folder_duid=folder_duid,
         in_trash=in_trash,
         is_draft=is_draft,
         limit=limit,
         offset=offset,
         report_kind=report_kind,
         subscriber=subscriber,
+        subscriber_duid=subscriber_duid,
         text=text,
         title=title,
     )
@@ -138,26 +156,32 @@ def sync(
     *,
     client: AuthenticatedClient,
     editor: Union[Unset, str] = UNSET,
+    editor_duid: Union[Unset, str] = UNSET,
     folder: Union[Unset, str] = UNSET,
+    folder_duid: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     report_kind: Union[Unset, str] = UNSET,
     subscriber: Union[Unset, str] = UNSET,
+    subscriber_duid: Union[Unset, str] = UNSET,
     text: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedDocList]:
     """
     Args:
         editor (Union[Unset, str]):
+        editor_duid (Union[Unset, str]):
         folder (Union[Unset, str]):
+        folder_duid (Union[Unset, str]):
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         report_kind (Union[Unset, str]):
         subscriber (Union[Unset, str]):
+        subscriber_duid (Union[Unset, str]):
         text (Union[Unset, str]):
         title (Union[Unset, str]):
 
@@ -172,13 +196,16 @@ def sync(
     return sync_detailed(
         client=client,
         editor=editor,
+        editor_duid=editor_duid,
         folder=folder,
+        folder_duid=folder_duid,
         in_trash=in_trash,
         is_draft=is_draft,
         limit=limit,
         offset=offset,
         report_kind=report_kind,
         subscriber=subscriber,
+        subscriber_duid=subscriber_duid,
         text=text,
         title=title,
     ).parsed
@@ -188,26 +215,32 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     editor: Union[Unset, str] = UNSET,
+    editor_duid: Union[Unset, str] = UNSET,
     folder: Union[Unset, str] = UNSET,
+    folder_duid: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     report_kind: Union[Unset, str] = UNSET,
     subscriber: Union[Unset, str] = UNSET,
+    subscriber_duid: Union[Unset, str] = UNSET,
     text: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedDocList]:
     """
     Args:
         editor (Union[Unset, str]):
+        editor_duid (Union[Unset, str]):
         folder (Union[Unset, str]):
+        folder_duid (Union[Unset, str]):
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         report_kind (Union[Unset, str]):
         subscriber (Union[Unset, str]):
+        subscriber_duid (Union[Unset, str]):
         text (Union[Unset, str]):
         title (Union[Unset, str]):
 
@@ -221,13 +254,16 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         editor=editor,
+        editor_duid=editor_duid,
         folder=folder,
+        folder_duid=folder_duid,
         in_trash=in_trash,
         is_draft=is_draft,
         limit=limit,
         offset=offset,
         report_kind=report_kind,
         subscriber=subscriber,
+        subscriber_duid=subscriber_duid,
         text=text,
         title=title,
     )
@@ -241,26 +277,32 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     editor: Union[Unset, str] = UNSET,
+    editor_duid: Union[Unset, str] = UNSET,
     folder: Union[Unset, str] = UNSET,
+    folder_duid: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     report_kind: Union[Unset, str] = UNSET,
     subscriber: Union[Unset, str] = UNSET,
+    subscriber_duid: Union[Unset, str] = UNSET,
     text: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedDocList]:
     """
     Args:
         editor (Union[Unset, str]):
+        editor_duid (Union[Unset, str]):
         folder (Union[Unset, str]):
+        folder_duid (Union[Unset, str]):
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         report_kind (Union[Unset, str]):
         subscriber (Union[Unset, str]):
+        subscriber_duid (Union[Unset, str]):
         text (Union[Unset, str]):
         title (Union[Unset, str]):
 
@@ -276,13 +318,16 @@ async def asyncio(
         await asyncio_detailed(
             client=client,
             editor=editor,
+            editor_duid=editor_duid,
             folder=folder,
+            folder_duid=folder_duid,
             in_trash=in_trash,
             is_draft=is_draft,
             limit=limit,
             offset=offset,
             report_kind=report_kind,
             subscriber=subscriber,
+            subscriber_duid=subscriber_duid,
             text=text,
             title=title,
         )

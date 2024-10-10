@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# README: https://its-dart.notion.site/27064491a4694d0fb2b27d8294a6e3fa
+# README: https://help.itsdart.com/articles/9024895-webhooks
 
 
 import json
@@ -34,15 +34,17 @@ def webhook() -> Response:
     event_type = event["type"]
     match event_type:
         case "task.created":
-            task = event["data"]["model"]  # The task that was created
+            task = event["data"]  # The task that was created
             print(f"Task created:\n{Task.from_dict(task)}")
         case "task.updated":
             data = event["data"]
             task = data["model"]  # The new version of the task that was updated
             old_task = data["oldModel"]  # The old version of the task that was updated
-            print(f"Task updated:\n{Task.from_dict(task)}")
+            print(
+                f"Task updated to:\n{Task.from_dict(task)}\nfrom:\n{Task.from_dict(old_task)}"
+            )
         case "task.deleted":
-            task = event["data"]["model"]  # The task that was deleted
+            task = event["data"]  # The task that was deleted
             print(f"Task deleted:\n{Task.from_dict(task)}")
         case _:
             # Unexpected event type

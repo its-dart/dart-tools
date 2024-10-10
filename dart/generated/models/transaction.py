@@ -80,6 +80,9 @@ class Transaction:
             * `view_create` - VIEW_CREATE
             * `view_delete` - VIEW_DELETE
             * `view_update` - VIEW_UPDATE
+            * `webhook_create` - WEBHOOK_CREATE
+            * `webhook_delete` - WEBHOOK_DELETE
+            * `webhook_update` - WEBHOOK_UPDATE
         operations (List['Operation']):
     """
 

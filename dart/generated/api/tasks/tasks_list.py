@@ -13,7 +13,9 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     *,
     assignee: Union[Unset, str] = UNSET,
+    assignee_duid: Union[Unset, str] = UNSET,
     dartboard: Union[Unset, str] = UNSET,
+    dartboard_duid: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
     due_at: Union[Unset, datetime.date] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
@@ -22,10 +24,12 @@ def _get_kwargs(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
-    size: Union[Unset, str] = UNSET,
+    size: Union[Unset, int] = UNSET,
     start_at: Union[Unset, datetime.date] = UNSET,
     status: Union[Unset, str] = UNSET,
+    status_duid: Union[Unset, str] = UNSET,
     subscriber: Union[Unset, str] = UNSET,
+    subscriber_duid: Union[Unset, str] = UNSET,
     tag: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
@@ -33,7 +37,11 @@ def _get_kwargs(
 
     params["assignee"] = assignee
 
+    params["assignee_duid"] = assignee_duid
+
     params["dartboard"] = dartboard
+
+    params["dartboard_duid"] = dartboard_duid
 
     params["description"] = description
 
@@ -63,7 +71,11 @@ def _get_kwargs(
 
     params["status"] = status
 
+    params["status_duid"] = status_duid
+
     params["subscriber"] = subscriber
+
+    params["subscriber_duid"] = subscriber_duid
 
     params["tag"] = tag
 
@@ -108,7 +120,9 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     assignee: Union[Unset, str] = UNSET,
+    assignee_duid: Union[Unset, str] = UNSET,
     dartboard: Union[Unset, str] = UNSET,
+    dartboard_duid: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
     due_at: Union[Unset, datetime.date] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
@@ -117,17 +131,21 @@ def sync_detailed(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
-    size: Union[Unset, str] = UNSET,
+    size: Union[Unset, int] = UNSET,
     start_at: Union[Unset, datetime.date] = UNSET,
     status: Union[Unset, str] = UNSET,
+    status_duid: Union[Unset, str] = UNSET,
     subscriber: Union[Unset, str] = UNSET,
+    subscriber_duid: Union[Unset, str] = UNSET,
     tag: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedTaskList]:
     """
     Args:
         assignee (Union[Unset, str]):
+        assignee_duid (Union[Unset, str]):
         dartboard (Union[Unset, str]):
+        dartboard_duid (Union[Unset, str]):
         description (Union[Unset, str]):
         due_at (Union[Unset, datetime.date]):
         in_trash (Union[Unset, bool]):
@@ -136,10 +154,12 @@ def sync_detailed(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
-        size (Union[Unset, str]):
+        size (Union[Unset, int]):
         start_at (Union[Unset, datetime.date]):
         status (Union[Unset, str]):
+        status_duid (Union[Unset, str]):
         subscriber (Union[Unset, str]):
+        subscriber_duid (Union[Unset, str]):
         tag (Union[Unset, str]):
         title (Union[Unset, str]):
 
@@ -153,7 +173,9 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         assignee=assignee,
+        assignee_duid=assignee_duid,
         dartboard=dartboard,
+        dartboard_duid=dartboard_duid,
         description=description,
         due_at=due_at,
         in_trash=in_trash,
@@ -165,7 +187,9 @@ def sync_detailed(
         size=size,
         start_at=start_at,
         status=status,
+        status_duid=status_duid,
         subscriber=subscriber,
+        subscriber_duid=subscriber_duid,
         tag=tag,
         title=title,
     )
@@ -181,7 +205,9 @@ def sync(
     *,
     client: AuthenticatedClient,
     assignee: Union[Unset, str] = UNSET,
+    assignee_duid: Union[Unset, str] = UNSET,
     dartboard: Union[Unset, str] = UNSET,
+    dartboard_duid: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
     due_at: Union[Unset, datetime.date] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
@@ -190,17 +216,21 @@ def sync(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
-    size: Union[Unset, str] = UNSET,
+    size: Union[Unset, int] = UNSET,
     start_at: Union[Unset, datetime.date] = UNSET,
     status: Union[Unset, str] = UNSET,
+    status_duid: Union[Unset, str] = UNSET,
     subscriber: Union[Unset, str] = UNSET,
+    subscriber_duid: Union[Unset, str] = UNSET,
     tag: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedTaskList]:
     """
     Args:
         assignee (Union[Unset, str]):
+        assignee_duid (Union[Unset, str]):
         dartboard (Union[Unset, str]):
+        dartboard_duid (Union[Unset, str]):
         description (Union[Unset, str]):
         due_at (Union[Unset, datetime.date]):
         in_trash (Union[Unset, bool]):
@@ -209,10 +239,12 @@ def sync(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
-        size (Union[Unset, str]):
+        size (Union[Unset, int]):
         start_at (Union[Unset, datetime.date]):
         status (Union[Unset, str]):
+        status_duid (Union[Unset, str]):
         subscriber (Union[Unset, str]):
+        subscriber_duid (Union[Unset, str]):
         tag (Union[Unset, str]):
         title (Union[Unset, str]):
 
@@ -227,7 +259,9 @@ def sync(
     return sync_detailed(
         client=client,
         assignee=assignee,
+        assignee_duid=assignee_duid,
         dartboard=dartboard,
+        dartboard_duid=dartboard_duid,
         description=description,
         due_at=due_at,
         in_trash=in_trash,
@@ -239,7 +273,9 @@ def sync(
         size=size,
         start_at=start_at,
         status=status,
+        status_duid=status_duid,
         subscriber=subscriber,
+        subscriber_duid=subscriber_duid,
         tag=tag,
         title=title,
     ).parsed
@@ -249,7 +285,9 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     assignee: Union[Unset, str] = UNSET,
+    assignee_duid: Union[Unset, str] = UNSET,
     dartboard: Union[Unset, str] = UNSET,
+    dartboard_duid: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
     due_at: Union[Unset, datetime.date] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
@@ -258,17 +296,21 @@ async def asyncio_detailed(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
-    size: Union[Unset, str] = UNSET,
+    size: Union[Unset, int] = UNSET,
     start_at: Union[Unset, datetime.date] = UNSET,
     status: Union[Unset, str] = UNSET,
+    status_duid: Union[Unset, str] = UNSET,
     subscriber: Union[Unset, str] = UNSET,
+    subscriber_duid: Union[Unset, str] = UNSET,
     tag: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedTaskList]:
     """
     Args:
         assignee (Union[Unset, str]):
+        assignee_duid (Union[Unset, str]):
         dartboard (Union[Unset, str]):
+        dartboard_duid (Union[Unset, str]):
         description (Union[Unset, str]):
         due_at (Union[Unset, datetime.date]):
         in_trash (Union[Unset, bool]):
@@ -277,10 +319,12 @@ async def asyncio_detailed(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
-        size (Union[Unset, str]):
+        size (Union[Unset, int]):
         start_at (Union[Unset, datetime.date]):
         status (Union[Unset, str]):
+        status_duid (Union[Unset, str]):
         subscriber (Union[Unset, str]):
+        subscriber_duid (Union[Unset, str]):
         tag (Union[Unset, str]):
         title (Union[Unset, str]):
 
@@ -294,7 +338,9 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         assignee=assignee,
+        assignee_duid=assignee_duid,
         dartboard=dartboard,
+        dartboard_duid=dartboard_duid,
         description=description,
         due_at=due_at,
         in_trash=in_trash,
@@ -306,7 +352,9 @@ async def asyncio_detailed(
         size=size,
         start_at=start_at,
         status=status,
+        status_duid=status_duid,
         subscriber=subscriber,
+        subscriber_duid=subscriber_duid,
         tag=tag,
         title=title,
     )
@@ -320,7 +368,9 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     assignee: Union[Unset, str] = UNSET,
+    assignee_duid: Union[Unset, str] = UNSET,
     dartboard: Union[Unset, str] = UNSET,
+    dartboard_duid: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
     due_at: Union[Unset, datetime.date] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
@@ -329,17 +379,21 @@ async def asyncio(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
-    size: Union[Unset, str] = UNSET,
+    size: Union[Unset, int] = UNSET,
     start_at: Union[Unset, datetime.date] = UNSET,
     status: Union[Unset, str] = UNSET,
+    status_duid: Union[Unset, str] = UNSET,
     subscriber: Union[Unset, str] = UNSET,
+    subscriber_duid: Union[Unset, str] = UNSET,
     tag: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedTaskList]:
     """
     Args:
         assignee (Union[Unset, str]):
+        assignee_duid (Union[Unset, str]):
         dartboard (Union[Unset, str]):
+        dartboard_duid (Union[Unset, str]):
         description (Union[Unset, str]):
         due_at (Union[Unset, datetime.date]):
         in_trash (Union[Unset, bool]):
@@ -348,10 +402,12 @@ async def asyncio(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
-        size (Union[Unset, str]):
+        size (Union[Unset, int]):
         start_at (Union[Unset, datetime.date]):
         status (Union[Unset, str]):
+        status_duid (Union[Unset, str]):
         subscriber (Union[Unset, str]):
+        subscriber_duid (Union[Unset, str]):
         tag (Union[Unset, str]):
         title (Union[Unset, str]):
 
@@ -367,7 +423,9 @@ async def asyncio(
         await asyncio_detailed(
             client=client,
             assignee=assignee,
+            assignee_duid=assignee_duid,
             dartboard=dartboard,
+            dartboard_duid=dartboard_duid,
             description=description,
             due_at=due_at,
             in_trash=in_trash,
@@ -379,7 +437,9 @@ async def asyncio(
             size=size,
             start_at=start_at,
             status=status,
+            status_duid=status_duid,
             subscriber=subscriber,
+            subscriber_duid=subscriber_duid,
             tag=tag,
             title=title,
         )

@@ -11,6 +11,7 @@ if TYPE_CHECKING:
     from ..models.discord_integration import DiscordIntegration
     from ..models.github_integration import GithubIntegration
     from ..models.notion_integration import NotionIntegration
+    from ..models.saml_config import SamlConfig
     from ..models.slack_integration import SlackIntegration
     from ..models.zapier_integration import ZapierIntegration
 
@@ -41,7 +42,7 @@ class Tenant:
         update_blockee_dates_on_update_blocker_due_date (bool):
         webhook_enabled (bool):
         webhook_secret (str):
-        webhook_url (Union[None, str]):
+        saml_config (Union['SamlConfig', None]):
         notion_integration (Union['NotionIntegration', None]):
         slack_integration (Union['SlackIntegration', None]):
         discord_integration (Union['DiscordIntegration', None]):
@@ -67,7 +68,7 @@ class Tenant:
     update_blockee_dates_on_update_blocker_due_date: bool
     webhook_enabled: bool
     webhook_secret: str
-    webhook_url: Union[None, str]
+    saml_config: Union["SamlConfig", None]
     notion_integration: Union["NotionIntegration", None]
     slack_integration: Union["SlackIntegration", None]
     discord_integration: Union["DiscordIntegration", None]
@@ -79,6 +80,7 @@ class Tenant:
         from ..models.discord_integration import DiscordIntegration
         from ..models.github_integration import GithubIntegration
         from ..models.notion_integration import NotionIntegration
+        from ..models.saml_config import SamlConfig
         from ..models.slack_integration import SlackIntegration
         from ..models.zapier_integration import ZapierIntegration
 
@@ -119,8 +121,11 @@ class Tenant:
 
         webhook_secret = self.webhook_secret
 
-        webhook_url: Union[None, str]
-        webhook_url = self.webhook_url
+        saml_config: Union[Dict[str, Any], None]
+        if isinstance(self.saml_config, SamlConfig):
+            saml_config = self.saml_config.to_dict()
+        else:
+            saml_config = self.saml_config
 
         notion_integration: Union[Dict[str, Any], None]
         if isinstance(self.notion_integration, NotionIntegration):
@@ -174,7 +179,7 @@ class Tenant:
                 "updateBlockeeDatesOnUpdateBlockerDueDate": update_blockee_dates_on_update_blocker_due_date,
                 "webhookEnabled": webhook_enabled,
                 "webhookSecret": webhook_secret,
-                "webhookUrl": webhook_url,
+                "samlConfig": saml_config,
                 "notionIntegration": notion_integration,
                 "slackIntegration": slack_integration,
                 "discordIntegration": discord_integration,
@@ -190,6 +195,7 @@ class Tenant:
         from ..models.discord_integration import DiscordIntegration
         from ..models.github_integration import GithubIntegration
         from ..models.notion_integration import NotionIntegration
+        from ..models.saml_config import SamlConfig
         from ..models.slack_integration import SlackIntegration
         from ..models.zapier_integration import ZapierIntegration
 
@@ -235,12 +241,20 @@ class Tenant:
 
         webhook_secret = d.pop("webhookSecret")
 
-        def _parse_webhook_url(data: object) -> Union[None, str]:
+        def _parse_saml_config(data: object) -> Union["SamlConfig", None]:
             if data is None:
                 return data
-            return cast(Union[None, str], data)
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                saml_config_type_0 = SamlConfig.from_dict(data)
 
-        webhook_url = _parse_webhook_url(d.pop("webhookUrl"))
+                return saml_config_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union["SamlConfig", None], data)
+
+        saml_config = _parse_saml_config(d.pop("samlConfig"))
 
         def _parse_notion_integration(data: object) -> Union["NotionIntegration", None]:
             if data is None:
@@ -336,7 +350,7 @@ class Tenant:
             update_blockee_dates_on_update_blocker_due_date=update_blockee_dates_on_update_blocker_due_date,
             webhook_enabled=webhook_enabled,
             webhook_secret=webhook_secret,
-            webhook_url=webhook_url,
+            saml_config=saml_config,
             notion_integration=notion_integration,
             slack_integration=slack_integration,
             discord_integration=discord_integration,

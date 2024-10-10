@@ -29,6 +29,8 @@ class User:
         role (UserRole): * `Admin` - ADMIN
             * `Member` - MEMBER
             * `Guest` - GUEST
+            * `Technical admin` - TECHNICAL_ADMIN
+            * `Financial admin` - FINANCIAL_ADMIN
         email (str):
         name (str):
         abrev (str):

@@ -55,6 +55,8 @@ if TYPE_CHECKING:
     from ..models.user_update import UserUpdate
     from ..models.view_create import ViewCreate
     from ..models.view_update import ViewUpdate
+    from ..models.webhook_create import WebhookCreate
+    from ..models.webhook_update import WebhookUpdate
 
 
 T = TypeVar("T", bound="Operation")
@@ -97,6 +99,7 @@ class Operation:
             * `user` - USER
             * `user_dartboard_layout` - USER_DARTBOARD_LAYOUT
             * `view` - VIEW
+            * `webhook` - WEBHOOK
         data (Union['AttachmentCreate', 'AttachmentUpdate', 'BrainstormCreate', 'BrainstormUpdate', 'CommentCreate',
             'CommentReactionCreate', 'CommentReactionUpdate', 'CommentUpdate', 'DartboardCreate', 'DartboardUpdate',
             'DashboardCreate', 'DashboardUpdate', 'DocCreate', 'DocUpdate', 'EventCreate', 'EventSubscriptionUpdate',
@@ -105,7 +108,7 @@ class Operation:
             'PropertyUpdate', 'RelationshipCreate', 'RelationshipKindCreate', 'RelationshipKindUpdate', 'SpaceCreate',
             'SpaceUpdate', 'StatusCreate', 'StatusUpdate', 'TaskCreate', 'TaskDocRelationshipCreate', 'TaskKindCreate',
             'TaskKindUpdate', 'TaskLinkCreate', 'TaskLinkUpdate', 'TaskUpdate', 'TenantUpdate', 'UserDartboardLayoutCreate',
-            'UserUpdate', 'ViewCreate', 'ViewUpdate']):
+            'UserUpdate', 'ViewCreate', 'ViewUpdate', 'WebhookCreate', 'WebhookUpdate']):
     """
 
     kind: OperationKind
@@ -159,6 +162,8 @@ class Operation:
         "UserUpdate",
         "ViewCreate",
         "ViewUpdate",
+        "WebhookCreate",
+        "WebhookUpdate",
     ]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -210,6 +215,8 @@ class Operation:
         from ..models.user_dartboard_layout_create import UserDartboardLayoutCreate
         from ..models.user_update import UserUpdate
         from ..models.view_create import ViewCreate
+        from ..models.view_update import ViewUpdate
+        from ..models.webhook_create import WebhookCreate
 
         kind = self.kind.value
 
@@ -310,6 +317,10 @@ class Operation:
             data = self.data.to_dict()
         elif isinstance(self.data, ViewCreate):
             data = self.data.to_dict()
+        elif isinstance(self.data, ViewUpdate):
+            data = self.data.to_dict()
+        elif isinstance(self.data, WebhookCreate):
+            data = self.data.to_dict()
         else:
             data = self.data.to_dict()
 
@@ -375,6 +386,8 @@ class Operation:
         from ..models.user_update import UserUpdate
         from ..models.view_create import ViewCreate
         from ..models.view_update import ViewUpdate
+        from ..models.webhook_create import WebhookCreate
+        from ..models.webhook_update import WebhookUpdate
 
         d = src_dict.copy()
         kind = OperationKind(d.pop("kind"))
@@ -432,6 +445,8 @@ class Operation:
             "UserUpdate",
             "ViewCreate",
             "ViewUpdate",
+            "WebhookCreate",
+            "WebhookUpdate",
         ]:
             try:
                 if not isinstance(data, dict):
@@ -809,11 +824,27 @@ class Operation:
                 return componentsschemas_operation_model_data_type_46
             except:  # noqa: E722
                 pass
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                componentsschemas_operation_model_data_type_47 = ViewUpdate.from_dict(data)
+
+                return componentsschemas_operation_model_data_type_47
+            except:  # noqa: E722
+                pass
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                componentsschemas_operation_model_data_type_48 = WebhookCreate.from_dict(data)
+
+                return componentsschemas_operation_model_data_type_48
+            except:  # noqa: E722
+                pass
             if not isinstance(data, dict):
                 raise TypeError()
-            componentsschemas_operation_model_data_type_47 = ViewUpdate.from_dict(data)
+            componentsschemas_operation_model_data_type_49 = WebhookUpdate.from_dict(data)
 
-            return componentsschemas_operation_model_data_type_47
+            return componentsschemas_operation_model_data_type_49
 
         data = _parse_data(d.pop("data"))
 

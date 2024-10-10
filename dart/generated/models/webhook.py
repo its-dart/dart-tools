@@ -5,40 +5,31 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Option")
+T = TypeVar("T", bound="Webhook")
 
 
 @_attrs_define
-class Option:
+class Webhook:
     """
     Attributes:
         duid (str):
-        property_duid (str):
-        parent_duid (Union[None, str]):
-        title (str):
-        color_hex (str):
+        order (str):
+        url (str):
         updated_by_client_duid (Union[None, Unset, str]):
     """
 
     duid: str
-    property_duid: str
-    parent_duid: Union[None, str]
-    title: str
-    color_hex: str
+    order: str
+    url: str
     updated_by_client_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
 
-        property_duid = self.property_duid
+        order = self.order
 
-        parent_duid: Union[None, str]
-        parent_duid = self.parent_duid
-
-        title = self.title
-
-        color_hex = self.color_hex
+        url = self.url
 
         updated_by_client_duid: Union[None, Unset, str]
         if isinstance(self.updated_by_client_duid, Unset):
@@ -51,10 +42,8 @@ class Option:
         field_dict.update(
             {
                 "duid": duid,
-                "propertyDuid": property_duid,
-                "parentDuid": parent_duid,
-                "title": title,
-                "colorHex": color_hex,
+                "order": order,
+                "url": url,
             }
         )
         if updated_by_client_duid is not UNSET:
@@ -67,18 +56,9 @@ class Option:
         d = src_dict.copy()
         duid = d.pop("duid")
 
-        property_duid = d.pop("propertyDuid")
+        order = d.pop("order")
 
-        def _parse_parent_duid(data: object) -> Union[None, str]:
-            if data is None:
-                return data
-            return cast(Union[None, str], data)
-
-        parent_duid = _parse_parent_duid(d.pop("parentDuid"))
-
-        title = d.pop("title")
-
-        color_hex = d.pop("colorHex")
+        url = d.pop("url")
 
         def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
             if data is None:
@@ -89,17 +69,15 @@ class Option:
 
         updated_by_client_duid = _parse_updated_by_client_duid(d.pop("updatedByClientDuid", UNSET))
 
-        option = cls(
+        webhook = cls(
             duid=duid,
-            property_duid=property_duid,
-            parent_duid=parent_duid,
-            title=title,
-            color_hex=color_hex,
+            order=order,
+            url=url,
             updated_by_client_duid=updated_by_client_duid,
         )
 
-        option.additional_properties = d
-        return option
+        webhook.additional_properties = d
+        return webhook
 
     @property
     def additional_keys(self) -> List[str]:

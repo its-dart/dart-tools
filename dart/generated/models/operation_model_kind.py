@@ -30,6 +30,7 @@ class OperationModelKind(str, Enum):
     USER = "user"
     USER_DARTBOARD_LAYOUT = "user_dartboard_layout"
     VIEW = "view"
+    WEBHOOK = "webhook"
 
     def __str__(self) -> str:
         return str(self.value)

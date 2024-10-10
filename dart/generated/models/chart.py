@@ -7,6 +7,7 @@ from ..models.chart_type import ChartType
 
 if TYPE_CHECKING:
     from ..models.bar_chart_adtl import BarChartAdtl
+    from ..models.burn_up_chart_adtl import BurnUpChartAdtl
     from ..models.line_chart_adtl import LineChartAdtl
     from ..models.number_chart_adtl import NumberChartAdtl
     from ..models.pie_chart_adtl import PieChartAdtl
@@ -22,6 +23,7 @@ class Chart:
     Attributes:
         duid (str):
         type (ChartType): * `bar` - BAR
+            * `burnup` - BURN_UP
             * `line` - LINE
             * `number` - NUMBER
             * `pie` - PIE
@@ -31,7 +33,8 @@ class Chart:
         y (int):
         width (int):
         height (int):
-        adtl (Union['BarChartAdtl', 'LineChartAdtl', 'NumberChartAdtl', 'PieChartAdtl', 'TableChartAdtl']):
+        adtl (Union['BarChartAdtl', 'BurnUpChartAdtl', 'LineChartAdtl', 'NumberChartAdtl', 'PieChartAdtl',
+            'TableChartAdtl']):
     """
 
     duid: str
@@ -41,11 +44,12 @@ class Chart:
     y: int
     width: int
     height: int
-    adtl: Union["BarChartAdtl", "LineChartAdtl", "NumberChartAdtl", "PieChartAdtl", "TableChartAdtl"]
+    adtl: Union["BarChartAdtl", "BurnUpChartAdtl", "LineChartAdtl", "NumberChartAdtl", "PieChartAdtl", "TableChartAdtl"]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         from ..models.bar_chart_adtl import BarChartAdtl
+        from ..models.burn_up_chart_adtl import BurnUpChartAdtl
         from ..models.line_chart_adtl import LineChartAdtl
         from ..models.number_chart_adtl import NumberChartAdtl
         from ..models.pie_chart_adtl import PieChartAdtl
@@ -66,6 +70,8 @@ class Chart:
 
         adtl: Dict[str, Any]
         if isinstance(self.adtl, BarChartAdtl):
+            adtl = self.adtl.to_dict()
+        elif isinstance(self.adtl, BurnUpChartAdtl):
             adtl = self.adtl.to_dict()
         elif isinstance(self.adtl, LineChartAdtl):
             adtl = self.adtl.to_dict()
@@ -96,6 +102,7 @@ class Chart:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.bar_chart_adtl import BarChartAdtl
+        from ..models.burn_up_chart_adtl import BurnUpChartAdtl
         from ..models.line_chart_adtl import LineChartAdtl
         from ..models.number_chart_adtl import NumberChartAdtl
         from ..models.pie_chart_adtl import PieChartAdtl
@@ -118,7 +125,9 @@ class Chart:
 
         def _parse_adtl(
             data: object,
-        ) -> Union["BarChartAdtl", "LineChartAdtl", "NumberChartAdtl", "PieChartAdtl", "TableChartAdtl"]:
+        ) -> Union[
+            "BarChartAdtl", "BurnUpChartAdtl", "LineChartAdtl", "NumberChartAdtl", "PieChartAdtl", "TableChartAdtl"
+        ]:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
@@ -130,7 +139,7 @@ class Chart:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_chart_adtl_type_1 = LineChartAdtl.from_dict(data)
+                componentsschemas_chart_adtl_type_1 = BurnUpChartAdtl.from_dict(data)
 
                 return componentsschemas_chart_adtl_type_1
             except:  # noqa: E722
@@ -138,7 +147,7 @@ class Chart:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_chart_adtl_type_2 = NumberChartAdtl.from_dict(data)
+                componentsschemas_chart_adtl_type_2 = LineChartAdtl.from_dict(data)
 
                 return componentsschemas_chart_adtl_type_2
             except:  # noqa: E722
@@ -146,16 +155,24 @@ class Chart:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_chart_adtl_type_3 = PieChartAdtl.from_dict(data)
+                componentsschemas_chart_adtl_type_3 = NumberChartAdtl.from_dict(data)
 
                 return componentsschemas_chart_adtl_type_3
             except:  # noqa: E722
                 pass
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                componentsschemas_chart_adtl_type_4 = PieChartAdtl.from_dict(data)
+
+                return componentsschemas_chart_adtl_type_4
+            except:  # noqa: E722
+                pass
             if not isinstance(data, dict):
                 raise TypeError()
-            componentsschemas_chart_adtl_type_4 = TableChartAdtl.from_dict(data)
+            componentsschemas_chart_adtl_type_5 = TableChartAdtl.from_dict(data)
 
-            return componentsschemas_chart_adtl_type_4
+            return componentsschemas_chart_adtl_type_5
 
         adtl = _parse_adtl(d.pop("adtl"))
 

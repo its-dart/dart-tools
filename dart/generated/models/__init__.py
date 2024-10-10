@@ -8,6 +8,7 @@ from .brainstorm import Brainstorm
 from .brainstorm_create import BrainstormCreate
 from .brainstorm_state import BrainstormState
 from .brainstorm_update import BrainstormUpdate
+from .burn_up_chart_adtl import BurnUpChartAdtl
 from .chart import Chart
 from .chart_type import ChartType
 from .comment import Comment
@@ -81,6 +82,7 @@ from .paginated_attachment_list import PaginatedAttachmentList
 from .paginated_comment_list import PaginatedCommentList
 from .paginated_comment_reaction_list import PaginatedCommentReactionList
 from .paginated_dartboard_list import PaginatedDartboardList
+from .paginated_dashboard_list import PaginatedDashboardList
 from .paginated_doc_list import PaginatedDocList
 from .paginated_folder_list import PaginatedFolderList
 from .paginated_form_field_list import PaginatedFormFieldList
@@ -100,6 +102,7 @@ from .paginated_tenant_list import PaginatedTenantList
 from .paginated_user_dartboard_layout_list import PaginatedUserDartboardLayoutList
 from .paginated_user_list import PaginatedUserList
 from .paginated_view_list import PaginatedViewList
+from .paginated_webhook_list import PaginatedWebhookList
 from .pie_chart_adtl import PieChartAdtl
 from .pie_chart_display_metric import PieChartDisplayMetric
 from .priority import Priority
@@ -117,6 +120,8 @@ from .relationship_kind_update import RelationshipKindUpdate
 from .report_kind import ReportKind
 from .request_body import RequestBody
 from .response_body import ResponseBody
+from .saml_config import SamlConfig
+from .saml_config_tenant_extension_status import SamlConfigTenantExtensionStatus
 from .slack_integration import SlackIntegration
 from .slack_integration_tenant_extension_status import SlackIntegrationTenantExtensionStatus
 from .sort import Sort
@@ -143,6 +148,7 @@ from .task_kind import TaskKind
 from .task_kind_create import TaskKindCreate
 from .task_kind_kind import TaskKindKind
 from .task_kind_update import TaskKindUpdate
+from .task_kinds_list_kind import TaskKindsListKind
 from .task_link import TaskLink
 from .task_link_create import TaskLinkCreate
 from .task_link_kind import TaskLinkKind
@@ -173,6 +179,9 @@ from .view import View
 from .view_create import ViewCreate
 from .view_kind import ViewKind
 from .view_update import ViewUpdate
+from .webhook import Webhook
+from .webhook_create import WebhookCreate
+from .webhook_update import WebhookUpdate
 from .zapier_integration import ZapierIntegration
 
 __all__ = (
@@ -184,6 +193,7 @@ __all__ = (
     "BrainstormCreate",
     "BrainstormState",
     "BrainstormUpdate",
+    "BurnUpChartAdtl",
     "Chart",
     "ChartType",
     "Comment",
@@ -257,6 +267,7 @@ __all__ = (
     "PaginatedCommentList",
     "PaginatedCommentReactionList",
     "PaginatedDartboardList",
+    "PaginatedDashboardList",
     "PaginatedDocList",
     "PaginatedFolderList",
     "PaginatedFormFieldList",
@@ -276,6 +287,7 @@ __all__ = (
     "PaginatedUserDartboardLayoutList",
     "PaginatedUserList",
     "PaginatedViewList",
+    "PaginatedWebhookList",
     "PieChartAdtl",
     "PieChartDisplayMetric",
     "Priority",
@@ -293,6 +305,8 @@ __all__ = (
     "ReportKind",
     "RequestBody",
     "ResponseBody",
+    "SamlConfig",
+    "SamlConfigTenantExtensionStatus",
     "SlackIntegration",
     "SlackIntegrationTenantExtensionStatus",
     "Sort",
@@ -318,6 +332,7 @@ __all__ = (
     "TaskKind",
     "TaskKindCreate",
     "TaskKindKind",
+    "TaskKindsListKind",
     "TaskKindUpdate",
     "TaskLink",
     "TaskLinkCreate",
@@ -349,5 +364,8 @@ __all__ = (
     "ViewCreate",
     "ViewKind",
     "ViewUpdate",
+    "Webhook",
+    "WebhookCreate",
+    "WebhookUpdate",
     "ZapierIntegration",
 )
