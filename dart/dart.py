@@ -16,7 +16,7 @@ import sys
 from collections import defaultdict
 from datetime import timezone
 from importlib.metadata import version
-from typing import Callable, Literal, NoReturn
+from typing import Any, Callable, NoReturn
 from webbrowser import open_new_tab
 
 import dateparser
@@ -29,13 +29,16 @@ from .generated import Client
 from .generated.models import (
     Dartboard,
     DartboardKind,
+    DartboardUpdate,
+    Folder,
+    FolderKind,
+    FolderUpdate,
     Operation,
     OperationKind,
     OperationModelKind,
     Priority,
     PropertyKind,
     RequestBody,
-    Space,
     SpaceKind,
     StatusKind,
     Task,
@@ -45,6 +48,8 @@ from .generated.models import (
     Transaction,
     TransactionKind,
 )
+from .generated.api.dartboards import dartboards_list
+from .generated.api.folders import folders_list
 from .generated.api.transactions import transactions_create
 from .order_manager import get_orders_between
 
@@ -136,6 +141,10 @@ def _get_dartboard_url(host: str, duid: str) -> str:
 
 def _get_task_url(host: str, duid: str) -> str:
     return f"{host}/t/{duid}"
+
+
+def _get_folder_url(host: str, duid: str) -> str:
+    return f"{host}/f/{duid}"
 
 
 def _suppress_exception(fn: Callable) -> Callable:
@@ -399,13 +408,22 @@ class _Git:
         _run_cmd(f"git checkout -b {branch}")
 
 
+def get_host() -> str:
+    config = _Config()
+
+    host = config.host
+    _log(f"Host is {host}")
+    _log("Done.")
+    return host
+
+
 def set_host(host: str) -> bool:
     config = _Config()
 
     new_host = _HOST_MAP.get(host, host)
-    _log(f"Setting host to {new_host}")
     config.host = new_host
 
+    _log(f"Set host to {new_host}")
     _log("Done.")
     return True
 
@@ -427,10 +445,9 @@ def _check_request_response_and_maybe_exit(response) -> None:
         _unknown_failure_exit()
 
 
-# TODO remove temporary task-only typing
 def _parse_transaction_response_and_maybe_exit(
-    response, model_kind: Literal[OperationModelKind.TASK], duid
-) -> Task:
+    response, model_kind: str, duid: str
+) -> Any:
     if (
         response is None
         or not hasattr(response, "results")
@@ -475,8 +492,7 @@ def _get_is_logged_in(session: _Session) -> bool:
 
 
 def is_logged_in(should_raise: bool = False) -> bool:
-    config = _Config()
-    session = _Session(config)
+    session = _Session()
 
     result = _get_is_logged_in(session)
 
@@ -584,7 +600,7 @@ def begin_task() -> bool:
 def create_task(
     title: str,
     *,
-    should_begin: bool = False,
+    dartboard_duid: str | None = None,
     dartboard_title: str | None = None,
     kind_title: str | None = None,
     status_title: str | None = None,
@@ -593,6 +609,7 @@ def create_task(
     priority_int: int | None = None,
     size_int: int | None = None,
     due_at_str: str | None = None,
+    should_begin: bool = False,
 ) -> Task:
     config = _Config()
     session = _Session(config)
@@ -604,21 +621,32 @@ def create_task(
     user_duid = user["duid"]
 
     dartboards = user_bundle.dartboards
-    if dartboard_title is not None:
-        dartboard_title_norm = dartboard_title.strip().lower()
-        dartboard = next(
-            (
+    if dartboard_duid is None:
+        if dartboard_title is not None:
+            dartboard_title_norm = dartboard_title.strip().lower()
+            dartboard = next(
+                (
+                    e
+                    for e in dartboards
+                    if dartboard_title_norm in {e["title"].lower(), e["kind"].lower()}
+                ),
+                None,
+            )
+            if dartboard is None:
+                _dart_exit(f"No dartboard found with title '{dartboard_title}'.")
+        else:
+            team_space_duid = next(
+                e["duid"]
+                for e in user_bundle.spaces
+                if e["kind"] == SpaceKind.WORKSPACE
+            )
+            dartboard = next(
                 e
                 for e in dartboards
-                if dartboard_title_norm in {e["title"].lower(), e["kind"].lower()}
-            ),
-            None,
-        )
-        if dartboard is None:
-            _dart_exit(f"No dartboard found with title '{dartboard_title}'.")
-    else:
-        dartboard = next(e for e in dartboards if e["kind"] == DartboardKind.ACTIVE)
-    dartboard_duid = dartboard["duid"]
+                if e["spaceDuid"] == team_space_duid
+                and e["kind"] == DartboardKind.ACTIVE
+            )
+        dartboard_duid = dartboard["duid"]
 
     orders = [
         e["order"] for e in user_bundle.tasks if e["dartboardDuid"] == dartboard_duid
@@ -731,6 +759,7 @@ def update_task(
     duid: str,
     *,
     title: str | None = None,
+    dartboard_duid: str | None = None,
     dartboard_title: str | None = None,
     status_title: str | None = None,
     assignee_emails: list[str] | None = None,
@@ -759,7 +788,9 @@ def update_task(
         task_update_kwargs["title"] = title
 
     dartboards = user_bundle.dartboards
-    if dartboard_title is not None:
+    if dartboard_duid is not None:
+        task_update_kwargs["dartboard_duid"] = dartboard_duid
+    elif dartboard_title is not None:
         dartboard_title_norm = dartboard_title.strip().lower()
         dartboard = next(
             (
@@ -858,26 +889,55 @@ def update_task(
     return task
 
 
-def replicate_space(duid: str, title: str | None = None) -> Space:
+def replicate_space(
+    duid: str,
+    *,
+    title: str | None = None,
+    abrev: str | None = None,
+    color_hex: str | None = None,
+    accessible_by_team: bool | None = None,
+    accessor_duids: list[str] | None = None,
+) -> str:
     config = _Config()
     session = _Session(config)
 
     content = {}
     if title is not None:
         content["title"] = title
+    if abrev is not None:
+        content["abrev"] = abrev
+    if color_hex is not None:
+        content["colorHex"] = color_hex
+    if accessible_by_team is not None:
+        content["accessibleByTeam"] = accessible_by_team
+    if accessor_duids is not None:
+        content["accessorIds"] = accessor_duids
     response = session.post(
         _REPLICATE_SPACE_URL_FRAG_FMT.format(duid=duid), json=content
     )
     _check_request_response_and_maybe_exit(response)
 
-    space = Space.from_dict(response.json()["item"])
+    space_duid = response.json()["duid"]
 
-    _log(f"Replicated space {space.title} at {_get_space_url(config.host, space.duid)}")
+    _log(f"Replicated space at {_get_space_url(config.host, space_duid)}")
     _log("Done.")
-    return space
+    return space_duid
 
 
-def replicate_dartboard(duid: str, title: str | None = None) -> Dartboard:
+def get_dartboards(space_duid: str, include_special: bool = False) -> list[Dartboard]:
+    dart = Dart()
+
+    response = dartboards_list.sync(client=dart, space_duid=space_duid)
+    dartboards = response.results if response is not None else []
+    if not include_special:
+        dartboards = [e for e in dartboards if e.kind == DartboardKind.CUSTOM]
+
+    _log(f"Got {len(dartboards)} dartboards")
+    _log("Done.")
+    return dartboards
+
+
+def replicate_dartboard(duid: str, *, title: str | None = None) -> str:
     config = _Config()
     session = _Session(config)
 
@@ -889,13 +949,94 @@ def replicate_dartboard(duid: str, title: str | None = None) -> Dartboard:
     )
     _check_request_response_and_maybe_exit(response)
 
-    dartboard = Dartboard.from_dict(response.json()["item"])
+    dartboard_duid = response.json()["duid"]
+
+    _log(f"Replicated dartboard at {_get_dartboard_url(config.host, dartboard_duid)}")
+    _log("Done.")
+    return dartboard_duid
+
+
+def update_dartboard(
+    duid: str,
+    *,
+    title: str | None = None,
+    color_hex: str | None = None,
+) -> Dartboard:
+    config = _Config()
+    session = _Session(config)
+    dart = Dart(session)
+
+    dartboard_update_kwargs = {"duid": duid}
+
+    if title is not None:
+        dartboard_update_kwargs["title"] = title
+    if color_hex is not None:
+        dartboard_update_kwargs["color_hex"] = color_hex
+
+    dartboard_update = DartboardUpdate(**dartboard_update_kwargs)
+    dartboard_update_op = Operation(
+        model=OperationModelKind.DARTBOARD,
+        kind=OperationKind.UPDATE,
+        data=dartboard_update,
+    )
+    response = dart.transact([dartboard_update_op], TransactionKind.DARTBOARD_UPDATE)
+    dartboard = _parse_transaction_response_and_maybe_exit(
+        response, OperationModelKind.DARTBOARD, dartboard_update.duid
+    )
 
     _log(
-        f"Replicated dartboard {dartboard.title} at {_get_dartboard_url(config.host, dartboard.duid)}"
+        f"Updated dartboard {dartboard.title} at {_get_dartboard_url(config.host, dartboard.duid)}"
     )
     _log("Done.")
     return dartboard
+
+
+def get_folders(space_duid: str, *, include_special: bool = False) -> list[Folder]:
+    dart = Dart()
+
+    response = folders_list.sync(client=dart, space_duid=space_duid)
+    folders = response.results if response is not None else []
+    if not include_special:
+        folders = [e for e in folders if e.kind == FolderKind.OTHER]
+
+    _log(f"Got {len(folders)} folders")
+    _log("Done.")
+    return folders
+
+
+def update_folder(
+    duid: str,
+    *,
+    title: str | None = None,
+    color_hex: str | None = None,
+) -> Folder:
+    config = _Config()
+    session = _Session(config)
+    dart = Dart(session)
+
+    folder_update_kwargs = {"duid": duid}
+
+    if title is not None:
+        folder_update_kwargs["title"] = title
+    if color_hex is not None:
+        folder_update_kwargs["color_hex"] = color_hex
+
+    folder_update = FolderUpdate(**folder_update_kwargs)
+    folder_update_op = Operation(
+        model=OperationModelKind.FOLDER,
+        kind=OperationKind.UPDATE,
+        data=folder_update,
+    )
+    response = dart.transact([folder_update_op], TransactionKind.FOLDER_UPDATE)
+    folder = _parse_transaction_response_and_maybe_exit(
+        response, OperationModelKind.FOLDER, folder_update.duid
+    )
+
+    _log(
+        f"Updated folder {folder.title} at {_get_folder_url(config.host, folder.duid)}"
+    )
+    _log("Done.")
+    return folder
 
 
 def _add_standard_task_arguments(parser: ArgumentParser) -> None:

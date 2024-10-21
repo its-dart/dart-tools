@@ -2,7 +2,15 @@
 # -*- coding: utf-8 -*-
 
 
-from dart import is_logged_in, replicate_space
+from dart import (
+    create_task,
+    is_logged_in,
+    get_dartboards,
+    get_folders,
+    replicate_space,
+    update_dartboard,
+    update_folder,
+)
 
 
 # The DART_TOKEN environment variable must be set to the value from
@@ -10,14 +18,36 @@ from dart import is_logged_in, replicate_space
 is_logged_in(should_raise=True)
 
 
-# You can get these IDs from the space's three dot menu > 'Copy ID'
-TEMPLATE_SPACE_ID_1 = "rWPeANfzSnJi"
-TEMPLATE_SPACE_ID_2 = "gJLw5RsKSjw8"
+# You can get this ID from the space's three dot menu > 'Copy ID'
+TEMPLATE_SPACE_ID = "J3h4WKcqRpnS"
+NEW_COLOR_HEX = "#000000"
 
-
-# Conditionally replicate one of the template spaces, depending on the circumstances
-condition = True
 # Title is optional
-replicate_space(
-    TEMPLATE_SPACE_ID_1 if condition else TEMPLATE_SPACE_ID_2, "New space title"
+new_space_id = replicate_space(
+    TEMPLATE_SPACE_ID,
+    title="New space title",
+    abrev="NST",
+    color_hex=NEW_COLOR_HEX,
+    accessible_by_team=True,
+)
+
+# Because space replication is async, you might need to add a timeout
+# or loop until you get the expected number of dartboards here
+dartboards = get_dartboards(new_space_id)
+main_dartboard = [e for e in dartboards if e.title == "Dartboard title to change"][0]
+# Update the relevant dartboard
+update_dartboard(
+    main_dartboard.duid, title="New dartboard title", color_hex=NEW_COLOR_HEX
+)
+
+# Do the same for folders
+folders = get_folders(new_space_id)
+for folder in folders:
+    update_folder(folder.duid, title="New folder title", color_hex=NEW_COLOR_HEX)
+
+# Create and assign tasks to the new dartboard
+create_task(
+    dartboard_duid=main_dartboard.duid,
+    title="New task",
+    priority_int=0,
 )
