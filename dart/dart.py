@@ -77,7 +77,7 @@ _REPLICATE_SPACE_URL_FRAG_FMT = _ROOT_API_URL_FRAG + "/spaces/replicate/{duid}"
 _REPLICATE_DARTBOARD_URL_FRAG_FMT = _ROOT_API_URL_FRAG + "/dartboards/replicate/{duid}"
 
 _AUTH_TOKEN_ENVVAR_KEY = "DART_TOKEN"
-_CONFIG_FPATH = platformdirs.user_config_path(_APP, roaming=False, ensure_exists=False)
+_CONFIG_FPATH = platformdirs.user_config_path(_APP)
 _CLIENT_DUID_KEY = "clientDuid"
 _HOST_KEY = "host"
 _HOSTS_KEY = "hosts"
@@ -178,8 +178,11 @@ class _Config:
     def __init__(self):
         self._content = {}
         if os.path.isfile(_CONFIG_FPATH):
-            with open(_CONFIG_FPATH, "r", encoding="UTF-8") as fin:
-                self._content = json.load(fin)
+            try:
+                with open(_CONFIG_FPATH, "r", encoding="UTF-8") as fin:
+                    self._content = json.load(fin)
+            except OSError:
+                pass
         self._content = {
             _CLIENT_DUID_KEY: _make_duid(),
             _HOST_KEY: _PROD_HOST,
@@ -189,8 +192,11 @@ class _Config:
         self._write()
 
     def _write(self):
-        with open(_CONFIG_FPATH, "w+", encoding="UTF-8") as fout:
-            json.dump(self._content, fout, indent=2)
+        try:
+            with open(_CONFIG_FPATH, "w+", encoding="UTF-8") as fout:
+                json.dump(self._content, fout, indent=2)
+        except OSError:
+            pass
 
     @property
     def client_duid(self):
