@@ -86,7 +86,6 @@ To use the `dart-tools` Python library in an AWS Lambda function, you need to pa
 
   Use Docker to create a deployment package that includes the `dart-tools` library. Run the following commands in your terminal, ensuring that the `RUNTIME_PYTHON_VERSION` and `RUNTIME_ARCHITECTURE` environment variables match the runtime settings of your Lambda function:
 
-
   ```bash
   export RUNTIME_PYTHON_VERSION=3.12
   export RUNTIME_ARCHITECTURE=x86_64
