@@ -34,9 +34,11 @@ class DartboardCreate:
         index (Union[None, Unset, int]):
         started_at (Union[None, Unset, datetime.datetime]):
         finished_at (Union[None, Unset, datetime.datetime]):
+        default_property_map (Union[Unset, Any]):
         always_shown_property_duids (Union[Unset, List[str]]):
         always_hidden_property_duids (Union[Unset, List[str]]):
         property_order_duids (Union[Unset, List[str]]):
+        property_width_map (Union[Unset, Any]):
     """
 
     duid: str
@@ -51,9 +53,11 @@ class DartboardCreate:
     index: Union[None, Unset, int] = UNSET
     started_at: Union[None, Unset, datetime.datetime] = UNSET
     finished_at: Union[None, Unset, datetime.datetime] = UNSET
+    default_property_map: Union[Unset, Any] = UNSET
     always_shown_property_duids: Union[Unset, List[str]] = UNSET
     always_hidden_property_duids: Union[Unset, List[str]] = UNSET
     property_order_duids: Union[Unset, List[str]] = UNSET
+    property_width_map: Union[Unset, Any] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -101,6 +105,8 @@ class DartboardCreate:
         else:
             finished_at = self.finished_at
 
+        default_property_map = self.default_property_map
+
         always_shown_property_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.always_shown_property_duids, Unset):
             always_shown_property_duids = self.always_shown_property_duids
@@ -112,6 +118,8 @@ class DartboardCreate:
         property_order_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.property_order_duids, Unset):
             property_order_duids = self.property_order_duids
+
+        property_width_map = self.property_width_map
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -140,12 +148,16 @@ class DartboardCreate:
             field_dict["startedAt"] = started_at
         if finished_at is not UNSET:
             field_dict["finishedAt"] = finished_at
+        if default_property_map is not UNSET:
+            field_dict["defaultPropertyMap"] = default_property_map
         if always_shown_property_duids is not UNSET:
             field_dict["alwaysShownPropertyDuids"] = always_shown_property_duids
         if always_hidden_property_duids is not UNSET:
             field_dict["alwaysHiddenPropertyDuids"] = always_hidden_property_duids
         if property_order_duids is not UNSET:
             field_dict["propertyOrderDuids"] = property_order_duids
+        if property_width_map is not UNSET:
+            field_dict["propertyWidthMap"] = property_width_map
 
         return field_dict
 
@@ -223,11 +235,15 @@ class DartboardCreate:
 
         finished_at = _parse_finished_at(d.pop("finishedAt", UNSET))
 
+        default_property_map = d.pop("defaultPropertyMap", UNSET)
+
         always_shown_property_duids = cast(List[str], d.pop("alwaysShownPropertyDuids", UNSET))
 
         always_hidden_property_duids = cast(List[str], d.pop("alwaysHiddenPropertyDuids", UNSET))
 
         property_order_duids = cast(List[str], d.pop("propertyOrderDuids", UNSET))
+
+        property_width_map = d.pop("propertyWidthMap", UNSET)
 
         dartboard_create = cls(
             duid=duid,
@@ -242,9 +258,11 @@ class DartboardCreate:
             index=index,
             started_at=started_at,
             finished_at=finished_at,
+            default_property_map=default_property_map,
             always_shown_property_duids=always_shown_property_duids,
             always_hidden_property_duids=always_hidden_property_duids,
             property_order_duids=property_order_duids,
+            property_width_map=property_width_map,
         )
 
         dartboard_create.additional_properties = d

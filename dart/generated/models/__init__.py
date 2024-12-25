@@ -10,6 +10,7 @@ from .brainstorm_state import BrainstormState
 from .brainstorm_update import BrainstormUpdate
 from .burn_up_chart_adtl import BurnUpChartAdtl
 from .chart import Chart
+from .chart_aggregation import ChartAggregation
 from .chart_type import ChartType
 from .comment import Comment
 from .comment_create import CommentCreate
@@ -71,7 +72,6 @@ from .notification_update import NotificationUpdate
 from .notion_integration import NotionIntegration
 from .notion_integration_tenant_extension_status import NotionIntegrationTenantExtensionStatus
 from .number_chart_adtl import NumberChartAdtl
-from .number_chart_aggregation import NumberChartAggregation
 from .operation import Operation
 from .operation_kind import OperationKind
 from .operation_model_kind import OperationModelKind
@@ -195,6 +195,7 @@ __all__ = (
     "BrainstormUpdate",
     "BurnUpChartAdtl",
     "Chart",
+    "ChartAggregation",
     "ChartType",
     "Comment",
     "CommentCreate",
@@ -256,7 +257,6 @@ __all__ = (
     "NotionIntegration",
     "NotionIntegrationTenantExtensionStatus",
     "NumberChartAdtl",
-    "NumberChartAggregation",
     "Operation",
     "OperationKind",
     "OperationModelKind",

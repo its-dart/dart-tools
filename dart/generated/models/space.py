@@ -41,6 +41,8 @@ class Space:
         standup_recurs_next_at (Union[None, datetime.datetime]):
         changelog_recurrence (Union[Any, None]):
         changelog_recurs_next_at (Union[None, datetime.datetime]):
+        rollover_recurrence (Union[Any, None]):
+        rollover_recurs_next_at (Union[None, datetime.datetime]):
         updated_by_client_duid (Union[None, Unset, str]):
     """
 
@@ -63,6 +65,8 @@ class Space:
     standup_recurs_next_at: Union[None, datetime.datetime]
     changelog_recurrence: Union[Any, None]
     changelog_recurs_next_at: Union[None, datetime.datetime]
+    rollover_recurrence: Union[Any, None]
+    rollover_recurs_next_at: Union[None, datetime.datetime]
     updated_by_client_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -116,6 +120,15 @@ class Space:
         else:
             changelog_recurs_next_at = self.changelog_recurs_next_at
 
+        rollover_recurrence: Union[Any, None]
+        rollover_recurrence = self.rollover_recurrence
+
+        rollover_recurs_next_at: Union[None, str]
+        if isinstance(self.rollover_recurs_next_at, datetime.datetime):
+            rollover_recurs_next_at = self.rollover_recurs_next_at.isoformat()
+        else:
+            rollover_recurs_next_at = self.rollover_recurs_next_at
+
         updated_by_client_duid: Union[None, Unset, str]
         if isinstance(self.updated_by_client_duid, Unset):
             updated_by_client_duid = UNSET
@@ -145,6 +158,8 @@ class Space:
                 "standupRecursNextAt": standup_recurs_next_at,
                 "changelogRecurrence": changelog_recurrence,
                 "changelogRecursNextAt": changelog_recurs_next_at,
+                "rolloverRecurrence": rollover_recurrence,
+                "rolloverRecursNextAt": rollover_recurs_next_at,
             }
         )
         if updated_by_client_duid is not UNSET:
@@ -234,6 +249,28 @@ class Space:
 
         changelog_recurs_next_at = _parse_changelog_recurs_next_at(d.pop("changelogRecursNextAt"))
 
+        def _parse_rollover_recurrence(data: object) -> Union[Any, None]:
+            if data is None:
+                return data
+            return cast(Union[Any, None], data)
+
+        rollover_recurrence = _parse_rollover_recurrence(d.pop("rolloverRecurrence"))
+
+        def _parse_rollover_recurs_next_at(data: object) -> Union[None, datetime.datetime]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                rollover_recurs_next_at_type_0 = isoparse(data)
+
+                return rollover_recurs_next_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, datetime.datetime], data)
+
+        rollover_recurs_next_at = _parse_rollover_recurs_next_at(d.pop("rolloverRecursNextAt"))
+
         def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
@@ -263,6 +300,8 @@ class Space:
             standup_recurs_next_at=standup_recurs_next_at,
             changelog_recurrence=changelog_recurrence,
             changelog_recurs_next_at=changelog_recurs_next_at,
+            rollover_recurrence=rollover_recurrence,
+            rollover_recurs_next_at=rollover_recurs_next_at,
             updated_by_client_duid=updated_by_client_duid,
         )
 

@@ -1,3 +1,5 @@
+# Required for type hinting compatibility when using Python 3.9
+from __future__ import annotations
 from .generated.models import *
 from .dart import (
     Dart,

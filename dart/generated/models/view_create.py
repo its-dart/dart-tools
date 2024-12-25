@@ -30,6 +30,7 @@ class ViewCreate:
         always_shown_property_duids (Union[Unset, List[str]]):
         always_hidden_property_duids (Union[Unset, List[str]]):
         property_order_duids (Union[Unset, List[str]]):
+        property_width_map (Union[Unset, Any]):
     """
 
     duid: str
@@ -47,6 +48,7 @@ class ViewCreate:
     always_shown_property_duids: Union[Unset, List[str]] = UNSET
     always_hidden_property_duids: Union[Unset, List[str]] = UNSET
     property_order_duids: Union[Unset, List[str]] = UNSET
+    property_width_map: Union[Unset, Any] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -92,6 +94,8 @@ class ViewCreate:
         if not isinstance(self.property_order_duids, Unset):
             property_order_duids = self.property_order_duids
 
+        property_width_map = self.property_width_map
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -125,6 +129,8 @@ class ViewCreate:
             field_dict["alwaysHiddenPropertyDuids"] = always_hidden_property_duids
         if property_order_duids is not UNSET:
             field_dict["propertyOrderDuids"] = property_order_duids
+        if property_width_map is not UNSET:
+            field_dict["propertyWidthMap"] = property_width_map
 
         return field_dict
 
@@ -166,6 +172,8 @@ class ViewCreate:
 
         property_order_duids = cast(List[str], d.pop("propertyOrderDuids", UNSET))
 
+        property_width_map = d.pop("propertyWidthMap", UNSET)
+
         view_create = cls(
             duid=duid,
             order=order,
@@ -182,6 +190,7 @@ class ViewCreate:
             always_shown_property_duids=always_shown_property_duids,
             always_hidden_property_duids=always_hidden_property_duids,
             property_order_duids=property_order_duids,
+            property_width_map=property_width_map,
         )
 
         view_create.additional_properties = d

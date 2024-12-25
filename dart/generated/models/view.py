@@ -35,6 +35,7 @@ class View:
         always_shown_property_duids (List[str]):
         always_hidden_property_duids (List[str]):
         property_order_duids (List[str]):
+        property_width_map (Any):
         updated_by_client_duid (Union[None, Unset, str]):
     """
 
@@ -54,6 +55,7 @@ class View:
     always_shown_property_duids: List[str]
     always_hidden_property_duids: List[str]
     property_order_duids: List[str]
+    property_width_map: Any
     updated_by_client_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -90,6 +92,8 @@ class View:
 
         property_order_duids = self.property_order_duids
 
+        property_width_map = self.property_width_map
+
         updated_by_client_duid: Union[None, Unset, str]
         if isinstance(self.updated_by_client_duid, Unset):
             updated_by_client_duid = UNSET
@@ -116,6 +120,7 @@ class View:
                 "alwaysShownPropertyDuids": always_shown_property_duids,
                 "alwaysHiddenPropertyDuids": always_hidden_property_duids,
                 "propertyOrderDuids": property_order_duids,
+                "propertyWidthMap": property_width_map,
             }
         )
         if updated_by_client_duid is not UNSET:
@@ -158,6 +163,8 @@ class View:
 
         property_order_duids = cast(List[str], d.pop("propertyOrderDuids"))
 
+        property_width_map = d.pop("propertyWidthMap")
+
         def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
@@ -184,6 +191,7 @@ class View:
             always_shown_property_duids=always_shown_property_duids,
             always_hidden_property_duids=always_hidden_property_duids,
             property_order_duids=property_order_duids,
+            property_width_map=property_width_map,
             updated_by_client_duid=updated_by_client_duid,
         )
 

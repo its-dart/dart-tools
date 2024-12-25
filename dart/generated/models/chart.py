@@ -23,11 +23,12 @@ class Chart:
     Attributes:
         duid (str):
         type (ChartType): * `bar` - BAR
-            * `burnup` - BURN_UP
+            * `burn-up` - BURN_UP
             * `line` - LINE
             * `number` - NUMBER
             * `pie` - PIE
             * `table` - TABLE
+            * `text` - TEXT_BLOCK
         title (str):
         x (int):
         y (int):

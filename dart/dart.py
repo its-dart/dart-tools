@@ -3,6 +3,8 @@
 
 """A CLI to interact with the Dart web app."""
 
+# Required for type hinting compatibility when using Python 3.9
+from __future__ import annotations
 from argparse import ArgumentParser
 from functools import wraps
 import json

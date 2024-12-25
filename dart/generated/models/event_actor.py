@@ -12,6 +12,7 @@ class EventActor(str, Enum):
     DART_REMINDER_BOT = "Dart Reminder Bot"
     DART_REPORT_BOT = "Dart Report Bot"
     DART_SLACK_BOT = "Dart Slack Bot"
+    DART_SPRINT_BOT = "Dart Sprint Bot"
     STRIPE_WEBHOOK = "Stripe webhook"
 
     def __str__(self) -> str:

@@ -77,7 +77,7 @@ def _parse_response(
         "Webhook",
     ]
 ]:
-    if response.status_code == HTTPStatus.OK:
+    if response.status_code == 200:
 
         def _parse_response_200(
             data: object,

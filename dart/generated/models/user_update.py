@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -26,6 +26,7 @@ class UserUpdate:
             * `Dark` - DARK
         color_hex (Union[Unset, str]):
         open_in_native_app (Union[Unset, bool]):
+        last_url_path (Union[None, Unset, str]):
         first_day_of_week (Union[Unset, int]):
         sections (Union[Unset, Any]):
         layout (Union[Unset, Any]):
@@ -41,6 +42,7 @@ class UserUpdate:
     theme: Union[Unset, Theme] = UNSET
     color_hex: Union[Unset, str] = UNSET
     open_in_native_app: Union[Unset, bool] = UNSET
+    last_url_path: Union[None, Unset, str] = UNSET
     first_day_of_week: Union[Unset, int] = UNSET
     sections: Union[Unset, Any] = UNSET
     layout: Union[Unset, Any] = UNSET
@@ -66,6 +68,12 @@ class UserUpdate:
         color_hex = self.color_hex
 
         open_in_native_app = self.open_in_native_app
+
+        last_url_path: Union[None, Unset, str]
+        if isinstance(self.last_url_path, Unset):
+            last_url_path = UNSET
+        else:
+            last_url_path = self.last_url_path
 
         first_day_of_week = self.first_day_of_week
 
@@ -98,6 +106,8 @@ class UserUpdate:
             field_dict["colorHex"] = color_hex
         if open_in_native_app is not UNSET:
             field_dict["openInNativeApp"] = open_in_native_app
+        if last_url_path is not UNSET:
+            field_dict["lastUrlPath"] = last_url_path
         if first_day_of_week is not UNSET:
             field_dict["firstDayOfWeek"] = first_day_of_week
         if sections is not UNSET:
@@ -140,6 +150,15 @@ class UserUpdate:
 
         open_in_native_app = d.pop("openInNativeApp", UNSET)
 
+        def _parse_last_url_path(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        last_url_path = _parse_last_url_path(d.pop("lastUrlPath", UNSET))
+
         first_day_of_week = d.pop("firstDayOfWeek", UNSET)
 
         sections = d.pop("sections", UNSET)
@@ -161,6 +180,7 @@ class UserUpdate:
             theme=theme,
             color_hex=color_hex,
             open_in_native_app=open_in_native_app,
+            last_url_path=last_url_path,
             first_day_of_week=first_day_of_week,
             sections=sections,
             layout=layout,

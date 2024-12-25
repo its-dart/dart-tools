@@ -1,3 +1,6 @@
+# Required for type hinting compatibility when using Python 3.9
+from __future__ import annotations
+
 # TODO dedupe with the other order manager
 from random import choices
 

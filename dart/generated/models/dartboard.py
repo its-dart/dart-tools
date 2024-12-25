@@ -39,9 +39,11 @@ class Dartboard:
         index (Union[None, int]):
         started_at (Union[None, datetime.datetime]):
         finished_at (Union[None, datetime.datetime]):
+        default_property_map (Any):
         always_shown_property_duids (List[str]):
         always_hidden_property_duids (List[str]):
         property_order_duids (List[str]):
+        property_width_map (Any):
         updated_by_client_duid (Union[None, Unset, str]):
     """
 
@@ -58,9 +60,11 @@ class Dartboard:
     index: Union[None, int]
     started_at: Union[None, datetime.datetime]
     finished_at: Union[None, datetime.datetime]
+    default_property_map: Any
     always_shown_property_duids: List[str]
     always_hidden_property_duids: List[str]
     property_order_duids: List[str]
+    property_width_map: Any
     updated_by_client_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -103,11 +107,15 @@ class Dartboard:
         else:
             finished_at = self.finished_at
 
+        default_property_map = self.default_property_map
+
         always_shown_property_duids = self.always_shown_property_duids
 
         always_hidden_property_duids = self.always_hidden_property_duids
 
         property_order_duids = self.property_order_duids
+
+        property_width_map = self.property_width_map
 
         updated_by_client_duid: Union[None, Unset, str]
         if isinstance(self.updated_by_client_duid, Unset):
@@ -132,9 +140,11 @@ class Dartboard:
                 "index": index,
                 "startedAt": started_at,
                 "finishedAt": finished_at,
+                "defaultPropertyMap": default_property_map,
                 "alwaysShownPropertyDuids": always_shown_property_duids,
                 "alwaysHiddenPropertyDuids": always_hidden_property_duids,
                 "propertyOrderDuids": property_order_duids,
+                "propertyWidthMap": property_width_map,
             }
         )
         if updated_by_client_duid is not UNSET:
@@ -209,11 +219,15 @@ class Dartboard:
 
         finished_at = _parse_finished_at(d.pop("finishedAt"))
 
+        default_property_map = d.pop("defaultPropertyMap")
+
         always_shown_property_duids = cast(List[str], d.pop("alwaysShownPropertyDuids"))
 
         always_hidden_property_duids = cast(List[str], d.pop("alwaysHiddenPropertyDuids"))
 
         property_order_duids = cast(List[str], d.pop("propertyOrderDuids"))
+
+        property_width_map = d.pop("propertyWidthMap")
 
         def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
             if data is None:
@@ -238,9 +252,11 @@ class Dartboard:
             index=index,
             started_at=started_at,
             finished_at=finished_at,
+            default_property_map=default_property_map,
             always_shown_property_duids=always_shown_property_duids,
             always_hidden_property_duids=always_hidden_property_duids,
             property_order_duids=property_order_duids,
+            property_width_map=property_width_map,
             updated_by_client_duid=updated_by_client_duid,
         )
 

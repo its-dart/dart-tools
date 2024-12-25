@@ -15,7 +15,8 @@
 
 ## Sync API
 
-1. Run `admin/make-openapi.sh`
+1. Run `pip install openapi-python-client` as needed
+2. Run `admin/make-api.sh`
 
 
 ## Deploy setup
