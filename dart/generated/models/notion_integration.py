@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -22,9 +22,9 @@ class NotionIntegration:
     status: NotionIntegrationTenantExtensionStatus
     workspace_name: Union[None, str]
     workspace_icon: Union[None, str]
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         status = self.status.value
 
         workspace_name: Union[None, str]
@@ -33,7 +33,7 @@ class NotionIntegration:
         workspace_icon: Union[None, str]
         workspace_icon = self.workspace_icon
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -46,7 +46,7 @@ class NotionIntegration:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         status = NotionIntegrationTenantExtensionStatus(d.pop("status"))
 
@@ -74,7 +74,7 @@ class NotionIntegration:
         return notion_integration
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

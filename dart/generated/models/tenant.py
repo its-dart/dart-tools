@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -74,9 +74,9 @@ class Tenant:
     discord_integration: Union["DiscordIntegration", None]
     github_integration: Union["GithubIntegration", None]
     zapier_integration: Union["ZapierIntegration", None]
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         from ..models.discord_integration import DiscordIntegration
         from ..models.github_integration import GithubIntegration
         from ..models.notion_integration import NotionIntegration
@@ -121,43 +121,43 @@ class Tenant:
 
         webhook_secret = self.webhook_secret
 
-        saml_config: Union[Dict[str, Any], None]
+        saml_config: Union[None, dict[str, Any]]
         if isinstance(self.saml_config, SamlConfig):
             saml_config = self.saml_config.to_dict()
         else:
             saml_config = self.saml_config
 
-        notion_integration: Union[Dict[str, Any], None]
+        notion_integration: Union[None, dict[str, Any]]
         if isinstance(self.notion_integration, NotionIntegration):
             notion_integration = self.notion_integration.to_dict()
         else:
             notion_integration = self.notion_integration
 
-        slack_integration: Union[Dict[str, Any], None]
+        slack_integration: Union[None, dict[str, Any]]
         if isinstance(self.slack_integration, SlackIntegration):
             slack_integration = self.slack_integration.to_dict()
         else:
             slack_integration = self.slack_integration
 
-        discord_integration: Union[Dict[str, Any], None]
+        discord_integration: Union[None, dict[str, Any]]
         if isinstance(self.discord_integration, DiscordIntegration):
             discord_integration = self.discord_integration.to_dict()
         else:
             discord_integration = self.discord_integration
 
-        github_integration: Union[Dict[str, Any], None]
+        github_integration: Union[None, dict[str, Any]]
         if isinstance(self.github_integration, GithubIntegration):
             github_integration = self.github_integration.to_dict()
         else:
             github_integration = self.github_integration
 
-        zapier_integration: Union[Dict[str, Any], None]
+        zapier_integration: Union[None, dict[str, Any]]
         if isinstance(self.zapier_integration, ZapierIntegration):
             zapier_integration = self.zapier_integration.to_dict()
         else:
             zapier_integration = self.zapier_integration
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -191,7 +191,7 @@ class Tenant:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.discord_integration import DiscordIntegration
         from ..models.github_integration import GithubIntegration
         from ..models.notion_integration import NotionIntegration
@@ -362,7 +362,7 @@ class Tenant:
         return tenant
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

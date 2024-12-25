@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -84,15 +84,15 @@ class Transaction:
             * `webhook_create` - WEBHOOK_CREATE
             * `webhook_delete` - WEBHOOK_DELETE
             * `webhook_update` - WEBHOOK_UPDATE
-        operations (List['Operation']):
+        operations (list['Operation']):
     """
 
     duid: str
     kind: TransactionKind
-    operations: List["Operation"]
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    operations: list["Operation"]
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         duid = self.duid
 
         kind = self.kind.value
@@ -102,7 +102,7 @@ class Transaction:
             operations_item = operations_item_data.to_dict()
             operations.append(operations_item)
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -115,7 +115,7 @@ class Transaction:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.operation import Operation
 
         d = src_dict.copy()
@@ -140,7 +140,7 @@ class Transaction:
         return transaction
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

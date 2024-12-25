@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -17,7 +17,7 @@ class ViewCreate:
         order (str):
         layout_duid (str):
         accessible_by_team (Union[Unset, bool]):
-        accessible_by_user_duids (Union[Unset, List[str]]):
+        accessible_by_user_duids (Union[Unset, list[str]]):
         public (Union[Unset, bool]):
         title (Union[Unset, str]):
         description (Union[Unset, str]):
@@ -26,10 +26,10 @@ class ViewCreate:
             * `Emoji` - EMOJI
         icon_name_or_emoji (Union[Unset, str]):
         color_hex (Union[Unset, str]):
-        favorited_by_user_duids (Union[Unset, List[str]]):
-        always_shown_property_duids (Union[Unset, List[str]]):
-        always_hidden_property_duids (Union[Unset, List[str]]):
-        property_order_duids (Union[Unset, List[str]]):
+        favorited_by_user_duids (Union[Unset, list[str]]):
+        always_shown_property_duids (Union[Unset, list[str]]):
+        always_hidden_property_duids (Union[Unset, list[str]]):
+        property_order_duids (Union[Unset, list[str]]):
         property_width_map (Union[Unset, Any]):
     """
 
@@ -37,21 +37,21 @@ class ViewCreate:
     order: str
     layout_duid: str
     accessible_by_team: Union[Unset, bool] = UNSET
-    accessible_by_user_duids: Union[Unset, List[str]] = UNSET
+    accessible_by_user_duids: Union[Unset, list[str]] = UNSET
     public: Union[Unset, bool] = UNSET
     title: Union[Unset, str] = UNSET
     description: Union[Unset, str] = UNSET
     icon_kind: Union[Unset, IconKind] = UNSET
     icon_name_or_emoji: Union[Unset, str] = UNSET
     color_hex: Union[Unset, str] = UNSET
-    favorited_by_user_duids: Union[Unset, List[str]] = UNSET
-    always_shown_property_duids: Union[Unset, List[str]] = UNSET
-    always_hidden_property_duids: Union[Unset, List[str]] = UNSET
-    property_order_duids: Union[Unset, List[str]] = UNSET
+    favorited_by_user_duids: Union[Unset, list[str]] = UNSET
+    always_shown_property_duids: Union[Unset, list[str]] = UNSET
+    always_hidden_property_duids: Union[Unset, list[str]] = UNSET
+    property_order_duids: Union[Unset, list[str]] = UNSET
     property_width_map: Union[Unset, Any] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         duid = self.duid
 
         order = self.order
@@ -60,7 +60,7 @@ class ViewCreate:
 
         accessible_by_team = self.accessible_by_team
 
-        accessible_by_user_duids: Union[Unset, List[str]] = UNSET
+        accessible_by_user_duids: Union[Unset, list[str]] = UNSET
         if not isinstance(self.accessible_by_user_duids, Unset):
             accessible_by_user_duids = self.accessible_by_user_duids
 
@@ -78,25 +78,25 @@ class ViewCreate:
 
         color_hex = self.color_hex
 
-        favorited_by_user_duids: Union[Unset, List[str]] = UNSET
+        favorited_by_user_duids: Union[Unset, list[str]] = UNSET
         if not isinstance(self.favorited_by_user_duids, Unset):
             favorited_by_user_duids = self.favorited_by_user_duids
 
-        always_shown_property_duids: Union[Unset, List[str]] = UNSET
+        always_shown_property_duids: Union[Unset, list[str]] = UNSET
         if not isinstance(self.always_shown_property_duids, Unset):
             always_shown_property_duids = self.always_shown_property_duids
 
-        always_hidden_property_duids: Union[Unset, List[str]] = UNSET
+        always_hidden_property_duids: Union[Unset, list[str]] = UNSET
         if not isinstance(self.always_hidden_property_duids, Unset):
             always_hidden_property_duids = self.always_hidden_property_duids
 
-        property_order_duids: Union[Unset, List[str]] = UNSET
+        property_order_duids: Union[Unset, list[str]] = UNSET
         if not isinstance(self.property_order_duids, Unset):
             property_order_duids = self.property_order_duids
 
         property_width_map = self.property_width_map
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -135,7 +135,7 @@ class ViewCreate:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -145,7 +145,7 @@ class ViewCreate:
 
         accessible_by_team = d.pop("accessibleByTeam", UNSET)
 
-        accessible_by_user_duids = cast(List[str], d.pop("accessibleByUserDuids", UNSET))
+        accessible_by_user_duids = cast(list[str], d.pop("accessibleByUserDuids", UNSET))
 
         public = d.pop("public", UNSET)
 
@@ -164,13 +164,13 @@ class ViewCreate:
 
         color_hex = d.pop("colorHex", UNSET)
 
-        favorited_by_user_duids = cast(List[str], d.pop("favoritedByUserDuids", UNSET))
+        favorited_by_user_duids = cast(list[str], d.pop("favoritedByUserDuids", UNSET))
 
-        always_shown_property_duids = cast(List[str], d.pop("alwaysShownPropertyDuids", UNSET))
+        always_shown_property_duids = cast(list[str], d.pop("alwaysShownPropertyDuids", UNSET))
 
-        always_hidden_property_duids = cast(List[str], d.pop("alwaysHiddenPropertyDuids", UNSET))
+        always_hidden_property_duids = cast(list[str], d.pop("alwaysHiddenPropertyDuids", UNSET))
 
-        property_order_duids = cast(List[str], d.pop("propertyOrderDuids", UNSET))
+        property_order_duids = cast(list[str], d.pop("propertyOrderDuids", UNSET))
 
         property_width_map = d.pop("propertyWidthMap", UNSET)
 
@@ -197,7 +197,7 @@ class ViewCreate:
         return view_create
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:
