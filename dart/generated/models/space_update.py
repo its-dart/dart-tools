@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -19,7 +19,7 @@ class SpaceUpdate:
         duid (str):
         drafter_duid (Union[None, Unset, str]):
         accessible_by_team (Union[Unset, bool]):
-        accessible_by_user_duids (Union[Unset, List[str]]):
+        accessible_by_user_duids (Union[Unset, list[str]]):
         order (Union[Unset, str]):
         title (Union[Unset, str]):
         abrev (Union[Unset, str]):
@@ -37,12 +37,14 @@ class SpaceUpdate:
         standup_recurs_next_at (Union[None, Unset, datetime.datetime]):
         changelog_recurrence (Union[Any, None, Unset]):
         changelog_recurs_next_at (Union[None, Unset, datetime.datetime]):
+        rollover_recurrence (Union[Any, None, Unset]):
+        rollover_recurs_next_at (Union[None, Unset, datetime.datetime]):
     """
 
     duid: str
     drafter_duid: Union[None, Unset, str] = UNSET
     accessible_by_team: Union[Unset, bool] = UNSET
-    accessible_by_user_duids: Union[Unset, List[str]] = UNSET
+    accessible_by_user_duids: Union[Unset, list[str]] = UNSET
     order: Union[Unset, str] = UNSET
     title: Union[Unset, str] = UNSET
     abrev: Union[Unset, str] = UNSET
@@ -57,9 +59,11 @@ class SpaceUpdate:
     standup_recurs_next_at: Union[None, Unset, datetime.datetime] = UNSET
     changelog_recurrence: Union[Any, None, Unset] = UNSET
     changelog_recurs_next_at: Union[None, Unset, datetime.datetime] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    rollover_recurrence: Union[Any, None, Unset] = UNSET
+    rollover_recurs_next_at: Union[None, Unset, datetime.datetime] = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         duid = self.duid
 
         drafter_duid: Union[None, Unset, str]
@@ -70,7 +74,7 @@ class SpaceUpdate:
 
         accessible_by_team = self.accessible_by_team
 
-        accessible_by_user_duids: Union[Unset, List[str]] = UNSET
+        accessible_by_user_duids: Union[Unset, list[str]] = UNSET
         if not isinstance(self.accessible_by_user_duids, Unset):
             accessible_by_user_duids = self.accessible_by_user_duids
 
@@ -126,7 +130,21 @@ class SpaceUpdate:
         else:
             changelog_recurs_next_at = self.changelog_recurs_next_at
 
-        field_dict: Dict[str, Any] = {}
+        rollover_recurrence: Union[Any, None, Unset]
+        if isinstance(self.rollover_recurrence, Unset):
+            rollover_recurrence = UNSET
+        else:
+            rollover_recurrence = self.rollover_recurrence
+
+        rollover_recurs_next_at: Union[None, Unset, str]
+        if isinstance(self.rollover_recurs_next_at, Unset):
+            rollover_recurs_next_at = UNSET
+        elif isinstance(self.rollover_recurs_next_at, datetime.datetime):
+            rollover_recurs_next_at = self.rollover_recurs_next_at.isoformat()
+        else:
+            rollover_recurs_next_at = self.rollover_recurs_next_at
+
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -167,11 +185,15 @@ class SpaceUpdate:
             field_dict["changelogRecurrence"] = changelog_recurrence
         if changelog_recurs_next_at is not UNSET:
             field_dict["changelogRecursNextAt"] = changelog_recurs_next_at
+        if rollover_recurrence is not UNSET:
+            field_dict["rolloverRecurrence"] = rollover_recurrence
+        if rollover_recurs_next_at is not UNSET:
+            field_dict["rolloverRecursNextAt"] = rollover_recurs_next_at
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -186,7 +208,7 @@ class SpaceUpdate:
 
         accessible_by_team = d.pop("accessibleByTeam", UNSET)
 
-        accessible_by_user_duids = cast(List[str], d.pop("accessibleByUserDuids", UNSET))
+        accessible_by_user_duids = cast(list[str], d.pop("accessibleByUserDuids", UNSET))
 
         order = d.pop("order", UNSET)
 
@@ -270,6 +292,32 @@ class SpaceUpdate:
 
         changelog_recurs_next_at = _parse_changelog_recurs_next_at(d.pop("changelogRecursNextAt", UNSET))
 
+        def _parse_rollover_recurrence(data: object) -> Union[Any, None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[Any, None, Unset], data)
+
+        rollover_recurrence = _parse_rollover_recurrence(d.pop("rolloverRecurrence", UNSET))
+
+        def _parse_rollover_recurs_next_at(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                rollover_recurs_next_at_type_0 = isoparse(data)
+
+                return rollover_recurs_next_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        rollover_recurs_next_at = _parse_rollover_recurs_next_at(d.pop("rolloverRecursNextAt", UNSET))
+
         space_update = cls(
             duid=duid,
             drafter_duid=drafter_duid,
@@ -289,13 +337,15 @@ class SpaceUpdate:
             standup_recurs_next_at=standup_recurs_next_at,
             changelog_recurrence=changelog_recurrence,
             changelog_recurs_next_at=changelog_recurs_next_at,
+            rollover_recurrence=rollover_recurrence,
+            rollover_recurs_next_at=rollover_recurs_next_at,
         )
 
         space_update.additional_properties = d
         return space_update
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

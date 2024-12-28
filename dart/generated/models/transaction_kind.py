@@ -58,6 +58,7 @@ class TransactionKind(str, Enum):
     TASK_RENAME = "task_rename"
     TASK_UPDATE = "task_update"
     TENANT_UPDATE = "tenant_update"
+    UNDO_SPRINT_ROLLOVER = "undo_sprint_rollover"
     USER_DARTBOARD_LAYOUT_CREATE = "user_dartboard_layout_create"
     USER_DARTBOARD_LAYOUT_DELETE = "user_dartboard_layout_delete"
     USER_DARTBOARD_LAYOUT_UPDATE = "user_dartboard_layout_update"

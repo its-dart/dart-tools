@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class NumberChartAggregation(str, Enum):
+class ChartAggregation(str, Enum):
     AVG = "avg"
     COUNT = "count"
     SUM = "sum"

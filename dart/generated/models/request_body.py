@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -14,15 +14,15 @@ T = TypeVar("T", bound="RequestBody")
 class RequestBody:
     """
     Attributes:
-        items (List['Transaction']):
+        items (list['Transaction']):
         client_duid (str):
     """
 
-    items: List["Transaction"]
+    items: list["Transaction"]
     client_duid: str
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         items = []
         for items_item_data in self.items:
             items_item = items_item_data.to_dict()
@@ -30,7 +30,7 @@ class RequestBody:
 
         client_duid = self.client_duid
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -42,7 +42,7 @@ class RequestBody:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.transaction import Transaction
 
         d = src_dict.copy()
@@ -64,7 +64,7 @@ class RequestBody:
         return request_body
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

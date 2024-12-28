@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -25,7 +25,7 @@ class BrainstormUpdate:
             * `Paused` - PAUSED
             * `Stopped` - STOPPED
         after_start_ms (Union[Unset, int]):
-        created_tasks_duids (Union[Unset, List[str]]):
+        created_tasks_duids (Union[Unset, list[str]]):
     """
 
     duid: str
@@ -36,10 +36,10 @@ class BrainstormUpdate:
     started_at: Union[Unset, datetime.datetime] = UNSET
     state: Union[Unset, BrainstormState] = UNSET
     after_start_ms: Union[Unset, int] = UNSET
-    created_tasks_duids: Union[Unset, List[str]] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    created_tasks_duids: Union[Unset, list[str]] = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         duid = self.duid
 
         dartboard_duid = self.dartboard_duid
@@ -60,11 +60,11 @@ class BrainstormUpdate:
 
         after_start_ms = self.after_start_ms
 
-        created_tasks_duids: Union[Unset, List[str]] = UNSET
+        created_tasks_duids: Union[Unset, list[str]] = UNSET
         if not isinstance(self.created_tasks_duids, Unset):
             created_tasks_duids = self.created_tasks_duids
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -91,7 +91,7 @@ class BrainstormUpdate:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -119,7 +119,7 @@ class BrainstormUpdate:
 
         after_start_ms = d.pop("afterStartMs", UNSET)
 
-        created_tasks_duids = cast(List[str], d.pop("createdTasksDuids", UNSET))
+        created_tasks_duids = cast(list[str], d.pop("createdTasksDuids", UNSET))
 
         brainstorm_update = cls(
             duid=duid,
@@ -137,7 +137,7 @@ class BrainstormUpdate:
         return brainstorm_update
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:
