@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -17,18 +17,18 @@ class PaginatedOptionList:
     """
     Attributes:
         count (int):  Example: 123.
-        results (list['Option']):
+        results (List['Option']):
         next_ (Union[None, Unset, str]):  Example: http://api.example.org/accounts/?offset=400&limit=100.
         previous (Union[None, Unset, str]):  Example: http://api.example.org/accounts/?offset=200&limit=100.
     """
 
     count: int
-    results: list["Option"]
+    results: List["Option"]
     next_: Union[None, Unset, str] = UNSET
     previous: Union[None, Unset, str] = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         count = self.count
 
         results = []
@@ -48,7 +48,7 @@ class PaginatedOptionList:
         else:
             previous = self.previous
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -64,7 +64,7 @@ class PaginatedOptionList:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.option import Option
 
         d = src_dict.copy()
@@ -106,7 +106,7 @@ class PaginatedOptionList:
         return paginated_option_list
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

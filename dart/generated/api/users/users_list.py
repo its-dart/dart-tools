@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
@@ -16,8 +16,8 @@ def _get_kwargs(
     name: Union[Unset, str] = UNSET,
     offset: Union[Unset, int] = UNSET,
     role: Union[Unset, str] = UNSET,
-) -> dict[str, Any]:
-    params: dict[str, Any] = {}
+) -> Dict[str, Any]:
+    params: Dict[str, Any] = {}
 
     params["email"] = email
 
@@ -31,7 +31,7 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": "/api/v0/users",
         "params": params,
@@ -43,7 +43,7 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[PaginatedUserList]:
-    if response.status_code == 200:
+    if response.status_code == HTTPStatus.OK:
         response_200 = PaginatedUserList.from_dict(response.json())
 
         return response_200

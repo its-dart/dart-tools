@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
@@ -14,8 +14,8 @@ def _get_kwargs(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     title: Union[Unset, str] = UNSET,
-) -> dict[str, Any]:
-    params: dict[str, Any] = {}
+) -> Dict[str, Any]:
+    params: Dict[str, Any] = {}
 
     params["limit"] = limit
 
@@ -25,7 +25,7 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": "/api/v0/dashboards",
         "params": params,
@@ -37,7 +37,7 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[PaginatedDashboardList]:
-    if response.status_code == 200:
+    if response.status_code == HTTPStatus.OK:
         response_200 = PaginatedDashboardList.from_dict(response.json())
 
         return response_200

@@ -1,4 +1,4 @@
-from typing import Any, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -33,8 +33,8 @@ class DocUpdate:
         text_markdown (Union[Unset, str]):
         edited_by_ai (Union[Unset, bool]):
         recommendation_duid (Union[None, Unset, str]):
-        editor_duids (Union[Unset, list[str]]):
-        subscriber_duids (Union[Unset, list[str]]):
+        editor_duids (Union[Unset, List[str]]):
+        subscriber_duids (Union[Unset, List[str]]):
         icon_kind (Union[Unset, IconKind]): * `None` - NONE
             * `Icon` - ICON
             * `Emoji` - EMOJI
@@ -55,14 +55,14 @@ class DocUpdate:
     text_markdown: Union[Unset, str] = UNSET
     edited_by_ai: Union[Unset, bool] = UNSET
     recommendation_duid: Union[None, Unset, str] = UNSET
-    editor_duids: Union[Unset, list[str]] = UNSET
-    subscriber_duids: Union[Unset, list[str]] = UNSET
+    editor_duids: Union[Unset, List[str]] = UNSET
+    subscriber_duids: Union[Unset, List[str]] = UNSET
     icon_kind: Union[Unset, IconKind] = UNSET
     icon_name_or_emoji: Union[Unset, str] = UNSET
     color_hex: Union[Unset, str] = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
 
         source_user: Union[None, Unset, str]
@@ -109,11 +109,11 @@ class DocUpdate:
         else:
             recommendation_duid = self.recommendation_duid
 
-        editor_duids: Union[Unset, list[str]] = UNSET
+        editor_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.editor_duids, Unset):
             editor_duids = self.editor_duids
 
-        subscriber_duids: Union[Unset, list[str]] = UNSET
+        subscriber_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.subscriber_duids, Unset):
             subscriber_duids = self.subscriber_duids
 
@@ -125,7 +125,7 @@ class DocUpdate:
 
         color_hex = self.color_hex
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -170,7 +170,7 @@ class DocUpdate:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -239,9 +239,9 @@ class DocUpdate:
 
         recommendation_duid = _parse_recommendation_duid(d.pop("recommendationDuid", UNSET))
 
-        editor_duids = cast(list[str], d.pop("editorDuids", UNSET))
+        editor_duids = cast(List[str], d.pop("editorDuids", UNSET))
 
-        subscriber_duids = cast(list[str], d.pop("subscriberDuids", UNSET))
+        subscriber_duids = cast(List[str], d.pop("subscriberDuids", UNSET))
 
         _icon_kind = d.pop("iconKind", UNSET)
         icon_kind: Union[Unset, IconKind]
@@ -279,7 +279,7 @@ class DocUpdate:
         return doc_update
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

@@ -1,4 +1,4 @@
-from typing import Any, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -20,15 +20,15 @@ class NumberChartAdtl:
 
     property_duid: Union[None, str]
     aggregation: ChartAggregation
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         property_duid: Union[None, str]
         property_duid = self.property_duid
 
         aggregation = self.aggregation.value
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -40,7 +40,7 @@ class NumberChartAdtl:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
 
         def _parse_property_duid(data: object) -> Union[None, str]:
@@ -61,7 +61,7 @@ class NumberChartAdtl:
         return number_chart_adtl
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

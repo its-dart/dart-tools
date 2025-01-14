@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -19,7 +19,7 @@ class Dashboard:
     Attributes:
         duid (str):
         accessible_by_team (bool):
-        accessible_by_user_duids (list[str]):
+        accessible_by_user_duids (List[str]):
         order (str):
         title (str):
         description (str):
@@ -29,14 +29,14 @@ class Dashboard:
         icon_name_or_emoji (str):
         color_hex (str):
         layout_duid (str):
-        favorited_by_user_duids (list[str]):
-        charts (list['Chart']):
+        favorited_by_user_duids (List[str]):
+        charts (List['Chart']):
         updated_by_client_duid (Union[None, Unset, str]):
     """
 
     duid: str
     accessible_by_team: bool
-    accessible_by_user_duids: list[str]
+    accessible_by_user_duids: List[str]
     order: str
     title: str
     description: str
@@ -44,12 +44,12 @@ class Dashboard:
     icon_name_or_emoji: str
     color_hex: str
     layout_duid: str
-    favorited_by_user_duids: list[str]
-    charts: list["Chart"]
+    favorited_by_user_duids: List[str]
+    charts: List["Chart"]
     updated_by_client_duid: Union[None, Unset, str] = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
 
         accessible_by_team = self.accessible_by_team
@@ -83,7 +83,7 @@ class Dashboard:
         else:
             updated_by_client_duid = self.updated_by_client_duid
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -107,7 +107,7 @@ class Dashboard:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.chart import Chart
 
         d = src_dict.copy()
@@ -115,7 +115,7 @@ class Dashboard:
 
         accessible_by_team = d.pop("accessibleByTeam")
 
-        accessible_by_user_duids = cast(list[str], d.pop("accessibleByUserDuids"))
+        accessible_by_user_duids = cast(List[str], d.pop("accessibleByUserDuids"))
 
         order = d.pop("order")
 
@@ -131,7 +131,7 @@ class Dashboard:
 
         layout_duid = d.pop("layoutDuid")
 
-        favorited_by_user_duids = cast(list[str], d.pop("favoritedByUserDuids"))
+        favorited_by_user_duids = cast(List[str], d.pop("favoritedByUserDuids"))
 
         charts = []
         _charts = d.pop("charts")
@@ -169,7 +169,7 @@ class Dashboard:
         return dashboard
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

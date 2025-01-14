@@ -1,4 +1,4 @@
-from typing import Any, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -14,7 +14,7 @@ T = TypeVar("T", bound="Event")
 class Event:
     """
     Attributes:
-        message_frags (Union[None, list[Any]]):
+        message_frags (Union[List[Any], None]):
         kind (EventKind): * `tasks/create` - TASK_CREATE
             * `tasks/update_assignees` - TASK_UPDATE_ASSIGNEES
             * `tasks/update_status` - TASK_UPDATE_STATUS
@@ -129,7 +129,7 @@ class Event:
         adtl (Any):
     """
 
-    message_frags: Union[None, list[Any]]
+    message_frags: Union[List[Any], None]
     kind: EventKind
     actor_duid: Union[None, str]
     actor_str: Union[EventActor, None]
@@ -148,10 +148,10 @@ class Event:
     status_duid: Union[None, str]
     user_duid: Union[None, str]
     adtl: Any
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
-        message_frags: Union[None, list[Any]]
+    def to_dict(self) -> Dict[str, Any]:
+        message_frags: Union[List[Any], None]
         if isinstance(self.message_frags, list):
             message_frags = self.message_frags
 
@@ -212,7 +212,7 @@ class Event:
 
         adtl = self.adtl
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -241,21 +241,21 @@ class Event:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
 
-        def _parse_message_frags(data: object) -> Union[None, list[Any]]:
+        def _parse_message_frags(data: object) -> Union[List[Any], None]:
             if data is None:
                 return data
             try:
                 if not isinstance(data, list):
                     raise TypeError()
-                message_frags_type_0 = cast(list[Any], data)
+                message_frags_type_0 = cast(List[Any], data)
 
                 return message_frags_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[None, list[Any]], data)
+            return cast(Union[List[Any], None], data)
 
         message_frags = _parse_message_frags(d.pop("messageFrags"))
 
@@ -404,7 +404,7 @@ class Event:
         return event
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

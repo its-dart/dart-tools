@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -27,7 +27,7 @@ class Comment:
         author_duid (str):
         text (Any):
         published_at (Union[None, datetime.datetime]):
-        reactions (list['CommentReaction']):
+        reactions (List['CommentReaction']):
         is_draft (bool):
         edited (bool):
         updated_by_client_duid (Union[None, Unset, str]):
@@ -42,13 +42,13 @@ class Comment:
     author_duid: str
     text: Any
     published_at: Union[None, datetime.datetime]
-    reactions: list["CommentReaction"]
+    reactions: List["CommentReaction"]
     is_draft: bool
     edited: bool
     updated_by_client_duid: Union[None, Unset, str] = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
 
         created_at = self.created_at.isoformat()
@@ -87,7 +87,7 @@ class Comment:
         else:
             updated_by_client_duid = self.updated_by_client_duid
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -111,7 +111,7 @@ class Comment:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.comment_reaction import CommentReaction
 
         d = src_dict.copy()
@@ -191,7 +191,7 @@ class Comment:
         return comment
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

@@ -1,4 +1,4 @@
-from typing import Any, TypeVar, cast
+from typing import Any, Dict, List, Type, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -33,7 +33,7 @@ class FilterAssignee:
             * `is unchecked` - IS_UNCHECKED
         connector (FilterConnector): * `or` - OR
             * `and` - AND
-        values (list[Any]):
+        values (List[Any]):
     """
 
     id: str
@@ -41,10 +41,10 @@ class FilterAssignee:
     locked: bool
     applicability: FilterApplicability
     connector: FilterConnector
-    values: list[Any]
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    values: List[Any]
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         id = self.id
 
         field = self.field
@@ -57,7 +57,7 @@ class FilterAssignee:
 
         values = self.values
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -73,7 +73,7 @@ class FilterAssignee:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         id = d.pop("id")
 
@@ -85,7 +85,7 @@ class FilterAssignee:
 
         connector = FilterConnector(d.pop("connector"))
 
-        values = cast(list[Any], d.pop("values"))
+        values = cast(List[Any], d.pop("values"))
 
         filter_assignee = cls(
             id=id,
@@ -100,7 +100,7 @@ class FilterAssignee:
         return filter_assignee
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

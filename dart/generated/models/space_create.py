@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -20,7 +20,7 @@ class SpaceCreate:
         order (str):
         drafter_duid (Union[None, Unset, str]):
         accessible_by_team (Union[Unset, bool]):
-        accessible_by_user_duids (Union[Unset, list[str]]):
+        accessible_by_user_duids (Union[Unset, List[str]]):
         title (Union[Unset, str]):
         abrev (Union[Unset, str]):
         description (Union[Unset, str]):
@@ -45,7 +45,7 @@ class SpaceCreate:
     order: str
     drafter_duid: Union[None, Unset, str] = UNSET
     accessible_by_team: Union[Unset, bool] = UNSET
-    accessible_by_user_duids: Union[Unset, list[str]] = UNSET
+    accessible_by_user_duids: Union[Unset, List[str]] = UNSET
     title: Union[Unset, str] = UNSET
     abrev: Union[Unset, str] = UNSET
     description: Union[Unset, str] = UNSET
@@ -61,9 +61,9 @@ class SpaceCreate:
     changelog_recurs_next_at: Union[None, Unset, datetime.datetime] = UNSET
     rollover_recurrence: Union[Any, None, Unset] = UNSET
     rollover_recurs_next_at: Union[None, Unset, datetime.datetime] = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
 
         order = self.order
@@ -76,7 +76,7 @@ class SpaceCreate:
 
         accessible_by_team = self.accessible_by_team
 
-        accessible_by_user_duids: Union[Unset, list[str]] = UNSET
+        accessible_by_user_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.accessible_by_user_duids, Unset):
             accessible_by_user_duids = self.accessible_by_user_duids
 
@@ -144,7 +144,7 @@ class SpaceCreate:
         else:
             rollover_recurs_next_at = self.rollover_recurs_next_at
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -192,7 +192,7 @@ class SpaceCreate:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -209,7 +209,7 @@ class SpaceCreate:
 
         accessible_by_team = d.pop("accessibleByTeam", UNSET)
 
-        accessible_by_user_duids = cast(list[str], d.pop("accessibleByUserDuids", UNSET))
+        accessible_by_user_duids = cast(List[str], d.pop("accessibleByUserDuids", UNSET))
 
         title = d.pop("title", UNSET)
 
@@ -344,7 +344,7 @@ class SpaceCreate:
         return space_create
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

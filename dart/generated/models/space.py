@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -23,7 +23,7 @@ class Space:
             * `Workspace` - WORKSPACE
             * `Personal` - PERSONAL
         accessible_by_team (bool):
-        accessible_by_user_duids (list[str]):
+        accessible_by_user_duids (List[str]):
         order (str):
         title (str):
         abrev (str):
@@ -50,7 +50,7 @@ class Space:
     drafter_duid: Union[None, str]
     kind: SpaceKind
     accessible_by_team: bool
-    accessible_by_user_duids: list[str]
+    accessible_by_user_duids: List[str]
     order: str
     title: str
     abrev: str
@@ -68,9 +68,9 @@ class Space:
     rollover_recurrence: Union[Any, None]
     rollover_recurs_next_at: Union[None, datetime.datetime]
     updated_by_client_duid: Union[None, Unset, str] = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
 
         drafter_duid: Union[None, str]
@@ -135,7 +135,7 @@ class Space:
         else:
             updated_by_client_duid = self.updated_by_client_duid
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -168,7 +168,7 @@ class Space:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -183,7 +183,7 @@ class Space:
 
         accessible_by_team = d.pop("accessibleByTeam")
 
-        accessible_by_user_duids = cast(list[str], d.pop("accessibleByUserDuids"))
+        accessible_by_user_duids = cast(List[str], d.pop("accessibleByUserDuids"))
 
         order = d.pop("order")
 
@@ -309,7 +309,7 @@ class Space:
         return space
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

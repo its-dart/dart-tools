@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -34,9 +34,9 @@ class TaskNotionDocument:
     page_map: Union["TaskNotionDocumentPageMapType0", None]
     block_map: Union["TaskNotionDocumentBlockMapType0", None]
     block_children_map: Union["TaskNotionDocumentBlockChildrenMapType0", None]
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         from ..models.task_notion_document_block_children_map_type_0 import TaskNotionDocumentBlockChildrenMapType0
         from ..models.task_notion_document_block_map_type_0 import TaskNotionDocumentBlockMapType0
         from ..models.task_notion_document_page_map_type_0 import TaskNotionDocumentPageMapType0
@@ -54,25 +54,25 @@ class TaskNotionDocument:
         else:
             last_refresh_at = self.last_refresh_at
 
-        page_map: Union[None, dict[str, Any]]
+        page_map: Union[Dict[str, Any], None]
         if isinstance(self.page_map, TaskNotionDocumentPageMapType0):
             page_map = self.page_map.to_dict()
         else:
             page_map = self.page_map
 
-        block_map: Union[None, dict[str, Any]]
+        block_map: Union[Dict[str, Any], None]
         if isinstance(self.block_map, TaskNotionDocumentBlockMapType0):
             block_map = self.block_map.to_dict()
         else:
             block_map = self.block_map
 
-        block_children_map: Union[None, dict[str, Any]]
+        block_children_map: Union[Dict[str, Any], None]
         if isinstance(self.block_children_map, TaskNotionDocumentBlockChildrenMapType0):
             block_children_map = self.block_children_map.to_dict()
         else:
             block_children_map = self.block_children_map
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -89,7 +89,7 @@ class TaskNotionDocument:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.task_notion_document_block_children_map_type_0 import TaskNotionDocumentBlockChildrenMapType0
         from ..models.task_notion_document_block_map_type_0 import TaskNotionDocumentBlockMapType0
         from ..models.task_notion_document_page_map_type_0 import TaskNotionDocumentPageMapType0
@@ -180,7 +180,7 @@ class TaskNotionDocument:
         return task_notion_document
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

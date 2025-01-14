@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -53,273 +53,273 @@ class ModelsResponse:
     }
 
         Attributes:
-            attachments (Union[Unset, list['Attachment']]):
-            brainstorms (Union[Unset, list['Brainstorm']]):
-            comments (Union[Unset, list['Comment']]):
-            reactions (Union[Unset, list['CommentReaction']]):
-            dartboards (Union[Unset, list['Dartboard']]):
-            dashboards (Union[Unset, list['Dashboard']]):
-            docs (Union[Unset, list['Doc']]):
-            events (Union[Unset, list['Event']]):
-            event_subscriptions (Union[Unset, list['EventSubscription']]):
-            folders (Union[Unset, list['Folder']]):
-            forms (Union[Unset, list['Form']]):
-            form_fields (Union[Unset, list['FormField']]):
-            layouts (Union[Unset, list['Layout']]):
-            notifications (Union[Unset, list['Notification']]):
-            options (Union[Unset, list['Option']]):
-            properties (Union[Unset, list['Property']]):
-            relationships (Union[Unset, list['Relationship']]):
-            relationship_kinds (Union[Unset, list['RelationshipKind']]):
-            spaces (Union[Unset, list['Space']]):
-            statuses (Union[Unset, list['Status']]):
-            tasks (Union[Unset, list['Task']]):
-            task_doc_relationships (Union[Unset, list['TaskDocRelationship']]):
-            task_kinds (Union[Unset, list['TaskKind']]):
-            links (Union[Unset, list['TaskLink']]):
-            tenants (Union[Unset, list['Tenant']]):
-            users (Union[Unset, list['User']]):
-            user_dartboard_layouts (Union[Unset, list['UserDartboardLayout']]):
-            views (Union[Unset, list['View']]):
-            webhooks (Union[Unset, list['Webhook']]):
+            attachments (Union[Unset, List['Attachment']]):
+            brainstorms (Union[Unset, List['Brainstorm']]):
+            comments (Union[Unset, List['Comment']]):
+            reactions (Union[Unset, List['CommentReaction']]):
+            dartboards (Union[Unset, List['Dartboard']]):
+            dashboards (Union[Unset, List['Dashboard']]):
+            docs (Union[Unset, List['Doc']]):
+            events (Union[Unset, List['Event']]):
+            event_subscriptions (Union[Unset, List['EventSubscription']]):
+            folders (Union[Unset, List['Folder']]):
+            forms (Union[Unset, List['Form']]):
+            form_fields (Union[Unset, List['FormField']]):
+            layouts (Union[Unset, List['Layout']]):
+            notifications (Union[Unset, List['Notification']]):
+            options (Union[Unset, List['Option']]):
+            properties (Union[Unset, List['Property']]):
+            relationships (Union[Unset, List['Relationship']]):
+            relationship_kinds (Union[Unset, List['RelationshipKind']]):
+            spaces (Union[Unset, List['Space']]):
+            statuses (Union[Unset, List['Status']]):
+            tasks (Union[Unset, List['Task']]):
+            task_doc_relationships (Union[Unset, List['TaskDocRelationship']]):
+            task_kinds (Union[Unset, List['TaskKind']]):
+            links (Union[Unset, List['TaskLink']]):
+            tenants (Union[Unset, List['Tenant']]):
+            users (Union[Unset, List['User']]):
+            user_dartboard_layouts (Union[Unset, List['UserDartboardLayout']]):
+            views (Union[Unset, List['View']]):
+            webhooks (Union[Unset, List['Webhook']]):
     """
 
-    attachments: Union[Unset, list["Attachment"]] = UNSET
-    brainstorms: Union[Unset, list["Brainstorm"]] = UNSET
-    comments: Union[Unset, list["Comment"]] = UNSET
-    reactions: Union[Unset, list["CommentReaction"]] = UNSET
-    dartboards: Union[Unset, list["Dartboard"]] = UNSET
-    dashboards: Union[Unset, list["Dashboard"]] = UNSET
-    docs: Union[Unset, list["Doc"]] = UNSET
-    events: Union[Unset, list["Event"]] = UNSET
-    event_subscriptions: Union[Unset, list["EventSubscription"]] = UNSET
-    folders: Union[Unset, list["Folder"]] = UNSET
-    forms: Union[Unset, list["Form"]] = UNSET
-    form_fields: Union[Unset, list["FormField"]] = UNSET
-    layouts: Union[Unset, list["Layout"]] = UNSET
-    notifications: Union[Unset, list["Notification"]] = UNSET
-    options: Union[Unset, list["Option"]] = UNSET
-    properties: Union[Unset, list["Property"]] = UNSET
-    relationships: Union[Unset, list["Relationship"]] = UNSET
-    relationship_kinds: Union[Unset, list["RelationshipKind"]] = UNSET
-    spaces: Union[Unset, list["Space"]] = UNSET
-    statuses: Union[Unset, list["Status"]] = UNSET
-    tasks: Union[Unset, list["Task"]] = UNSET
-    task_doc_relationships: Union[Unset, list["TaskDocRelationship"]] = UNSET
-    task_kinds: Union[Unset, list["TaskKind"]] = UNSET
-    links: Union[Unset, list["TaskLink"]] = UNSET
-    tenants: Union[Unset, list["Tenant"]] = UNSET
-    users: Union[Unset, list["User"]] = UNSET
-    user_dartboard_layouts: Union[Unset, list["UserDartboardLayout"]] = UNSET
-    views: Union[Unset, list["View"]] = UNSET
-    webhooks: Union[Unset, list["Webhook"]] = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    attachments: Union[Unset, List["Attachment"]] = UNSET
+    brainstorms: Union[Unset, List["Brainstorm"]] = UNSET
+    comments: Union[Unset, List["Comment"]] = UNSET
+    reactions: Union[Unset, List["CommentReaction"]] = UNSET
+    dartboards: Union[Unset, List["Dartboard"]] = UNSET
+    dashboards: Union[Unset, List["Dashboard"]] = UNSET
+    docs: Union[Unset, List["Doc"]] = UNSET
+    events: Union[Unset, List["Event"]] = UNSET
+    event_subscriptions: Union[Unset, List["EventSubscription"]] = UNSET
+    folders: Union[Unset, List["Folder"]] = UNSET
+    forms: Union[Unset, List["Form"]] = UNSET
+    form_fields: Union[Unset, List["FormField"]] = UNSET
+    layouts: Union[Unset, List["Layout"]] = UNSET
+    notifications: Union[Unset, List["Notification"]] = UNSET
+    options: Union[Unset, List["Option"]] = UNSET
+    properties: Union[Unset, List["Property"]] = UNSET
+    relationships: Union[Unset, List["Relationship"]] = UNSET
+    relationship_kinds: Union[Unset, List["RelationshipKind"]] = UNSET
+    spaces: Union[Unset, List["Space"]] = UNSET
+    statuses: Union[Unset, List["Status"]] = UNSET
+    tasks: Union[Unset, List["Task"]] = UNSET
+    task_doc_relationships: Union[Unset, List["TaskDocRelationship"]] = UNSET
+    task_kinds: Union[Unset, List["TaskKind"]] = UNSET
+    links: Union[Unset, List["TaskLink"]] = UNSET
+    tenants: Union[Unset, List["Tenant"]] = UNSET
+    users: Union[Unset, List["User"]] = UNSET
+    user_dartboard_layouts: Union[Unset, List["UserDartboardLayout"]] = UNSET
+    views: Union[Unset, List["View"]] = UNSET
+    webhooks: Union[Unset, List["Webhook"]] = UNSET
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
-        attachments: Union[Unset, list[dict[str, Any]]] = UNSET
+    def to_dict(self) -> Dict[str, Any]:
+        attachments: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.attachments, Unset):
             attachments = []
             for attachments_item_data in self.attachments:
                 attachments_item = attachments_item_data.to_dict()
                 attachments.append(attachments_item)
 
-        brainstorms: Union[Unset, list[dict[str, Any]]] = UNSET
+        brainstorms: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.brainstorms, Unset):
             brainstorms = []
             for brainstorms_item_data in self.brainstorms:
                 brainstorms_item = brainstorms_item_data.to_dict()
                 brainstorms.append(brainstorms_item)
 
-        comments: Union[Unset, list[dict[str, Any]]] = UNSET
+        comments: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.comments, Unset):
             comments = []
             for comments_item_data in self.comments:
                 comments_item = comments_item_data.to_dict()
                 comments.append(comments_item)
 
-        reactions: Union[Unset, list[dict[str, Any]]] = UNSET
+        reactions: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.reactions, Unset):
             reactions = []
             for reactions_item_data in self.reactions:
                 reactions_item = reactions_item_data.to_dict()
                 reactions.append(reactions_item)
 
-        dartboards: Union[Unset, list[dict[str, Any]]] = UNSET
+        dartboards: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.dartboards, Unset):
             dartboards = []
             for dartboards_item_data in self.dartboards:
                 dartboards_item = dartboards_item_data.to_dict()
                 dartboards.append(dartboards_item)
 
-        dashboards: Union[Unset, list[dict[str, Any]]] = UNSET
+        dashboards: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.dashboards, Unset):
             dashboards = []
             for dashboards_item_data in self.dashboards:
                 dashboards_item = dashboards_item_data.to_dict()
                 dashboards.append(dashboards_item)
 
-        docs: Union[Unset, list[dict[str, Any]]] = UNSET
+        docs: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.docs, Unset):
             docs = []
             for docs_item_data in self.docs:
                 docs_item = docs_item_data.to_dict()
                 docs.append(docs_item)
 
-        events: Union[Unset, list[dict[str, Any]]] = UNSET
+        events: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.events, Unset):
             events = []
             for events_item_data in self.events:
                 events_item = events_item_data.to_dict()
                 events.append(events_item)
 
-        event_subscriptions: Union[Unset, list[dict[str, Any]]] = UNSET
+        event_subscriptions: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.event_subscriptions, Unset):
             event_subscriptions = []
             for event_subscriptions_item_data in self.event_subscriptions:
                 event_subscriptions_item = event_subscriptions_item_data.to_dict()
                 event_subscriptions.append(event_subscriptions_item)
 
-        folders: Union[Unset, list[dict[str, Any]]] = UNSET
+        folders: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.folders, Unset):
             folders = []
             for folders_item_data in self.folders:
                 folders_item = folders_item_data.to_dict()
                 folders.append(folders_item)
 
-        forms: Union[Unset, list[dict[str, Any]]] = UNSET
+        forms: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.forms, Unset):
             forms = []
             for forms_item_data in self.forms:
                 forms_item = forms_item_data.to_dict()
                 forms.append(forms_item)
 
-        form_fields: Union[Unset, list[dict[str, Any]]] = UNSET
+        form_fields: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.form_fields, Unset):
             form_fields = []
             for form_fields_item_data in self.form_fields:
                 form_fields_item = form_fields_item_data.to_dict()
                 form_fields.append(form_fields_item)
 
-        layouts: Union[Unset, list[dict[str, Any]]] = UNSET
+        layouts: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.layouts, Unset):
             layouts = []
             for layouts_item_data in self.layouts:
                 layouts_item = layouts_item_data.to_dict()
                 layouts.append(layouts_item)
 
-        notifications: Union[Unset, list[dict[str, Any]]] = UNSET
+        notifications: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.notifications, Unset):
             notifications = []
             for notifications_item_data in self.notifications:
                 notifications_item = notifications_item_data.to_dict()
                 notifications.append(notifications_item)
 
-        options: Union[Unset, list[dict[str, Any]]] = UNSET
+        options: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.options, Unset):
             options = []
             for options_item_data in self.options:
                 options_item = options_item_data.to_dict()
                 options.append(options_item)
 
-        properties: Union[Unset, list[dict[str, Any]]] = UNSET
+        properties: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.properties, Unset):
             properties = []
             for properties_item_data in self.properties:
                 properties_item = properties_item_data.to_dict()
                 properties.append(properties_item)
 
-        relationships: Union[Unset, list[dict[str, Any]]] = UNSET
+        relationships: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.relationships, Unset):
             relationships = []
             for relationships_item_data in self.relationships:
                 relationships_item = relationships_item_data.to_dict()
                 relationships.append(relationships_item)
 
-        relationship_kinds: Union[Unset, list[dict[str, Any]]] = UNSET
+        relationship_kinds: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.relationship_kinds, Unset):
             relationship_kinds = []
             for relationship_kinds_item_data in self.relationship_kinds:
                 relationship_kinds_item = relationship_kinds_item_data.to_dict()
                 relationship_kinds.append(relationship_kinds_item)
 
-        spaces: Union[Unset, list[dict[str, Any]]] = UNSET
+        spaces: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.spaces, Unset):
             spaces = []
             for spaces_item_data in self.spaces:
                 spaces_item = spaces_item_data.to_dict()
                 spaces.append(spaces_item)
 
-        statuses: Union[Unset, list[dict[str, Any]]] = UNSET
+        statuses: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.statuses, Unset):
             statuses = []
             for statuses_item_data in self.statuses:
                 statuses_item = statuses_item_data.to_dict()
                 statuses.append(statuses_item)
 
-        tasks: Union[Unset, list[dict[str, Any]]] = UNSET
+        tasks: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.tasks, Unset):
             tasks = []
             for tasks_item_data in self.tasks:
                 tasks_item = tasks_item_data.to_dict()
                 tasks.append(tasks_item)
 
-        task_doc_relationships: Union[Unset, list[dict[str, Any]]] = UNSET
+        task_doc_relationships: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.task_doc_relationships, Unset):
             task_doc_relationships = []
             for task_doc_relationships_item_data in self.task_doc_relationships:
                 task_doc_relationships_item = task_doc_relationships_item_data.to_dict()
                 task_doc_relationships.append(task_doc_relationships_item)
 
-        task_kinds: Union[Unset, list[dict[str, Any]]] = UNSET
+        task_kinds: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.task_kinds, Unset):
             task_kinds = []
             for task_kinds_item_data in self.task_kinds:
                 task_kinds_item = task_kinds_item_data.to_dict()
                 task_kinds.append(task_kinds_item)
 
-        links: Union[Unset, list[dict[str, Any]]] = UNSET
+        links: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.links, Unset):
             links = []
             for links_item_data in self.links:
                 links_item = links_item_data.to_dict()
                 links.append(links_item)
 
-        tenants: Union[Unset, list[dict[str, Any]]] = UNSET
+        tenants: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.tenants, Unset):
             tenants = []
             for tenants_item_data in self.tenants:
                 tenants_item = tenants_item_data.to_dict()
                 tenants.append(tenants_item)
 
-        users: Union[Unset, list[dict[str, Any]]] = UNSET
+        users: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.users, Unset):
             users = []
             for users_item_data in self.users:
                 users_item = users_item_data.to_dict()
                 users.append(users_item)
 
-        user_dartboard_layouts: Union[Unset, list[dict[str, Any]]] = UNSET
+        user_dartboard_layouts: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.user_dartboard_layouts, Unset):
             user_dartboard_layouts = []
             for user_dartboard_layouts_item_data in self.user_dartboard_layouts:
                 user_dartboard_layouts_item = user_dartboard_layouts_item_data.to_dict()
                 user_dartboard_layouts.append(user_dartboard_layouts_item)
 
-        views: Union[Unset, list[dict[str, Any]]] = UNSET
+        views: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.views, Unset):
             views = []
             for views_item_data in self.views:
                 views_item = views_item_data.to_dict()
                 views.append(views_item)
 
-        webhooks: Union[Unset, list[dict[str, Any]]] = UNSET
+        webhooks: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.webhooks, Unset):
             webhooks = []
             for webhooks_item_data in self.webhooks:
                 webhooks_item = webhooks_item_data.to_dict()
                 webhooks.append(webhooks_item)
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if attachments is not UNSET:
@@ -384,7 +384,7 @@ class ModelsResponse:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.attachment import Attachment
         from ..models.brainstorm import Brainstorm
         from ..models.comment import Comment
@@ -655,7 +655,7 @@ class ModelsResponse:
         return models_response
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

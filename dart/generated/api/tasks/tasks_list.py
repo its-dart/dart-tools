@@ -1,6 +1,6 @@
 import datetime
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
@@ -32,8 +32,8 @@ def _get_kwargs(
     subscriber_duid: Union[Unset, str] = UNSET,
     tag: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
-) -> dict[str, Any]:
-    params: dict[str, Any] = {}
+) -> Dict[str, Any]:
+    params: Dict[str, Any] = {}
 
     params["assignee"] = assignee
 
@@ -83,7 +83,7 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": "/api/v0/tasks",
         "params": params,
@@ -95,7 +95,7 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[PaginatedTaskList]:
-    if response.status_code == 200:
+    if response.status_code == HTTPStatus.OK:
         response_200 = PaginatedTaskList.from_dict(response.json())
 
         return response_200

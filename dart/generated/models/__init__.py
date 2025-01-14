@@ -31,6 +31,7 @@ from .doc import Doc
 from .doc_create import DocCreate
 from .doc_source_type import DocSourceType
 from .doc_update import DocUpdate
+from .docs_list_o_item import DocsListOItem
 from .entity_name import EntityName
 from .event import Event
 from .event_actor import EventActor
@@ -214,6 +215,7 @@ __all__ = (
     "DiscordIntegration",
     "Doc",
     "DocCreate",
+    "DocsListOItem",
     "DocSourceType",
     "DocUpdate",
     "EntityName",

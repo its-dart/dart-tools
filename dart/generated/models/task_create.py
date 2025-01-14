@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -58,10 +58,10 @@ class TaskCreate:
         status_duid (Union[Unset, str]):
         assigned_to_ai (Union[Unset, bool]):
         recommendation_duid (Union[None, Unset, str]):
-        assignee_duids (Union[Unset, list[str]]):
-        subscriber_duids (Union[Unset, list[str]]):
-        tag_duids (Union[Unset, list[str]]):
-        attachment_duids (Union[Unset, list[str]]):
+        assignee_duids (Union[Unset, List[str]]):
+        subscriber_duids (Union[Unset, List[str]]):
+        tag_duids (Union[Unset, List[str]]):
+        attachment_duids (Union[Unset, List[str]]):
         priority (Union[None, Priority, Unset]):
         size (Union[None, Unset, int]):
         start_at (Union[None, Unset, datetime.datetime]):
@@ -92,10 +92,10 @@ class TaskCreate:
     status_duid: Union[Unset, str] = UNSET
     assigned_to_ai: Union[Unset, bool] = UNSET
     recommendation_duid: Union[None, Unset, str] = UNSET
-    assignee_duids: Union[Unset, list[str]] = UNSET
-    subscriber_duids: Union[Unset, list[str]] = UNSET
-    tag_duids: Union[Unset, list[str]] = UNSET
-    attachment_duids: Union[Unset, list[str]] = UNSET
+    assignee_duids: Union[Unset, List[str]] = UNSET
+    subscriber_duids: Union[Unset, List[str]] = UNSET
+    tag_duids: Union[Unset, List[str]] = UNSET
+    attachment_duids: Union[Unset, List[str]] = UNSET
     priority: Union[None, Priority, Unset] = UNSET
     size: Union[None, Unset, int] = UNSET
     start_at: Union[None, Unset, datetime.datetime] = UNSET
@@ -105,9 +105,9 @@ class TaskCreate:
     recurrence: Union[Any, None, Unset] = UNSET
     recurs_next_at: Union[None, Unset, datetime.datetime] = UNSET
     properties: Union[Unset, Any] = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
 
         source_type: Union[Unset, str] = UNSET
@@ -176,19 +176,19 @@ class TaskCreate:
         else:
             recommendation_duid = self.recommendation_duid
 
-        assignee_duids: Union[Unset, list[str]] = UNSET
+        assignee_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.assignee_duids, Unset):
             assignee_duids = self.assignee_duids
 
-        subscriber_duids: Union[Unset, list[str]] = UNSET
+        subscriber_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.subscriber_duids, Unset):
             subscriber_duids = self.subscriber_duids
 
-        tag_duids: Union[Unset, list[str]] = UNSET
+        tag_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.tag_duids, Unset):
             tag_duids = self.tag_duids
 
-        attachment_duids: Union[Unset, list[str]] = UNSET
+        attachment_duids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.attachment_duids, Unset):
             attachment_duids = self.attachment_duids
 
@@ -248,7 +248,7 @@ class TaskCreate:
 
         properties = self.properties
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -321,7 +321,7 @@ class TaskCreate:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         duid = d.pop("duid")
 
@@ -415,13 +415,13 @@ class TaskCreate:
 
         recommendation_duid = _parse_recommendation_duid(d.pop("recommendationDuid", UNSET))
 
-        assignee_duids = cast(list[str], d.pop("assigneeDuids", UNSET))
+        assignee_duids = cast(List[str], d.pop("assigneeDuids", UNSET))
 
-        subscriber_duids = cast(list[str], d.pop("subscriberDuids", UNSET))
+        subscriber_duids = cast(List[str], d.pop("subscriberDuids", UNSET))
 
-        tag_duids = cast(list[str], d.pop("tagDuids", UNSET))
+        tag_duids = cast(List[str], d.pop("tagDuids", UNSET))
 
-        attachment_duids = cast(list[str], d.pop("attachmentDuids", UNSET))
+        attachment_duids = cast(List[str], d.pop("attachmentDuids", UNSET))
 
         def _parse_priority(data: object) -> Union[None, Priority, Unset]:
             if data is None:
@@ -569,7 +569,7 @@ class TaskCreate:
         return task_create
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

@@ -43,6 +43,7 @@ from .generated.models import (
     RequestBody,
     SpaceKind,
     StatusKind,
+    SprintMode,
     Task,
     TaskCreate,
     TaskSourceType,
@@ -314,6 +315,24 @@ class UserBundle:
         return self._raw["taskKinds"]
 
     @property
+    def default_dartboard(self):
+        space = next(
+            (e for e in self.spaces if e["kind"] == SpaceKind.WORKSPACE),
+            self.spaces[0],
+        )
+        space_duid = space["duid"]
+        dartboard_kind = (
+            DartboardKind.ACTIVE
+            if space["sprintMode"] == SprintMode.ANBA
+            else DartboardKind.CUSTOM
+        )
+        return next(
+            e
+            for e in self.dartboards
+            if e["spaceDuid"] == space_duid and e["kind"] == dartboard_kind
+        )
+
+    @property
     def default_statuses(self):
         default_status_property_duid = next(
             e["duid"]
@@ -564,15 +583,8 @@ def begin_task() -> bool:
 
     def _get_task():
         user_duid = user["duid"]
-        team_space_duid = next(
-            e["duid"] for e in user_bundle.spaces if e["kind"] == SpaceKind.WORKSPACE
-        )
-        active_duid = next(
-            e["duid"]
-            for e in user_bundle.dartboards
-            if e["spaceDuid"] == team_space_duid and e["kind"] == DartboardKind.ACTIVE
-        )
-        unterm_status_duids = {
+        active_duid = user_bundle.default_dartboard["duid"]
+        incomplete_status_duids = {
             e["duid"]
             for e in user_bundle.default_statuses
             if e["kind"] not in _COMPLETED_STATUS_KINDS
@@ -583,7 +595,7 @@ def begin_task() -> bool:
             if not e["inTrash"]
             and e["dartboardDuid"] == active_duid
             and user_duid in e["assigneeDuids"]
-            and e["statusDuid"] in unterm_status_duids
+            and e["statusDuid"] in incomplete_status_duids
             and e["drafterDuid"] is None
         ]
         filtered_tasks.sort(key=lambda e: e["order"])
@@ -643,17 +655,7 @@ def create_task(
             if dartboard is None:
                 _dart_exit(f"No dartboard found with title '{dartboard_title}'.")
         else:
-            team_space_duid = next(
-                e["duid"]
-                for e in user_bundle.spaces
-                if e["kind"] == SpaceKind.WORKSPACE
-            )
-            dartboard = next(
-                e
-                for e in dartboards
-                if e["spaceDuid"] == team_space_duid
-                and e["kind"] == DartboardKind.ACTIVE
-            )
+            dartboard = user_bundle.default_dartboard
         dartboard_duid = dartboard["duid"]
 
     orders = [
@@ -1097,7 +1099,7 @@ def cli() -> None:
     subparsers = parser.add_subparsers(
         title="command",
         required=True,
-        metavar=f"{{{_LOGIN_CMD},{_CREATE_TASK_CMD},{_BEGIN_TASK_CMD}}}",
+        metavar=f"{{{_LOGIN_CMD},{_CREATE_TASK_CMD},{_UPDATE_TASK_CMD},{_BEGIN_TASK_CMD}}}",
     )
 
     set_host_parser = subparsers.add_parser(_SET_HOST_CMD, aliases="s")
