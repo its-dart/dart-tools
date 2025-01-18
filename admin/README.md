@@ -30,3 +30,4 @@
 
 1. Bump the version in `pyproject.toml`
 2. Run `admin/make-deploy.sh`
+3. Commit and push all local changes to GitHub
