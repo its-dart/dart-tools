@@ -18,6 +18,7 @@ def _get_kwargs(
     dartboard_duid: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
     due_at: Union[Unset, datetime.date] = UNSET,
+    duids: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     kind: Union[Unset, str] = UNSET,
@@ -49,6 +50,8 @@ def _get_kwargs(
     if not isinstance(due_at, Unset):
         json_due_at = due_at.isoformat()
     params["due_at"] = json_due_at
+
+    params["duids"] = duids
 
     params["in_trash"] = in_trash
 
@@ -125,6 +128,7 @@ def sync_detailed(
     dartboard_duid: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
     due_at: Union[Unset, datetime.date] = UNSET,
+    duids: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     kind: Union[Unset, str] = UNSET,
@@ -148,6 +152,7 @@ def sync_detailed(
         dartboard_duid (Union[Unset, str]):
         description (Union[Unset, str]):
         due_at (Union[Unset, datetime.date]):
+        duids (Union[Unset, str]):
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
         kind (Union[Unset, str]):
@@ -178,6 +183,7 @@ def sync_detailed(
         dartboard_duid=dartboard_duid,
         description=description,
         due_at=due_at,
+        duids=duids,
         in_trash=in_trash,
         is_draft=is_draft,
         kind=kind,
@@ -210,6 +216,7 @@ def sync(
     dartboard_duid: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
     due_at: Union[Unset, datetime.date] = UNSET,
+    duids: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     kind: Union[Unset, str] = UNSET,
@@ -233,6 +240,7 @@ def sync(
         dartboard_duid (Union[Unset, str]):
         description (Union[Unset, str]):
         due_at (Union[Unset, datetime.date]):
+        duids (Union[Unset, str]):
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
         kind (Union[Unset, str]):
@@ -264,6 +272,7 @@ def sync(
         dartboard_duid=dartboard_duid,
         description=description,
         due_at=due_at,
+        duids=duids,
         in_trash=in_trash,
         is_draft=is_draft,
         kind=kind,
@@ -290,6 +299,7 @@ async def asyncio_detailed(
     dartboard_duid: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
     due_at: Union[Unset, datetime.date] = UNSET,
+    duids: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     kind: Union[Unset, str] = UNSET,
@@ -313,6 +323,7 @@ async def asyncio_detailed(
         dartboard_duid (Union[Unset, str]):
         description (Union[Unset, str]):
         due_at (Union[Unset, datetime.date]):
+        duids (Union[Unset, str]):
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
         kind (Union[Unset, str]):
@@ -343,6 +354,7 @@ async def asyncio_detailed(
         dartboard_duid=dartboard_duid,
         description=description,
         due_at=due_at,
+        duids=duids,
         in_trash=in_trash,
         is_draft=is_draft,
         kind=kind,
@@ -373,6 +385,7 @@ async def asyncio(
     dartboard_duid: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
     due_at: Union[Unset, datetime.date] = UNSET,
+    duids: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     kind: Union[Unset, str] = UNSET,
@@ -396,6 +409,7 @@ async def asyncio(
         dartboard_duid (Union[Unset, str]):
         description (Union[Unset, str]):
         due_at (Union[Unset, datetime.date]):
+        duids (Union[Unset, str]):
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
         kind (Union[Unset, str]):
@@ -428,6 +442,7 @@ async def asyncio(
             dartboard_duid=dartboard_duid,
             description=description,
             due_at=due_at,
+            duids=duids,
             in_trash=in_trash,
             is_draft=is_draft,
             kind=kind,

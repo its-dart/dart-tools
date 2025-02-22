@@ -13,6 +13,7 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
+    duids: Union[Unset, str] = UNSET,
     finished_at: Union[Unset, datetime.date] = UNSET,
     kind: Union[Unset, DartboardsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
@@ -23,6 +24,8 @@ def _get_kwargs(
     title: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     params: Dict[str, Any] = {}
+
+    params["duids"] = duids
 
     json_finished_at: Union[Unset, str] = UNSET
     if not isinstance(finished_at, Unset):
@@ -88,6 +91,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
+    duids: Union[Unset, str] = UNSET,
     finished_at: Union[Unset, datetime.date] = UNSET,
     kind: Union[Unset, DartboardsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
@@ -99,6 +103,7 @@ def sync_detailed(
 ) -> Response[PaginatedDartboardList]:
     """
     Args:
+        duids (Union[Unset, str]):
         finished_at (Union[Unset, datetime.date]):
         kind (Union[Unset, DartboardsListKind]):
         limit (Union[Unset, int]):
@@ -117,6 +122,7 @@ def sync_detailed(
     """
 
     kwargs = _get_kwargs(
+        duids=duids,
         finished_at=finished_at,
         kind=kind,
         limit=limit,
@@ -137,6 +143,7 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
+    duids: Union[Unset, str] = UNSET,
     finished_at: Union[Unset, datetime.date] = UNSET,
     kind: Union[Unset, DartboardsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
@@ -148,6 +155,7 @@ def sync(
 ) -> Optional[PaginatedDartboardList]:
     """
     Args:
+        duids (Union[Unset, str]):
         finished_at (Union[Unset, datetime.date]):
         kind (Union[Unset, DartboardsListKind]):
         limit (Union[Unset, int]):
@@ -167,6 +175,7 @@ def sync(
 
     return sync_detailed(
         client=client,
+        duids=duids,
         finished_at=finished_at,
         kind=kind,
         limit=limit,
@@ -181,6 +190,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
+    duids: Union[Unset, str] = UNSET,
     finished_at: Union[Unset, datetime.date] = UNSET,
     kind: Union[Unset, DartboardsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
@@ -192,6 +202,7 @@ async def asyncio_detailed(
 ) -> Response[PaginatedDartboardList]:
     """
     Args:
+        duids (Union[Unset, str]):
         finished_at (Union[Unset, datetime.date]):
         kind (Union[Unset, DartboardsListKind]):
         limit (Union[Unset, int]):
@@ -210,6 +221,7 @@ async def asyncio_detailed(
     """
 
     kwargs = _get_kwargs(
+        duids=duids,
         finished_at=finished_at,
         kind=kind,
         limit=limit,
@@ -228,6 +240,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
+    duids: Union[Unset, str] = UNSET,
     finished_at: Union[Unset, datetime.date] = UNSET,
     kind: Union[Unset, DartboardsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
@@ -239,6 +252,7 @@ async def asyncio(
 ) -> Optional[PaginatedDartboardList]:
     """
     Args:
+        duids (Union[Unset, str]):
         finished_at (Union[Unset, datetime.date]):
         kind (Union[Unset, DartboardsListKind]):
         limit (Union[Unset, int]):
@@ -259,6 +273,7 @@ async def asyncio(
     return (
         await asyncio_detailed(
             client=client,
+            duids=duids,
             finished_at=finished_at,
             kind=kind,
             limit=limit,

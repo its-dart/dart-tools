@@ -35,6 +35,7 @@ class Tenant:
         backlog_enabled (bool):
         ai_assignment_enabled (bool):
         email_integration_enabled (bool):
+        scim_enabled (bool):
         close_parent_on_close_all_subtasks (bool):
         move_subtasks_on_move_parent (bool):
         update_subtasks_status_on_update_parent_status (bool):
@@ -61,6 +62,7 @@ class Tenant:
     backlog_enabled: bool
     ai_assignment_enabled: bool
     email_integration_enabled: bool
+    scim_enabled: bool
     close_parent_on_close_all_subtasks: bool
     move_subtasks_on_move_parent: bool
     update_subtasks_status_on_update_parent_status: bool
@@ -106,6 +108,8 @@ class Tenant:
         ai_assignment_enabled = self.ai_assignment_enabled
 
         email_integration_enabled = self.email_integration_enabled
+
+        scim_enabled = self.scim_enabled
 
         close_parent_on_close_all_subtasks = self.close_parent_on_close_all_subtasks
 
@@ -172,6 +176,7 @@ class Tenant:
                 "backlogEnabled": backlog_enabled,
                 "aiAssignmentEnabled": ai_assignment_enabled,
                 "emailIntegrationEnabled": email_integration_enabled,
+                "scimEnabled": scim_enabled,
                 "closeParentOnCloseAllSubtasks": close_parent_on_close_all_subtasks,
                 "moveSubtasksOnMoveParent": move_subtasks_on_move_parent,
                 "updateSubtasksStatusOnUpdateParentStatus": update_subtasks_status_on_update_parent_status,
@@ -226,6 +231,8 @@ class Tenant:
         ai_assignment_enabled = d.pop("aiAssignmentEnabled")
 
         email_integration_enabled = d.pop("emailIntegrationEnabled")
+
+        scim_enabled = d.pop("scimEnabled")
 
         close_parent_on_close_all_subtasks = d.pop("closeParentOnCloseAllSubtasks")
 
@@ -343,6 +350,7 @@ class Tenant:
             backlog_enabled=backlog_enabled,
             ai_assignment_enabled=ai_assignment_enabled,
             email_integration_enabled=email_integration_enabled,
+            scim_enabled=scim_enabled,
             close_parent_on_close_all_subtasks=close_parent_on_close_all_subtasks,
             move_subtasks_on_move_parent=move_subtasks_on_move_parent,
             update_subtasks_status_on_update_parent_status=update_subtasks_status_on_update_parent_status,

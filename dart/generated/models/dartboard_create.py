@@ -34,6 +34,7 @@ class DartboardCreate:
         index (Union[None, Unset, int]):
         started_at (Union[None, Unset, datetime.datetime]):
         finished_at (Union[None, Unset, datetime.datetime]):
+        planned_finish_at (Union[None, Unset, datetime.datetime]):
         default_property_map (Union[Unset, Any]):
         always_shown_property_duids (Union[Unset, List[str]]):
         always_hidden_property_duids (Union[Unset, List[str]]):
@@ -53,6 +54,7 @@ class DartboardCreate:
     index: Union[None, Unset, int] = UNSET
     started_at: Union[None, Unset, datetime.datetime] = UNSET
     finished_at: Union[None, Unset, datetime.datetime] = UNSET
+    planned_finish_at: Union[None, Unset, datetime.datetime] = UNSET
     default_property_map: Union[Unset, Any] = UNSET
     always_shown_property_duids: Union[Unset, List[str]] = UNSET
     always_hidden_property_duids: Union[Unset, List[str]] = UNSET
@@ -105,6 +107,14 @@ class DartboardCreate:
         else:
             finished_at = self.finished_at
 
+        planned_finish_at: Union[None, Unset, str]
+        if isinstance(self.planned_finish_at, Unset):
+            planned_finish_at = UNSET
+        elif isinstance(self.planned_finish_at, datetime.datetime):
+            planned_finish_at = self.planned_finish_at.isoformat()
+        else:
+            planned_finish_at = self.planned_finish_at
+
         default_property_map = self.default_property_map
 
         always_shown_property_duids: Union[Unset, List[str]] = UNSET
@@ -148,6 +158,8 @@ class DartboardCreate:
             field_dict["startedAt"] = started_at
         if finished_at is not UNSET:
             field_dict["finishedAt"] = finished_at
+        if planned_finish_at is not UNSET:
+            field_dict["plannedFinishAt"] = planned_finish_at
         if default_property_map is not UNSET:
             field_dict["defaultPropertyMap"] = default_property_map
         if always_shown_property_duids is not UNSET:
@@ -235,6 +247,23 @@ class DartboardCreate:
 
         finished_at = _parse_finished_at(d.pop("finishedAt", UNSET))
 
+        def _parse_planned_finish_at(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                planned_finish_at_type_0 = isoparse(data)
+
+                return planned_finish_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        planned_finish_at = _parse_planned_finish_at(d.pop("plannedFinishAt", UNSET))
+
         default_property_map = d.pop("defaultPropertyMap", UNSET)
 
         always_shown_property_duids = cast(List[str], d.pop("alwaysShownPropertyDuids", UNSET))
@@ -258,6 +287,7 @@ class DartboardCreate:
             index=index,
             started_at=started_at,
             finished_at=finished_at,
+            planned_finish_at=planned_finish_at,
             default_property_map=default_property_map,
             always_shown_property_duids=always_shown_property_duids,
             always_hidden_property_duids=always_hidden_property_duids,

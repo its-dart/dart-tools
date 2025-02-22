@@ -14,16 +14,16 @@ class TableChartAdtl:
     Attributes:
         column_property_duid (str):
         row_property_duid (Union[None, str]):
+        aggregation_property_duid (Union[None, str]):
         aggregation (ChartAggregation): * `sum` - SUM
             * `avg` - AVG
             * `count` - COUNT
-        aggregation_property_duid (Union[None, str]):
     """
 
     column_property_duid: str
     row_property_duid: Union[None, str]
-    aggregation: ChartAggregation
     aggregation_property_duid: Union[None, str]
+    aggregation: ChartAggregation
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -32,10 +32,10 @@ class TableChartAdtl:
         row_property_duid: Union[None, str]
         row_property_duid = self.row_property_duid
 
-        aggregation = self.aggregation.value
-
         aggregation_property_duid: Union[None, str]
         aggregation_property_duid = self.aggregation_property_duid
+
+        aggregation = self.aggregation.value
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -43,8 +43,8 @@ class TableChartAdtl:
             {
                 "columnPropertyDuid": column_property_duid,
                 "rowPropertyDuid": row_property_duid,
-                "aggregation": aggregation,
                 "aggregationPropertyDuid": aggregation_property_duid,
+                "aggregation": aggregation,
             }
         )
 
@@ -62,8 +62,6 @@ class TableChartAdtl:
 
         row_property_duid = _parse_row_property_duid(d.pop("rowPropertyDuid"))
 
-        aggregation = ChartAggregation(d.pop("aggregation"))
-
         def _parse_aggregation_property_duid(data: object) -> Union[None, str]:
             if data is None:
                 return data
@@ -71,11 +69,13 @@ class TableChartAdtl:
 
         aggregation_property_duid = _parse_aggregation_property_duid(d.pop("aggregationPropertyDuid"))
 
+        aggregation = ChartAggregation(d.pop("aggregation"))
+
         table_chart_adtl = cls(
             column_property_duid=column_property_duid,
             row_property_duid=row_property_duid,
-            aggregation=aggregation,
             aggregation_property_duid=aggregation_property_duid,
+            aggregation=aggregation,
         )
 
         table_chart_adtl.additional_properties = d

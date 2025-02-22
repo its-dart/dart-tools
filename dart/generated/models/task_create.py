@@ -16,7 +16,7 @@ T = TypeVar("T", bound="TaskCreate")
 class TaskCreate:
     """
     Attributes:
-        duid (str):
+        duid (Union[Unset, str]):
         source_type (Union[Unset, TaskSourceType]): * `Unknown` - UNKNOWN
             * `Import` - IMPORT
             * `Onboarding` - ONBOARDING
@@ -73,7 +73,7 @@ class TaskCreate:
         properties (Union[Unset, Any]):
     """
 
-    duid: str
+    duid: Union[Unset, str] = UNSET
     source_type: Union[Unset, TaskSourceType] = TaskSourceType.UNKNOWN
     source_template_view_duid: Union[None, Unset, str] = UNSET
     source_template_task_duid: Union[None, Unset, str] = UNSET
@@ -250,11 +250,9 @@ class TaskCreate:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "duid": duid,
-            }
-        )
+        field_dict.update({})
+        if duid is not UNSET:
+            field_dict["duid"] = duid
         if source_type is not UNSET:
             field_dict["sourceType"] = source_type
         if source_template_view_duid is not UNSET:
@@ -323,7 +321,7 @@ class TaskCreate:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        duid = d.pop("duid")
+        duid = d.pop("duid", UNSET)
 
         _source_type = d.pop("sourceType", UNSET)
         source_type: Union[Unset, TaskSourceType]

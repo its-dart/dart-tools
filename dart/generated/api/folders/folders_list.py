@@ -12,6 +12,7 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
+    duids: Union[Unset, str] = UNSET,
     kind: Union[Unset, FoldersListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
@@ -20,6 +21,8 @@ def _get_kwargs(
     title: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     params: Dict[str, Any] = {}
+
+    params["duids"] = duids
 
     json_kind: Union[Unset, str] = UNSET
     if not isinstance(kind, Unset):
@@ -75,6 +78,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
+    duids: Union[Unset, str] = UNSET,
     kind: Union[Unset, FoldersListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
@@ -84,6 +88,7 @@ def sync_detailed(
 ) -> Response[PaginatedFolderList]:
     """
     Args:
+        duids (Union[Unset, str]):
         kind (Union[Unset, FoldersListKind]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
@@ -100,6 +105,7 @@ def sync_detailed(
     """
 
     kwargs = _get_kwargs(
+        duids=duids,
         kind=kind,
         limit=limit,
         offset=offset,
@@ -118,6 +124,7 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
+    duids: Union[Unset, str] = UNSET,
     kind: Union[Unset, FoldersListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
@@ -127,6 +134,7 @@ def sync(
 ) -> Optional[PaginatedFolderList]:
     """
     Args:
+        duids (Union[Unset, str]):
         kind (Union[Unset, FoldersListKind]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
@@ -144,6 +152,7 @@ def sync(
 
     return sync_detailed(
         client=client,
+        duids=duids,
         kind=kind,
         limit=limit,
         offset=offset,
@@ -156,6 +165,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
+    duids: Union[Unset, str] = UNSET,
     kind: Union[Unset, FoldersListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
@@ -165,6 +175,7 @@ async def asyncio_detailed(
 ) -> Response[PaginatedFolderList]:
     """
     Args:
+        duids (Union[Unset, str]):
         kind (Union[Unset, FoldersListKind]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
@@ -181,6 +192,7 @@ async def asyncio_detailed(
     """
 
     kwargs = _get_kwargs(
+        duids=duids,
         kind=kind,
         limit=limit,
         offset=offset,
@@ -197,6 +209,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
+    duids: Union[Unset, str] = UNSET,
     kind: Union[Unset, FoldersListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
@@ -206,6 +219,7 @@ async def asyncio(
 ) -> Optional[PaginatedFolderList]:
     """
     Args:
+        duids (Union[Unset, str]):
         kind (Union[Unset, FoldersListKind]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
@@ -224,6 +238,7 @@ async def asyncio(
     return (
         await asyncio_detailed(
             client=client,
+            duids=duids,
             kind=kind,
             limit=limit,
             offset=offset,

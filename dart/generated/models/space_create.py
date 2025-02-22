@@ -18,7 +18,6 @@ class SpaceCreate:
     Attributes:
         duid (str):
         order (str):
-        drafter_duid (Union[None, Unset, str]):
         accessible_by_team (Union[Unset, bool]):
         accessible_by_user_duids (Union[Unset, List[str]]):
         title (Union[Unset, str]):
@@ -43,7 +42,6 @@ class SpaceCreate:
 
     duid: str
     order: str
-    drafter_duid: Union[None, Unset, str] = UNSET
     accessible_by_team: Union[Unset, bool] = UNSET
     accessible_by_user_duids: Union[Unset, List[str]] = UNSET
     title: Union[Unset, str] = UNSET
@@ -67,12 +65,6 @@ class SpaceCreate:
         duid = self.duid
 
         order = self.order
-
-        drafter_duid: Union[None, Unset, str]
-        if isinstance(self.drafter_duid, Unset):
-            drafter_duid = UNSET
-        else:
-            drafter_duid = self.drafter_duid
 
         accessible_by_team = self.accessible_by_team
 
@@ -152,8 +144,6 @@ class SpaceCreate:
                 "order": order,
             }
         )
-        if drafter_duid is not UNSET:
-            field_dict["drafterDuid"] = drafter_duid
         if accessible_by_team is not UNSET:
             field_dict["accessibleByTeam"] = accessible_by_team
         if accessible_by_user_duids is not UNSET:
@@ -197,15 +187,6 @@ class SpaceCreate:
         duid = d.pop("duid")
 
         order = d.pop("order")
-
-        def _parse_drafter_duid(data: object) -> Union[None, Unset, str]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            return cast(Union[None, Unset, str], data)
-
-        drafter_duid = _parse_drafter_duid(d.pop("drafterDuid", UNSET))
 
         accessible_by_team = d.pop("accessibleByTeam", UNSET)
 
@@ -320,7 +301,6 @@ class SpaceCreate:
         space_create = cls(
             duid=duid,
             order=order,
-            drafter_duid=drafter_duid,
             accessible_by_team=accessible_by_team,
             accessible_by_user_duids=accessible_by_user_duids,
             title=title,

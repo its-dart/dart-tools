@@ -13,6 +13,7 @@ def _get_kwargs(
     *,
     abrev: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
+    duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     title: Union[Unset, str] = UNSET,
@@ -22,6 +23,8 @@ def _get_kwargs(
     params["abrev"] = abrev
 
     params["description"] = description
+
+    params["duids"] = duids
 
     params["limit"] = limit
 
@@ -69,6 +72,7 @@ def sync_detailed(
     client: AuthenticatedClient,
     abrev: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
+    duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     title: Union[Unset, str] = UNSET,
@@ -77,6 +81,7 @@ def sync_detailed(
     Args:
         abrev (Union[Unset, str]):
         description (Union[Unset, str]):
+        duids (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         title (Union[Unset, str]):
@@ -92,6 +97,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         abrev=abrev,
         description=description,
+        duids=duids,
         limit=limit,
         offset=offset,
         title=title,
@@ -109,6 +115,7 @@ def sync(
     client: AuthenticatedClient,
     abrev: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
+    duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     title: Union[Unset, str] = UNSET,
@@ -117,6 +124,7 @@ def sync(
     Args:
         abrev (Union[Unset, str]):
         description (Union[Unset, str]):
+        duids (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         title (Union[Unset, str]):
@@ -133,6 +141,7 @@ def sync(
         client=client,
         abrev=abrev,
         description=description,
+        duids=duids,
         limit=limit,
         offset=offset,
         title=title,
@@ -144,6 +153,7 @@ async def asyncio_detailed(
     client: AuthenticatedClient,
     abrev: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
+    duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     title: Union[Unset, str] = UNSET,
@@ -152,6 +162,7 @@ async def asyncio_detailed(
     Args:
         abrev (Union[Unset, str]):
         description (Union[Unset, str]):
+        duids (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         title (Union[Unset, str]):
@@ -167,6 +178,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         abrev=abrev,
         description=description,
+        duids=duids,
         limit=limit,
         offset=offset,
         title=title,
@@ -182,6 +194,7 @@ async def asyncio(
     client: AuthenticatedClient,
     abrev: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
+    duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     title: Union[Unset, str] = UNSET,
@@ -190,6 +203,7 @@ async def asyncio(
     Args:
         abrev (Union[Unset, str]):
         description (Union[Unset, str]):
+        duids (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         title (Union[Unset, str]):
@@ -207,6 +221,7 @@ async def asyncio(
             client=client,
             abrev=abrev,
             description=description,
+            duids=duids,
             limit=limit,
             offset=offset,
             title=title,

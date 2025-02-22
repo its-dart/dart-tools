@@ -43,9 +43,9 @@ class User:
             * `Overlay` - OVERLAY
         sections (Any):
         layout (Any):
+        auth_token (Union[None, str]):
         image_url (Union[None, str]):
         is_admin (bool):
-        auth_token (Union[None, str]):
         google_data (Union['GoogleData', None]):
         updated_by_client_duid (Union[None, Unset, str]):
     """
@@ -61,9 +61,9 @@ class User:
     task_detail_mode: TaskDetailMode
     sections: Any
     layout: Any
+    auth_token: Union[None, str]
     image_url: Union[None, str]
     is_admin: bool
-    auth_token: Union[None, str]
     google_data: Union["GoogleData", None]
     updated_by_client_duid: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -93,13 +93,13 @@ class User:
 
         layout = self.layout
 
+        auth_token: Union[None, str]
+        auth_token = self.auth_token
+
         image_url: Union[None, str]
         image_url = self.image_url
 
         is_admin = self.is_admin
-
-        auth_token: Union[None, str]
-        auth_token = self.auth_token
 
         google_data: Union[Dict[str, Any], None]
         if isinstance(self.google_data, GoogleData):
@@ -128,9 +128,9 @@ class User:
                 "taskDetailMode": task_detail_mode,
                 "sections": sections,
                 "layout": layout,
+                "authToken": auth_token,
                 "imageUrl": image_url,
                 "isAdmin": is_admin,
-                "authToken": auth_token,
                 "googleData": google_data,
             }
         )
@@ -166,6 +166,13 @@ class User:
 
         layout = d.pop("layout")
 
+        def _parse_auth_token(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        auth_token = _parse_auth_token(d.pop("authToken"))
+
         def _parse_image_url(data: object) -> Union[None, str]:
             if data is None:
                 return data
@@ -174,13 +181,6 @@ class User:
         image_url = _parse_image_url(d.pop("imageUrl"))
 
         is_admin = d.pop("isAdmin")
-
-        def _parse_auth_token(data: object) -> Union[None, str]:
-            if data is None:
-                return data
-            return cast(Union[None, str], data)
-
-        auth_token = _parse_auth_token(d.pop("authToken"))
 
         def _parse_google_data(data: object) -> Union["GoogleData", None]:
             if data is None:
@@ -218,9 +218,9 @@ class User:
             task_detail_mode=task_detail_mode,
             sections=sections,
             layout=layout,
+            auth_token=auth_token,
             image_url=image_url,
             is_admin=is_admin,
-            auth_token=auth_token,
             google_data=google_data,
             updated_by_client_duid=updated_by_client_duid,
         )

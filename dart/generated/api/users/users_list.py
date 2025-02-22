@@ -11,6 +11,7 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
+    duids: Union[Unset, str] = UNSET,
     email: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     name: Union[Unset, str] = UNSET,
@@ -18,6 +19,8 @@ def _get_kwargs(
     role: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     params: Dict[str, Any] = {}
+
+    params["duids"] = duids
 
     params["email"] = email
 
@@ -67,6 +70,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
+    duids: Union[Unset, str] = UNSET,
     email: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     name: Union[Unset, str] = UNSET,
@@ -75,6 +79,7 @@ def sync_detailed(
 ) -> Response[PaginatedUserList]:
     """
     Args:
+        duids (Union[Unset, str]):
         email (Union[Unset, str]):
         limit (Union[Unset, int]):
         name (Union[Unset, str]):
@@ -90,6 +95,7 @@ def sync_detailed(
     """
 
     kwargs = _get_kwargs(
+        duids=duids,
         email=email,
         limit=limit,
         name=name,
@@ -107,6 +113,7 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
+    duids: Union[Unset, str] = UNSET,
     email: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     name: Union[Unset, str] = UNSET,
@@ -115,6 +122,7 @@ def sync(
 ) -> Optional[PaginatedUserList]:
     """
     Args:
+        duids (Union[Unset, str]):
         email (Union[Unset, str]):
         limit (Union[Unset, int]):
         name (Union[Unset, str]):
@@ -131,6 +139,7 @@ def sync(
 
     return sync_detailed(
         client=client,
+        duids=duids,
         email=email,
         limit=limit,
         name=name,
@@ -142,6 +151,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
+    duids: Union[Unset, str] = UNSET,
     email: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     name: Union[Unset, str] = UNSET,
@@ -150,6 +160,7 @@ async def asyncio_detailed(
 ) -> Response[PaginatedUserList]:
     """
     Args:
+        duids (Union[Unset, str]):
         email (Union[Unset, str]):
         limit (Union[Unset, int]):
         name (Union[Unset, str]):
@@ -165,6 +176,7 @@ async def asyncio_detailed(
     """
 
     kwargs = _get_kwargs(
+        duids=duids,
         email=email,
         limit=limit,
         name=name,
@@ -180,6 +192,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
+    duids: Union[Unset, str] = UNSET,
     email: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     name: Union[Unset, str] = UNSET,
@@ -188,6 +201,7 @@ async def asyncio(
 ) -> Optional[PaginatedUserList]:
     """
     Args:
+        duids (Union[Unset, str]):
         email (Union[Unset, str]):
         limit (Union[Unset, int]):
         name (Union[Unset, str]):
@@ -205,6 +219,7 @@ async def asyncio(
     return (
         await asyncio_detailed(
             client=client,
+            duids=duids,
             email=email,
             limit=limit,
             name=name,

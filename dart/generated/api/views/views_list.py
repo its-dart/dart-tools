@@ -11,11 +11,14 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
+    duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     params: Dict[str, Any] = {}
+
+    params["duids"] = duids
 
     params["limit"] = limit
 
@@ -61,12 +64,14 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
+    duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedViewList]:
     """
     Args:
+        duids (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         title (Union[Unset, str]):
@@ -80,6 +85,7 @@ def sync_detailed(
     """
 
     kwargs = _get_kwargs(
+        duids=duids,
         limit=limit,
         offset=offset,
         title=title,
@@ -95,12 +101,14 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
+    duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedViewList]:
     """
     Args:
+        duids (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         title (Union[Unset, str]):
@@ -115,6 +123,7 @@ def sync(
 
     return sync_detailed(
         client=client,
+        duids=duids,
         limit=limit,
         offset=offset,
         title=title,
@@ -124,12 +133,14 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
+    duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedViewList]:
     """
     Args:
+        duids (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         title (Union[Unset, str]):
@@ -143,6 +154,7 @@ async def asyncio_detailed(
     """
 
     kwargs = _get_kwargs(
+        duids=duids,
         limit=limit,
         offset=offset,
         title=title,
@@ -156,12 +168,14 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
+    duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedViewList]:
     """
     Args:
+        duids (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         title (Union[Unset, str]):
@@ -177,6 +191,7 @@ async def asyncio(
     return (
         await asyncio_detailed(
             client=client,
+            duids=duids,
             limit=limit,
             offset=offset,
             title=title,

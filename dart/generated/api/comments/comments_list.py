@@ -14,6 +14,7 @@ def _get_kwargs(
     *,
     author: Union[Unset, str] = UNSET,
     author_duid: Union[Unset, str] = UNSET,
+    duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     published_at: Union[Unset, datetime.date] = UNSET,
@@ -27,6 +28,8 @@ def _get_kwargs(
     params["author"] = author
 
     params["author_duid"] = author_duid
+
+    params["duids"] = duids
 
     params["limit"] = limit
 
@@ -85,6 +88,7 @@ def sync_detailed(
     client: AuthenticatedClient,
     author: Union[Unset, str] = UNSET,
     author_duid: Union[Unset, str] = UNSET,
+    duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     published_at: Union[Unset, datetime.date] = UNSET,
@@ -97,6 +101,7 @@ def sync_detailed(
     Args:
         author (Union[Unset, str]):
         author_duid (Union[Unset, str]):
+        duids (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         published_at (Union[Unset, datetime.date]):
@@ -116,6 +121,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         author=author,
         author_duid=author_duid,
+        duids=duids,
         limit=limit,
         offset=offset,
         published_at=published_at,
@@ -137,6 +143,7 @@ def sync(
     client: AuthenticatedClient,
     author: Union[Unset, str] = UNSET,
     author_duid: Union[Unset, str] = UNSET,
+    duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     published_at: Union[Unset, datetime.date] = UNSET,
@@ -149,6 +156,7 @@ def sync(
     Args:
         author (Union[Unset, str]):
         author_duid (Union[Unset, str]):
+        duids (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         published_at (Union[Unset, datetime.date]):
@@ -169,6 +177,7 @@ def sync(
         client=client,
         author=author,
         author_duid=author_duid,
+        duids=duids,
         limit=limit,
         offset=offset,
         published_at=published_at,
@@ -184,6 +193,7 @@ async def asyncio_detailed(
     client: AuthenticatedClient,
     author: Union[Unset, str] = UNSET,
     author_duid: Union[Unset, str] = UNSET,
+    duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     published_at: Union[Unset, datetime.date] = UNSET,
@@ -196,6 +206,7 @@ async def asyncio_detailed(
     Args:
         author (Union[Unset, str]):
         author_duid (Union[Unset, str]):
+        duids (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         published_at (Union[Unset, datetime.date]):
@@ -215,6 +226,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         author=author,
         author_duid=author_duid,
+        duids=duids,
         limit=limit,
         offset=offset,
         published_at=published_at,
@@ -234,6 +246,7 @@ async def asyncio(
     client: AuthenticatedClient,
     author: Union[Unset, str] = UNSET,
     author_duid: Union[Unset, str] = UNSET,
+    duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     published_at: Union[Unset, datetime.date] = UNSET,
@@ -246,6 +259,7 @@ async def asyncio(
     Args:
         author (Union[Unset, str]):
         author_duid (Union[Unset, str]):
+        duids (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         published_at (Union[Unset, datetime.date]):
@@ -267,6 +281,7 @@ async def asyncio(
             client=client,
             author=author,
             author_duid=author_duid,
+            duids=duids,
             limit=limit,
             offset=offset,
             published_at=published_at,

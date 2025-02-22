@@ -18,7 +18,6 @@ class Space:
     """
     Attributes:
         duid (str):
-        drafter_duid (Union[None, str]):
         kind (SpaceKind): * `Other` - OTHER
             * `Workspace` - WORKSPACE
             * `Personal` - PERSONAL
@@ -47,7 +46,6 @@ class Space:
     """
 
     duid: str
-    drafter_duid: Union[None, str]
     kind: SpaceKind
     accessible_by_team: bool
     accessible_by_user_duids: List[str]
@@ -72,9 +70,6 @@ class Space:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
-
-        drafter_duid: Union[None, str]
-        drafter_duid = self.drafter_duid
 
         kind = self.kind.value
 
@@ -140,7 +135,6 @@ class Space:
         field_dict.update(
             {
                 "duid": duid,
-                "drafterDuid": drafter_duid,
                 "kind": kind,
                 "accessibleByTeam": accessible_by_team,
                 "accessibleByUserDuids": accessible_by_user_duids,
@@ -171,13 +165,6 @@ class Space:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         duid = d.pop("duid")
-
-        def _parse_drafter_duid(data: object) -> Union[None, str]:
-            if data is None:
-                return data
-            return cast(Union[None, str], data)
-
-        drafter_duid = _parse_drafter_duid(d.pop("drafterDuid"))
 
         kind = SpaceKind(d.pop("kind"))
 
@@ -282,7 +269,6 @@ class Space:
 
         space = cls(
             duid=duid,
-            drafter_duid=drafter_duid,
             kind=kind,
             accessible_by_team=accessible_by_team,
             accessible_by_user_duids=accessible_by_user_duids,

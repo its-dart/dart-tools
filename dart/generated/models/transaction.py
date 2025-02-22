@@ -1,9 +1,10 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.transaction_kind import TransactionKind
+from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.operation import Operation
@@ -16,7 +17,6 @@ T = TypeVar("T", bound="Transaction")
 class Transaction:
     """
     Attributes:
-        duid (str):
         kind (TransactionKind): * `brainstorm_create` - BRAINSTORM_CREATE
             * `brainstorm_delete` - BRAINSTORM_DELETE
             * `brainstorm_update` - BRAINSTORM_UPDATE
@@ -85,16 +85,15 @@ class Transaction:
             * `webhook_delete` - WEBHOOK_DELETE
             * `webhook_update` - WEBHOOK_UPDATE
         operations (List['Operation']):
+        duid (Union[Unset, str]):
     """
 
-    duid: str
     kind: TransactionKind
     operations: List["Operation"]
+    duid: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        duid = self.duid
-
         kind = self.kind.value
 
         operations = []
@@ -102,15 +101,18 @@ class Transaction:
             operations_item = operations_item_data.to_dict()
             operations.append(operations_item)
 
+        duid = self.duid
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "duid": duid,
                 "kind": kind,
                 "operations": operations,
             }
         )
+        if duid is not UNSET:
+            field_dict["duid"] = duid
 
         return field_dict
 
@@ -119,8 +121,6 @@ class Transaction:
         from ..models.operation import Operation
 
         d = src_dict.copy()
-        duid = d.pop("duid")
-
         kind = TransactionKind(d.pop("kind"))
 
         operations = []
@@ -130,10 +130,12 @@ class Transaction:
 
             operations.append(operations_item)
 
+        duid = d.pop("duid", UNSET)
+
         transaction = cls(
-            duid=duid,
             kind=kind,
             operations=operations,
+            duid=duid,
         )
 
         transaction.additional_properties = d

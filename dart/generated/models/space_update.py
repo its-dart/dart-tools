@@ -17,7 +17,6 @@ class SpaceUpdate:
     """
     Attributes:
         duid (str):
-        drafter_duid (Union[None, Unset, str]):
         accessible_by_team (Union[Unset, bool]):
         accessible_by_user_duids (Union[Unset, List[str]]):
         order (Union[Unset, str]):
@@ -42,7 +41,6 @@ class SpaceUpdate:
     """
 
     duid: str
-    drafter_duid: Union[None, Unset, str] = UNSET
     accessible_by_team: Union[Unset, bool] = UNSET
     accessible_by_user_duids: Union[Unset, List[str]] = UNSET
     order: Union[Unset, str] = UNSET
@@ -65,12 +63,6 @@ class SpaceUpdate:
 
     def to_dict(self) -> Dict[str, Any]:
         duid = self.duid
-
-        drafter_duid: Union[None, Unset, str]
-        if isinstance(self.drafter_duid, Unset):
-            drafter_duid = UNSET
-        else:
-            drafter_duid = self.drafter_duid
 
         accessible_by_team = self.accessible_by_team
 
@@ -151,8 +143,6 @@ class SpaceUpdate:
                 "duid": duid,
             }
         )
-        if drafter_duid is not UNSET:
-            field_dict["drafterDuid"] = drafter_duid
         if accessible_by_team is not UNSET:
             field_dict["accessibleByTeam"] = accessible_by_team
         if accessible_by_user_duids is not UNSET:
@@ -196,15 +186,6 @@ class SpaceUpdate:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         duid = d.pop("duid")
-
-        def _parse_drafter_duid(data: object) -> Union[None, Unset, str]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            return cast(Union[None, Unset, str], data)
-
-        drafter_duid = _parse_drafter_duid(d.pop("drafterDuid", UNSET))
 
         accessible_by_team = d.pop("accessibleByTeam", UNSET)
 
@@ -320,7 +301,6 @@ class SpaceUpdate:
 
         space_update = cls(
             duid=duid,
-            drafter_duid=drafter_duid,
             accessible_by_team=accessible_by_team,
             accessible_by_user_duids=accessible_by_user_duids,
             order=order,

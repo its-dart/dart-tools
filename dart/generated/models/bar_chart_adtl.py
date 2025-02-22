@@ -3,6 +3,8 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..models.chart_aggregation import ChartAggregation
+
 T = TypeVar("T", bound="BarChartAdtl")
 
 
@@ -12,10 +14,16 @@ class BarChartAdtl:
     Attributes:
         x_property_duid (str):
         stack_property_duid (Union[None, str]):
+        aggregation_property_duid (Union[None, str]):
+        aggregation (ChartAggregation): * `sum` - SUM
+            * `avg` - AVG
+            * `count` - COUNT
     """
 
     x_property_duid: str
     stack_property_duid: Union[None, str]
+    aggregation_property_duid: Union[None, str]
+    aggregation: ChartAggregation
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -24,12 +32,19 @@ class BarChartAdtl:
         stack_property_duid: Union[None, str]
         stack_property_duid = self.stack_property_duid
 
+        aggregation_property_duid: Union[None, str]
+        aggregation_property_duid = self.aggregation_property_duid
+
+        aggregation = self.aggregation.value
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "xPropertyDuid": x_property_duid,
                 "stackPropertyDuid": stack_property_duid,
+                "aggregationPropertyDuid": aggregation_property_duid,
+                "aggregation": aggregation,
             }
         )
 
@@ -47,9 +62,20 @@ class BarChartAdtl:
 
         stack_property_duid = _parse_stack_property_duid(d.pop("stackPropertyDuid"))
 
+        def _parse_aggregation_property_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        aggregation_property_duid = _parse_aggregation_property_duid(d.pop("aggregationPropertyDuid"))
+
+        aggregation = ChartAggregation(d.pop("aggregation"))
+
         bar_chart_adtl = cls(
             x_property_duid=x_property_duid,
             stack_property_duid=stack_property_duid,
+            aggregation_property_duid=aggregation_property_duid,
+            aggregation=aggregation,
         )
 
         bar_chart_adtl.additional_properties = d

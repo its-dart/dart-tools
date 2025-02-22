@@ -39,6 +39,7 @@ class Dartboard:
         index (Union[None, int]):
         started_at (Union[None, datetime.datetime]):
         finished_at (Union[None, datetime.datetime]):
+        planned_finish_at (Union[None, datetime.datetime]):
         default_property_map (Any):
         always_shown_property_duids (List[str]):
         always_hidden_property_duids (List[str]):
@@ -60,6 +61,7 @@ class Dartboard:
     index: Union[None, int]
     started_at: Union[None, datetime.datetime]
     finished_at: Union[None, datetime.datetime]
+    planned_finish_at: Union[None, datetime.datetime]
     default_property_map: Any
     always_shown_property_duids: List[str]
     always_hidden_property_duids: List[str]
@@ -107,6 +109,12 @@ class Dartboard:
         else:
             finished_at = self.finished_at
 
+        planned_finish_at: Union[None, str]
+        if isinstance(self.planned_finish_at, datetime.datetime):
+            planned_finish_at = self.planned_finish_at.isoformat()
+        else:
+            planned_finish_at = self.planned_finish_at
+
         default_property_map = self.default_property_map
 
         always_shown_property_duids = self.always_shown_property_duids
@@ -140,6 +148,7 @@ class Dartboard:
                 "index": index,
                 "startedAt": started_at,
                 "finishedAt": finished_at,
+                "plannedFinishAt": planned_finish_at,
                 "defaultPropertyMap": default_property_map,
                 "alwaysShownPropertyDuids": always_shown_property_duids,
                 "alwaysHiddenPropertyDuids": always_hidden_property_duids,
@@ -219,6 +228,21 @@ class Dartboard:
 
         finished_at = _parse_finished_at(d.pop("finishedAt"))
 
+        def _parse_planned_finish_at(data: object) -> Union[None, datetime.datetime]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                planned_finish_at_type_0 = isoparse(data)
+
+                return planned_finish_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, datetime.datetime], data)
+
+        planned_finish_at = _parse_planned_finish_at(d.pop("plannedFinishAt"))
+
         default_property_map = d.pop("defaultPropertyMap")
 
         always_shown_property_duids = cast(List[str], d.pop("alwaysShownPropertyDuids"))
@@ -252,6 +276,7 @@ class Dartboard:
             index=index,
             started_at=started_at,
             finished_at=finished_at,
+            planned_finish_at=planned_finish_at,
             default_property_map=default_property_map,
             always_shown_property_duids=always_shown_property_duids,
             always_hidden_property_duids=always_hidden_property_duids,

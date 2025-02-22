@@ -17,6 +17,7 @@ class TenantUpdate:
         backlog_enabled (Union[Unset, bool]):
         ai_assignment_enabled (Union[Unset, bool]):
         email_integration_enabled (Union[Unset, bool]):
+        scim_enabled (Union[Unset, bool]):
         close_parent_on_close_all_subtasks (Union[Unset, bool]):
         move_subtasks_on_move_parent (Union[Unset, bool]):
         update_subtasks_status_on_update_parent_status (Union[Unset, bool]):
@@ -31,6 +32,7 @@ class TenantUpdate:
     backlog_enabled: Union[Unset, bool] = UNSET
     ai_assignment_enabled: Union[Unset, bool] = UNSET
     email_integration_enabled: Union[Unset, bool] = UNSET
+    scim_enabled: Union[Unset, bool] = UNSET
     close_parent_on_close_all_subtasks: Union[Unset, bool] = UNSET
     move_subtasks_on_move_parent: Union[Unset, bool] = UNSET
     update_subtasks_status_on_update_parent_status: Union[Unset, bool] = UNSET
@@ -50,6 +52,8 @@ class TenantUpdate:
         ai_assignment_enabled = self.ai_assignment_enabled
 
         email_integration_enabled = self.email_integration_enabled
+
+        scim_enabled = self.scim_enabled
 
         close_parent_on_close_all_subtasks = self.close_parent_on_close_all_subtasks
 
@@ -78,6 +82,8 @@ class TenantUpdate:
             field_dict["aiAssignmentEnabled"] = ai_assignment_enabled
         if email_integration_enabled is not UNSET:
             field_dict["emailIntegrationEnabled"] = email_integration_enabled
+        if scim_enabled is not UNSET:
+            field_dict["scimEnabled"] = scim_enabled
         if close_parent_on_close_all_subtasks is not UNSET:
             field_dict["closeParentOnCloseAllSubtasks"] = close_parent_on_close_all_subtasks
         if move_subtasks_on_move_parent is not UNSET:
@@ -108,6 +114,8 @@ class TenantUpdate:
 
         email_integration_enabled = d.pop("emailIntegrationEnabled", UNSET)
 
+        scim_enabled = d.pop("scimEnabled", UNSET)
+
         close_parent_on_close_all_subtasks = d.pop("closeParentOnCloseAllSubtasks", UNSET)
 
         move_subtasks_on_move_parent = d.pop("moveSubtasksOnMoveParent", UNSET)
@@ -128,6 +136,7 @@ class TenantUpdate:
             backlog_enabled=backlog_enabled,
             ai_assignment_enabled=ai_assignment_enabled,
             email_integration_enabled=email_integration_enabled,
+            scim_enabled=scim_enabled,
             close_parent_on_close_all_subtasks=close_parent_on_close_all_subtasks,
             move_subtasks_on_move_parent=move_subtasks_on_move_parent,
             update_subtasks_status_on_update_parent_status=update_subtasks_status_on_update_parent_status,
