@@ -1,7 +1,9 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+
+from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.transaction import Transaction
@@ -15,11 +17,11 @@ class RequestBody:
     """
     Attributes:
         items (List['Transaction']):
-        client_duid (str):
+        client_duid (Union[Unset, str]):
     """
 
     items: List["Transaction"]
-    client_duid: str
+    client_duid: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -35,9 +37,10 @@ class RequestBody:
         field_dict.update(
             {
                 "items": items,
-                "clientDuid": client_duid,
             }
         )
+        if client_duid is not UNSET:
+            field_dict["clientDuid"] = client_duid
 
         return field_dict
 
@@ -53,7 +56,7 @@ class RequestBody:
 
             items.append(items_item)
 
-        client_duid = d.pop("clientDuid")
+        client_duid = d.pop("clientDuid", UNSET)
 
         request_body = cls(
             items=items,
