@@ -8,7 +8,7 @@ requires-python = ">=3.9"
 license = {file = "LICENSE"}
 keywords = ["dart", "cli", "projectmanagement", "taskmanagement"]
 authors = [
-  { name="Dart Software Team", email="software@itsdart.com" }
+  { name="Dart", email="software@itsdart.com" }
 ]
 classifiers=[
     "Development Status :: 4 - Beta",
