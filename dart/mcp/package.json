@@ -1,0 +1,35 @@
+{
+  "name": "dart-mcp-server",
+  "version": "1.0.0",
+  "description": "A Model Context Protocol server implementation for Dart task management system",
+  "main": "build/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node build/index.js",
+    "test": "node build/test.js",
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "postinstall": "python -m venv .venv && . .venv/bin/activate && pip install dart-sdk",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "dart",
+    "mcp",
+    "task-management",
+    "ai-assistant",
+    "model-context-protocol"
+  ],
+  "author": "jmanhype",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.5.0",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "python": ">=3.8.0"
+  }
+}
