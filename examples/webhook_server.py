@@ -34,7 +34,7 @@ def webhook() -> Response:
     event_type = event["type"]
     match event_type:
         case "task.created":
-            task = event["data"]  # The task that was created
+            task = event["data"]["model"]  # The task that was created
             print(f"Task created:\n{task}")
         case "task.updated":
             data = event["data"]
@@ -42,7 +42,7 @@ def webhook() -> Response:
             old_task = data["oldModel"]  # The old version of the task that was updated
             print(f"Task updated from:\n{old_task}\nfrom:\n{task}")
         case "task.deleted":
-            task = event["data"]  # The task that was deleted
+            task = event["data"]["model"]  # The task that was deleted
             print(f"Task deleted:\n{task}")
         case _:
             # Unexpected event type
