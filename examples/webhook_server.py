@@ -6,7 +6,7 @@
 
 import json
 
-from dart import is_signature_correct, Task
+from dart import is_signature_correct
 from flask import Flask, Response, jsonify, request
 
 
@@ -35,17 +35,15 @@ def webhook() -> Response:
     match event_type:
         case "task.created":
             task = event["data"]  # The task that was created
-            print(f"Task created:\n{Task.from_dict(task)}")
+            print(f"Task created:\n{task}")
         case "task.updated":
             data = event["data"]
             task = data["model"]  # The new version of the task that was updated
             old_task = data["oldModel"]  # The old version of the task that was updated
-            print(
-                f"Task updated to:\n{Task.from_dict(task)}\nfrom:\n{Task.from_dict(old_task)}"
-            )
+            print(f"Task updated from:\n{old_task}\nfrom:\n{task}")
         case "task.deleted":
             task = event["data"]  # The task that was deleted
-            print(f"Task deleted:\n{Task.from_dict(task)}")
+            print(f"Task deleted:\n{task}")
         case _:
             # Unexpected event type
             print(f"Unhandled event type: {event_type}")
