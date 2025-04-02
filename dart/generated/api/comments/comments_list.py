@@ -1,6 +1,6 @@
 import datetime
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any, Optional, Union
 
 import httpx
 
@@ -17,13 +17,14 @@ def _get_kwargs(
     duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
-    published_at: Union[Unset, datetime.date] = UNSET,
+    published_at_after: Union[Unset, datetime.datetime] = UNSET,
+    published_at_before: Union[Unset, datetime.datetime] = UNSET,
     task: Union[Unset, str] = UNSET,
     task_duid: Union[Unset, str] = UNSET,
     text: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
     params["author"] = author
 
@@ -35,10 +36,15 @@ def _get_kwargs(
 
     params["offset"] = offset
 
-    json_published_at: Union[Unset, str] = UNSET
-    if not isinstance(published_at, Unset):
-        json_published_at = published_at.isoformat()
-    params["published_at"] = json_published_at
+    json_published_at_after: Union[Unset, str] = UNSET
+    if not isinstance(published_at_after, Unset):
+        json_published_at_after = published_at_after.isoformat()
+    params["published_at_after"] = json_published_at_after
+
+    json_published_at_before: Union[Unset, str] = UNSET
+    if not isinstance(published_at_before, Unset):
+        json_published_at_before = published_at_before.isoformat()
+    params["published_at_before"] = json_published_at_before
 
     params["task"] = task
 
@@ -50,7 +56,7 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/api/v0/comments",
         "params": params,
@@ -62,7 +68,7 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[PaginatedCommentList]:
-    if response.status_code == HTTPStatus.OK:
+    if response.status_code == 200:
         response_200 = PaginatedCommentList.from_dict(response.json())
 
         return response_200
@@ -91,7 +97,8 @@ def sync_detailed(
     duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
-    published_at: Union[Unset, datetime.date] = UNSET,
+    published_at_after: Union[Unset, datetime.datetime] = UNSET,
+    published_at_before: Union[Unset, datetime.datetime] = UNSET,
     task: Union[Unset, str] = UNSET,
     task_duid: Union[Unset, str] = UNSET,
     text: Union[Unset, str] = UNSET,
@@ -104,7 +111,8 @@ def sync_detailed(
         duids (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
-        published_at (Union[Unset, datetime.date]):
+        published_at_after (Union[Unset, datetime.datetime]):
+        published_at_before (Union[Unset, datetime.datetime]):
         task (Union[Unset, str]):
         task_duid (Union[Unset, str]):
         text (Union[Unset, str]):
@@ -124,7 +132,8 @@ def sync_detailed(
         duids=duids,
         limit=limit,
         offset=offset,
-        published_at=published_at,
+        published_at_after=published_at_after,
+        published_at_before=published_at_before,
         task=task,
         task_duid=task_duid,
         text=text,
@@ -146,7 +155,8 @@ def sync(
     duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
-    published_at: Union[Unset, datetime.date] = UNSET,
+    published_at_after: Union[Unset, datetime.datetime] = UNSET,
+    published_at_before: Union[Unset, datetime.datetime] = UNSET,
     task: Union[Unset, str] = UNSET,
     task_duid: Union[Unset, str] = UNSET,
     text: Union[Unset, str] = UNSET,
@@ -159,7 +169,8 @@ def sync(
         duids (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
-        published_at (Union[Unset, datetime.date]):
+        published_at_after (Union[Unset, datetime.datetime]):
+        published_at_before (Union[Unset, datetime.datetime]):
         task (Union[Unset, str]):
         task_duid (Union[Unset, str]):
         text (Union[Unset, str]):
@@ -180,7 +191,8 @@ def sync(
         duids=duids,
         limit=limit,
         offset=offset,
-        published_at=published_at,
+        published_at_after=published_at_after,
+        published_at_before=published_at_before,
         task=task,
         task_duid=task_duid,
         text=text,
@@ -196,7 +208,8 @@ async def asyncio_detailed(
     duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
-    published_at: Union[Unset, datetime.date] = UNSET,
+    published_at_after: Union[Unset, datetime.datetime] = UNSET,
+    published_at_before: Union[Unset, datetime.datetime] = UNSET,
     task: Union[Unset, str] = UNSET,
     task_duid: Union[Unset, str] = UNSET,
     text: Union[Unset, str] = UNSET,
@@ -209,7 +222,8 @@ async def asyncio_detailed(
         duids (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
-        published_at (Union[Unset, datetime.date]):
+        published_at_after (Union[Unset, datetime.datetime]):
+        published_at_before (Union[Unset, datetime.datetime]):
         task (Union[Unset, str]):
         task_duid (Union[Unset, str]):
         text (Union[Unset, str]):
@@ -229,7 +243,8 @@ async def asyncio_detailed(
         duids=duids,
         limit=limit,
         offset=offset,
-        published_at=published_at,
+        published_at_after=published_at_after,
+        published_at_before=published_at_before,
         task=task,
         task_duid=task_duid,
         text=text,
@@ -249,7 +264,8 @@ async def asyncio(
     duids: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
-    published_at: Union[Unset, datetime.date] = UNSET,
+    published_at_after: Union[Unset, datetime.datetime] = UNSET,
+    published_at_before: Union[Unset, datetime.datetime] = UNSET,
     task: Union[Unset, str] = UNSET,
     task_duid: Union[Unset, str] = UNSET,
     text: Union[Unset, str] = UNSET,
@@ -262,7 +278,8 @@ async def asyncio(
         duids (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
-        published_at (Union[Unset, datetime.date]):
+        published_at_after (Union[Unset, datetime.datetime]):
+        published_at_before (Union[Unset, datetime.datetime]):
         task (Union[Unset, str]):
         task_duid (Union[Unset, str]):
         text (Union[Unset, str]):
@@ -284,7 +301,8 @@ async def asyncio(
             duids=duids,
             limit=limit,
             offset=offset,
-            published_at=published_at,
+            published_at_after=published_at_after,
+            published_at_before=published_at_before,
             task=task,
             task_duid=task_duid,
             text=text,

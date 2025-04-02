@@ -1,4 +1,5 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -14,7 +15,7 @@ T = TypeVar("T", bound="Event")
 class Event:
     """
     Attributes:
-        message_frags (Union[List[Any], None]):
+        message_frags (Union[None, list[Any]]):
         kind (EventKind): * `tasks/create` - TASK_CREATE
             * `tasks/update_assignees` - TASK_UPDATE_ASSIGNEES
             * `tasks/update_status` - TASK_UPDATE_STATUS
@@ -98,7 +99,8 @@ class Event:
             * `usage/nlp_typeahead_accept` - USAGE_NLP_TYPEAHEAD_ACCEPT
         actor_duid (Union[None, str]):
         actor_str (Union[EventActor, None]):
-        main_entity_name (EntityName): * `comment` - COMMENT
+        main_entity_name (EntityName): * `agent` - AGENT
+            * `comment` - COMMENT
             * `task` - TASK
             * `dartboard` - DARTBOARD
             * `dashboard` - DASHBOARD
@@ -126,10 +128,11 @@ class Event:
         property_duid (Union[None, str]):
         status_duid (Union[None, str]):
         user_duid (Union[None, str]):
+        agent_duid (Union[None, str]):
         adtl (Any):
     """
 
-    message_frags: Union[List[Any], None]
+    message_frags: Union[None, list[Any]]
     kind: EventKind
     actor_duid: Union[None, str]
     actor_str: Union[EventActor, None]
@@ -147,11 +150,12 @@ class Event:
     property_duid: Union[None, str]
     status_duid: Union[None, str]
     user_duid: Union[None, str]
+    agent_duid: Union[None, str]
     adtl: Any
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        message_frags: Union[List[Any], None]
+    def to_dict(self) -> dict[str, Any]:
+        message_frags: Union[None, list[Any]]
         if isinstance(self.message_frags, list):
             message_frags = self.message_frags
 
@@ -210,9 +214,12 @@ class Event:
         user_duid: Union[None, str]
         user_duid = self.user_duid
 
+        agent_duid: Union[None, str]
+        agent_duid = self.agent_duid
+
         adtl = self.adtl
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -234,6 +241,7 @@ class Event:
                 "propertyDuid": property_duid,
                 "statusDuid": status_duid,
                 "userDuid": user_duid,
+                "agentDuid": agent_duid,
                 "adtl": adtl,
             }
         )
@@ -241,21 +249,21 @@ class Event:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
 
-        def _parse_message_frags(data: object) -> Union[List[Any], None]:
+        def _parse_message_frags(data: object) -> Union[None, list[Any]]:
             if data is None:
                 return data
             try:
                 if not isinstance(data, list):
                     raise TypeError()
-                message_frags_type_0 = cast(List[Any], data)
+                message_frags_type_0 = cast(list[Any], data)
 
                 return message_frags_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[List[Any], None], data)
+            return cast(Union[None, list[Any]], data)
 
         message_frags = _parse_message_frags(d.pop("messageFrags"))
 
@@ -376,6 +384,13 @@ class Event:
 
         user_duid = _parse_user_duid(d.pop("userDuid"))
 
+        def _parse_agent_duid(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        agent_duid = _parse_agent_duid(d.pop("agentDuid"))
+
         adtl = d.pop("adtl")
 
         event = cls(
@@ -397,6 +412,7 @@ class Event:
             property_duid=property_duid,
             status_duid=status_duid,
             user_duid=user_duid,
+            agent_duid=agent_duid,
             adtl=adtl,
         )
 
@@ -404,7 +420,7 @@ class Event:
         return event
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

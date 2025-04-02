@@ -17,6 +17,12 @@ class FilterApplicability(str, Enum):
     IS_NOT = "is not"
     IS_NOT_SET = "is not set"
     IS_UNCHECKED = "is unchecked"
+    VALUE_15 = "="
+    VALUE_16 = "≠"
+    VALUE_17 = "<"
+    VALUE_18 = ">"
+    VALUE_19 = "≤"
+    VALUE_20 = "≥"
 
     def __str__(self) -> str:
         return str(self.value)

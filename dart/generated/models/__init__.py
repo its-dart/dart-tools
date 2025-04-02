@@ -1,5 +1,8 @@
 """Contains all the data models used in inputs/outputs"""
 
+from .agent import Agent
+from .agent_create import AgentCreate
+from .agent_update import AgentUpdate
 from .attachment import Attachment
 from .attachment_create import AttachmentCreate
 from .attachment_update import AttachmentUpdate
@@ -12,6 +15,9 @@ from .burn_up_chart_adtl import BurnUpChartAdtl
 from .chart import Chart
 from .chart_aggregation import ChartAggregation
 from .chart_type import ChartType
+from .chat import Chat
+from .chat_create import ChatCreate
+from .chat_update import ChatUpdate
 from .comment import Comment
 from .comment_create import CommentCreate
 from .comment_reaction import CommentReaction
@@ -79,7 +85,9 @@ from .operation_model_kind import OperationModelKind
 from .option import Option
 from .option_create import OptionCreate
 from .option_update import OptionUpdate
+from .paginated_agent_list import PaginatedAgentList
 from .paginated_attachment_list import PaginatedAttachmentList
+from .paginated_chat_list import PaginatedChatList
 from .paginated_comment_list import PaginatedCommentList
 from .paginated_comment_reaction_list import PaginatedCommentReactionList
 from .paginated_dartboard_list import PaginatedDartboardList
@@ -182,10 +190,14 @@ from .view_kind import ViewKind
 from .view_update import ViewUpdate
 from .webhook import Webhook
 from .webhook_create import WebhookCreate
+from .webhook_event_kind import WebhookEventKind
 from .webhook_update import WebhookUpdate
 from .zapier_integration import ZapierIntegration
 
 __all__ = (
+    "Agent",
+    "AgentCreate",
+    "AgentUpdate",
     "Attachment",
     "AttachmentCreate",
     "AttachmentUpdate",
@@ -198,6 +210,9 @@ __all__ = (
     "Chart",
     "ChartAggregation",
     "ChartType",
+    "Chat",
+    "ChatCreate",
+    "ChatUpdate",
     "Comment",
     "CommentCreate",
     "CommentReaction",
@@ -265,7 +280,9 @@ __all__ = (
     "Option",
     "OptionCreate",
     "OptionUpdate",
+    "PaginatedAgentList",
     "PaginatedAttachmentList",
+    "PaginatedChatList",
     "PaginatedCommentList",
     "PaginatedCommentReactionList",
     "PaginatedDartboardList",
@@ -368,6 +385,7 @@ __all__ = (
     "ViewUpdate",
     "Webhook",
     "WebhookCreate",
+    "WebhookEventKind",
     "WebhookUpdate",
     "ZapierIntegration",
 )

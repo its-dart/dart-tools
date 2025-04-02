@@ -1,4 +1,5 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -25,7 +26,7 @@ class TaskKindUpdate:
             * `Emoji` - EMOJI
         icon_name_or_emoji (Union[Unset, str]):
         color_hex (Union[Unset, str]):
-        hidden_status_duids (Union[Unset, List[str]]):
+        hidden_status_duids (Union[Unset, list[str]]):
     """
 
     duid: str
@@ -36,10 +37,10 @@ class TaskKindUpdate:
     icon_kind: Union[Unset, IconKind] = UNSET
     icon_name_or_emoji: Union[Unset, str] = UNSET
     color_hex: Union[Unset, str] = UNSET
-    hidden_status_duids: Union[Unset, List[str]] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    hidden_status_duids: Union[Unset, list[str]] = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         duid = self.duid
 
         kind: Union[Unset, str] = UNSET
@@ -60,11 +61,11 @@ class TaskKindUpdate:
 
         color_hex = self.color_hex
 
-        hidden_status_duids: Union[Unset, List[str]] = UNSET
+        hidden_status_duids: Union[Unset, list[str]] = UNSET
         if not isinstance(self.hidden_status_duids, Unset):
             hidden_status_duids = self.hidden_status_duids
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -91,8 +92,8 @@ class TaskKindUpdate:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         duid = d.pop("duid")
 
         _kind = d.pop("kind", UNSET)
@@ -119,7 +120,7 @@ class TaskKindUpdate:
 
         color_hex = d.pop("colorHex", UNSET)
 
-        hidden_status_duids = cast(List[str], d.pop("hiddenStatusDuids", UNSET))
+        hidden_status_duids = cast(list[str], d.pop("hiddenStatusDuids", UNSET))
 
         task_kind_update = cls(
             duid=duid,
@@ -137,7 +138,7 @@ class TaskKindUpdate:
         return task_kind_update
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

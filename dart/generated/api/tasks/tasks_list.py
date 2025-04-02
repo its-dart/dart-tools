@@ -1,6 +1,6 @@
 import datetime
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any, Optional, Union
 
 import httpx
 
@@ -17,24 +17,28 @@ def _get_kwargs(
     dartboard: Union[Unset, str] = UNSET,
     dartboard_duid: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
-    due_at: Union[Unset, datetime.date] = UNSET,
+    due_at_after: Union[Unset, datetime.datetime] = UNSET,
+    due_at_before: Union[Unset, datetime.datetime] = UNSET,
     duids: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     kind: Union[Unset, str] = UNSET,
+    kind_duid: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
     size: Union[Unset, int] = UNSET,
-    start_at: Union[Unset, datetime.date] = UNSET,
+    start_at_after: Union[Unset, datetime.datetime] = UNSET,
+    start_at_before: Union[Unset, datetime.datetime] = UNSET,
     status: Union[Unset, str] = UNSET,
     status_duid: Union[Unset, str] = UNSET,
     subscriber: Union[Unset, str] = UNSET,
     subscriber_duid: Union[Unset, str] = UNSET,
     tag: Union[Unset, str] = UNSET,
+    tag_duid: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
     params["assignee"] = assignee
 
@@ -46,10 +50,15 @@ def _get_kwargs(
 
     params["description"] = description
 
-    json_due_at: Union[Unset, str] = UNSET
-    if not isinstance(due_at, Unset):
-        json_due_at = due_at.isoformat()
-    params["due_at"] = json_due_at
+    json_due_at_after: Union[Unset, str] = UNSET
+    if not isinstance(due_at_after, Unset):
+        json_due_at_after = due_at_after.isoformat()
+    params["due_at_after"] = json_due_at_after
+
+    json_due_at_before: Union[Unset, str] = UNSET
+    if not isinstance(due_at_before, Unset):
+        json_due_at_before = due_at_before.isoformat()
+    params["due_at_before"] = json_due_at_before
 
     params["duids"] = duids
 
@@ -59,6 +68,8 @@ def _get_kwargs(
 
     params["kind"] = kind
 
+    params["kind_duid"] = kind_duid
+
     params["limit"] = limit
 
     params["offset"] = offset
@@ -67,10 +78,15 @@ def _get_kwargs(
 
     params["size"] = size
 
-    json_start_at: Union[Unset, str] = UNSET
-    if not isinstance(start_at, Unset):
-        json_start_at = start_at.isoformat()
-    params["start_at"] = json_start_at
+    json_start_at_after: Union[Unset, str] = UNSET
+    if not isinstance(start_at_after, Unset):
+        json_start_at_after = start_at_after.isoformat()
+    params["start_at_after"] = json_start_at_after
+
+    json_start_at_before: Union[Unset, str] = UNSET
+    if not isinstance(start_at_before, Unset):
+        json_start_at_before = start_at_before.isoformat()
+    params["start_at_before"] = json_start_at_before
 
     params["status"] = status
 
@@ -82,11 +98,13 @@ def _get_kwargs(
 
     params["tag"] = tag
 
+    params["tag_duid"] = tag_duid
+
     params["title"] = title
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/api/v0/tasks",
         "params": params,
@@ -98,7 +116,7 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[PaginatedTaskList]:
-    if response.status_code == HTTPStatus.OK:
+    if response.status_code == 200:
         response_200 = PaginatedTaskList.from_dict(response.json())
 
         return response_200
@@ -127,21 +145,25 @@ def sync_detailed(
     dartboard: Union[Unset, str] = UNSET,
     dartboard_duid: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
-    due_at: Union[Unset, datetime.date] = UNSET,
+    due_at_after: Union[Unset, datetime.datetime] = UNSET,
+    due_at_before: Union[Unset, datetime.datetime] = UNSET,
     duids: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     kind: Union[Unset, str] = UNSET,
+    kind_duid: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
     size: Union[Unset, int] = UNSET,
-    start_at: Union[Unset, datetime.date] = UNSET,
+    start_at_after: Union[Unset, datetime.datetime] = UNSET,
+    start_at_before: Union[Unset, datetime.datetime] = UNSET,
     status: Union[Unset, str] = UNSET,
     status_duid: Union[Unset, str] = UNSET,
     subscriber: Union[Unset, str] = UNSET,
     subscriber_duid: Union[Unset, str] = UNSET,
     tag: Union[Unset, str] = UNSET,
+    tag_duid: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedTaskList]:
     """
@@ -151,21 +173,25 @@ def sync_detailed(
         dartboard (Union[Unset, str]):
         dartboard_duid (Union[Unset, str]):
         description (Union[Unset, str]):
-        due_at (Union[Unset, datetime.date]):
+        due_at_after (Union[Unset, datetime.datetime]):
+        due_at_before (Union[Unset, datetime.datetime]):
         duids (Union[Unset, str]):
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
         kind (Union[Unset, str]):
+        kind_duid (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
         size (Union[Unset, int]):
-        start_at (Union[Unset, datetime.date]):
+        start_at_after (Union[Unset, datetime.datetime]):
+        start_at_before (Union[Unset, datetime.datetime]):
         status (Union[Unset, str]):
         status_duid (Union[Unset, str]):
         subscriber (Union[Unset, str]):
         subscriber_duid (Union[Unset, str]):
         tag (Union[Unset, str]):
+        tag_duid (Union[Unset, str]):
         title (Union[Unset, str]):
 
     Raises:
@@ -182,21 +208,25 @@ def sync_detailed(
         dartboard=dartboard,
         dartboard_duid=dartboard_duid,
         description=description,
-        due_at=due_at,
+        due_at_after=due_at_after,
+        due_at_before=due_at_before,
         duids=duids,
         in_trash=in_trash,
         is_draft=is_draft,
         kind=kind,
+        kind_duid=kind_duid,
         limit=limit,
         offset=offset,
         priority=priority,
         size=size,
-        start_at=start_at,
+        start_at_after=start_at_after,
+        start_at_before=start_at_before,
         status=status,
         status_duid=status_duid,
         subscriber=subscriber,
         subscriber_duid=subscriber_duid,
         tag=tag,
+        tag_duid=tag_duid,
         title=title,
     )
 
@@ -215,21 +245,25 @@ def sync(
     dartboard: Union[Unset, str] = UNSET,
     dartboard_duid: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
-    due_at: Union[Unset, datetime.date] = UNSET,
+    due_at_after: Union[Unset, datetime.datetime] = UNSET,
+    due_at_before: Union[Unset, datetime.datetime] = UNSET,
     duids: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     kind: Union[Unset, str] = UNSET,
+    kind_duid: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
     size: Union[Unset, int] = UNSET,
-    start_at: Union[Unset, datetime.date] = UNSET,
+    start_at_after: Union[Unset, datetime.datetime] = UNSET,
+    start_at_before: Union[Unset, datetime.datetime] = UNSET,
     status: Union[Unset, str] = UNSET,
     status_duid: Union[Unset, str] = UNSET,
     subscriber: Union[Unset, str] = UNSET,
     subscriber_duid: Union[Unset, str] = UNSET,
     tag: Union[Unset, str] = UNSET,
+    tag_duid: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedTaskList]:
     """
@@ -239,21 +273,25 @@ def sync(
         dartboard (Union[Unset, str]):
         dartboard_duid (Union[Unset, str]):
         description (Union[Unset, str]):
-        due_at (Union[Unset, datetime.date]):
+        due_at_after (Union[Unset, datetime.datetime]):
+        due_at_before (Union[Unset, datetime.datetime]):
         duids (Union[Unset, str]):
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
         kind (Union[Unset, str]):
+        kind_duid (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
         size (Union[Unset, int]):
-        start_at (Union[Unset, datetime.date]):
+        start_at_after (Union[Unset, datetime.datetime]):
+        start_at_before (Union[Unset, datetime.datetime]):
         status (Union[Unset, str]):
         status_duid (Union[Unset, str]):
         subscriber (Union[Unset, str]):
         subscriber_duid (Union[Unset, str]):
         tag (Union[Unset, str]):
+        tag_duid (Union[Unset, str]):
         title (Union[Unset, str]):
 
     Raises:
@@ -271,21 +309,25 @@ def sync(
         dartboard=dartboard,
         dartboard_duid=dartboard_duid,
         description=description,
-        due_at=due_at,
+        due_at_after=due_at_after,
+        due_at_before=due_at_before,
         duids=duids,
         in_trash=in_trash,
         is_draft=is_draft,
         kind=kind,
+        kind_duid=kind_duid,
         limit=limit,
         offset=offset,
         priority=priority,
         size=size,
-        start_at=start_at,
+        start_at_after=start_at_after,
+        start_at_before=start_at_before,
         status=status,
         status_duid=status_duid,
         subscriber=subscriber,
         subscriber_duid=subscriber_duid,
         tag=tag,
+        tag_duid=tag_duid,
         title=title,
     ).parsed
 
@@ -298,21 +340,25 @@ async def asyncio_detailed(
     dartboard: Union[Unset, str] = UNSET,
     dartboard_duid: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
-    due_at: Union[Unset, datetime.date] = UNSET,
+    due_at_after: Union[Unset, datetime.datetime] = UNSET,
+    due_at_before: Union[Unset, datetime.datetime] = UNSET,
     duids: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     kind: Union[Unset, str] = UNSET,
+    kind_duid: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
     size: Union[Unset, int] = UNSET,
-    start_at: Union[Unset, datetime.date] = UNSET,
+    start_at_after: Union[Unset, datetime.datetime] = UNSET,
+    start_at_before: Union[Unset, datetime.datetime] = UNSET,
     status: Union[Unset, str] = UNSET,
     status_duid: Union[Unset, str] = UNSET,
     subscriber: Union[Unset, str] = UNSET,
     subscriber_duid: Union[Unset, str] = UNSET,
     tag: Union[Unset, str] = UNSET,
+    tag_duid: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedTaskList]:
     """
@@ -322,21 +368,25 @@ async def asyncio_detailed(
         dartboard (Union[Unset, str]):
         dartboard_duid (Union[Unset, str]):
         description (Union[Unset, str]):
-        due_at (Union[Unset, datetime.date]):
+        due_at_after (Union[Unset, datetime.datetime]):
+        due_at_before (Union[Unset, datetime.datetime]):
         duids (Union[Unset, str]):
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
         kind (Union[Unset, str]):
+        kind_duid (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
         size (Union[Unset, int]):
-        start_at (Union[Unset, datetime.date]):
+        start_at_after (Union[Unset, datetime.datetime]):
+        start_at_before (Union[Unset, datetime.datetime]):
         status (Union[Unset, str]):
         status_duid (Union[Unset, str]):
         subscriber (Union[Unset, str]):
         subscriber_duid (Union[Unset, str]):
         tag (Union[Unset, str]):
+        tag_duid (Union[Unset, str]):
         title (Union[Unset, str]):
 
     Raises:
@@ -353,21 +403,25 @@ async def asyncio_detailed(
         dartboard=dartboard,
         dartboard_duid=dartboard_duid,
         description=description,
-        due_at=due_at,
+        due_at_after=due_at_after,
+        due_at_before=due_at_before,
         duids=duids,
         in_trash=in_trash,
         is_draft=is_draft,
         kind=kind,
+        kind_duid=kind_duid,
         limit=limit,
         offset=offset,
         priority=priority,
         size=size,
-        start_at=start_at,
+        start_at_after=start_at_after,
+        start_at_before=start_at_before,
         status=status,
         status_duid=status_duid,
         subscriber=subscriber,
         subscriber_duid=subscriber_duid,
         tag=tag,
+        tag_duid=tag_duid,
         title=title,
     )
 
@@ -384,21 +438,25 @@ async def asyncio(
     dartboard: Union[Unset, str] = UNSET,
     dartboard_duid: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
-    due_at: Union[Unset, datetime.date] = UNSET,
+    due_at_after: Union[Unset, datetime.datetime] = UNSET,
+    due_at_before: Union[Unset, datetime.datetime] = UNSET,
     duids: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     kind: Union[Unset, str] = UNSET,
+    kind_duid: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
     size: Union[Unset, int] = UNSET,
-    start_at: Union[Unset, datetime.date] = UNSET,
+    start_at_after: Union[Unset, datetime.datetime] = UNSET,
+    start_at_before: Union[Unset, datetime.datetime] = UNSET,
     status: Union[Unset, str] = UNSET,
     status_duid: Union[Unset, str] = UNSET,
     subscriber: Union[Unset, str] = UNSET,
     subscriber_duid: Union[Unset, str] = UNSET,
     tag: Union[Unset, str] = UNSET,
+    tag_duid: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedTaskList]:
     """
@@ -408,21 +466,25 @@ async def asyncio(
         dartboard (Union[Unset, str]):
         dartboard_duid (Union[Unset, str]):
         description (Union[Unset, str]):
-        due_at (Union[Unset, datetime.date]):
+        due_at_after (Union[Unset, datetime.datetime]):
+        due_at_before (Union[Unset, datetime.datetime]):
         duids (Union[Unset, str]):
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
         kind (Union[Unset, str]):
+        kind_duid (Union[Unset, str]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
         size (Union[Unset, int]):
-        start_at (Union[Unset, datetime.date]):
+        start_at_after (Union[Unset, datetime.datetime]):
+        start_at_before (Union[Unset, datetime.datetime]):
         status (Union[Unset, str]):
         status_duid (Union[Unset, str]):
         subscriber (Union[Unset, str]):
         subscriber_duid (Union[Unset, str]):
         tag (Union[Unset, str]):
+        tag_duid (Union[Unset, str]):
         title (Union[Unset, str]):
 
     Raises:
@@ -441,21 +503,25 @@ async def asyncio(
             dartboard=dartboard,
             dartboard_duid=dartboard_duid,
             description=description,
-            due_at=due_at,
+            due_at_after=due_at_after,
+            due_at_before=due_at_before,
             duids=duids,
             in_trash=in_trash,
             is_draft=is_draft,
             kind=kind,
+            kind_duid=kind_duid,
             limit=limit,
             offset=offset,
             priority=priority,
             size=size,
-            start_at=start_at,
+            start_at_after=start_at_after,
+            start_at_before=start_at_before,
             status=status,
             status_duid=status_duid,
             subscriber=subscriber,
             subscriber_duid=subscriber_duid,
             tag=tag,
+            tag_duid=tag_duid,
             title=title,
         )
     ).parsed

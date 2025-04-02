@@ -1,5 +1,6 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -64,12 +65,12 @@ class Task:
         status_duid (str):
         assigned_to_ai (bool):
         recommendation_duid (Union[None, str]):
-        assignee_duids (List[str]):
-        subscriber_duids (List[str]):
-        tag_duids (List[str]):
-        links (List['TaskLink']):
-        attachment_duids (List[str]):
-        relationships (List['Relationship']):
+        assignee_duids (list[str]):
+        subscriber_duids (list[str]):
+        tag_duids (list[str]):
+        links (list['TaskLink']):
+        attachment_duids (list[str]):
+        relationships (list['Relationship']):
         priority (Union[None, Priority]):
         size (Union[None, int]):
         start_at (Union[None, datetime.datetime]):
@@ -100,12 +101,12 @@ class Task:
     status_duid: str
     assigned_to_ai: bool
     recommendation_duid: Union[None, str]
-    assignee_duids: List[str]
-    subscriber_duids: List[str]
-    tag_duids: List[str]
-    links: List["TaskLink"]
-    attachment_duids: List[str]
-    relationships: List["Relationship"]
+    assignee_duids: list[str]
+    subscriber_duids: list[str]
+    tag_duids: list[str]
+    links: list["TaskLink"]
+    attachment_duids: list[str]
+    relationships: list["Relationship"]
     priority: Union[None, Priority]
     size: Union[None, int]
     start_at: Union[None, datetime.datetime]
@@ -116,9 +117,9 @@ class Task:
     recurs_next_at: Union[None, datetime.datetime]
     properties: "TaskProperties"
     updated_by_client_duid: Union[None, Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         from ..models.task_notion_document import TaskNotionDocument
 
         duid = self.duid
@@ -152,7 +153,7 @@ class Task:
 
         description = self.description
 
-        notion_document: Union[Dict[str, Any], None]
+        notion_document: Union[None, dict[str, Any]]
         if isinstance(self.notion_document, TaskNotionDocument):
             notion_document = self.notion_document.to_dict()
         else:
@@ -229,7 +230,7 @@ class Task:
         else:
             updated_by_client_duid = self.updated_by_client_duid
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -274,13 +275,13 @@ class Task:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.relationship import Relationship
         from ..models.task_link import TaskLink
         from ..models.task_notion_document import TaskNotionDocument
         from ..models.task_properties import TaskProperties
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         duid = d.pop("duid")
 
         source_type = TaskSourceType(d.pop("sourceType"))
@@ -350,11 +351,11 @@ class Task:
 
         recommendation_duid = _parse_recommendation_duid(d.pop("recommendationDuid"))
 
-        assignee_duids = cast(List[str], d.pop("assigneeDuids"))
+        assignee_duids = cast(list[str], d.pop("assigneeDuids"))
 
-        subscriber_duids = cast(List[str], d.pop("subscriberDuids"))
+        subscriber_duids = cast(list[str], d.pop("subscriberDuids"))
 
-        tag_duids = cast(List[str], d.pop("tagDuids"))
+        tag_duids = cast(list[str], d.pop("tagDuids"))
 
         links = []
         _links = d.pop("links")
@@ -363,7 +364,7 @@ class Task:
 
             links.append(links_item)
 
-        attachment_duids = cast(List[str], d.pop("attachmentDuids"))
+        attachment_duids = cast(list[str], d.pop("attachmentDuids"))
 
         relationships = []
         _relationships = d.pop("relationships")
@@ -515,7 +516,7 @@ class Task:
         return task
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

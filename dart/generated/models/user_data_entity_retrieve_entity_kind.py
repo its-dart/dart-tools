@@ -2,7 +2,9 @@ from enum import Enum
 
 
 class UserDataEntityRetrieveEntityKind(str, Enum):
+    AGENTS = "agents"
     ATTACHMENTS = "attachments"
+    CHATS = "chats"
     COMMENTS = "comments"
     DARTBOARDS = "dartboards"
     DASHBOARDS = "dashboards"

@@ -1,11 +1,13 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any, Optional, Union
 
 import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...models.agent import Agent
 from ...models.attachment import Attachment
+from ...models.chat import Chat
 from ...models.comment import Comment
 from ...models.comment_reaction import CommentReaction
 from ...models.dartboard import Dartboard
@@ -37,8 +39,8 @@ from ...types import Response
 def _get_kwargs(
     entity_kind: UserDataEntityRetrieveEntityKind,
     entity_duid: str,
-) -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+) -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": f"/api/v0/{entity_kind}/{entity_duid}",
     }
@@ -50,7 +52,9 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[
     Union[
+        "Agent",
         "Attachment",
+        "Chat",
         "Comment",
         "CommentReaction",
         "Dartboard",
@@ -77,12 +81,14 @@ def _parse_response(
         "Webhook",
     ]
 ]:
-    if response.status_code == HTTPStatus.OK:
+    if response.status_code == 200:
 
         def _parse_response_200(
             data: object,
         ) -> Union[
+            "Agent",
             "Attachment",
+            "Chat",
             "Comment",
             "CommentReaction",
             "Dartboard",
@@ -111,7 +117,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_0 = Attachment.from_dict(data)
+                componentsschemas_user_data_entity_type_0 = Agent.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_0
             except:  # noqa: E722
@@ -119,7 +125,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_1 = Comment.from_dict(data)
+                componentsschemas_user_data_entity_type_1 = Attachment.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_1
             except:  # noqa: E722
@@ -127,7 +133,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_2 = CommentReaction.from_dict(data)
+                componentsschemas_user_data_entity_type_2 = Chat.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_2
             except:  # noqa: E722
@@ -135,7 +141,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_3 = User.from_dict(data)
+                componentsschemas_user_data_entity_type_3 = Comment.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_3
             except:  # noqa: E722
@@ -143,7 +149,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_4 = Dartboard.from_dict(data)
+                componentsschemas_user_data_entity_type_4 = CommentReaction.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_4
             except:  # noqa: E722
@@ -151,7 +157,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_5 = Dashboard.from_dict(data)
+                componentsschemas_user_data_entity_type_5 = User.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_5
             except:  # noqa: E722
@@ -159,7 +165,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_6 = TaskKind.from_dict(data)
+                componentsschemas_user_data_entity_type_6 = Dartboard.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_6
             except:  # noqa: E722
@@ -167,7 +173,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_7 = Doc.from_dict(data)
+                componentsschemas_user_data_entity_type_7 = Dashboard.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_7
             except:  # noqa: E722
@@ -175,7 +181,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_8 = Folder.from_dict(data)
+                componentsschemas_user_data_entity_type_8 = TaskKind.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_8
             except:  # noqa: E722
@@ -183,7 +189,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_9 = Form.from_dict(data)
+                componentsschemas_user_data_entity_type_9 = Doc.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_9
             except:  # noqa: E722
@@ -191,7 +197,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_10 = FormField.from_dict(data)
+                componentsschemas_user_data_entity_type_10 = Folder.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_10
             except:  # noqa: E722
@@ -199,7 +205,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_11 = Layout.from_dict(data)
+                componentsschemas_user_data_entity_type_11 = Form.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_11
             except:  # noqa: E722
@@ -207,7 +213,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_12 = Option.from_dict(data)
+                componentsschemas_user_data_entity_type_12 = FormField.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_12
             except:  # noqa: E722
@@ -215,7 +221,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_13 = Property.from_dict(data)
+                componentsschemas_user_data_entity_type_13 = Layout.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_13
             except:  # noqa: E722
@@ -223,7 +229,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_14 = Relationship.from_dict(data)
+                componentsschemas_user_data_entity_type_14 = Option.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_14
             except:  # noqa: E722
@@ -231,7 +237,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_15 = RelationshipKind.from_dict(data)
+                componentsschemas_user_data_entity_type_15 = Property.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_15
             except:  # noqa: E722
@@ -239,7 +245,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_16 = Space.from_dict(data)
+                componentsschemas_user_data_entity_type_16 = Relationship.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_16
             except:  # noqa: E722
@@ -247,7 +253,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_17 = Status.from_dict(data)
+                componentsschemas_user_data_entity_type_17 = RelationshipKind.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_17
             except:  # noqa: E722
@@ -255,7 +261,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_18 = Task.from_dict(data)
+                componentsschemas_user_data_entity_type_18 = Space.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_18
             except:  # noqa: E722
@@ -263,7 +269,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_19 = TaskDocRelationship.from_dict(data)
+                componentsschemas_user_data_entity_type_19 = Status.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_19
             except:  # noqa: E722
@@ -271,7 +277,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_20 = TaskLink.from_dict(data)
+                componentsschemas_user_data_entity_type_20 = Task.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_20
             except:  # noqa: E722
@@ -279,7 +285,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_21 = Tenant.from_dict(data)
+                componentsschemas_user_data_entity_type_21 = TaskDocRelationship.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_21
             except:  # noqa: E722
@@ -287,7 +293,7 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_22 = UserDartboardLayout.from_dict(data)
+                componentsschemas_user_data_entity_type_22 = TaskLink.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_22
             except:  # noqa: E722
@@ -295,16 +301,32 @@ def _parse_response(
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_user_data_entity_type_23 = View.from_dict(data)
+                componentsschemas_user_data_entity_type_23 = Tenant.from_dict(data)
 
                 return componentsschemas_user_data_entity_type_23
             except:  # noqa: E722
                 pass
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                componentsschemas_user_data_entity_type_24 = UserDartboardLayout.from_dict(data)
+
+                return componentsschemas_user_data_entity_type_24
+            except:  # noqa: E722
+                pass
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                componentsschemas_user_data_entity_type_25 = View.from_dict(data)
+
+                return componentsschemas_user_data_entity_type_25
+            except:  # noqa: E722
+                pass
             if not isinstance(data, dict):
                 raise TypeError()
-            componentsschemas_user_data_entity_type_24 = Webhook.from_dict(data)
+            componentsschemas_user_data_entity_type_26 = Webhook.from_dict(data)
 
-            return componentsschemas_user_data_entity_type_24
+            return componentsschemas_user_data_entity_type_26
 
         response_200 = _parse_response_200(response.json())
 
@@ -319,7 +341,9 @@ def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Response[
     Union[
+        "Agent",
         "Attachment",
+        "Chat",
         "Comment",
         "CommentReaction",
         "Dartboard",
@@ -361,7 +385,9 @@ def sync_detailed(
     client: AuthenticatedClient,
 ) -> Response[
     Union[
+        "Agent",
         "Attachment",
+        "Chat",
         "Comment",
         "CommentReaction",
         "Dartboard",
@@ -398,7 +424,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union['Attachment', 'Comment', 'CommentReaction', 'Dartboard', 'Dashboard', 'Doc', 'Folder', 'Form', 'FormField', 'Layout', 'Option', 'Property', 'Relationship', 'RelationshipKind', 'Space', 'Status', 'Task', 'TaskDocRelationship', 'TaskKind', 'TaskLink', 'Tenant', 'User', 'UserDartboardLayout', 'View', 'Webhook']]
+        Response[Union['Agent', 'Attachment', 'Chat', 'Comment', 'CommentReaction', 'Dartboard', 'Dashboard', 'Doc', 'Folder', 'Form', 'FormField', 'Layout', 'Option', 'Property', 'Relationship', 'RelationshipKind', 'Space', 'Status', 'Task', 'TaskDocRelationship', 'TaskKind', 'TaskLink', 'Tenant', 'User', 'UserDartboardLayout', 'View', 'Webhook']]
     """
 
     kwargs = _get_kwargs(
@@ -420,7 +446,9 @@ def sync(
     client: AuthenticatedClient,
 ) -> Optional[
     Union[
+        "Agent",
         "Attachment",
+        "Chat",
         "Comment",
         "CommentReaction",
         "Dartboard",
@@ -457,7 +485,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union['Attachment', 'Comment', 'CommentReaction', 'Dartboard', 'Dashboard', 'Doc', 'Folder', 'Form', 'FormField', 'Layout', 'Option', 'Property', 'Relationship', 'RelationshipKind', 'Space', 'Status', 'Task', 'TaskDocRelationship', 'TaskKind', 'TaskLink', 'Tenant', 'User', 'UserDartboardLayout', 'View', 'Webhook']
+        Union['Agent', 'Attachment', 'Chat', 'Comment', 'CommentReaction', 'Dartboard', 'Dashboard', 'Doc', 'Folder', 'Form', 'FormField', 'Layout', 'Option', 'Property', 'Relationship', 'RelationshipKind', 'Space', 'Status', 'Task', 'TaskDocRelationship', 'TaskKind', 'TaskLink', 'Tenant', 'User', 'UserDartboardLayout', 'View', 'Webhook']
     """
 
     return sync_detailed(
@@ -474,7 +502,9 @@ async def asyncio_detailed(
     client: AuthenticatedClient,
 ) -> Response[
     Union[
+        "Agent",
         "Attachment",
+        "Chat",
         "Comment",
         "CommentReaction",
         "Dartboard",
@@ -511,7 +541,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union['Attachment', 'Comment', 'CommentReaction', 'Dartboard', 'Dashboard', 'Doc', 'Folder', 'Form', 'FormField', 'Layout', 'Option', 'Property', 'Relationship', 'RelationshipKind', 'Space', 'Status', 'Task', 'TaskDocRelationship', 'TaskKind', 'TaskLink', 'Tenant', 'User', 'UserDartboardLayout', 'View', 'Webhook']]
+        Response[Union['Agent', 'Attachment', 'Chat', 'Comment', 'CommentReaction', 'Dartboard', 'Dashboard', 'Doc', 'Folder', 'Form', 'FormField', 'Layout', 'Option', 'Property', 'Relationship', 'RelationshipKind', 'Space', 'Status', 'Task', 'TaskDocRelationship', 'TaskKind', 'TaskLink', 'Tenant', 'User', 'UserDartboardLayout', 'View', 'Webhook']]
     """
 
     kwargs = _get_kwargs(
@@ -531,7 +561,9 @@ async def asyncio(
     client: AuthenticatedClient,
 ) -> Optional[
     Union[
+        "Agent",
         "Attachment",
+        "Chat",
         "Comment",
         "CommentReaction",
         "Dartboard",
@@ -568,7 +600,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union['Attachment', 'Comment', 'CommentReaction', 'Dartboard', 'Dashboard', 'Doc', 'Folder', 'Form', 'FormField', 'Layout', 'Option', 'Property', 'Relationship', 'RelationshipKind', 'Space', 'Status', 'Task', 'TaskDocRelationship', 'TaskKind', 'TaskLink', 'Tenant', 'User', 'UserDartboardLayout', 'View', 'Webhook']
+        Union['Agent', 'Attachment', 'Chat', 'Comment', 'CommentReaction', 'Dartboard', 'Dashboard', 'Doc', 'Folder', 'Form', 'FormField', 'Layout', 'Option', 'Property', 'Relationship', 'RelationshipKind', 'Space', 'Status', 'Task', 'TaskDocRelationship', 'TaskKind', 'TaskLink', 'Tenant', 'User', 'UserDartboardLayout', 'View', 'Webhook']
     """
 
     return (

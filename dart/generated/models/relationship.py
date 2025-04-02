@@ -1,4 +1,5 @@
-from typing import Any, Dict, List, Type, TypeVar
+from collections.abc import Mapping
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -11,27 +12,32 @@ class Relationship:
     """
     Attributes:
         duid (str):
+        kind_duid (str):
         source_duid (str):
         target_duid (str):
     """
 
     duid: str
+    kind_duid: str
     source_duid: str
     target_duid: str
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         duid = self.duid
+
+        kind_duid = self.kind_duid
 
         source_duid = self.source_duid
 
         target_duid = self.target_duid
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "duid": duid,
+                "kindDuid": kind_duid,
                 "sourceDuid": source_duid,
                 "targetDuid": target_duid,
             }
@@ -40,9 +46,11 @@ class Relationship:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         duid = d.pop("duid")
+
+        kind_duid = d.pop("kindDuid")
 
         source_duid = d.pop("sourceDuid")
 
@@ -50,6 +58,7 @@ class Relationship:
 
         relationship = cls(
             duid=duid,
+            kind_duid=kind_duid,
             source_duid=source_duid,
             target_duid=target_duid,
         )
@@ -58,7 +67,7 @@ class Relationship:
         return relationship
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

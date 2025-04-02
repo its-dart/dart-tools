@@ -1,4 +1,5 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -22,7 +23,7 @@ class Chart:
     """
     Attributes:
         duid (str):
-        type (ChartType): * `bar` - BAR
+        type_ (ChartType): * `bar` - BAR
             * `burn-up` - BURN_UP
             * `line` - LINE
             * `number` - NUMBER
@@ -39,16 +40,16 @@ class Chart:
     """
 
     duid: str
-    type: ChartType
+    type_: ChartType
     title: str
     x: int
     y: int
     width: int
     height: int
     adtl: Union["BarChartAdtl", "BurnUpChartAdtl", "LineChartAdtl", "NumberChartAdtl", "PieChartAdtl", "TableChartAdtl"]
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         from ..models.bar_chart_adtl import BarChartAdtl
         from ..models.burn_up_chart_adtl import BurnUpChartAdtl
         from ..models.line_chart_adtl import LineChartAdtl
@@ -57,7 +58,7 @@ class Chart:
 
         duid = self.duid
 
-        type = self.type.value
+        type_ = self.type_.value
 
         title = self.title
 
@@ -69,7 +70,7 @@ class Chart:
 
         height = self.height
 
-        adtl: Dict[str, Any]
+        adtl: dict[str, Any]
         if isinstance(self.adtl, BarChartAdtl):
             adtl = self.adtl.to_dict()
         elif isinstance(self.adtl, BurnUpChartAdtl):
@@ -83,12 +84,12 @@ class Chart:
         else:
             adtl = self.adtl.to_dict()
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "duid": duid,
-                "type": type,
+                "type": type_,
                 "title": title,
                 "x": x,
                 "y": y,
@@ -101,7 +102,7 @@ class Chart:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.bar_chart_adtl import BarChartAdtl
         from ..models.burn_up_chart_adtl import BurnUpChartAdtl
         from ..models.line_chart_adtl import LineChartAdtl
@@ -109,10 +110,10 @@ class Chart:
         from ..models.pie_chart_adtl import PieChartAdtl
         from ..models.table_chart_adtl import TableChartAdtl
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         duid = d.pop("duid")
 
-        type = ChartType(d.pop("type"))
+        type_ = ChartType(d.pop("type"))
 
         title = d.pop("title")
 
@@ -179,7 +180,7 @@ class Chart:
 
         chart = cls(
             duid=duid,
-            type=type,
+            type_=type_,
             title=title,
             x=x,
             y=y,
@@ -192,7 +193,7 @@ class Chart:
         return chart
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

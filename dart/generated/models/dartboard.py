@@ -1,5 +1,6 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -35,15 +36,15 @@ class Dartboard:
             * `Emoji` - EMOJI
         icon_name_or_emoji (str):
         color_hex (str):
-        user_duids_to_layout_duids (List['UserDartboardLayout']):
+        user_duids_to_layout_duids (list['UserDartboardLayout']):
         index (Union[None, int]):
         started_at (Union[None, datetime.datetime]):
         finished_at (Union[None, datetime.datetime]):
         planned_finish_at (Union[None, datetime.datetime]):
         default_property_map (Any):
-        always_shown_property_duids (List[str]):
-        always_hidden_property_duids (List[str]):
-        property_order_duids (List[str]):
+        always_shown_property_duids (list[str]):
+        always_hidden_property_duids (list[str]):
+        property_order_duids (list[str]):
         property_width_map (Any):
         updated_by_client_duid (Union[None, Unset, str]):
     """
@@ -57,20 +58,20 @@ class Dartboard:
     icon_kind: IconKind
     icon_name_or_emoji: str
     color_hex: str
-    user_duids_to_layout_duids: List["UserDartboardLayout"]
+    user_duids_to_layout_duids: list["UserDartboardLayout"]
     index: Union[None, int]
     started_at: Union[None, datetime.datetime]
     finished_at: Union[None, datetime.datetime]
     planned_finish_at: Union[None, datetime.datetime]
     default_property_map: Any
-    always_shown_property_duids: List[str]
-    always_hidden_property_duids: List[str]
-    property_order_duids: List[str]
+    always_shown_property_duids: list[str]
+    always_hidden_property_duids: list[str]
+    property_order_duids: list[str]
     property_width_map: Any
     updated_by_client_duid: Union[None, Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         duid = self.duid
 
         space_duid = self.space_duid
@@ -131,7 +132,7 @@ class Dartboard:
         else:
             updated_by_client_duid = self.updated_by_client_duid
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -162,10 +163,10 @@ class Dartboard:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.user_dartboard_layout import UserDartboardLayout
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         duid = d.pop("duid")
 
         space_duid = d.pop("spaceDuid")
@@ -245,11 +246,11 @@ class Dartboard:
 
         default_property_map = d.pop("defaultPropertyMap")
 
-        always_shown_property_duids = cast(List[str], d.pop("alwaysShownPropertyDuids"))
+        always_shown_property_duids = cast(list[str], d.pop("alwaysShownPropertyDuids"))
 
-        always_hidden_property_duids = cast(List[str], d.pop("alwaysHiddenPropertyDuids"))
+        always_hidden_property_duids = cast(list[str], d.pop("alwaysHiddenPropertyDuids"))
 
-        property_order_duids = cast(List[str], d.pop("propertyOrderDuids"))
+        property_order_duids = cast(list[str], d.pop("propertyOrderDuids"))
 
         property_width_map = d.pop("propertyWidthMap")
 
@@ -289,7 +290,7 @@ class Dartboard:
         return dartboard
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

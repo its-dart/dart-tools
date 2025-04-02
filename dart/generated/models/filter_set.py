@@ -1,4 +1,5 @@
-from typing import Any, Dict, List, Type, TypeVar, cast
+from collections.abc import Mapping
+from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -31,9 +32,15 @@ class FilterSet:
             * `is between` - IS_BETWEEN
             * `is checked` - IS_CHECKED
             * `is unchecked` - IS_UNCHECKED
+            * `=` - EQUAL
+            * `≠` - NOT_EQUAL
+            * `<` - LESS_THAN
+            * `>` - GREATER_THAN
+            * `≤` - LESS_THAN_OR_EQUAL
+            * `≥` - GREATER_THAN_OR_EQUAL
         connector (FilterConnector): * `or` - OR
             * `and` - AND
-        values (List[Any]):
+        values (list[Any]):
     """
 
     id: str
@@ -41,10 +48,10 @@ class FilterSet:
     locked: bool
     applicability: FilterApplicability
     connector: FilterConnector
-    values: List[Any]
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    values: list[Any]
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         id = self.id
 
         field = self.field
@@ -57,7 +64,7 @@ class FilterSet:
 
         values = self.values
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -73,8 +80,8 @@ class FilterSet:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         id = d.pop("id")
 
         field = d.pop("field")
@@ -85,7 +92,7 @@ class FilterSet:
 
         connector = FilterConnector(d.pop("connector"))
 
-        values = cast(List[Any], d.pop("values"))
+        values = cast(list[Any], d.pop("values"))
 
         filter_set = cls(
             id=id,
@@ -100,7 +107,7 @@ class FilterSet:
         return filter_set
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

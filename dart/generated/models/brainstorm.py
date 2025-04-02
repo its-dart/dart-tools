@@ -1,5 +1,6 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -25,7 +26,7 @@ class Brainstorm:
             * `Paused` - PAUSED
             * `Stopped` - STOPPED
         after_start_ms (int):
-        created_tasks_duids (List[str]):
+        created_tasks_duids (list[str]):
         updated_by_client_duid (Union[None, Unset, str]):
     """
 
@@ -37,11 +38,11 @@ class Brainstorm:
     started_at: datetime.datetime
     state: BrainstormState
     after_start_ms: int
-    created_tasks_duids: List[str]
+    created_tasks_duids: list[str]
     updated_by_client_duid: Union[None, Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         duid = self.duid
 
         dartboard_duid = self.dartboard_duid
@@ -66,7 +67,7 @@ class Brainstorm:
         else:
             updated_by_client_duid = self.updated_by_client_duid
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -87,8 +88,8 @@ class Brainstorm:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         duid = d.pop("duid")
 
         dartboard_duid = d.pop("dartboardDuid")
@@ -105,7 +106,7 @@ class Brainstorm:
 
         after_start_ms = d.pop("afterStartMs")
 
-        created_tasks_duids = cast(List[str], d.pop("createdTasksDuids"))
+        created_tasks_duids = cast(list[str], d.pop("createdTasksDuids"))
 
         def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
             if data is None:
@@ -133,7 +134,7 @@ class Brainstorm:
         return brainstorm
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

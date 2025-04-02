@@ -1,8 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..models.webhook_event_kind import WebhookEventKind
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Webhook")
@@ -13,23 +15,41 @@ class Webhook:
     """
     Attributes:
         duid (str):
+        enabled (bool):
         order (str):
+        title (str):
         url (str):
+        event_kinds (WebhookEventKind): * `task.created` - TASK_CREATED
+            * `task.deleted` - TASK_DELETED
+            * `task.updated` - TASK_UPDATED
+            * `doc.created` - DOC_CREATED
+            * `doc.deleted` - DOC_DELETED
+            * `doc.updated` - DOC_UPDATED
+            * `comment.created` - COMMENT_CREATED
         updated_by_client_duid (Union[None, Unset, str]):
     """
 
     duid: str
+    enabled: bool
     order: str
+    title: str
     url: str
+    event_kinds: WebhookEventKind
     updated_by_client_duid: Union[None, Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         duid = self.duid
+
+        enabled = self.enabled
 
         order = self.order
 
+        title = self.title
+
         url = self.url
+
+        event_kinds = self.event_kinds.value
 
         updated_by_client_duid: Union[None, Unset, str]
         if isinstance(self.updated_by_client_duid, Unset):
@@ -37,13 +57,16 @@ class Webhook:
         else:
             updated_by_client_duid = self.updated_by_client_duid
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "duid": duid,
+                "enabled": enabled,
                 "order": order,
+                "title": title,
                 "url": url,
+                "eventKinds": event_kinds,
             }
         )
         if updated_by_client_duid is not UNSET:
@@ -52,13 +75,19 @@ class Webhook:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         duid = d.pop("duid")
+
+        enabled = d.pop("enabled")
 
         order = d.pop("order")
 
+        title = d.pop("title")
+
         url = d.pop("url")
+
+        event_kinds = WebhookEventKind(d.pop("eventKinds"))
 
         def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
             if data is None:
@@ -71,8 +100,11 @@ class Webhook:
 
         webhook = cls(
             duid=duid,
+            enabled=enabled,
             order=order,
+            title=title,
             url=url,
+            event_kinds=event_kinds,
             updated_by_client_duid=updated_by_client_duid,
         )
 
@@ -80,7 +112,7 @@ class Webhook:
         return webhook
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

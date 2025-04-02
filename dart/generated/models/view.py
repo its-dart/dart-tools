@@ -1,4 +1,5 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -20,7 +21,7 @@ class View:
             * `Trash` - TRASH
             * `My tasks` - MY_TASKS
         accessible_by_team (bool):
-        accessible_by_user_duids (List[str]):
+        accessible_by_user_duids (list[str]):
         public (bool):
         order (str):
         title (str):
@@ -31,10 +32,10 @@ class View:
         icon_name_or_emoji (str):
         color_hex (str):
         layout_duid (str):
-        favorited_by_user_duids (List[str]):
-        always_shown_property_duids (List[str]):
-        always_hidden_property_duids (List[str]):
-        property_order_duids (List[str]):
+        favorited_by_user_duids (list[str]):
+        always_shown_property_duids (list[str]):
+        always_hidden_property_duids (list[str]):
+        property_order_duids (list[str]):
         property_width_map (Any):
         updated_by_client_duid (Union[None, Unset, str]):
     """
@@ -42,7 +43,7 @@ class View:
     duid: str
     kind: ViewKind
     accessible_by_team: bool
-    accessible_by_user_duids: List[str]
+    accessible_by_user_duids: list[str]
     public: bool
     order: str
     title: str
@@ -51,15 +52,15 @@ class View:
     icon_name_or_emoji: str
     color_hex: str
     layout_duid: str
-    favorited_by_user_duids: List[str]
-    always_shown_property_duids: List[str]
-    always_hidden_property_duids: List[str]
-    property_order_duids: List[str]
+    favorited_by_user_duids: list[str]
+    always_shown_property_duids: list[str]
+    always_hidden_property_duids: list[str]
+    property_order_duids: list[str]
     property_width_map: Any
     updated_by_client_duid: Union[None, Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         duid = self.duid
 
         kind = self.kind.value
@@ -100,7 +101,7 @@ class View:
         else:
             updated_by_client_duid = self.updated_by_client_duid
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -129,15 +130,15 @@ class View:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         duid = d.pop("duid")
 
         kind = ViewKind(d.pop("kind"))
 
         accessible_by_team = d.pop("accessibleByTeam")
 
-        accessible_by_user_duids = cast(List[str], d.pop("accessibleByUserDuids"))
+        accessible_by_user_duids = cast(list[str], d.pop("accessibleByUserDuids"))
 
         public = d.pop("public")
 
@@ -155,13 +156,13 @@ class View:
 
         layout_duid = d.pop("layoutDuid")
 
-        favorited_by_user_duids = cast(List[str], d.pop("favoritedByUserDuids"))
+        favorited_by_user_duids = cast(list[str], d.pop("favoritedByUserDuids"))
 
-        always_shown_property_duids = cast(List[str], d.pop("alwaysShownPropertyDuids"))
+        always_shown_property_duids = cast(list[str], d.pop("alwaysShownPropertyDuids"))
 
-        always_hidden_property_duids = cast(List[str], d.pop("alwaysHiddenPropertyDuids"))
+        always_hidden_property_duids = cast(list[str], d.pop("alwaysHiddenPropertyDuids"))
 
-        property_order_duids = cast(List[str], d.pop("propertyOrderDuids"))
+        property_order_duids = cast(list[str], d.pop("propertyOrderDuids"))
 
         property_width_map = d.pop("propertyWidthMap")
 
@@ -199,7 +200,7 @@ class View:
         return view
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

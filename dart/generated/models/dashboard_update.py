@@ -1,4 +1,5 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -15,7 +16,7 @@ class DashboardUpdate:
     Attributes:
         duid (str):
         accessible_by_team (Union[Unset, bool]):
-        accessible_by_user_duids (Union[Unset, List[str]]):
+        accessible_by_user_duids (Union[Unset, list[str]]):
         order (Union[Unset, str]):
         title (Union[Unset, str]):
         description (Union[Unset, str]):
@@ -25,13 +26,13 @@ class DashboardUpdate:
         icon_name_or_emoji (Union[Unset, str]):
         color_hex (Union[Unset, str]):
         layout_duid (Union[Unset, str]):
-        favorited_by_user_duids (Union[Unset, List[str]]):
+        favorited_by_user_duids (Union[Unset, list[str]]):
         charts (Union[Unset, Any]):
     """
 
     duid: str
     accessible_by_team: Union[Unset, bool] = UNSET
-    accessible_by_user_duids: Union[Unset, List[str]] = UNSET
+    accessible_by_user_duids: Union[Unset, list[str]] = UNSET
     order: Union[Unset, str] = UNSET
     title: Union[Unset, str] = UNSET
     description: Union[Unset, str] = UNSET
@@ -39,16 +40,16 @@ class DashboardUpdate:
     icon_name_or_emoji: Union[Unset, str] = UNSET
     color_hex: Union[Unset, str] = UNSET
     layout_duid: Union[Unset, str] = UNSET
-    favorited_by_user_duids: Union[Unset, List[str]] = UNSET
+    favorited_by_user_duids: Union[Unset, list[str]] = UNSET
     charts: Union[Unset, Any] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         duid = self.duid
 
         accessible_by_team = self.accessible_by_team
 
-        accessible_by_user_duids: Union[Unset, List[str]] = UNSET
+        accessible_by_user_duids: Union[Unset, list[str]] = UNSET
         if not isinstance(self.accessible_by_user_duids, Unset):
             accessible_by_user_duids = self.accessible_by_user_duids
 
@@ -68,13 +69,13 @@ class DashboardUpdate:
 
         layout_duid = self.layout_duid
 
-        favorited_by_user_duids: Union[Unset, List[str]] = UNSET
+        favorited_by_user_duids: Union[Unset, list[str]] = UNSET
         if not isinstance(self.favorited_by_user_duids, Unset):
             favorited_by_user_duids = self.favorited_by_user_duids
 
         charts = self.charts
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -107,13 +108,13 @@ class DashboardUpdate:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         duid = d.pop("duid")
 
         accessible_by_team = d.pop("accessibleByTeam", UNSET)
 
-        accessible_by_user_duids = cast(List[str], d.pop("accessibleByUserDuids", UNSET))
+        accessible_by_user_duids = cast(list[str], d.pop("accessibleByUserDuids", UNSET))
 
         order = d.pop("order", UNSET)
 
@@ -134,7 +135,7 @@ class DashboardUpdate:
 
         layout_duid = d.pop("layoutDuid", UNSET)
 
-        favorited_by_user_duids = cast(List[str], d.pop("favoritedByUserDuids", UNSET))
+        favorited_by_user_duids = cast(list[str], d.pop("favoritedByUserDuids", UNSET))
 
         charts = d.pop("charts", UNSET)
 
@@ -157,7 +158,7 @@ class DashboardUpdate:
         return dashboard_update
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

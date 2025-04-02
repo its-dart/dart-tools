@@ -2,8 +2,10 @@ from enum import Enum
 
 
 class OperationModelKind(str, Enum):
+    AGENT = "agent"
     ATTACHMENT = "attachment"
     BRAINSTORM = "brainstorm"
+    CHAT = "chat"
     COMMENT = "comment"
     COMMENT_REACTION = "comment_reaction"
     DARTBOARD = "dartboard"

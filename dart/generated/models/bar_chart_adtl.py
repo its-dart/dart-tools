@@ -1,4 +1,5 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -24,9 +25,9 @@ class BarChartAdtl:
     stack_property_duid: Union[None, str]
     aggregation_property_duid: Union[None, str]
     aggregation: ChartAggregation
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         x_property_duid = self.x_property_duid
 
         stack_property_duid: Union[None, str]
@@ -37,7 +38,7 @@ class BarChartAdtl:
 
         aggregation = self.aggregation.value
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -51,8 +52,8 @@ class BarChartAdtl:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         x_property_duid = d.pop("xPropertyDuid")
 
         def _parse_stack_property_duid(data: object) -> Union[None, str]:
@@ -82,7 +83,7 @@ class BarChartAdtl:
         return bar_chart_adtl
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

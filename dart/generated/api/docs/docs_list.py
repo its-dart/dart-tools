@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Optional, Union
 
 import httpx
 
@@ -20,7 +20,7 @@ def _get_kwargs(
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
-    o: Union[Unset, List[DocsListOItem]] = UNSET,
+    o: Union[Unset, list[DocsListOItem]] = UNSET,
     offset: Union[Unset, int] = UNSET,
     report_kind: Union[Unset, str] = UNSET,
     s: Union[Unset, str] = UNSET,
@@ -28,8 +28,8 @@ def _get_kwargs(
     subscriber_duid: Union[Unset, str] = UNSET,
     text: Union[Unset, str] = UNSET,
     title: Union[Unset, str] = UNSET,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
     params["duids"] = duids
 
@@ -47,7 +47,7 @@ def _get_kwargs(
 
     params["limit"] = limit
 
-    json_o: Union[Unset, List[str]] = UNSET
+    json_o: Union[Unset, list[str]] = UNSET
     if not isinstance(o, Unset):
         json_o = []
         for o_item_data in o:
@@ -72,7 +72,7 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/api/v0/docs",
         "params": params,
@@ -84,7 +84,7 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[PaginatedDocList]:
-    if response.status_code == HTTPStatus.OK:
+    if response.status_code == 200:
         response_200 = PaginatedDocList.from_dict(response.json())
 
         return response_200
@@ -116,7 +116,7 @@ def sync_detailed(
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
-    o: Union[Unset, List[DocsListOItem]] = UNSET,
+    o: Union[Unset, list[DocsListOItem]] = UNSET,
     offset: Union[Unset, int] = UNSET,
     report_kind: Union[Unset, str] = UNSET,
     s: Union[Unset, str] = UNSET,
@@ -135,7 +135,7 @@ def sync_detailed(
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
         limit (Union[Unset, int]):
-        o (Union[Unset, List[DocsListOItem]]):
+        o (Union[Unset, list[DocsListOItem]]):
         offset (Union[Unset, int]):
         report_kind (Union[Unset, str]):
         s (Union[Unset, str]):
@@ -189,7 +189,7 @@ def sync(
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
-    o: Union[Unset, List[DocsListOItem]] = UNSET,
+    o: Union[Unset, list[DocsListOItem]] = UNSET,
     offset: Union[Unset, int] = UNSET,
     report_kind: Union[Unset, str] = UNSET,
     s: Union[Unset, str] = UNSET,
@@ -208,7 +208,7 @@ def sync(
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
         limit (Union[Unset, int]):
-        o (Union[Unset, List[DocsListOItem]]):
+        o (Union[Unset, list[DocsListOItem]]):
         offset (Union[Unset, int]):
         report_kind (Union[Unset, str]):
         s (Union[Unset, str]):
@@ -257,7 +257,7 @@ async def asyncio_detailed(
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
-    o: Union[Unset, List[DocsListOItem]] = UNSET,
+    o: Union[Unset, list[DocsListOItem]] = UNSET,
     offset: Union[Unset, int] = UNSET,
     report_kind: Union[Unset, str] = UNSET,
     s: Union[Unset, str] = UNSET,
@@ -276,7 +276,7 @@ async def asyncio_detailed(
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
         limit (Union[Unset, int]):
-        o (Union[Unset, List[DocsListOItem]]):
+        o (Union[Unset, list[DocsListOItem]]):
         offset (Union[Unset, int]):
         report_kind (Union[Unset, str]):
         s (Union[Unset, str]):
@@ -328,7 +328,7 @@ async def asyncio(
     in_trash: Union[Unset, bool] = UNSET,
     is_draft: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
-    o: Union[Unset, List[DocsListOItem]] = UNSET,
+    o: Union[Unset, list[DocsListOItem]] = UNSET,
     offset: Union[Unset, int] = UNSET,
     report_kind: Union[Unset, str] = UNSET,
     s: Union[Unset, str] = UNSET,
@@ -347,7 +347,7 @@ async def asyncio(
         in_trash (Union[Unset, bool]):
         is_draft (Union[Unset, bool]):
         limit (Union[Unset, int]):
-        o (Union[Unset, List[DocsListOItem]]):
+        o (Union[Unset, list[DocsListOItem]]):
         offset (Union[Unset, int]):
         report_kind (Union[Unset, str]):
         s (Union[Unset, str]):

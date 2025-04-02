@@ -2,9 +2,15 @@ from enum import Enum
 
 
 class TransactionKind(str, Enum):
+    AGENT_CREATE = "agent_create"
+    AGENT_DELETE = "agent_delete"
+    AGENT_UPDATE = "agent_update"
     BRAINSTORM_CREATE = "brainstorm_create"
     BRAINSTORM_DELETE = "brainstorm_delete"
     BRAINSTORM_UPDATE = "brainstorm_update"
+    CHAT_CREATE = "chat_create"
+    CHAT_DELETE = "chat_delete"
+    CHAT_UPDATE = "chat_update"
     COMMENT_CREATE = "comment_create"
     COMMENT_DELETE = "comment_delete"
     COMMENT_REACTION_CREATE = "comment_reaction_create"

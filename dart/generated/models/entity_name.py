@@ -2,6 +2,7 @@ from enum import Enum
 
 
 class EntityName(str, Enum):
+    AGENT = "agent"
     BRAINSTORM = "brainstorm"
     COMMENT = "comment"
     DARTBOARD = "dartboard"

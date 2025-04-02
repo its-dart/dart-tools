@@ -1,6 +1,6 @@
 import datetime
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any, Optional, Union
 
 import httpx
 
@@ -14,23 +14,30 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     *,
     duids: Union[Unset, str] = UNSET,
-    finished_at: Union[Unset, datetime.date] = UNSET,
+    finished_at_after: Union[Unset, datetime.datetime] = UNSET,
+    finished_at_before: Union[Unset, datetime.datetime] = UNSET,
     kind: Union[Unset, DartboardsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     space: Union[Unset, str] = UNSET,
     space_duid: Union[Unset, str] = UNSET,
-    started_at: Union[Unset, datetime.date] = UNSET,
+    started_at_after: Union[Unset, datetime.datetime] = UNSET,
+    started_at_before: Union[Unset, datetime.datetime] = UNSET,
     title: Union[Unset, str] = UNSET,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
     params["duids"] = duids
 
-    json_finished_at: Union[Unset, str] = UNSET
-    if not isinstance(finished_at, Unset):
-        json_finished_at = finished_at.isoformat()
-    params["finished_at"] = json_finished_at
+    json_finished_at_after: Union[Unset, str] = UNSET
+    if not isinstance(finished_at_after, Unset):
+        json_finished_at_after = finished_at_after.isoformat()
+    params["finished_at_after"] = json_finished_at_after
+
+    json_finished_at_before: Union[Unset, str] = UNSET
+    if not isinstance(finished_at_before, Unset):
+        json_finished_at_before = finished_at_before.isoformat()
+    params["finished_at_before"] = json_finished_at_before
 
     json_kind: Union[Unset, str] = UNSET
     if not isinstance(kind, Unset):
@@ -46,16 +53,21 @@ def _get_kwargs(
 
     params["space_duid"] = space_duid
 
-    json_started_at: Union[Unset, str] = UNSET
-    if not isinstance(started_at, Unset):
-        json_started_at = started_at.isoformat()
-    params["started_at"] = json_started_at
+    json_started_at_after: Union[Unset, str] = UNSET
+    if not isinstance(started_at_after, Unset):
+        json_started_at_after = started_at_after.isoformat()
+    params["started_at_after"] = json_started_at_after
+
+    json_started_at_before: Union[Unset, str] = UNSET
+    if not isinstance(started_at_before, Unset):
+        json_started_at_before = started_at_before.isoformat()
+    params["started_at_before"] = json_started_at_before
 
     params["title"] = title
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/api/v0/dartboards",
         "params": params,
@@ -67,7 +79,7 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[PaginatedDartboardList]:
-    if response.status_code == HTTPStatus.OK:
+    if response.status_code == 200:
         response_200 = PaginatedDartboardList.from_dict(response.json())
 
         return response_200
@@ -92,25 +104,29 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     duids: Union[Unset, str] = UNSET,
-    finished_at: Union[Unset, datetime.date] = UNSET,
+    finished_at_after: Union[Unset, datetime.datetime] = UNSET,
+    finished_at_before: Union[Unset, datetime.datetime] = UNSET,
     kind: Union[Unset, DartboardsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     space: Union[Unset, str] = UNSET,
     space_duid: Union[Unset, str] = UNSET,
-    started_at: Union[Unset, datetime.date] = UNSET,
+    started_at_after: Union[Unset, datetime.datetime] = UNSET,
+    started_at_before: Union[Unset, datetime.datetime] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedDartboardList]:
     """
     Args:
         duids (Union[Unset, str]):
-        finished_at (Union[Unset, datetime.date]):
+        finished_at_after (Union[Unset, datetime.datetime]):
+        finished_at_before (Union[Unset, datetime.datetime]):
         kind (Union[Unset, DartboardsListKind]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         space (Union[Unset, str]):
         space_duid (Union[Unset, str]):
-        started_at (Union[Unset, datetime.date]):
+        started_at_after (Union[Unset, datetime.datetime]):
+        started_at_before (Union[Unset, datetime.datetime]):
         title (Union[Unset, str]):
 
     Raises:
@@ -123,13 +139,15 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         duids=duids,
-        finished_at=finished_at,
+        finished_at_after=finished_at_after,
+        finished_at_before=finished_at_before,
         kind=kind,
         limit=limit,
         offset=offset,
         space=space,
         space_duid=space_duid,
-        started_at=started_at,
+        started_at_after=started_at_after,
+        started_at_before=started_at_before,
         title=title,
     )
 
@@ -144,25 +162,29 @@ def sync(
     *,
     client: AuthenticatedClient,
     duids: Union[Unset, str] = UNSET,
-    finished_at: Union[Unset, datetime.date] = UNSET,
+    finished_at_after: Union[Unset, datetime.datetime] = UNSET,
+    finished_at_before: Union[Unset, datetime.datetime] = UNSET,
     kind: Union[Unset, DartboardsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     space: Union[Unset, str] = UNSET,
     space_duid: Union[Unset, str] = UNSET,
-    started_at: Union[Unset, datetime.date] = UNSET,
+    started_at_after: Union[Unset, datetime.datetime] = UNSET,
+    started_at_before: Union[Unset, datetime.datetime] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedDartboardList]:
     """
     Args:
         duids (Union[Unset, str]):
-        finished_at (Union[Unset, datetime.date]):
+        finished_at_after (Union[Unset, datetime.datetime]):
+        finished_at_before (Union[Unset, datetime.datetime]):
         kind (Union[Unset, DartboardsListKind]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         space (Union[Unset, str]):
         space_duid (Union[Unset, str]):
-        started_at (Union[Unset, datetime.date]):
+        started_at_after (Union[Unset, datetime.datetime]):
+        started_at_before (Union[Unset, datetime.datetime]):
         title (Union[Unset, str]):
 
     Raises:
@@ -176,13 +198,15 @@ def sync(
     return sync_detailed(
         client=client,
         duids=duids,
-        finished_at=finished_at,
+        finished_at_after=finished_at_after,
+        finished_at_before=finished_at_before,
         kind=kind,
         limit=limit,
         offset=offset,
         space=space,
         space_duid=space_duid,
-        started_at=started_at,
+        started_at_after=started_at_after,
+        started_at_before=started_at_before,
         title=title,
     ).parsed
 
@@ -191,25 +215,29 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     duids: Union[Unset, str] = UNSET,
-    finished_at: Union[Unset, datetime.date] = UNSET,
+    finished_at_after: Union[Unset, datetime.datetime] = UNSET,
+    finished_at_before: Union[Unset, datetime.datetime] = UNSET,
     kind: Union[Unset, DartboardsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     space: Union[Unset, str] = UNSET,
     space_duid: Union[Unset, str] = UNSET,
-    started_at: Union[Unset, datetime.date] = UNSET,
+    started_at_after: Union[Unset, datetime.datetime] = UNSET,
+    started_at_before: Union[Unset, datetime.datetime] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedDartboardList]:
     """
     Args:
         duids (Union[Unset, str]):
-        finished_at (Union[Unset, datetime.date]):
+        finished_at_after (Union[Unset, datetime.datetime]):
+        finished_at_before (Union[Unset, datetime.datetime]):
         kind (Union[Unset, DartboardsListKind]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         space (Union[Unset, str]):
         space_duid (Union[Unset, str]):
-        started_at (Union[Unset, datetime.date]):
+        started_at_after (Union[Unset, datetime.datetime]):
+        started_at_before (Union[Unset, datetime.datetime]):
         title (Union[Unset, str]):
 
     Raises:
@@ -222,13 +250,15 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         duids=duids,
-        finished_at=finished_at,
+        finished_at_after=finished_at_after,
+        finished_at_before=finished_at_before,
         kind=kind,
         limit=limit,
         offset=offset,
         space=space,
         space_duid=space_duid,
-        started_at=started_at,
+        started_at_after=started_at_after,
+        started_at_before=started_at_before,
         title=title,
     )
 
@@ -241,25 +271,29 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     duids: Union[Unset, str] = UNSET,
-    finished_at: Union[Unset, datetime.date] = UNSET,
+    finished_at_after: Union[Unset, datetime.datetime] = UNSET,
+    finished_at_before: Union[Unset, datetime.datetime] = UNSET,
     kind: Union[Unset, DartboardsListKind] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     space: Union[Unset, str] = UNSET,
     space_duid: Union[Unset, str] = UNSET,
-    started_at: Union[Unset, datetime.date] = UNSET,
+    started_at_after: Union[Unset, datetime.datetime] = UNSET,
+    started_at_before: Union[Unset, datetime.datetime] = UNSET,
     title: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedDartboardList]:
     """
     Args:
         duids (Union[Unset, str]):
-        finished_at (Union[Unset, datetime.date]):
+        finished_at_after (Union[Unset, datetime.datetime]):
+        finished_at_before (Union[Unset, datetime.datetime]):
         kind (Union[Unset, DartboardsListKind]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         space (Union[Unset, str]):
         space_duid (Union[Unset, str]):
-        started_at (Union[Unset, datetime.date]):
+        started_at_after (Union[Unset, datetime.datetime]):
+        started_at_before (Union[Unset, datetime.datetime]):
         title (Union[Unset, str]):
 
     Raises:
@@ -274,13 +308,15 @@ async def asyncio(
         await asyncio_detailed(
             client=client,
             duids=duids,
-            finished_at=finished_at,
+            finished_at_after=finished_at_after,
+            finished_at_before=finished_at_before,
             kind=kind,
             limit=limit,
             offset=offset,
             space=space,
             space_duid=space_duid,
-            started_at=started_at,
+            started_at_after=started_at_after,
+            started_at_before=started_at_before,
             title=title,
         )
     ).parsed
