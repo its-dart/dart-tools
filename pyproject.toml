@@ -38,7 +38,12 @@ dependencies = [
   "httpx",
   "pick",
   "platformdirs",
-  "requests"
+  "requests",
+]
+
+[dependency-groups]
+dev = [
+    "openapi-python-client",
 ]
 
 [project.urls]
