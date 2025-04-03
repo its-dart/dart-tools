@@ -43,6 +43,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "black>=25.1.0",
     "openapi-python-client",
 ]
 
@@ -59,6 +60,13 @@ dart = "dart:cli"
 [build-system]
 requires = ["setuptools>=43.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
+line_length = 88
 
 [tool.setuptools.packages.find]
 where = ["."]
