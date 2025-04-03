@@ -1,16 +1,8 @@
-import datetime
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
-
-from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.comment_reaction import CommentReaction
-
 
 T = TypeVar("T", bound="Comment")
 
@@ -19,173 +11,72 @@ T = TypeVar("T", bound="Comment")
 class Comment:
     """
     Attributes:
-        duid (str):
-        created_at (datetime.datetime):
-        updated_at (datetime.datetime):
-        task_duid (str):
-        root_duid (Union[None, str]):
-        authored_by_ai (bool):
-        author_duid (str):
-        text (Any):
-        published_at (Union[None, datetime.datetime]):
-        reactions (list['CommentReaction']):
-        is_draft (bool):
-        edited (bool):
-        updated_by_client_duid (Union[None, Unset, str]):
+        id (str): The ID. This can and should be null on creation and not otherwise.
+        permalink (Union[None, str]): The permanent link, which is a URL that can be used to open the comment in Dart.
+            This can and should be null on creation and not otherwise.
+        task_id (str): The ID of the task that the comment is associated with. This cannot be null.
+        author (str): The name or email of the user that authored the comment. This can and should be null on creation
+            and not otherwise.
+        text (str): The full content of the comment, which can include markdown formatting. This cannot be null.
     """
 
-    duid: str
-    created_at: datetime.datetime
-    updated_at: datetime.datetime
-    task_duid: str
-    root_duid: Union[None, str]
-    authored_by_ai: bool
-    author_duid: str
-    text: Any
-    published_at: Union[None, datetime.datetime]
-    reactions: list["CommentReaction"]
-    is_draft: bool
-    edited: bool
-    updated_by_client_duid: Union[None, Unset, str] = UNSET
+    id: str
+    permalink: Union[None, str]
+    task_id: str
+    author: str
+    text: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        duid = self.duid
+        id = self.id
 
-        created_at = self.created_at.isoformat()
+        permalink: Union[None, str]
+        permalink = self.permalink
 
-        updated_at = self.updated_at.isoformat()
+        task_id = self.task_id
 
-        task_duid = self.task_duid
-
-        root_duid: Union[None, str]
-        root_duid = self.root_duid
-
-        authored_by_ai = self.authored_by_ai
-
-        author_duid = self.author_duid
+        author = self.author
 
         text = self.text
-
-        published_at: Union[None, str]
-        if isinstance(self.published_at, datetime.datetime):
-            published_at = self.published_at.isoformat()
-        else:
-            published_at = self.published_at
-
-        reactions = []
-        for reactions_item_data in self.reactions:
-            reactions_item = reactions_item_data.to_dict()
-            reactions.append(reactions_item)
-
-        is_draft = self.is_draft
-
-        edited = self.edited
-
-        updated_by_client_duid: Union[None, Unset, str]
-        if isinstance(self.updated_by_client_duid, Unset):
-            updated_by_client_duid = UNSET
-        else:
-            updated_by_client_duid = self.updated_by_client_duid
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "duid": duid,
-                "createdAt": created_at,
-                "updatedAt": updated_at,
-                "taskDuid": task_duid,
-                "rootDuid": root_duid,
-                "authoredByAi": authored_by_ai,
-                "authorDuid": author_duid,
+                "id": id,
+                "permalink": permalink,
+                "taskId": task_id,
+                "author": author,
                 "text": text,
-                "publishedAt": published_at,
-                "reactions": reactions,
-                "isDraft": is_draft,
-                "edited": edited,
             }
         )
-        if updated_by_client_duid is not UNSET:
-            field_dict["updatedByClientDuid"] = updated_by_client_duid
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.comment_reaction import CommentReaction
-
         d = dict(src_dict)
-        duid = d.pop("duid")
+        id = d.pop("id")
 
-        created_at = isoparse(d.pop("createdAt"))
-
-        updated_at = isoparse(d.pop("updatedAt"))
-
-        task_duid = d.pop("taskDuid")
-
-        def _parse_root_duid(data: object) -> Union[None, str]:
+        def _parse_permalink(data: object) -> Union[None, str]:
             if data is None:
                 return data
             return cast(Union[None, str], data)
 
-        root_duid = _parse_root_duid(d.pop("rootDuid"))
+        permalink = _parse_permalink(d.pop("permalink"))
 
-        authored_by_ai = d.pop("authoredByAi")
+        task_id = d.pop("taskId")
 
-        author_duid = d.pop("authorDuid")
+        author = d.pop("author")
 
         text = d.pop("text")
 
-        def _parse_published_at(data: object) -> Union[None, datetime.datetime]:
-            if data is None:
-                return data
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                published_at_type_0 = isoparse(data)
-
-                return published_at_type_0
-            except:  # noqa: E722
-                pass
-            return cast(Union[None, datetime.datetime], data)
-
-        published_at = _parse_published_at(d.pop("publishedAt"))
-
-        reactions = []
-        _reactions = d.pop("reactions")
-        for reactions_item_data in _reactions:
-            reactions_item = CommentReaction.from_dict(reactions_item_data)
-
-            reactions.append(reactions_item)
-
-        is_draft = d.pop("isDraft")
-
-        edited = d.pop("edited")
-
-        def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            return cast(Union[None, Unset, str], data)
-
-        updated_by_client_duid = _parse_updated_by_client_duid(d.pop("updatedByClientDuid", UNSET))
-
         comment = cls(
-            duid=duid,
-            created_at=created_at,
-            updated_at=updated_at,
-            task_duid=task_duid,
-            root_duid=root_duid,
-            authored_by_ai=authored_by_ai,
-            author_duid=author_duid,
+            id=id,
+            permalink=permalink,
+            task_id=task_id,
+            author=author,
             text=text,
-            published_at=published_at,
-            reactions=reactions,
-            is_draft=is_draft,
-            edited=edited,
-            updated_by_client_duid=updated_by_client_duid,
         )
 
         comment.additional_properties = d

@@ -6,12 +6,13 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Task")
+T = TypeVar("T", bound="ConciseTask")
 
 
 @_attrs_define
-class Task:
-    """
+class ConciseTask:
+    """This concise task serializer is going to be used in tasks listing view only.
+
     Attributes:
         id (str): The ID. This can and should be null on creation and not otherwise.
         permalink (str): The permanent link, which is a URL that can be used to open the task in Dart. This can and
@@ -24,8 +25,6 @@ class Task:
         type_ (str): The title of the type of the task. This can be null on creation and not otherwise.
         status (str): The status from the list of available statuses. Common options are To-do, Doing, and Done,
             although what is possible depends on the workspace. This can be null on creation and not otherwise.
-        description (str): A longer description of the task, which can include markdown formatting. This should fully
-            describe what needs to be done. This can be null on creation and not otherwise.
         assignees (Union[Unset, list[str]]): The names or emails of the users that the task is assigned to. Either this
             or assignee must be included, depending on whether the workspaces allows multiple assignees or not. If included,
             this can be null on creation and not otherwise.
@@ -55,7 +54,6 @@ class Task:
     dartboard: str
     type_: str
     status: str
-    description: str
     assignees: Union[Unset, list[str]] = UNSET
     assignee: Union[None, Unset, str] = UNSET
     tags: Union[Unset, list[str]] = UNSET
@@ -81,8 +79,6 @@ class Task:
         type_ = self.type_
 
         status = self.status
-
-        description = self.description
 
         assignees: Union[Unset, list[str]] = UNSET
         if not isinstance(self.assignees, Unset):
@@ -135,7 +131,6 @@ class Task:
                 "dartboard": dartboard,
                 "type": type_,
                 "status": status,
-                "description": description,
             }
         )
         if assignees is not UNSET:
@@ -178,8 +173,6 @@ class Task:
         type_ = d.pop("type")
 
         status = d.pop("status")
-
-        description = d.pop("description")
 
         assignees = cast(list[str], d.pop("assignees", UNSET))
 
@@ -232,7 +225,7 @@ class Task:
 
         time_tracking = d.pop("timeTracking", UNSET)
 
-        task = cls(
+        concise_task = cls(
             id=id,
             permalink=permalink,
             title=title,
@@ -240,7 +233,6 @@ class Task:
             dartboard=dartboard,
             type_=type_,
             status=status,
-            description=description,
             assignees=assignees,
             assignee=assignee,
             tags=tags,
@@ -251,8 +243,8 @@ class Task:
             time_tracking=time_tracking,
         )
 
-        task.additional_properties = d
-        return task
+        concise_task.additional_properties = d
+        return concise_task
 
     @property
     def additional_keys(self) -> list[str]:

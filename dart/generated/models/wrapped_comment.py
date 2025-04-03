@@ -1,35 +1,34 @@
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="CommentCreate")
+if TYPE_CHECKING:
+    from ..models.comment import Comment
+
+
+T = TypeVar("T", bound="WrappedComment")
 
 
 @_attrs_define
-class CommentCreate:
+class WrappedComment:
     """
     Attributes:
-        task_id (str): The ID of the task that the comment is associated with. This cannot be null.
-        text (str): The full content of the comment, which can include markdown formatting. This cannot be null.
+        item (Comment):
     """
 
-    task_id: str
-    text: str
+    item: "Comment"
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        task_id = self.task_id
-
-        text = self.text
+        item = self.item.to_dict()
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "taskId": task_id,
-                "text": text,
+                "item": item,
             }
         )
 
@@ -37,18 +36,17 @@ class CommentCreate:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.comment import Comment
+
         d = dict(src_dict)
-        task_id = d.pop("taskId")
+        item = Comment.from_dict(d.pop("item"))
 
-        text = d.pop("text")
-
-        comment_create = cls(
-            task_id=task_id,
-            text=text,
+        wrapped_comment = cls(
+            item=item,
         )
 
-        comment_create.additional_properties = d
-        return comment_create
+        wrapped_comment.additional_properties = d
+        return wrapped_comment
 
     @property
     def additional_keys(self) -> list[str]:

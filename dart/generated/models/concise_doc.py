@@ -4,12 +4,13 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="Doc")
+T = TypeVar("T", bound="ConciseDoc")
 
 
 @_attrs_define
-class Doc:
-    """
+class ConciseDoc:
+    """This concise doc serializer is going to be used in docs listing view only.
+
     Attributes:
         id (str): The ID. This can and should be null on creation and not otherwise.
         permalink (str): The permanent link, which is a URL that can be used to open the doc in Dart. This can and
@@ -18,14 +19,12 @@ class Doc:
         folder (str): The title of the folder, which is a project or list of docs. One common option is Docs, although
             what is possible depends on the workspace. If the folder is ambiguous it may need to include a prefix with the
             name of the space, which is a folder for folders.
-        text (str): The full content of the doc, which can include markdown formatting. This cannot be null.
     """
 
     id: str
     permalink: str
     title: str
     folder: str
-    text: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -37,8 +36,6 @@ class Doc:
 
         folder = self.folder
 
-        text = self.text
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -47,7 +44,6 @@ class Doc:
                 "permalink": permalink,
                 "title": title,
                 "folder": folder,
-                "text": text,
             }
         )
 
@@ -64,18 +60,15 @@ class Doc:
 
         folder = d.pop("folder")
 
-        text = d.pop("text")
-
-        doc = cls(
+        concise_doc = cls(
             id=id,
             permalink=permalink,
             title=title,
             folder=folder,
-            text=text,
         )
 
-        doc.additional_properties = d
-        return doc
+        concise_doc.additional_properties = d
+        return concise_doc
 
     @property
     def additional_keys(self) -> list[str]:

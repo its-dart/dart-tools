@@ -4,32 +4,32 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="CommentCreate")
+T = TypeVar("T", bound="Assignee")
 
 
 @_attrs_define
-class CommentCreate:
+class Assignee:
     """
     Attributes:
-        task_id (str): The ID of the task that the comment is associated with. This cannot be null.
-        text (str): The full content of the comment, which can include markdown formatting. This cannot be null.
+        name (str):
+        email (str):
     """
 
-    task_id: str
-    text: str
+    name: str
+    email: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        task_id = self.task_id
+        name = self.name
 
-        text = self.text
+        email = self.email
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "taskId": task_id,
-                "text": text,
+                "name": name,
+                "email": email,
             }
         )
 
@@ -38,17 +38,17 @@ class CommentCreate:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        task_id = d.pop("taskId")
+        name = d.pop("name")
 
-        text = d.pop("text")
+        email = d.pop("email")
 
-        comment_create = cls(
-            task_id=task_id,
-            text=text,
+        assignee = cls(
+            name=name,
+            email=email,
         )
 
-        comment_create.additional_properties = d
-        return comment_create
+        assignee.additional_properties = d
+        return assignee
 
     @property
     def additional_keys(self) -> list[str]:
