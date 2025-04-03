@@ -30,7 +30,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[WrappedTask]:
+def _parse_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Optional[WrappedTask]:
     if response.status_code == 200:
         response_200 = WrappedTask.from_dict(response.json())
 
@@ -41,7 +43,9 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[WrappedTask]:
+def _build_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Response[WrappedTask]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
