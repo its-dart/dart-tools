@@ -1,7 +1,8 @@
 # Generate OpenAPI client.
 api:
 	admin/make-api.sh
-	$(MAKE) blacken
+	@$(MAKE) isort
+	@$(MAKE) blacken
 
 # Run black on python files to format them.
 blacken:
@@ -10,3 +11,7 @@ blacken:
 # Build a Python package and upload it to PyPI.
 deploy:
 	admin/make-deploy.sh
+
+# Format imports on python files.
+isort:
+	uv run isort ./dart ./examples

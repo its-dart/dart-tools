@@ -5,8 +5,7 @@
 
 # Required for type hinting compatibility when using Python 3.9
 from __future__ import annotations
-from argparse import ArgumentParser
-from functools import wraps
+
 import json
 import os
 import random
@@ -15,19 +14,24 @@ import signal
 import string
 import subprocess
 import sys
+from argparse import ArgumentParser
 from collections import defaultdict
 from datetime import timezone
+from functools import wraps
 from importlib.metadata import version
 from typing import Any, Callable, NoReturn
 from webbrowser import open_new_tab
 
 import dateparser
-from pick import pick
-import requests
 import platformdirs
+import requests
+from pick import pick
 
 from .exception import DartException
 from .generated import Client
+from .generated.api.dartboards import dartboards_list
+from .generated.api.folders import folders_list
+from .generated.api.transactions import transactions_create
 from .generated.models import (
     Dartboard,
     DartboardKind,
@@ -42,8 +46,8 @@ from .generated.models import (
     PropertyKind,
     RequestBody,
     SpaceKind,
-    StatusKind,
     SprintMode,
+    StatusKind,
     Task,
     TaskCreate,
     TaskSourceType,
@@ -51,9 +55,6 @@ from .generated.models import (
     Transaction,
     TransactionKind,
 )
-from .generated.api.dartboards import dartboards_list
-from .generated.api.folders import folders_list
-from .generated.api.transactions import transactions_create
 from .order_manager import get_orders_between
 
 _APP = "dart-tools"

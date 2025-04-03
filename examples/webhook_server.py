@@ -3,12 +3,11 @@
 
 # README: https://help.itsdart.com/articles/9024895-webhooks
 
-
 import json
 
-from dart import is_signature_correct
 from flask import Flask, Response, jsonify, request
 
+from dart import is_signature_correct
 
 app = Flask(__name__)
 

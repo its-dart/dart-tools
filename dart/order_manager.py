@@ -6,7 +6,6 @@ from random import choices
 
 from .exception import OrderException
 
-
 _MIN_ORD = 1
 _MAX_ORD = 256
 

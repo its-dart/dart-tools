@@ -2,7 +2,6 @@ import hashlib
 import hmac
 import os
 
-
 _WEBHOOK_SECRET = os.environ.get("DART_WEBHOOK_SECRET")
 _ENCODED_WEBHOOK_SECRET = (
     _WEBHOOK_SECRET.encode() if _WEBHOOK_SECRET is not None else None

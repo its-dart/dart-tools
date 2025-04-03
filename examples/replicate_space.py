@@ -4,14 +4,13 @@
 
 from dart import (
     create_task,
-    is_logged_in,
     get_dartboards,
     get_folders,
+    is_logged_in,
     replicate_space,
     update_dartboard,
     update_folder,
 )
-
 
 # The DART_TOKEN environment variable must be set to the value from
 # https://app.itsdart.com/?settings=account at this point

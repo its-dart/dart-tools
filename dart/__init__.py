@@ -1,6 +1,6 @@
 # Required for type hinting compatibility when using Python 3.9
 from __future__ import annotations
-from .generated.models import *
+
 from .dart import (
     Dart,
     begin_task,
@@ -17,4 +17,5 @@ from .dart import (
     update_folder,
     update_task,
 )
+from .generated.models import *
 from .webhook import is_signature_correct

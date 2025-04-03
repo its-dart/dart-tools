@@ -5,7 +5,6 @@ import json
 
 from dart import is_signature_correct
 
-
 # Adjust these depending on the situation within Dart
 STANDARD_TITLE = "Approve to continue"
 
