@@ -1,35 +1,34 @@
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="Assignee")
+if TYPE_CHECKING:
+    from ..models.view import View
+
+
+T = TypeVar("T", bound="WrappedView")
 
 
 @_attrs_define
-class Assignee:
+class WrappedView:
     """
     Attributes:
-        name (str):
-        email (str):
+        item (View):
     """
 
-    name: str
-    email: str
+    item: "View"
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        name = self.name
-
-        email = self.email
+        item = self.item.to_dict()
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "name": name,
-                "email": email,
+                "item": item,
             }
         )
 
@@ -37,18 +36,17 @@ class Assignee:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.view import View
+
         d = dict(src_dict)
-        name = d.pop("name")
+        item = View.from_dict(d.pop("item"))
 
-        email = d.pop("email")
-
-        assignee = cls(
-            name=name,
-            email=email,
+        wrapped_view = cls(
+            item=item,
         )
 
-        assignee.additional_properties = d
-        return assignee
+        wrapped_view.additional_properties = d
+        return wrapped_view
 
     @property
     def additional_keys(self) -> list[str]:

@@ -7,7 +7,6 @@ from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 if TYPE_CHECKING:
-    from ..models.assignee import Assignee
     from ..models.user import User
 
 
@@ -24,7 +23,7 @@ class UserSpaceConfiguration:
         folders (list[str]):
         types (list[str]):
         statuses (list[str]):
-        assignees (list['Assignee']):
+        assignees (list['User']):
         tags (list[str]):
         priorities (list[str]):
         sizes (list[int]):
@@ -36,7 +35,7 @@ class UserSpaceConfiguration:
     folders: list[str]
     types: list[str]
     statuses: list[str]
-    assignees: list["Assignee"]
+    assignees: list["User"]
     tags: list[str]
     priorities: list[str]
     sizes: list[int]
@@ -87,7 +86,6 @@ class UserSpaceConfiguration:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.assignee import Assignee
         from ..models.user import User
 
         d = dict(src_dict)
@@ -106,7 +104,7 @@ class UserSpaceConfiguration:
         assignees = []
         _assignees = d.pop("assignees")
         for assignees_item_data in _assignees:
-            assignees_item = Assignee.from_dict(assignees_item_data)
+            assignees_item = User.from_dict(assignees_item_data)
 
             assignees.append(assignees_item)
 
