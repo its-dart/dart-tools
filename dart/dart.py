@@ -71,12 +71,12 @@ _COPY_BRANCH_URL_FRAG = "/vcs/copy-branch-link"
 
 _AUTH_TOKEN_ENVVAR_KEY = "DART_TOKEN"
 _CONFIG_FPATH = platformdirs.user_config_path(_APP)
-_CLIENT_DUID_KEY = "clientDuid"
+_CLIENT_ID_KEY = "clientId"
 _HOST_KEY = "host"
 _HOSTS_KEY = "hosts"
 _AUTH_TOKEN_KEY = "authToken"
 
-_DUID_CHARS = string.ascii_lowercase + string.ascii_uppercase + string.digits
+_ID_CHARS = string.ascii_lowercase + string.ascii_uppercase + string.digits
 _NON_ALPHANUM_RE = re.compile(r"[^a-zA-Z0-9-]+")
 _REPEATED_DASH_RE = re.compile(r"-{2,}")
 _PRIORITY_MAP: dict[int, str] = {
@@ -94,8 +94,8 @@ _is_cli = False
 
 
 # TODO dedupe these functions with other usages elsewhere
-def _make_duid() -> str:
-    return "".join(random.choices(_DUID_CHARS, k=12))
+def _make_id() -> str:
+    return "".join(random.choices(_ID_CHARS, k=12))
 
 
 def trim_slug_str(s: str, length: int, max_under: int | None = None) -> str:
@@ -123,20 +123,20 @@ def _run_cmd(cmd: str) -> str:
     return subprocess.check_output(cmd, shell=True).decode()
 
 
-def _get_space_url(host: str, duid: str) -> str:
-    return f"{host}/s/{duid}"
+def _get_space_url(host: str, id: str) -> str:
+    return f"{host}/s/{id}"
 
 
-def _get_dartboard_url(host: str, duid: str) -> str:
-    return f"{host}/d/{duid}"
+def _get_dartboard_url(host: str, id: str) -> str:
+    return f"{host}/d/{id}"
 
 
-def _get_task_url(host: str, duid: str) -> str:
-    return f"{host}/t/{duid}"
+def _get_task_url(host: str, id: str) -> str:
+    return f"{host}/t/{id}"
 
 
-def _get_folder_url(host: str, duid: str) -> str:
-    return f"{host}/f/{duid}"
+def _get_folder_url(host: str, id: str) -> str:
+    return f"{host}/f/{id}"
 
 
 def _suppress_exception(fn: Callable) -> Callable:
@@ -201,7 +201,7 @@ class _Config:
             except OSError:
                 pass
         self._content = {
-            _CLIENT_DUID_KEY: _make_duid(),
+            _CLIENT_ID_KEY: _make_id(),
             _HOST_KEY: _PROD_HOST,
             _HOSTS_KEY: {},
         } | self._content
@@ -216,8 +216,8 @@ class _Config:
             pass
 
     @property
-    def client_duid(self) -> str:
-        return self._content[_CLIENT_DUID_KEY]
+    def client_id(self) -> str:
+        return self._content[_CLIENT_ID_KEY]
 
     @property
     def host(self) -> str:
@@ -256,8 +256,8 @@ class Dart:
     def get_base_url(self) -> str:
         return self._config.host
 
-    def get_client_duid(self) -> str:
-        return self._config.client_duid
+    def get_client_id(self) -> str:
+        return self._config.client_id
 
     def get_auth_token(self) -> str | None:
         result = self._config.get(_AUTH_TOKEN_KEY)
@@ -268,7 +268,7 @@ class Dart:
     def get_headers(self) -> dict[str, str]:
         result = {
             "Origin": self._config.host,
-            "client-duid": self.get_client_duid(),
+            "client-duid": self.get_client_id(),
         }
         if (auth_token := self.get_auth_token()) is not None:
             result["Authorization"] = f"Bearer {auth_token}"
@@ -301,22 +301,22 @@ class Dart:
         return task
 
     @_handle_api_errors
-    def retrieve_task(self, duid: str) -> WrappedTask:
-        task = retrieve_task_api.sync(duid, client=self._public_api)
+    def retrieve_task(self, id: str) -> WrappedTask:
+        task = retrieve_task_api.sync(id, client=self._public_api)
         if task is None:
             raise DartException("Failed to retrieve task: API returned None.")
         return task
 
     @_handle_api_errors
-    def update_task(self, duid: str, body: WrappedTaskUpdate) -> WrappedTask:
-        task = update_task_api.sync(duid, client=self._public_api, body=body)
+    def update_task(self, id: str, body: WrappedTaskUpdate) -> WrappedTask:
+        task = update_task_api.sync(id, client=self._public_api, body=body)
         if task is None:
             raise DartException("Failed to update task: API returned None.")
         return task
 
     @_handle_api_errors
-    def delete_task(self, duid: str) -> WrappedTask:
-        task = delete_task_api.sync(duid, client=self._public_api)
+    def delete_task(self, id: str) -> WrappedTask:
+        task = delete_task_api.sync(id, client=self._public_api)
         if task is None:
             raise DartException("Failed to delete task: API returned None.")
         return task
@@ -329,9 +329,9 @@ class Dart:
         return filtered_tasks
 
     @_handle_api_errors
-    def copy_branch_link(self, duid: str) -> None:
+    def copy_branch_link(self, id: str) -> None:
         self._private_api.get_httpx_client().post(
-            _COPY_BRANCH_URL_FRAG, json={"duid": duid}
+            _COPY_BRANCH_URL_FRAG, json={"duid": id}
         )
 
 
@@ -512,11 +512,10 @@ def begin_task() -> bool:
     dart = Dart()
     user_space_config = dart.get_config()
     user = user_space_config.user
-    # TODO: Find a way to more accurately determine the incomplete task status
-    incomplete_task_status = user_space_config.statuses[0]
-    filtered_tasks = dart.list_tasks(
-        assignee=user.email, status=incomplete_task_status
-    ).results
+    finished_task_status = user_space_config.defaults.statuses.finished
+
+    filtered_tasks = dart.list_tasks(assignee=user.email).results
+    filtered_tasks = [e for e in filtered_tasks if e.status != finished_task_status]
 
     if not filtered_tasks:
         _dart_exit("No active, incomplete tasks found.")
@@ -597,7 +596,7 @@ def create_task(
 
 
 def update_task(
-    duid: str,
+    id: str,
     *,
     title: Unset | str = UNSET,
     dartboard_title: str | Unset = UNSET,
@@ -611,7 +610,7 @@ def update_task(
     dart = Dart()
     task_update = WrappedTaskUpdate(
         item=TaskUpdate(
-            duid,
+            id,
             title=title,
             dartboard=dartboard_title,
             status=status_title,
@@ -622,7 +621,7 @@ def update_task(
             due_at=_get_due_at_from_str_arg(due_at_str),
         )
     )
-    task = dart.update_task(duid, task_update).item
+    task = dart.update_task(id, task_update).item
 
     _log(f"Updated task {task.title} at {_get_task_url(dart.get_base_url(), task.id)}")
     _log("Done.")
@@ -732,7 +731,7 @@ def cli() -> None:
     update_task_parser = subparsers.add_parser(
         _UPDATE_TASK_CMD, aliases="u", help="update an existing task"
     )
-    update_task_parser.add_argument("duid", help="Dart ID (DUID) of the task")
+    update_task_parser.add_argument("id", help="ID of the task")
     update_task_parser.add_argument(
         "-e", "--title", dest="title", help="task title", default=UNSET
     )
