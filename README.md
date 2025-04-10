@@ -3,7 +3,7 @@
   <p>
     <a href="https://pypi.org/project/dart-tools"><img src="https://img.shields.io/pypi/v/dart-tools" alt="PyPI"></a>
     <a href="pyproject.toml"><img src="https://img.shields.io/pypi/pyversions/dart-tools" alt="Supported Python Versions"></a>
-    <a href="LICENSE"><img src="https://img.shields.io/github/license/its-dart/dart-tools" alt="License"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/github/license/its-dart/dart-tools-py" alt="License"></a>
   </p>
 </div>
 
@@ -118,7 +118,7 @@ By following these steps, you can use the `dart-tools` Python library within you
 - [Web App](https://app.itsdart.com/)
 - [Help Center](https://help.itsdart.com/)
 - [Bugs and Features](https://app.itsdart.com/p/r/JFyPnhL9En61)
-- [Library Source](https://github.com/its-dart/dart-tools/)
+- [Library Source](https://github.com/its-dart/dart-tools-py/)
 - [Chat on Discord](https://discord.gg/RExv8jEkSh)
 - Email us at [support@itsdart.com](mailto:support@itsdart.com)
 
