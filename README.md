@@ -47,9 +47,9 @@ You can explore all of these options and many more with `dart --help` or the mor
 
 Another common workflow is to updating a preexisting task. To do this, run something like
 ```sh
-dart updatetask [DUID] -s Done
+dart updatetask [ID] -s Done
 ```
-This command will mark the referenced task 'Done'. Here `[DUID]` is meant to be replaced (including the brackets) with the 'Dart ID' of an existing task. You can get a DUID from any existing task in a number of ways, such as by copying it from the end of a task's URL or by clicking the '...' button in a task page in Dart and then choosing 'Copy ID'.
+This command will mark the referenced task 'Done'. Here `[ID]` is meant to be replaced (including the brackets) with the ID of an existing task. You can get a ID from any existing task in a number of ways, such as by copying it from the end of a task's URL or by clicking the '...' button in a task page in Dart and then choosing 'Copy ID'.
 
 
 ## Using the Python Library
