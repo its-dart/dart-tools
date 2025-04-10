@@ -208,7 +208,7 @@ class _Config:
         self._content[_HOSTS_KEY] = defaultdict(dict, self._content[_HOSTS_KEY])
         self._write()
 
-    def _write(self):
+    def _write(self) -> None:
         try:
             with open(_CONFIG_FPATH, "w+", encoding="UTF-8") as fout:
                 json.dump(self._content, fout, indent=2)
@@ -216,22 +216,22 @@ class _Config:
             pass
 
     @property
-    def client_duid(self):
+    def client_duid(self) -> str:
         return self._content[_CLIENT_DUID_KEY]
 
     @property
-    def host(self):
+    def host(self) -> str:
         return self._content[_HOST_KEY]
 
     @host.setter
-    def host(self, v):
+    def host(self, v: str) -> None:
         self._content[_HOST_KEY] = v
         self._write()
 
-    def get(self, k):
+    def get(self, k: str) -> str | None:
         return self._content[_HOSTS_KEY][self.host].get(k)
 
-    def set(self, k, v):
+    def set(self, k: str, v: str) -> None:
         self._content[_HOSTS_KEY][self.host][k] = v
         self._write()
 
@@ -241,7 +241,7 @@ class Dart:
         self._config = config or _Config()
         self._init_clients()
 
-    def _init_clients(self):
+    def _init_clients(self) -> None:
         self._private_api = Client(
             base_url=self.get_base_url() + _ROOT_PRIVATE_API_URL_FRAG,
             headers=self.get_headers(),
@@ -253,19 +253,19 @@ class Dart:
             raise_on_unexpected_status=True,
         )
 
-    def get_base_url(self):
+    def get_base_url(self) -> str:
         return self._config.host
 
-    def get_client_duid(self):
+    def get_client_duid(self) -> str:
         return self._config.client_duid
 
-    def get_auth_token(self):
+    def get_auth_token(self) -> str | None:
         result = self._config.get(_AUTH_TOKEN_KEY)
         if result is not None:
             return result
         return _AUTH_TOKEN_ENVVAR
 
-    def get_headers(self):
+    def get_headers(self) -> dict[str, str]:
         result = {
             "Origin": self._config.host,
             "client-duid": self.get_client_duid(),
@@ -337,7 +337,7 @@ class Dart:
 
 class _Git:
     @staticmethod
-    def _cmd_succeeds(cmd):
+    def _cmd_succeeds(cmd: str) -> bool:
         try:
             _run_cmd(f"{cmd} 2>&1")
         except subprocess.CalledProcessError as ex:
@@ -347,29 +347,29 @@ class _Git:
         return True
 
     @staticmethod
-    def make_task_name(email, task):
+    def make_task_name(email: str, task: ConciseTask | Task) -> str:
         username = slugify_str(email.split("@")[0], lower=True)
         title = slugify_str(task.title, lower=True)
-        return trim_slug_str(f"{username}/{task.duid}-{title}", length=60)
+        return trim_slug_str(f"{username}/{task.id}-{title}", length=60)
 
     @staticmethod
-    def get_current_branch():
+    def get_current_branch() -> str:
         return _run_cmd("git rev-parse --abbrev-ref HEAD").strip()
 
     @staticmethod
-    def ensure_in_repo():
+    def ensure_in_repo() -> None:
         if _Git._cmd_succeeds("git rev-parse --is-inside-work-tree"):
             return
         _dart_exit("You are not in a git repo.")
 
     @staticmethod
-    def ensure_no_unstaged_changes():
+    def ensure_no_unstaged_changes() -> None:
         if _run_cmd("git status --porcelain") == "":
             return
         _dart_exit("You have uncommitted changes. Please commit or stash them.")
 
     @staticmethod
-    def ensure_on_main_or_intended():
+    def ensure_on_main_or_intended() -> None:
         branch = _Git.get_current_branch()
         if branch == "main":
             return
@@ -385,11 +385,11 @@ class _Git:
         _run_cmd("git checkout main")
 
     @staticmethod
-    def branch_exists(branch):
+    def branch_exists(branch: str) -> bool:
         return _Git._cmd_succeeds(f"git rev-parse --verify {branch}")
 
     @staticmethod
-    def checkout_branch(branch):
+    def checkout_branch(branch: str) -> None:
         if _Git.branch_exists(branch):
             _run_cmd(f"git checkout {branch}")
             return
