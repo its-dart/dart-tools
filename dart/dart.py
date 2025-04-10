@@ -515,7 +515,7 @@ def begin_task() -> bool:
     # TODO: Find a way to more accurately determine the incomplete task status
     incomplete_task_status = user_space_config.statuses[0]
     filtered_tasks = dart.list_tasks(
-        assignee=user.email, status=incomplete_task_status
+        assignee=user.email
     ).results
 
     if not filtered_tasks:
