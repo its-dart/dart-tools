@@ -14,6 +14,7 @@ from .paginated_concise_task_list import PaginatedConciseTaskList
 from .task import Task
 from .task_create import TaskCreate
 from .task_update import TaskUpdate
+from .user import User
 from .user_space_configuration import UserSpaceConfiguration
 from .wrapped_comment import WrappedComment
 from .wrapped_comment_create import WrappedCommentCreate
@@ -39,6 +40,7 @@ __all__ = (
     "Task",
     "TaskCreate",
     "TaskUpdate",
+    "User",
     "UserSpaceConfiguration",
     "WrappedComment",
     "WrappedCommentCreate",

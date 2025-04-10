@@ -8,6 +8,7 @@ from dateutil.parser import isoparse
 
 if TYPE_CHECKING:
     from ..models.assignee import Assignee
+    from ..models.user import User
 
 
 T = TypeVar("T", bound="UserSpaceConfiguration")
@@ -18,6 +19,7 @@ class UserSpaceConfiguration:
     """
     Attributes:
         today (datetime.date):
+        user (User):
         dartboards (list[str]):
         folders (list[str]):
         types (list[str]):
@@ -29,6 +31,7 @@ class UserSpaceConfiguration:
     """
 
     today: datetime.date
+    user: "User"
     dartboards: list[str]
     folders: list[str]
     types: list[str]
@@ -41,6 +44,8 @@ class UserSpaceConfiguration:
 
     def to_dict(self) -> dict[str, Any]:
         today = self.today.isoformat()
+
+        user = self.user.to_dict()
 
         dartboards = self.dartboards
 
@@ -66,6 +71,7 @@ class UserSpaceConfiguration:
         field_dict.update(
             {
                 "today": today,
+                "user": user,
                 "dartboards": dartboards,
                 "folders": folders,
                 "types": types,
@@ -82,9 +88,12 @@ class UserSpaceConfiguration:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.assignee import Assignee
+        from ..models.user import User
 
         d = dict(src_dict)
         today = isoparse(d.pop("today")).date()
+
+        user = User.from_dict(d.pop("user"))
 
         dartboards = cast(list[str], d.pop("dartboards"))
 
@@ -109,6 +118,7 @@ class UserSpaceConfiguration:
 
         user_space_configuration = cls(
             today=today,
+            user=user,
             dartboards=dartboards,
             folders=folders,
             types=types,

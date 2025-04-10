@@ -70,7 +70,7 @@ new_task = create_task(
 )
 
 # Update the task to be 'Done'
-update_task(new_task.duid, status_title="Done")
+update_task(new_task.id, status_title="Done")
 ```
 
 
@@ -110,44 +110,6 @@ To use the `dart-tools` Python library in an AWS Lambda function, you need to pa
   Upload the `my_deployment_package.zip` file to AWS Lambda using the AWS Management Console or the AWS CLI.
 
 By following these steps, you can use the `dart-tools` Python library within your AWS Lambda functions.
-
-
-## Advanced Usage
-
-Almost anything that can be done in Dart can be done with the Python library, but there are not convenient wrapper functions for everything.
-For most advanced usage, the best thing to do is to [get in touch with us](mailto:support@itsdart.com) and we can help.
-
-However, if you want to explore on your own, the client is well-typed, so you can simply explore the code to see what is possible.
-All updates will go through the the `dart.transact` function.
-
-As an example, you could run something akin to `update_task` with
-```python
-from dart import (
-    Dart,
-    Operation,
-    OperationKind,
-    OperationModelKind,
-    TaskUpdate,
-    TransactionKind,
-)
-
-# Initialize the inner client
-dart = Dart()
-
-# Prepare the update operation
-task_update = TaskUpdate(
-    duid="[DUID]",
-    size=5,
-)
-task_update_op = Operation(
-    model=OperationModelKind.TASK,
-    kind=OperationKind.UPDATE,
-    data=task_update,
-)
-
-# Call the operation transactionally to perform the update
-response = dart.transact([task_update_op], TransactionKind.TASK_UPDATE)
-```
 
 
 ## Help and Resources
