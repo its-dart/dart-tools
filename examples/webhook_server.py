@@ -3,6 +3,7 @@
 
 # README: https://help.itsdart.com/articles/9024895-webhooks
 
+
 import json
 
 from flask import Flask, Response, jsonify, request
@@ -43,6 +44,20 @@ def webhook() -> Response:
         case "task.deleted":
             task = event["data"]["model"]  # The task that was deleted
             print(f"Task deleted:\n{task}")
+        case "doc.created":
+            doc = event["data"]["model"]  # The doc that was created
+            print(f"Doc created:\n{doc}")
+        case "doc.updated":
+            data = event["data"]
+            doc = data["model"]  # The new version of the doc that was updated
+            old_doc = data["oldModel"]  # The old version of the doc that was updated
+            print(f"Doc updated from:\n{old_doc}\nfrom:\n{doc}")
+        case "doc.deleted":
+            doc = event["data"]["model"]  # The doc that was deleted
+            print(f"Doc deleted:\n{doc}")
+        case "comment.created":
+            comment = event["data"]["model"]  # The comment that was created
+            print(f"Comment created:\n{comment}")
         case _:
             # Unexpected event type
             print(f"Unhandled event type: {event_type}")
