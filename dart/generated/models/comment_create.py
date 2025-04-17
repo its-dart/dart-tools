@@ -11,8 +11,8 @@ T = TypeVar("T", bound="CommentCreate")
 class CommentCreate:
     """
     Attributes:
-        task_id (str): The ID of the task that the comment is associated with. This cannot be null.
-        text (str): The full content of the comment, which can include markdown formatting. This cannot be null.
+        task_id (str): The universal, unique ID of the task that the comment is associated with.
+        text (str): The full content of the comment, which can include markdown formatting.
     """
 
     task_id: str

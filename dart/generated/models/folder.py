@@ -16,14 +16,14 @@ class Folder:
     """
     Attributes:
         id (str): The universal, unique ID of the folder.
-        link (str): The link to the folder.
+        html_url (str): The URL that can be used to open the folder in the Dart web UI.
         title (str): The title, which is a short description of the folder.
         description (str): The description, which is a longer description of the folder.
         docs (list['Doc']): The list of all of the docs in the folder.
     """
 
     id: str
-    link: str
+    html_url: str
     title: str
     description: str
     docs: list["Doc"]
@@ -32,7 +32,7 @@ class Folder:
     def to_dict(self) -> dict[str, Any]:
         id = self.id
 
-        link = self.link
+        html_url = self.html_url
 
         title = self.title
 
@@ -48,7 +48,7 @@ class Folder:
         field_dict.update(
             {
                 "id": id,
-                "link": link,
+                "htmlUrl": html_url,
                 "title": title,
                 "description": description,
                 "docs": docs,
@@ -64,7 +64,7 @@ class Folder:
         d = dict(src_dict)
         id = d.pop("id")
 
-        link = d.pop("link")
+        html_url = d.pop("htmlUrl")
 
         title = d.pop("title")
 
@@ -79,7 +79,7 @@ class Folder:
 
         folder = cls(
             id=id,
-            link=link,
+            html_url=html_url,
             title=title,
             description=description,
             docs=docs,

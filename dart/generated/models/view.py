@@ -16,14 +16,14 @@ class View:
     """
     Attributes:
         id (str): The universal, unique ID of the view.
-        link (str): The link to the view.
+        html_url (str): The URL that can be used to open the view in the Dart web UI.
         title (str): The title, which is a short description of the view.
         description (str): The description, which is a longer description of the view.
         tasks (list['Task']): The list of all of the tasks in the view.
     """
 
     id: str
-    link: str
+    html_url: str
     title: str
     description: str
     tasks: list["Task"]
@@ -32,7 +32,7 @@ class View:
     def to_dict(self) -> dict[str, Any]:
         id = self.id
 
-        link = self.link
+        html_url = self.html_url
 
         title = self.title
 
@@ -48,7 +48,7 @@ class View:
         field_dict.update(
             {
                 "id": id,
-                "link": link,
+                "htmlUrl": html_url,
                 "title": title,
                 "description": description,
                 "tasks": tasks,
@@ -64,7 +64,7 @@ class View:
         d = dict(src_dict)
         id = d.pop("id")
 
-        link = d.pop("link")
+        html_url = d.pop("htmlUrl")
 
         title = d.pop("title")
 
@@ -79,7 +79,7 @@ class View:
 
         view = cls(
             id=id,
-            link=link,
+            html_url=html_url,
             title=title,
             description=description,
             tasks=tasks,

@@ -13,12 +13,9 @@ T = TypeVar("T", bound="DocCreate")
 class DocCreate:
     """
     Attributes:
-        title (str): The title, which is a short description of the document. This cannot be null.
-        folder (Union[Unset, str]): The title of the folder, which is a project or list of docs. One common option is
-            Docs, although what is possible depends on the workspace. If the folder is ambiguous it may need to include a
-            prefix with the name of the space, which is a folder for folders.
-        text (Union[Unset, str]): The full content of the doc, which can include markdown formatting. This cannot be
-            null.
+        title (str): The title, which is a short description of the doc.
+        folder (Union[Unset, str]): The full title of the folder, which is a project or list of docs.
+        text (Union[Unset, str]): The full content of the doc, which can include markdown formatting.
     """
 
     title: str

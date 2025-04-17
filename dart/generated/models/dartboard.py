@@ -16,14 +16,14 @@ class Dartboard:
     """
     Attributes:
         id (str): The universal, unique ID of the dartboard.
-        link (str): The link to the dartboard.
+        html_url (str): The URL that can be used to open the dartboard in the Dart web UI.
         title (str): The title, which is a short description of the dartboard.
         description (str): The description, which is a longer description of the dartboard.
         tasks (list['Task']): The list of all of the tasks in the dartboard.
     """
 
     id: str
-    link: str
+    html_url: str
     title: str
     description: str
     tasks: list["Task"]
@@ -32,7 +32,7 @@ class Dartboard:
     def to_dict(self) -> dict[str, Any]:
         id = self.id
 
-        link = self.link
+        html_url = self.html_url
 
         title = self.title
 
@@ -48,7 +48,7 @@ class Dartboard:
         field_dict.update(
             {
                 "id": id,
-                "link": link,
+                "htmlUrl": html_url,
                 "title": title,
                 "description": description,
                 "tasks": tasks,
@@ -64,7 +64,7 @@ class Dartboard:
         d = dict(src_dict)
         id = d.pop("id")
 
-        link = d.pop("link")
+        html_url = d.pop("htmlUrl")
 
         title = d.pop("title")
 
@@ -79,7 +79,7 @@ class Dartboard:
 
         dartboard = cls(
             id=id,
-            link=link,
+            html_url=html_url,
             title=title,
             description=description,
             tasks=tasks,

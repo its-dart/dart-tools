@@ -11,18 +11,15 @@ T = TypeVar("T", bound="Doc")
 class Doc:
     """
     Attributes:
-        id (str): The ID. This can and should be null on creation and not otherwise.
-        permalink (str): The permanent link, which is a URL that can be used to open the doc in Dart. This can and
-            should be null on creation and not otherwise.
-        title (str): The title, which is a short description of the document. This cannot be null.
-        folder (str): The title of the folder, which is a project or list of docs. One common option is Docs, although
-            what is possible depends on the workspace. If the folder is ambiguous it may need to include a prefix with the
-            name of the space, which is a folder for folders.
-        text (str): The full content of the doc, which can include markdown formatting. This cannot be null.
+        id (str): The universal, unique ID of the doc.
+        html_url (str): The URL that can be used to open the doc in the Dart web UI.
+        title (str): The title, which is a short description of the doc.
+        folder (str): The full title of the folder, which is a project or list of docs.
+        text (str): The full content of the doc, which can include markdown formatting.
     """
 
     id: str
-    permalink: str
+    html_url: str
     title: str
     folder: str
     text: str
@@ -31,7 +28,7 @@ class Doc:
     def to_dict(self) -> dict[str, Any]:
         id = self.id
 
-        permalink = self.permalink
+        html_url = self.html_url
 
         title = self.title
 
@@ -44,7 +41,7 @@ class Doc:
         field_dict.update(
             {
                 "id": id,
-                "permalink": permalink,
+                "htmlUrl": html_url,
                 "title": title,
                 "folder": folder,
                 "text": text,
@@ -58,7 +55,7 @@ class Doc:
         d = dict(src_dict)
         id = d.pop("id")
 
-        permalink = d.pop("permalink")
+        html_url = d.pop("htmlUrl")
 
         title = d.pop("title")
 
@@ -68,7 +65,7 @@ class Doc:
 
         doc = cls(
             id=id,
-            permalink=permalink,
+            html_url=html_url,
             title=title,
             folder=folder,
             text=text,

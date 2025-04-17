@@ -1,5 +1,5 @@
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union, cast
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -11,17 +11,15 @@ T = TypeVar("T", bound="Comment")
 class Comment:
     """
     Attributes:
-        id (str): The ID. This can and should be null on creation and not otherwise.
-        permalink (Union[None, str]): The permanent link, which is a URL that can be used to open the comment in Dart.
-            This can and should be null on creation and not otherwise.
-        task_id (str): The ID of the task that the comment is associated with. This cannot be null.
-        author (str): The name or email of the user that authored the comment. This can and should be null on creation
-            and not otherwise.
-        text (str): The full content of the comment, which can include markdown formatting. This cannot be null.
+        id (str): The universal, unique ID of the comment.
+        html_url (str): The URL that can be used to open the comment in the Dart web UI.
+        task_id (str): The universal, unique ID of the task that the comment is associated with.
+        author (str): The name or email of the user that authored the comment.
+        text (str): The full content of the comment, which can include markdown formatting.
     """
 
     id: str
-    permalink: Union[None, str]
+    html_url: str
     task_id: str
     author: str
     text: str
@@ -30,8 +28,7 @@ class Comment:
     def to_dict(self) -> dict[str, Any]:
         id = self.id
 
-        permalink: Union[None, str]
-        permalink = self.permalink
+        html_url = self.html_url
 
         task_id = self.task_id
 
@@ -44,7 +41,7 @@ class Comment:
         field_dict.update(
             {
                 "id": id,
-                "permalink": permalink,
+                "htmlUrl": html_url,
                 "taskId": task_id,
                 "author": author,
                 "text": text,
@@ -58,12 +55,7 @@ class Comment:
         d = dict(src_dict)
         id = d.pop("id")
 
-        def _parse_permalink(data: object) -> Union[None, str]:
-            if data is None:
-                return data
-            return cast(Union[None, str], data)
-
-        permalink = _parse_permalink(d.pop("permalink"))
+        html_url = d.pop("htmlUrl")
 
         task_id = d.pop("taskId")
 
@@ -73,7 +65,7 @@ class Comment:
 
         comment = cls(
             id=id,
-            permalink=permalink,
+            html_url=html_url,
             task_id=task_id,
             author=author,
             text=text,
