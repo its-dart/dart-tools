@@ -35,9 +35,7 @@ new_space_id = replicate_space(
 dartboards = get_dartboards(new_space_id)
 main_dartboard = [e for e in dartboards if e.title == "Dartboard title to change"][0]
 # Update the relevant dartboard
-update_dartboard(
-    main_dartboard.duid, title="New dartboard title", color_hex=NEW_COLOR_HEX
-)
+update_dartboard(main_dartboard.duid, title="New dartboard title", color_hex=NEW_COLOR_HEX)
 
 # Do the same for folders
 folders = get_folders(new_space_id)

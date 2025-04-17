@@ -112,11 +112,7 @@ def slugify_str(s: str, lower: bool = False, trim_kwargs: dict | None = None) ->
     lowered = s.lower() if lower else s
     formatted = _NON_ALPHANUM_RE.sub("-", lowered.replace("'", ""))
     formatted = _REPEATED_DASH_RE.sub("-", formatted).strip("-")
-    return (
-        trim_slug_str(formatted, **trim_kwargs)
-        if trim_kwargs is not None
-        else formatted
-    )
+    return trim_slug_str(formatted, **trim_kwargs) if trim_kwargs is not None else formatted
 
 
 def _run_cmd(cmd: str) -> str:
@@ -179,9 +175,7 @@ def _handle_api_errors(fn: Callable) -> Callable:
 
             try:
                 content = json.loads(ex.content)
-                error_message = content.get("detail") or " ".join(
-                    content.get("errors", [])
-                )
+                error_message = content.get("detail") or " ".join(content.get("errors", []))
                 _dart_exit(error_message)
             except (json.JSONDecodeError, AttributeError):
                 _unknown_failure_exit()
@@ -288,9 +282,7 @@ class Dart:
     def get_config(self) -> UserSpaceConfiguration:
         config = get_config_api.sync(client=self._public_api)
         if config is None:
-            raise DartException(
-                "Failed to fetch user space configuration: API returned None."
-            )
+            raise DartException("Failed to fetch user space configuration: API returned None.")
         return config
 
     @_handle_api_errors
@@ -330,9 +322,7 @@ class Dart:
 
     @_handle_api_errors
     def copy_branch_link(self, id: str) -> None:
-        self._private_api.get_httpx_client().post(
-            _COPY_BRANCH_URL_FRAG, json={"duid": id}
-        )
+        self._private_api.get_httpx_client().post(_COPY_BRANCH_URL_FRAG, json={"duid": id})
 
 
 class _Git:
@@ -447,9 +437,7 @@ def print_version_update_message_maybe() -> None:
         .split("\n", maxsplit=1)[0]
         .strip()
     )
-    if latest == _VERSION or [int(e) for e in latest.split(".")] <= [
-        int(e) for e in _VERSION.split(".")
-    ]:
+    if latest == _VERSION or [int(e) for e in latest.split(".")] <= [int(e) for e in _VERSION.split(".")]:
         return
 
     _log(
@@ -475,9 +463,7 @@ def login(token: str | None = None) -> bool:
     if token is None:
         if not _is_cli:
             _dart_exit("Login failed, token is required.")
-        _log(
-            "Dart is opening in your browser, log in if needed and copy your authentication token from the page"
-        )
+        _log("Dart is opening in your browser, log in if needed and copy your authentication token from the page")
         open_new_tab(config.host + _PROFILE_SETTINGS_URL_FRAG)
         token = input("Token: ")
 
@@ -502,9 +488,7 @@ def _begin_task(dart: Dart, email: str, task: ConciseTask | Task) -> bool:
     branch_name = _Git.make_task_name(email, task)
     _Git.checkout_branch(branch_name)
 
-    _log(
-        f"Started work on\n\n  {task.title}\n  {_get_task_url(dart.get_base_url(), task.id)}\n"
-    )
+    _log(f"Started work on\n\n  {task.title}\n  {_get_task_url(dart.get_base_url(), task.id)}\n")
     return True
 
 
@@ -538,9 +522,7 @@ def _get_priority_from_int_arg(priority_int: int | None | Unset) -> str | None |
         return priority_int
 
     if priority_int not in _PRIORITY_MAP:
-        _dart_exit(
-            f"Invalid priority {priority_int}. Valid values are {list(_PRIORITY_MAP.keys())}."
-        )
+        _dart_exit(f"Invalid priority {priority_int}. Valid values are {list(_PRIORITY_MAP.keys())}.")
 
     return _PRIORITY_MAP[priority_int]
 
@@ -552,9 +534,7 @@ def _get_due_at_from_str_arg(due_at_str: str | None | Unset) -> str | None | Uns
     due_at = dateparser.parse(due_at_str)
     if not due_at:
         _dart_exit(f"Could not parse due date '{due_at_str}'.")
-    due_at = due_at.replace(
-        hour=0, minute=0, second=0, microsecond=0, tzinfo=timezone.utc
-    ).isoformat()
+    due_at = due_at.replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=timezone.utc).isoformat()
 
     return due_at
 
@@ -709,14 +689,10 @@ def cli() -> None:
     set_host_parser.set_defaults(func=set_host)
 
     login_parser = subparsers.add_parser(_LOGIN_CMD, aliases="l", help="login")
-    login_parser.add_argument(
-        "-t", "--token", dest="token", help="your authentication token"
-    )
+    login_parser.add_argument("-t", "--token", dest="token", help="your authentication token")
     login_parser.set_defaults(func=login)
 
-    create_task_parser = subparsers.add_parser(
-        _CREATE_TASK_CMD, aliases="c", help="create a new task"
-    )
+    create_task_parser = subparsers.add_parser(_CREATE_TASK_CMD, aliases="c", help="create a new task")
     create_task_parser.add_argument("title", help="title of the task")
     create_task_parser.add_argument(
         "-b",
@@ -728,19 +704,13 @@ def cli() -> None:
     _add_standard_task_arguments(create_task_parser)
     create_task_parser.set_defaults(func=create_task)
 
-    update_task_parser = subparsers.add_parser(
-        _UPDATE_TASK_CMD, aliases="u", help="update an existing task"
-    )
+    update_task_parser = subparsers.add_parser(_UPDATE_TASK_CMD, aliases="u", help="update an existing task")
     update_task_parser.add_argument("id", help="ID of the task")
-    update_task_parser.add_argument(
-        "-e", "--title", dest="title", help="task title", default=UNSET
-    )
+    update_task_parser.add_argument("-e", "--title", dest="title", help="task title", default=UNSET)
     _add_standard_task_arguments(update_task_parser)
     update_task_parser.set_defaults(func=update_task)
 
-    begin_task_parser = subparsers.add_parser(
-        _BEGIN_TASK_CMD, aliases="b", help="begin work on a task"
-    )
+    begin_task_parser = subparsers.add_parser(_BEGIN_TASK_CMD, aliases="b", help="begin work on a task")
     begin_task_parser.set_defaults(func=begin_task)
 
     args = vars(parser.parse_args())

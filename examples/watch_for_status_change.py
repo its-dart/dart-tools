@@ -32,11 +32,7 @@ def run_webhook(payload: bytes, headers: dict) -> bool:
     data = event["data"]
     task = data["model"]
     old_task = data["oldModel"]
-    if (
-        task["title"] != STANDARD_TITLE
-        or task["status"] != "Approved"
-        or old_task["status"] == "Approved"
-    ):
+    if task["title"] != STANDARD_TITLE or task["status"] != "Approved" or old_task["status"] == "Approved":
         return True
 
     # At this point we know that this is a relevant event, so we can do whatever we want with it

@@ -12,13 +12,11 @@ from .folder import Folder
 from .list_docs_o_item import ListDocsOItem
 from .paginated_concise_doc_list import PaginatedConciseDocList
 from .paginated_concise_task_list import PaginatedConciseTaskList
-from .status_defaults import StatusDefaults
 from .task import Task
 from .task_create import TaskCreate
 from .task_update import TaskUpdate
 from .user import User
 from .user_space_configuration import UserSpaceConfiguration
-from .user_space_defaults import UserSpaceDefaults
 from .view import View
 from .wrapped_comment import WrappedComment
 from .wrapped_comment_create import WrappedCommentCreate
@@ -45,13 +43,11 @@ __all__ = (
     "ListDocsOItem",
     "PaginatedConciseDocList",
     "PaginatedConciseTaskList",
-    "StatusDefaults",
     "Task",
     "TaskCreate",
     "TaskUpdate",
     "User",
     "UserSpaceConfiguration",
-    "UserSpaceDefaults",
     "View",
     "WrappedComment",
     "WrappedCommentCreate",

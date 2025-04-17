@@ -8,7 +8,6 @@ from dateutil.parser import isoparse
 
 if TYPE_CHECKING:
     from ..models.user import User
-    from ..models.user_space_defaults import UserSpaceDefaults
 
 
 T = TypeVar("T", bound="UserSpaceConfiguration")
@@ -28,7 +27,6 @@ class UserSpaceConfiguration:
         tags (list[str]):
         priorities (list[str]):
         sizes (list[int]):
-        defaults (UserSpaceDefaults):
     """
 
     today: datetime.date
@@ -41,7 +39,6 @@ class UserSpaceConfiguration:
     tags: list[str]
     priorities: list[str]
     sizes: list[int]
-    defaults: "UserSpaceDefaults"
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -68,8 +65,6 @@ class UserSpaceConfiguration:
 
         sizes = self.sizes
 
-        defaults = self.defaults.to_dict()
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -84,7 +79,6 @@ class UserSpaceConfiguration:
                 "tags": tags,
                 "priorities": priorities,
                 "sizes": sizes,
-                "defaults": defaults,
             }
         )
 
@@ -93,7 +87,6 @@ class UserSpaceConfiguration:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.user import User
-        from ..models.user_space_defaults import UserSpaceDefaults
 
         d = dict(src_dict)
         today = isoparse(d.pop("today")).date()
@@ -121,8 +114,6 @@ class UserSpaceConfiguration:
 
         sizes = cast(list[int], d.pop("sizes"))
 
-        defaults = UserSpaceDefaults.from_dict(d.pop("defaults"))
-
         user_space_configuration = cls(
             today=today,
             user=user,
@@ -134,7 +125,6 @@ class UserSpaceConfiguration:
             tags=tags,
             priorities=priorities,
             sizes=sizes,
-            defaults=defaults,
         )
 
         user_space_configuration.additional_properties = d

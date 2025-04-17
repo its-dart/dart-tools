@@ -63,11 +63,11 @@ requires = ["setuptools>=43.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.black]
-line-length = 88
+line-length = 120
 
 [tool.isort]
 profile = "black"
-line_length = 88
+line_length = 120
 
 [tool.setuptools.packages.find]
 where = ["."]
