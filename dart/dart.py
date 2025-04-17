@@ -517,7 +517,7 @@ def begin_task() -> bool:
     return True
 
 
-def _get_priority_from_int_arg(priority_int: int | None | Unset) -> str | None | Unset:
+def _normalize_priority(priority_int: int | None | Unset) -> str | None | Unset:
     if priority_int in (None, UNSET):
         return priority_int
 
@@ -559,7 +559,7 @@ def create_task(
             status=status_title,
             assignees=assignee_emails if assignee_emails is not None else UNSET,
             tags=tag_titles if tag_titles is not None else UNSET,
-            priority=_get_priority_from_int_arg(priority_int),
+            priority=_normalize_priority(priority_int),
             size=size_int,
             due_at=_get_due_at_from_str_arg(due_at_str),
         )
@@ -596,7 +596,7 @@ def update_task(
             status=status_title,
             assignees=assignee_emails if assignee_emails is not None else UNSET,
             tags=tag_titles if tag_titles is not None else UNSET,
-            priority=_get_priority_from_int_arg(priority_int),
+            priority=_normalize_priority(priority_int),
             size=size_int,
             due_at=_get_due_at_from_str_arg(due_at_str),
         )
