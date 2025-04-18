@@ -464,10 +464,10 @@ def set_host(host: str) -> bool:
 
 
 def _auth_failure_exit() -> NoReturn:
-    if _is_cli:
-        sys.exit(f"Not logged in, run\n\n  {_PROG} {_LOGIN_CMD}\n\nto log in.")
-    raise DartException(
-        f"Not logged in, either run dart.login(token) or save the token into the DART_TOKEN environment variable."
+    _dart_exit(
+        f"Not logged in, run\n\n  {_PROG} {_LOGIN_CMD}\n\nto log in."
+        if _is_cli
+        else "Not logged in, either run dart.login(token) or save the token into the DART_TOKEN environment variable."
     )
 
 
