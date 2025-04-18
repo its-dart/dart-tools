@@ -548,8 +548,7 @@ def begin_task() -> bool:
     dart = Dart()
     user_space_config = dart.get_config()
     user = user_space_config.user
-    unstarted_task_status = user_space_config.statuses[0]
-    filtered_tasks = dart.list_tasks(assignee=user.email, status=unstarted_task_status).results
+    filtered_tasks = dart.list_tasks(assignee=user.email, is_completed=False).results
 
     if not filtered_tasks:
         _dart_exit("No active, incomplete tasks found.")
