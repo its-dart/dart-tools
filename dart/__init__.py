@@ -5,11 +5,16 @@ from .dart import (
     Dart,
     begin_task,
     cli,
+    create_comment,
+    create_doc,
     create_task,
+    delete_doc,
+    delete_task,
     get_host,
     is_logged_in,
     login,
     set_host,
+    update_doc,
     update_task,
 )
 from .generated.models import *

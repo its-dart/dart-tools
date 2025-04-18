@@ -19,7 +19,7 @@ from collections import defaultdict
 from datetime import timezone
 from functools import wraps
 from importlib.metadata import version
-from typing import Callable, NoReturn
+from typing import Callable, NoReturn, TypeVar
 from webbrowser import open_new_tab
 
 import dateparser
@@ -27,22 +27,40 @@ import httpx
 import platformdirs
 from pick import pick
 
+from dart.generated.types import Response
+
 from .exception import DartException
 from .generated import Client
+from .generated.api.comment import create_comment as create_comment_api
 from .generated.api.config import get_config as get_config_api
+from .generated.api.doc import create_doc as create_doc_api
+from .generated.api.doc import delete_doc as delete_doc_api
+from .generated.api.doc import list_docs as list_docs_api
+from .generated.api.doc import retrieve_doc as retrieve_doc_api
+from .generated.api.doc import update_doc as update_doc_api
 from .generated.api.task import create_task as create_task_api
 from .generated.api.task import delete_task as delete_task_api
 from .generated.api.task import list_tasks as list_tasks_api
 from .generated.api.task import retrieve_task as retrieve_task_api
 from .generated.api.task import update_task as update_task_api
-from .generated.errors import UnexpectedStatus
 from .generated.models import (
+    Comment,
+    CommentCreate,
     ConciseTask,
+    Doc,
+    DocCreate,
+    DocUpdate,
+    PaginatedConciseDocList,
     PaginatedConciseTaskList,
     Task,
     TaskCreate,
     TaskUpdate,
     UserSpaceConfiguration,
+    WrappedComment,
+    WrappedCommentCreate,
+    WrappedDoc,
+    WrappedDocCreate,
+    WrappedDocUpdate,
     WrappedTask,
     WrappedTaskCreate,
     WrappedTaskUpdate,
@@ -62,7 +80,12 @@ _SET_HOST_CMD = "sethost"
 _LOGIN_CMD = "login"
 _CREATE_TASK_CMD = "createtask"
 _UPDATE_TASK_CMD = "updatetask"
+_DELETE_TASK_CMD = "deletetask"
 _BEGIN_TASK_CMD = "begintask"
+_CREATE_COMMENT_CMD = "createcomment"
+_CREATE_DOC_CMD = "createdoc"
+_UPDATE_DOC_CMD = "updatedoc"
+_DELETE_DOC_CMD = "deletedoc"
 
 _PROFILE_SETTINGS_URL_FRAG = "/?settings=account"
 _ROOT_PRIVATE_API_URL_FRAG = "/api/v0"
@@ -119,22 +142,6 @@ def _run_cmd(cmd: str) -> str:
     return subprocess.check_output(cmd, shell=True).decode()
 
 
-def _get_space_url(host: str, id: str) -> str:
-    return f"{host}/s/{id}"
-
-
-def _get_dartboard_url(host: str, id: str) -> str:
-    return f"{host}/d/{id}"
-
-
-def _get_task_url(host: str, id: str) -> str:
-    return f"{host}/t/{id}"
-
-
-def _get_folder_url(host: str, id: str) -> str:
-    return f"{host}/f/{id}"
-
-
 def _suppress_exception(fn: Callable) -> Callable:
     @wraps(fn)
     def wrapper(*args, **kwargs):
@@ -162,25 +169,32 @@ def _log(s: str) -> None:
     print(s)
 
 
-def _handle_api_errors(fn: Callable) -> Callable:
+T = TypeVar("T")
+
+
+def _get_response_parsed(response: Response[T]) -> T:
+    if response.parsed is not None:
+        return response.parsed
+
+    if response.status_code in {401, 403}:
+        _auth_failure_exit()
+    try:
+        content = json.loads(response.content)
+        error_message = content.get("detail") or " ".join(content.get("errors", []))
+        _dart_exit(error_message)
+    except (json.JSONDecodeError, AttributeError):
+        _unknown_failure_exit()
+
+
+def _handle_request_errors(fn: Callable) -> Callable:
     @wraps(fn)
     def wrapper(*args, **kwargs):
         try:
             return fn(*args, **kwargs)
         except DartException as ex:
-            _dart_exit(f"Failed to execute API call. {ex}")
-        except UnexpectedStatus as ex:
-            if ex.status_code in {401, 403}:
-                _auth_failure_exit()
-
-            try:
-                content = json.loads(ex.content)
-                error_message = content.get("detail") or " ".join(content.get("errors", []))
-                _dart_exit(error_message)
-            except (json.JSONDecodeError, AttributeError):
-                _unknown_failure_exit()
-        except httpx.TimeoutException:
-            _dart_exit("Failed to execute API call. The request timed out.")
+            _dart_exit(ex)
+        except (httpx.TimeoutException, httpx.RequestError, httpx.ConnectError) as ex:
+            _dart_exit(f"Failed to execute API call. Reason: {ex}.")
 
     return wrapper
 
@@ -239,12 +253,10 @@ class Dart:
         self._private_api = Client(
             base_url=self.get_base_url() + _ROOT_PRIVATE_API_URL_FRAG,
             headers=self.get_headers(),
-            raise_on_unexpected_status=True,
         )
         self._public_api = Client(
             base_url=self.get_base_url() + _ROOT_PUBLIC_API_URL_FRAG,
             headers=self.get_headers(),
-            raise_on_unexpected_status=True,
         )
 
     def get_base_url(self) -> str:
@@ -274,53 +286,71 @@ class Dart:
             config = get_config_api.sync(client=self._public_api)
             if config is None:
                 return False
-        except (httpx.TimeoutException, UnexpectedStatus) as ex:
+        except:
             return False
         return True
 
-    @_handle_api_errors
+    @_handle_request_errors
     def get_config(self) -> UserSpaceConfiguration:
-        config = get_config_api.sync(client=self._public_api)
-        if config is None:
-            raise DartException("Failed to fetch user space configuration: API returned None.")
-        return config
+        response = get_config_api.sync_detailed(client=self._public_api)
+        return _get_response_parsed(response)
 
-    @_handle_api_errors
+    @_handle_request_errors
     def create_task(self, body: WrappedTaskCreate) -> WrappedTask:
-        task = create_task_api.sync(client=self._public_api, body=body)
-        if task is None:
-            raise DartException("Failed to create task: API returned None.")
-        return task
+        response = create_task_api.sync_detailed(client=self._public_api, body=body)
+        return _get_response_parsed(response)
 
-    @_handle_api_errors
+    @_handle_request_errors
     def retrieve_task(self, id: str) -> WrappedTask:
-        task = retrieve_task_api.sync(id, client=self._public_api)
-        if task is None:
-            raise DartException("Failed to retrieve task: API returned None.")
-        return task
+        response = retrieve_task_api.sync_detailed(id, client=self._public_api)
+        return _get_response_parsed(response)
 
-    @_handle_api_errors
+    @_handle_request_errors
     def update_task(self, id: str, body: WrappedTaskUpdate) -> WrappedTask:
-        task = update_task_api.sync(id, client=self._public_api, body=body)
-        if task is None:
-            raise DartException("Failed to update task: API returned None.")
-        return task
+        response = update_task_api.sync_detailed(id, client=self._public_api, body=body)
+        return _get_response_parsed(response)
 
-    @_handle_api_errors
+    @_handle_request_errors
     def delete_task(self, id: str) -> WrappedTask:
-        task = delete_task_api.sync(id, client=self._public_api)
-        if task is None:
-            raise DartException("Failed to delete task: API returned None.")
-        return task
+        response = delete_task_api.sync_detailed(id, client=self._public_api)
+        return _get_response_parsed(response)
 
-    @_handle_api_errors
+    @_handle_request_errors
     def list_tasks(self, **kwargs) -> PaginatedConciseTaskList:
-        filtered_tasks = list_tasks_api.sync(client=self._public_api, **kwargs)
-        if filtered_tasks is None:
-            raise DartException("Failed to filter tasks: API returned None.")
-        return filtered_tasks
+        response = list_tasks_api.sync_detailed(client=self._public_api, **kwargs)
+        return _get_response_parsed(response)
 
-    @_handle_api_errors
+    @_handle_request_errors
+    def create_comment(self, body: WrappedCommentCreate) -> WrappedComment:
+        response = create_comment_api.sync_detailed(client=self._public_api, body=body)
+        return _get_response_parsed(response)
+
+    @_handle_request_errors
+    def create_doc(self, body: WrappedDocCreate) -> WrappedDoc:
+        response = create_doc_api.sync_detailed(client=self._public_api, body=body)
+        return _get_response_parsed(response)
+
+    @_handle_request_errors
+    def retrieve_doc(self, id: str) -> WrappedDoc:
+        response = retrieve_doc_api.sync_detailed(id, client=self._public_api)
+        return _get_response_parsed(response)
+
+    @_handle_request_errors
+    def update_doc(self, id: str, body: WrappedDocUpdate) -> WrappedDoc:
+        response = update_doc_api.sync_detailed(id, client=self._public_api, body=body)
+        return _get_response_parsed(response)
+
+    @_handle_request_errors
+    def delete_doc(self, id: str) -> WrappedDoc:
+        response = delete_doc_api.sync_detailed(id, client=self._public_api)
+        return _get_response_parsed(response)
+
+    @_handle_request_errors
+    def list_docs(self, **kwargs) -> PaginatedConciseDocList:
+        response = list_docs_api.sync_detailed(client=self._public_api, **kwargs)
+        return _get_response_parsed(response)
+
+    @_handle_request_errors
     def copy_branch_link(self, id: str) -> None:
         self._private_api.get_httpx_client().post(_COPY_BRANCH_URL_FRAG, json={"duid": id})
 
@@ -488,7 +518,7 @@ def _begin_task(dart: Dart, email: str, task: ConciseTask | Task) -> bool:
     branch_name = _Git.make_task_name(email, task)
     _Git.checkout_branch(branch_name)
 
-    _log(f"Started work on\n\n  {task.title}\n  {_get_task_url(dart.get_base_url(), task.id)}\n")
+    _log(f"Started work on\n\n  {task.title}\n  {task.html_url}\n")
     return True
 
 
@@ -496,10 +526,8 @@ def begin_task() -> bool:
     dart = Dart()
     user_space_config = dart.get_config()
     user = user_space_config.user
-    finished_task_status = user_space_config.defaults.statuses.finished
-
-    filtered_tasks = dart.list_tasks(assignee=user.email).results
-    filtered_tasks = [e for e in filtered_tasks if e.status != finished_task_status]
+    unstarted_task_status = user_space_config.statuses[0]
+    filtered_tasks = dart.list_tasks(assignee=user.email, status=unstarted_task_status).results
 
     if not filtered_tasks:
         _dart_exit("No active, incomplete tasks found.")
@@ -565,7 +593,7 @@ def create_task(
         )
     )
     task = dart.create_task(task_create).item
-    _log(f"Created task {task.title} at {_get_task_url(dart.get_base_url(), task.id)}")
+    _log(f"Created task {task.title} at {task.html_url}")
 
     if should_begin:
         user = dart.get_config().user
@@ -603,9 +631,68 @@ def update_task(
     )
     task = dart.update_task(id, task_update).item
 
-    _log(f"Updated task {task.title} at {_get_task_url(dart.get_base_url(), task.id)}")
+    _log(f"Updated task {task.title} at {task.html_url}")
     _log("Done.")
     return task
+
+
+def delete_task(id: str) -> Task:
+    dart = Dart()
+    task = dart.delete_task(id).item
+
+    _log(f"Deleted task {task.title} at {task.html_url}")
+    _log("Done.")
+    return task
+
+
+def create_comment(id: str, text: str) -> Comment:
+    dart = Dart()
+    comment_create = WrappedCommentCreate(item=CommentCreate(task_id=id, text=text))
+    comment = dart.create_comment(comment_create).item
+    _log(f"Created comment at {comment.html_url}")
+
+    _log("Done.")
+    return comment
+
+
+def create_doc(
+    title: str,
+    *,
+    folder: str | Unset = UNSET,
+    text: str | Unset = UNSET,
+) -> Doc:
+    dart = Dart()
+    doc_create = WrappedDocCreate(item=DocCreate(title=title, folder=folder, text=text))
+    doc = dart.create_doc(doc_create).item
+
+    _log(f"Created doc {doc.title} at {doc.html_url}")
+    _log("Done.")
+    return doc
+
+
+def update_doc(
+    id: str,
+    *,
+    title: str,
+    folder: str | Unset = UNSET,
+    text: str | Unset = UNSET,
+) -> Doc:
+    dart = Dart()
+    doc_update = WrappedDocUpdate(item=DocUpdate(id, title=title, folder=folder, text=text))
+    doc = dart.update_doc(id, doc_update).item
+
+    _log(f"Updated doc {doc.title} at {doc.html_url}")
+    _log("Done.")
+    return doc
+
+
+def delete_doc(id: str) -> Doc:
+    dart = Dart()
+    doc = dart.delete_doc(id).item
+
+    _log(f"Deleted doc {doc.title} at {doc.html_url}")
+    _log("Done.")
+    return doc
 
 
 def _add_standard_task_arguments(parser: ArgumentParser) -> None:
@@ -678,21 +765,34 @@ def cli() -> None:
         return
 
     parser = ArgumentParser(prog=_PROG, description="A CLI to interact with Dart")
+    metavar = ",".join(
+        [
+            _LOGIN_CMD,
+            _CREATE_TASK_CMD,
+            _UPDATE_TASK_CMD,
+            _DELETE_TASK_CMD,
+            _BEGIN_TASK_CMD,
+            _CREATE_COMMENT_CMD,
+            _CREATE_DOC_CMD,
+            _UPDATE_DOC_CMD,
+            _DELETE_DOC_CMD,
+        ]
+    )
     subparsers = parser.add_subparsers(
         title="command",
         required=True,
-        metavar=f"{{{_LOGIN_CMD},{_CREATE_TASK_CMD},{_UPDATE_TASK_CMD},{_BEGIN_TASK_CMD}}}",
+        metavar=f"{{{metavar}}}",
     )
 
-    set_host_parser = subparsers.add_parser(_SET_HOST_CMD, aliases="s")
+    set_host_parser = subparsers.add_parser(_SET_HOST_CMD, aliases=["sh"])
     set_host_parser.add_argument("host", help="the new host: {prod|stag|dev|[URL]}")
     set_host_parser.set_defaults(func=set_host)
 
-    login_parser = subparsers.add_parser(_LOGIN_CMD, aliases="l", help="login")
+    login_parser = subparsers.add_parser(_LOGIN_CMD, aliases=["lg"], help="login")
     login_parser.add_argument("-t", "--token", dest="token", help="your authentication token")
     login_parser.set_defaults(func=login)
 
-    create_task_parser = subparsers.add_parser(_CREATE_TASK_CMD, aliases="c", help="create a new task")
+    create_task_parser = subparsers.add_parser(_CREATE_TASK_CMD, aliases=["ct"], help="create a new task")
     create_task_parser.add_argument("title", help="title of the task")
     create_task_parser.add_argument(
         "-b",
@@ -704,14 +804,40 @@ def cli() -> None:
     _add_standard_task_arguments(create_task_parser)
     create_task_parser.set_defaults(func=create_task)
 
-    update_task_parser = subparsers.add_parser(_UPDATE_TASK_CMD, aliases="u", help="update an existing task")
+    update_task_parser = subparsers.add_parser(_UPDATE_TASK_CMD, aliases=["ut"], help="update an existing task")
     update_task_parser.add_argument("id", help="ID of the task")
     update_task_parser.add_argument("-e", "--title", dest="title", help="task title", default=UNSET)
     _add_standard_task_arguments(update_task_parser)
     update_task_parser.set_defaults(func=update_task)
 
-    begin_task_parser = subparsers.add_parser(_BEGIN_TASK_CMD, aliases="b", help="begin work on a task")
+    delete_task_parser = subparsers.add_parser(_DELETE_TASK_CMD, aliases=["dt"], help="delete an existing task")
+    delete_task_parser.add_argument("id", help="ID of the task")
+    delete_task_parser.set_defaults(func=delete_task)
+
+    begin_task_parser = subparsers.add_parser(_BEGIN_TASK_CMD, aliases=["bt"], help="begin work on a task")
     begin_task_parser.set_defaults(func=begin_task)
+
+    create_comment_parser = subparsers.add_parser(_CREATE_COMMENT_CMD, aliases=["cc"], help="create a comment")
+    create_comment_parser.add_argument("id", help="ID of the task")
+    create_comment_parser.add_argument("text", help="text of the comment")
+    create_comment_parser.set_defaults(func=create_comment)
+
+    create_doc_parser = subparsers.add_parser(_CREATE_DOC_CMD, aliases=["cd"], help="create a new doc")
+    create_doc_parser.add_argument("title", help="title of the doc")
+    create_doc_parser.add_argument("-f", "--folder", dest="folder", help="doc folder", default=UNSET)
+    create_doc_parser.add_argument("-t", "--text", dest="text", help="doc text", default=UNSET)
+    create_doc_parser.set_defaults(func=create_doc)
+
+    update_doc_parser = subparsers.add_parser(_UPDATE_DOC_CMD, aliases=["ud"], help="update an existing doc")
+    update_doc_parser.add_argument("id", help="ID of the doc")
+    update_doc_parser.add_argument("-e", "--title", dest="title", help="doc title", default=UNSET)
+    update_doc_parser.add_argument("-f", "--folder", dest="folder", help="doc folder", default=UNSET)
+    update_doc_parser.add_argument("-t", "--text", dest="text", help="doc text", default=UNSET)
+    update_doc_parser.set_defaults(func=update_doc)
+
+    delete_doc_parser = subparsers.add_parser(_DELETE_DOC_CMD, aliases=["dd"], help="delete an existing doc")
+    delete_doc_parser.add_argument("id", help="ID of the doc")
+    delete_doc_parser.set_defaults(func=delete_doc)
 
     args = vars(parser.parse_args())
     func = args.pop("func")
