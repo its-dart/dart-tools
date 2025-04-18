@@ -20,6 +20,7 @@ def _get_kwargs(
     due_at_after: Union[Unset, datetime.datetime] = UNSET,
     due_at_before: Union[Unset, datetime.datetime] = UNSET,
     ids: Union[Unset, str] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
@@ -57,6 +58,8 @@ def _get_kwargs(
     params["due_at_before"] = json_due_at_before
 
     params["ids"] = ids
+
+    params["in_trash"] = in_trash
 
     params["limit"] = limit
 
@@ -136,6 +139,7 @@ def sync_detailed(
     due_at_after: Union[Unset, datetime.datetime] = UNSET,
     due_at_before: Union[Unset, datetime.datetime] = UNSET,
     ids: Union[Unset, str] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
@@ -160,6 +164,7 @@ def sync_detailed(
         due_at_after (Union[Unset, datetime.datetime]):
         due_at_before (Union[Unset, datetime.datetime]):
         ids (Union[Unset, str]):
+        in_trash (Union[Unset, bool]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
@@ -191,6 +196,7 @@ def sync_detailed(
         due_at_after=due_at_after,
         due_at_before=due_at_before,
         ids=ids,
+        in_trash=in_trash,
         limit=limit,
         offset=offset,
         priority=priority,
@@ -224,6 +230,7 @@ def sync(
     due_at_after: Union[Unset, datetime.datetime] = UNSET,
     due_at_before: Union[Unset, datetime.datetime] = UNSET,
     ids: Union[Unset, str] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
@@ -248,6 +255,7 @@ def sync(
         due_at_after (Union[Unset, datetime.datetime]):
         due_at_before (Union[Unset, datetime.datetime]):
         ids (Union[Unset, str]):
+        in_trash (Union[Unset, bool]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
@@ -280,6 +288,7 @@ def sync(
         due_at_after=due_at_after,
         due_at_before=due_at_before,
         ids=ids,
+        in_trash=in_trash,
         limit=limit,
         offset=offset,
         priority=priority,
@@ -307,6 +316,7 @@ async def asyncio_detailed(
     due_at_after: Union[Unset, datetime.datetime] = UNSET,
     due_at_before: Union[Unset, datetime.datetime] = UNSET,
     ids: Union[Unset, str] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
@@ -331,6 +341,7 @@ async def asyncio_detailed(
         due_at_after (Union[Unset, datetime.datetime]):
         due_at_before (Union[Unset, datetime.datetime]):
         ids (Union[Unset, str]):
+        in_trash (Union[Unset, bool]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
@@ -362,6 +373,7 @@ async def asyncio_detailed(
         due_at_after=due_at_after,
         due_at_before=due_at_before,
         ids=ids,
+        in_trash=in_trash,
         limit=limit,
         offset=offset,
         priority=priority,
@@ -393,6 +405,7 @@ async def asyncio(
     due_at_after: Union[Unset, datetime.datetime] = UNSET,
     due_at_before: Union[Unset, datetime.datetime] = UNSET,
     ids: Union[Unset, str] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
@@ -417,6 +430,7 @@ async def asyncio(
         due_at_after (Union[Unset, datetime.datetime]):
         due_at_before (Union[Unset, datetime.datetime]):
         ids (Union[Unset, str]):
+        in_trash (Union[Unset, bool]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
@@ -450,6 +464,7 @@ async def asyncio(
             due_at_after=due_at_after,
             due_at_before=due_at_before,
             ids=ids,
+            in_trash=in_trash,
             limit=limit,
             offset=offset,
             priority=priority,

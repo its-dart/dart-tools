@@ -39,15 +39,15 @@ dart login
 
 Then, you can create a new task with a command along the lines of
 ```sh
-dart createtask "Update the landing page" -p0 --tag marketing
+dart task-create "Update the landing page" -p0 --tag marketing
 ```
 which will make a new task called 'Update the landing page' with priority 'Critical' (i.e. P0) and with the 'marketing' tag.
 
-You can explore all of these options and many more with `dart --help` or the more specific help for subcommands, in this case `dart createtask --help`.
+You can explore all of these options and many more with `dart --help` or the more specific help for subcommands, in this case `dart task-create --help`.
 
 Another common workflow is to updating a preexisting task. To do this, run something like
 ```sh
-dart updatetask [ID] -s Done
+dart task-update [ID] -s Done
 ```
 This command will mark the referenced task 'Done'. Here `[ID]` is meant to be replaced (including the brackets) with the ID of an existing task. You can get a ID from any existing task in a number of ways, such as by copying it from the end of a task's URL or by clicking the '...' button in a task page in Dart and then choosing 'Copy ID'.
 

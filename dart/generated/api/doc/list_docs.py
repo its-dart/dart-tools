@@ -15,6 +15,7 @@ def _get_kwargs(
     folder: Union[Unset, str] = UNSET,
     folder_id: Union[Unset, str] = UNSET,
     ids: Union[Unset, str] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     o: Union[Unset, list[ListDocsOItem]] = UNSET,
     offset: Union[Unset, int] = UNSET,
@@ -29,6 +30,8 @@ def _get_kwargs(
     params["folder_id"] = folder_id
 
     params["ids"] = ids
+
+    params["in_trash"] = in_trash
 
     params["limit"] = limit
 
@@ -90,6 +93,7 @@ def sync_detailed(
     folder: Union[Unset, str] = UNSET,
     folder_id: Union[Unset, str] = UNSET,
     ids: Union[Unset, str] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     o: Union[Unset, list[ListDocsOItem]] = UNSET,
     offset: Union[Unset, int] = UNSET,
@@ -102,6 +106,7 @@ def sync_detailed(
         folder (Union[Unset, str]):
         folder_id (Union[Unset, str]):
         ids (Union[Unset, str]):
+        in_trash (Union[Unset, bool]):
         limit (Union[Unset, int]):
         o (Union[Unset, list[ListDocsOItem]]):
         offset (Union[Unset, int]):
@@ -121,6 +126,7 @@ def sync_detailed(
         folder=folder,
         folder_id=folder_id,
         ids=ids,
+        in_trash=in_trash,
         limit=limit,
         o=o,
         offset=offset,
@@ -142,6 +148,7 @@ def sync(
     folder: Union[Unset, str] = UNSET,
     folder_id: Union[Unset, str] = UNSET,
     ids: Union[Unset, str] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     o: Union[Unset, list[ListDocsOItem]] = UNSET,
     offset: Union[Unset, int] = UNSET,
@@ -154,6 +161,7 @@ def sync(
         folder (Union[Unset, str]):
         folder_id (Union[Unset, str]):
         ids (Union[Unset, str]):
+        in_trash (Union[Unset, bool]):
         limit (Union[Unset, int]):
         o (Union[Unset, list[ListDocsOItem]]):
         offset (Union[Unset, int]):
@@ -174,6 +182,7 @@ def sync(
         folder=folder,
         folder_id=folder_id,
         ids=ids,
+        in_trash=in_trash,
         limit=limit,
         o=o,
         offset=offset,
@@ -189,6 +198,7 @@ async def asyncio_detailed(
     folder: Union[Unset, str] = UNSET,
     folder_id: Union[Unset, str] = UNSET,
     ids: Union[Unset, str] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     o: Union[Unset, list[ListDocsOItem]] = UNSET,
     offset: Union[Unset, int] = UNSET,
@@ -201,6 +211,7 @@ async def asyncio_detailed(
         folder (Union[Unset, str]):
         folder_id (Union[Unset, str]):
         ids (Union[Unset, str]):
+        in_trash (Union[Unset, bool]):
         limit (Union[Unset, int]):
         o (Union[Unset, list[ListDocsOItem]]):
         offset (Union[Unset, int]):
@@ -220,6 +231,7 @@ async def asyncio_detailed(
         folder=folder,
         folder_id=folder_id,
         ids=ids,
+        in_trash=in_trash,
         limit=limit,
         o=o,
         offset=offset,
@@ -239,6 +251,7 @@ async def asyncio(
     folder: Union[Unset, str] = UNSET,
     folder_id: Union[Unset, str] = UNSET,
     ids: Union[Unset, str] = UNSET,
+    in_trash: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     o: Union[Unset, list[ListDocsOItem]] = UNSET,
     offset: Union[Unset, int] = UNSET,
@@ -251,6 +264,7 @@ async def asyncio(
         folder (Union[Unset, str]):
         folder_id (Union[Unset, str]):
         ids (Union[Unset, str]):
+        in_trash (Union[Unset, bool]):
         limit (Union[Unset, int]):
         o (Union[Unset, list[ListDocsOItem]]):
         offset (Union[Unset, int]):
@@ -272,6 +286,7 @@ async def asyncio(
             folder=folder,
             folder_id=folder_id,
             ids=ids,
+            in_trash=in_trash,
             limit=limit,
             o=o,
             offset=offset,
