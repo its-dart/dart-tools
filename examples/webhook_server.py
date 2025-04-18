@@ -8,7 +8,7 @@ import json
 
 from flask import Flask, Response, jsonify, request
 
-from dart import is_signature_correct
+from dart import Comment, Doc, Task, is_signature_correct
 
 app = Flask(__name__)
 
@@ -34,30 +34,30 @@ def webhook() -> Response:
     event_type = event["type"]
     match event_type:
         case "task.created":
-            task = event["data"]["model"]  # The task that was created
-            print(f"Task created:\n{task}")
+            task = Task.from_dict(event["data"]["model"])  # The task that was created
+            print(f"Task created:\n{task.to_dict()}")
         case "task.updated":
             data = event["data"]
-            task = data["model"]  # The new version of the task that was updated
-            old_task = data["oldModel"]  # The old version of the task that was updated
-            print(f"Task updated from:\n{old_task}\nfrom:\n{task}")
+            task = Task.from_dict(data["model"])  # The new version of the task that was updated
+            old_task = Task.from_dict(data["oldModel"])  # The old version of the task that was updated
+            print(f"Task updated from:\n{old_task.to_dict()}\nfrom:\n{task.to_dict()}")
         case "task.deleted":
-            task = event["data"]["model"]  # The task that was deleted
-            print(f"Task deleted:\n{task}")
+            task = Task.from_dict(event["data"]["model"])  # The task that was deleted
+            print(f"Task deleted:\n{task.to_dict()}")
         case "doc.created":
-            doc = event["data"]["model"]  # The doc that was created
-            print(f"Doc created:\n{doc}")
+            doc = Doc.from_dict(event["data"]["model"])  # The doc that was created
+            print(f"Doc created:\n{doc.to_dict()}")
         case "doc.updated":
             data = event["data"]
-            doc = data["model"]  # The new version of the doc that was updated
-            old_doc = data["oldModel"]  # The old version of the doc that was updated
-            print(f"Doc updated from:\n{old_doc}\nfrom:\n{doc}")
+            doc = Doc.from_dict(data["model"])  # The new version of the doc that was updated
+            old_doc = Doc.from_dict(data["oldModel"])  # The old version of the doc that was updated
+            print(f"Doc updated from:\n{old_doc.to_dict()}\nfrom:\n{doc.to_dict()}")
         case "doc.deleted":
-            doc = event["data"]["model"]  # The doc that was deleted
-            print(f"Doc deleted:\n{doc}")
+            doc = Doc.from_dict(event["data"]["model"])  # The doc that was deleted
+            print(f"Doc deleted:\n{doc.to_dict()}")
         case "comment.created":
-            comment = event["data"]["model"]  # The comment that was created
-            print(f"Comment created:\n{comment}")
+            comment = Comment.from_dict(event["data"]["model"])  # The comment that was created
+            print(f"Comment created:\n{comment.to_dict()}")
         case _:
             # Unexpected event type
             print(f"Unhandled event type: {event_type}")
