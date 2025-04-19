@@ -30,19 +30,7 @@ from pick import pick
 from dart.generated.types import Response
 
 from .exception import DartException
-from .generated import Client
-from .generated.api.comment import create_comment as create_comment_api
-from .generated.api.config import get_config as get_config_api
-from .generated.api.doc import create_doc as create_doc_api
-from .generated.api.doc import delete_doc as delete_doc_api
-from .generated.api.doc import list_docs as list_docs_api
-from .generated.api.doc import retrieve_doc as retrieve_doc_api
-from .generated.api.doc import update_doc as update_doc_api
-from .generated.api.task import create_task as create_task_api
-from .generated.api.task import delete_task as delete_task_api
-from .generated.api.task import list_tasks as list_tasks_api
-from .generated.api.task import retrieve_task as retrieve_task_api
-from .generated.api.task import update_task as update_task_api
+from .generated import Client, api
 from .generated.models import (
     Comment,
     CommentCreate,
@@ -126,13 +114,13 @@ def _get_help_text(fn: Callable) -> str:
 
 
 _HELP_TEXT_TO_COMMAND = {
-    _CREATE_TASK_CMD: _get_help_text(create_task_api.sync_detailed),
-    _UPDATE_TASK_CMD: _get_help_text(update_task_api.sync_detailed),
-    _DELETE_TASK_CMD: _get_help_text(delete_task_api.sync_detailed),
-    _CREATE_DOC_CMD: _get_help_text(create_doc_api.sync_detailed),
-    _UPDATE_DOC_CMD: _get_help_text(update_doc_api.sync_detailed),
-    _DELETE_DOC_CMD: _get_help_text(delete_doc_api.sync_detailed),
-    _CREATE_COMMENT_CMD: _get_help_text(create_comment_api.sync_detailed),
+    _CREATE_TASK_CMD: _get_help_text(api.create_task.sync_detailed),
+    _UPDATE_TASK_CMD: _get_help_text(api.update_task.sync_detailed),
+    _DELETE_TASK_CMD: _get_help_text(api.delete_task.sync_detailed),
+    _CREATE_DOC_CMD: _get_help_text(api.create_doc.sync_detailed),
+    _UPDATE_DOC_CMD: _get_help_text(api.update_doc.sync_detailed),
+    _DELETE_DOC_CMD: _get_help_text(api.delete_doc.sync_detailed),
+    _CREATE_COMMENT_CMD: _get_help_text(api.create_comment.sync_detailed),
 }
 
 _is_cli = False
@@ -306,7 +294,7 @@ class Dart:
     def is_logged_in(self) -> bool:
         self._init_clients()
         try:
-            config = get_config_api.sync(client=self._public_api)
+            config = get_config.sync(client=self._public_api)
             if config is None:
                 return False
         except:
@@ -315,62 +303,62 @@ class Dart:
 
     @_handle_request_errors
     def get_config(self) -> UserSpaceConfiguration:
-        response = get_config_api.sync_detailed(client=self._public_api)
+        response = api.get_config.sync_detailed(client=self._public_api)
         return _get_response_parsed(response)
 
     @_handle_request_errors
     def create_task(self, body: WrappedTaskCreate) -> WrappedTask:
-        response = create_task_api.sync_detailed(client=self._public_api, body=body)
+        response = api.create_task.sync_detailed(client=self._public_api, body=body)
         return _get_response_parsed(response)
 
     @_handle_request_errors
     def retrieve_task(self, id: str) -> WrappedTask:
-        response = retrieve_task_api.sync_detailed(id, client=self._public_api)
+        response = api.retrieve_task.sync_detailed(id, client=self._public_api)
         return _get_response_parsed(response, not_found_message=f"Task with ID {id} not found.")
 
     @_handle_request_errors
     def update_task(self, id: str, body: WrappedTaskUpdate) -> WrappedTask:
-        response = update_task_api.sync_detailed(id, client=self._public_api, body=body)
+        response = api.update_task.sync_detailed(id, client=self._public_api, body=body)
         return _get_response_parsed(response, not_found_message=f"Task with ID {id} not found.")
 
     @_handle_request_errors
     def delete_task(self, id: str) -> WrappedTask:
-        response = delete_task_api.sync_detailed(id, client=self._public_api)
+        response = api.delete_task.sync_detailed(id, client=self._public_api)
         return _get_response_parsed(response, not_found_message=f"Task with ID {id} not found.")
 
     @_handle_request_errors
     def list_tasks(self, **kwargs) -> PaginatedConciseTaskList:
-        response = list_tasks_api.sync_detailed(client=self._public_api, **kwargs)
+        response = api.list_tasks.sync_detailed(client=self._public_api, **kwargs)
         return _get_response_parsed(response)
 
     @_handle_request_errors
     def create_comment(self, body: WrappedCommentCreate) -> WrappedComment:
-        response = create_comment_api.sync_detailed(client=self._public_api, body=body)
+        response = api.create_comment.sync_detailed(client=self._public_api, body=body)
         return _get_response_parsed(response)
 
     @_handle_request_errors
     def create_doc(self, body: WrappedDocCreate) -> WrappedDoc:
-        response = create_doc_api.sync_detailed(client=self._public_api, body=body)
+        response = api.create_doc.sync_detailed(client=self._public_api, body=body)
         return _get_response_parsed(response)
 
     @_handle_request_errors
     def retrieve_doc(self, id: str) -> WrappedDoc:
-        response = retrieve_doc_api.sync_detailed(id, client=self._public_api)
+        response = api.retrieve_doc.sync_detailed(id, client=self._public_api)
         return _get_response_parsed(response, not_found_message=f"Doc with ID {id} not found.")
 
     @_handle_request_errors
     def update_doc(self, id: str, body: WrappedDocUpdate) -> WrappedDoc:
-        response = update_doc_api.sync_detailed(id, client=self._public_api, body=body)
+        response = api.update_doc.sync_detailed(id, client=self._public_api, body=body)
         return _get_response_parsed(response, not_found_message=f"Doc with ID {id} not found.")
 
     @_handle_request_errors
     def delete_doc(self, id: str) -> WrappedDoc:
-        response = delete_doc_api.sync_detailed(id, client=self._public_api)
+        response = api.delete_doc.sync_detailed(id, client=self._public_api)
         return _get_response_parsed(response, not_found_message=f"Doc with ID {id} not found.")
 
     @_handle_request_errors
     def list_docs(self, **kwargs) -> PaginatedConciseDocList:
-        response = list_docs_api.sync_detailed(client=self._public_api, **kwargs)
+        response = api.list_docs.sync_detailed(client=self._public_api, **kwargs)
         return _get_response_parsed(response)
 
     @_handle_request_errors
