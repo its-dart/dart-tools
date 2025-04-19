@@ -52,6 +52,7 @@ from .generated.models import (
     DocUpdate,
     PaginatedConciseDocList,
     PaginatedConciseTaskList,
+    Priority,
     Task,
     TaskCreate,
     TaskUpdate,
@@ -93,7 +94,7 @@ _CREATE_COMMENT_CMD = "comment-create"
 
 _PROFILE_SETTINGS_URL_FRAG = "/?settings=account"
 _ROOT_PRIVATE_API_URL_FRAG = "/api/v0"
-_ROOT_PUBLIC_API_URL_FRAG = "/api/v0/public"
+_ROOT_PUBLIC_API_URL_FRAG = f"{_ROOT_PRIVATE_API_URL_FRAG}/public"
 _COPY_BRANCH_URL_FRAG = "/vcs/copy-branch-link"
 
 _AUTH_TOKEN_ENVVAR_KEY = "DART_TOKEN"
@@ -107,10 +108,10 @@ _ID_CHARS = string.ascii_lowercase + string.ascii_uppercase + string.digits
 _NON_ALPHANUM_RE = re.compile(r"[^a-zA-Z0-9-]+")
 _REPEATED_DASH_RE = re.compile(r"-{2,}")
 _PRIORITY_MAP: dict[int, str] = {
-    0: "critical",
-    1: "high",
-    2: "medium",
-    3: "low",
+    0: Priority.CRITICAL,
+    1: Priority.HIGH,
+    2: Priority.MEDIUM,
+    3: Priority.LOW,
 }
 _SIZES = {1, 2, 3, 5, 8}
 

@@ -12,6 +12,7 @@ from .folder import Folder
 from .list_docs_o_item import ListDocsOItem
 from .paginated_concise_doc_list import PaginatedConciseDocList
 from .paginated_concise_task_list import PaginatedConciseTaskList
+from .priority import Priority
 from .task import Task
 from .task_create import TaskCreate
 from .task_update import TaskUpdate
@@ -43,6 +44,7 @@ __all__ = (
     "ListDocsOItem",
     "PaginatedConciseDocList",
     "PaginatedConciseTaskList",
+    "Priority",
     "Task",
     "TaskCreate",
     "TaskUpdate",
