@@ -4,6 +4,7 @@ from typing import Any, TypeVar, Union, cast
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..models.priority import Priority
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="ConciseTask")
@@ -28,8 +29,8 @@ class ConciseTask:
         tags (Union[Unset, list[str]]): Any tags that should be applied to the task, which can be used to filter and
             search for tasks. Tags are also known as labels or components and are strings that can be anything, but should
             be short and descriptive. This list can be empty.
-        priority (Union[None, Unset, str]): The priority, which is a string that can be one of Critical, High, Medium,
-            or Low. This is used to sort tasks and determine which tasks should be done first.
+        priority (Union[None, Priority, Unset]): The priority, which is a string that can be one of the specified
+            options. This is used to sort tasks and determine which tasks should be done first.
         start_at (Union[None, Unset, str]): The start date, which is a date and time that the task should be started by
             in ISO format. It should be at 9:00am in the timezone of the user.
         due_at (Union[None, Unset, str]): The due date, which is a date and time that the task should be completed by in
@@ -50,7 +51,7 @@ class ConciseTask:
     assignees: Union[Unset, list[str]] = UNSET
     assignee: Union[None, Unset, str] = UNSET
     tags: Union[Unset, list[str]] = UNSET
-    priority: Union[None, Unset, str] = UNSET
+    priority: Union[None, Priority, Unset] = UNSET
     start_at: Union[None, Unset, str] = UNSET
     due_at: Union[None, Unset, str] = UNSET
     size: Union[None, Unset, int] = UNSET
@@ -90,6 +91,8 @@ class ConciseTask:
         priority: Union[None, Unset, str]
         if isinstance(self.priority, Unset):
             priority = UNSET
+        elif isinstance(self.priority, Priority):
+            priority = self.priority.value
         else:
             priority = self.priority
 
@@ -180,12 +183,20 @@ class ConciseTask:
 
         tags = cast(list[str], d.pop("tags", UNSET))
 
-        def _parse_priority(data: object) -> Union[None, Unset, str]:
+        def _parse_priority(data: object) -> Union[None, Priority, Unset]:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, str], data)
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                priority_type_0 = Priority(data)
+
+                return priority_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Priority, Unset], data)
 
         priority = _parse_priority(d.pop("priority", UNSET))
 
