@@ -2,14 +2,14 @@ from enum import Enum
 
 
 class ListDocsOItem(str, Enum):
-    CREATED = "created"
+    CREATED_AT = "created_at"
     ORDER = "order"
-    RECENT = "recent"
     TITLE = "title"
-    VALUE_0 = "-created"
+    UPDATED_AT = "updated_at"
+    VALUE_0 = "-created_at"
     VALUE_1 = "-order"
-    VALUE_2 = "-recent"
-    VALUE_3 = "-title"
+    VALUE_2 = "-title"
+    VALUE_3 = "-updated_at"
 
     def __str__(self) -> str:
         return str(self.value)
