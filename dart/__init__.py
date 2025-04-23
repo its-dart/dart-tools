@@ -18,4 +18,5 @@ from .dart import (
     update_task,
 )
 from .generated.models import *
+from .old import get_dartboards, get_folders, replicate_dartboard, replicate_space, update_dartboard, update_folder
 from .webhook import is_signature_correct

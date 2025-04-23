@@ -535,8 +535,8 @@ def _begin_task(dart: Dart, email: str, task: ConciseTask | Task) -> bool:
 
 def begin_task() -> bool:
     dart = Dart()
-    user_space_config = dart.get_config()
-    user = user_space_config.user
+    config = dart.get_config()
+    user = config.user
     filtered_tasks = dart.list_tasks(assignee=user.email, is_completed=False).results
 
     if not filtered_tasks:
