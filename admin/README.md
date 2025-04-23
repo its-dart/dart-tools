@@ -23,7 +23,7 @@
 
 1. Run `uv sync` as needed
 2. Get an existing PyPI token or [make a new one](https://pypi.org/manage/account/token/)
-3. Fill out `~/.pypirc` according to [the specification](https://packaging.python.org/en/latest/specifications/pypirc/#using-a-pypi-token)
+3. Set the `UV_PUBLISH_TOKEN` environment variable, for example, by running `export UV_PUBLISH_TOKEN=<PyPI token>`
 
 
 ## Deploy
