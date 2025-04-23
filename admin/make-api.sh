@@ -13,7 +13,7 @@ api_dir="dart/generated/api"
 init_file="$api_dir/__init__.py"
 
 find "$api_dir" -type f -name "*.py" ! -name "__init__.py" | while read -r file; do
-    model=$(basename "$(dirname "$file")")
-    action=$(basename "$file" .py)
-    echo "from .$model import $action" >> "$init_file"
+    service=$(basename "$(dirname "$file")")
+    method=$(basename "$file" .py)
+    echo "from .$service import $method" >> "$init_file"
 done
