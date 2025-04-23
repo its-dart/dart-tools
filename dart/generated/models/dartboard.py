@@ -1,16 +1,11 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
-
-from ..models.dartboard_kind import DartboardKind
-from ..models.icon_kind import IconKind
-from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.user_dartboard_layout import UserDartboardLayout
+    from ..models.task import Task
 
 
 T = TypeVar("T", bound="Dartboard")
@@ -20,276 +15,81 @@ T = TypeVar("T", bound="Dartboard")
 class Dartboard:
     """
     Attributes:
-        duid (str):
-        space_duid (str):
-        kind (DartboardKind): * `Active` - ACTIVE
-            * `Next` - NEXT
-            * `Backlog` - BACKLOG
-            * `Finished` - FINISHED
-            * `Custom` - CUSTOM
-        order (str):
-        title (str):
-        description (str):
-        icon_kind (IconKind): * `None` - NONE
-            * `Icon` - ICON
-            * `Emoji` - EMOJI
-        icon_name_or_emoji (str):
-        color_hex (str):
-        user_duids_to_layout_duids (List['UserDartboardLayout']):
-        index (Union[None, int]):
-        started_at (Union[None, datetime.datetime]):
-        finished_at (Union[None, datetime.datetime]):
-        planned_finish_at (Union[None, datetime.datetime]):
-        default_property_map (Any):
-        always_shown_property_duids (List[str]):
-        always_hidden_property_duids (List[str]):
-        property_order_duids (List[str]):
-        property_width_map (Any):
-        updated_by_client_duid (Union[None, Unset, str]):
+        id (str): The universal, unique ID of the dartboard.
+        html_url (str): The URL that can be used to open the dartboard in the Dart web UI.
+        title (str): The title, which is a short description of the dartboard.
+        description (str): The description, which is a longer description of the dartboard.
+        tasks (list['Task']): The list of all of the tasks in the dartboard.
     """
 
-    duid: str
-    space_duid: str
-    kind: DartboardKind
-    order: str
+    id: str
+    html_url: str
     title: str
     description: str
-    icon_kind: IconKind
-    icon_name_or_emoji: str
-    color_hex: str
-    user_duids_to_layout_duids: List["UserDartboardLayout"]
-    index: Union[None, int]
-    started_at: Union[None, datetime.datetime]
-    finished_at: Union[None, datetime.datetime]
-    planned_finish_at: Union[None, datetime.datetime]
-    default_property_map: Any
-    always_shown_property_duids: List[str]
-    always_hidden_property_duids: List[str]
-    property_order_duids: List[str]
-    property_width_map: Any
-    updated_by_client_duid: Union[None, Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    tasks: list["Task"]
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        duid = self.duid
+    def to_dict(self) -> dict[str, Any]:
+        id = self.id
 
-        space_duid = self.space_duid
-
-        kind = self.kind.value
-
-        order = self.order
+        html_url = self.html_url
 
         title = self.title
 
         description = self.description
 
-        icon_kind = self.icon_kind.value
+        tasks = []
+        for tasks_item_data in self.tasks:
+            tasks_item = tasks_item_data.to_dict()
+            tasks.append(tasks_item)
 
-        icon_name_or_emoji = self.icon_name_or_emoji
-
-        color_hex = self.color_hex
-
-        user_duids_to_layout_duids = []
-        for user_duids_to_layout_duids_item_data in self.user_duids_to_layout_duids:
-            user_duids_to_layout_duids_item = user_duids_to_layout_duids_item_data.to_dict()
-            user_duids_to_layout_duids.append(user_duids_to_layout_duids_item)
-
-        index: Union[None, int]
-        index = self.index
-
-        started_at: Union[None, str]
-        if isinstance(self.started_at, datetime.datetime):
-            started_at = self.started_at.isoformat()
-        else:
-            started_at = self.started_at
-
-        finished_at: Union[None, str]
-        if isinstance(self.finished_at, datetime.datetime):
-            finished_at = self.finished_at.isoformat()
-        else:
-            finished_at = self.finished_at
-
-        planned_finish_at: Union[None, str]
-        if isinstance(self.planned_finish_at, datetime.datetime):
-            planned_finish_at = self.planned_finish_at.isoformat()
-        else:
-            planned_finish_at = self.planned_finish_at
-
-        default_property_map = self.default_property_map
-
-        always_shown_property_duids = self.always_shown_property_duids
-
-        always_hidden_property_duids = self.always_hidden_property_duids
-
-        property_order_duids = self.property_order_duids
-
-        property_width_map = self.property_width_map
-
-        updated_by_client_duid: Union[None, Unset, str]
-        if isinstance(self.updated_by_client_duid, Unset):
-            updated_by_client_duid = UNSET
-        else:
-            updated_by_client_duid = self.updated_by_client_duid
-
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "duid": duid,
-                "spaceDuid": space_duid,
-                "kind": kind,
-                "order": order,
+                "id": id,
+                "htmlUrl": html_url,
                 "title": title,
                 "description": description,
-                "iconKind": icon_kind,
-                "iconNameOrEmoji": icon_name_or_emoji,
-                "colorHex": color_hex,
-                "userDuidsToLayoutDuids": user_duids_to_layout_duids,
-                "index": index,
-                "startedAt": started_at,
-                "finishedAt": finished_at,
-                "plannedFinishAt": planned_finish_at,
-                "defaultPropertyMap": default_property_map,
-                "alwaysShownPropertyDuids": always_shown_property_duids,
-                "alwaysHiddenPropertyDuids": always_hidden_property_duids,
-                "propertyOrderDuids": property_order_duids,
-                "propertyWidthMap": property_width_map,
+                "tasks": tasks,
             }
         )
-        if updated_by_client_duid is not UNSET:
-            field_dict["updatedByClientDuid"] = updated_by_client_duid
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.user_dartboard_layout import UserDartboardLayout
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.task import Task
 
-        d = src_dict.copy()
-        duid = d.pop("duid")
+        d = dict(src_dict)
+        id = d.pop("id")
 
-        space_duid = d.pop("spaceDuid")
-
-        kind = DartboardKind(d.pop("kind"))
-
-        order = d.pop("order")
+        html_url = d.pop("htmlUrl")
 
         title = d.pop("title")
 
         description = d.pop("description")
 
-        icon_kind = IconKind(d.pop("iconKind"))
+        tasks = []
+        _tasks = d.pop("tasks")
+        for tasks_item_data in _tasks:
+            tasks_item = Task.from_dict(tasks_item_data)
 
-        icon_name_or_emoji = d.pop("iconNameOrEmoji")
-
-        color_hex = d.pop("colorHex")
-
-        user_duids_to_layout_duids = []
-        _user_duids_to_layout_duids = d.pop("userDuidsToLayoutDuids")
-        for user_duids_to_layout_duids_item_data in _user_duids_to_layout_duids:
-            user_duids_to_layout_duids_item = UserDartboardLayout.from_dict(user_duids_to_layout_duids_item_data)
-
-            user_duids_to_layout_duids.append(user_duids_to_layout_duids_item)
-
-        def _parse_index(data: object) -> Union[None, int]:
-            if data is None:
-                return data
-            return cast(Union[None, int], data)
-
-        index = _parse_index(d.pop("index"))
-
-        def _parse_started_at(data: object) -> Union[None, datetime.datetime]:
-            if data is None:
-                return data
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                started_at_type_0 = isoparse(data)
-
-                return started_at_type_0
-            except:  # noqa: E722
-                pass
-            return cast(Union[None, datetime.datetime], data)
-
-        started_at = _parse_started_at(d.pop("startedAt"))
-
-        def _parse_finished_at(data: object) -> Union[None, datetime.datetime]:
-            if data is None:
-                return data
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                finished_at_type_0 = isoparse(data)
-
-                return finished_at_type_0
-            except:  # noqa: E722
-                pass
-            return cast(Union[None, datetime.datetime], data)
-
-        finished_at = _parse_finished_at(d.pop("finishedAt"))
-
-        def _parse_planned_finish_at(data: object) -> Union[None, datetime.datetime]:
-            if data is None:
-                return data
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                planned_finish_at_type_0 = isoparse(data)
-
-                return planned_finish_at_type_0
-            except:  # noqa: E722
-                pass
-            return cast(Union[None, datetime.datetime], data)
-
-        planned_finish_at = _parse_planned_finish_at(d.pop("plannedFinishAt"))
-
-        default_property_map = d.pop("defaultPropertyMap")
-
-        always_shown_property_duids = cast(List[str], d.pop("alwaysShownPropertyDuids"))
-
-        always_hidden_property_duids = cast(List[str], d.pop("alwaysHiddenPropertyDuids"))
-
-        property_order_duids = cast(List[str], d.pop("propertyOrderDuids"))
-
-        property_width_map = d.pop("propertyWidthMap")
-
-        def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            return cast(Union[None, Unset, str], data)
-
-        updated_by_client_duid = _parse_updated_by_client_duid(d.pop("updatedByClientDuid", UNSET))
+            tasks.append(tasks_item)
 
         dartboard = cls(
-            duid=duid,
-            space_duid=space_duid,
-            kind=kind,
-            order=order,
+            id=id,
+            html_url=html_url,
             title=title,
             description=description,
-            icon_kind=icon_kind,
-            icon_name_or_emoji=icon_name_or_emoji,
-            color_hex=color_hex,
-            user_duids_to_layout_duids=user_duids_to_layout_duids,
-            index=index,
-            started_at=started_at,
-            finished_at=finished_at,
-            planned_finish_at=planned_finish_at,
-            default_property_map=default_property_map,
-            always_shown_property_duids=always_shown_property_duids,
-            always_hidden_property_duids=always_hidden_property_duids,
-            property_order_duids=property_order_duids,
-            property_width_map=property_width_map,
-            updated_by_client_duid=updated_by_client_duid,
+            tasks=tasks,
         )
 
         dartboard.additional_properties = d
         return dartboard
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

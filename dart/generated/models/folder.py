@@ -1,11 +1,12 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.folder_kind import FolderKind
-from ..models.icon_kind import IconKind
-from ..types import UNSET, Unset
+if TYPE_CHECKING:
+    from ..models.doc import Doc
+
 
 T = TypeVar("T", bound="Folder")
 
@@ -14,127 +15,81 @@ T = TypeVar("T", bound="Folder")
 class Folder:
     """
     Attributes:
-        duid (str):
-        space_duid (str):
-        kind (FolderKind): * `Other` - OTHER
-            * `Default` - DEFAULT
-            * `Reports` - REPORTS
-        order (str):
-        title (str):
-        description (str):
-        icon_kind (IconKind): * `None` - NONE
-            * `Icon` - ICON
-            * `Emoji` - EMOJI
-        icon_name_or_emoji (str):
-        color_hex (str):
-        updated_by_client_duid (Union[None, Unset, str]):
+        id (str): The universal, unique ID of the folder.
+        html_url (str): The URL that can be used to open the folder in the Dart web UI.
+        title (str): The title, which is a short description of the folder.
+        description (str): The description, which is a longer description of the folder.
+        docs (list['Doc']): The list of all of the docs in the folder.
     """
 
-    duid: str
-    space_duid: str
-    kind: FolderKind
-    order: str
+    id: str
+    html_url: str
     title: str
     description: str
-    icon_kind: IconKind
-    icon_name_or_emoji: str
-    color_hex: str
-    updated_by_client_duid: Union[None, Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    docs: list["Doc"]
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        duid = self.duid
+    def to_dict(self) -> dict[str, Any]:
+        id = self.id
 
-        space_duid = self.space_duid
-
-        kind = self.kind.value
-
-        order = self.order
+        html_url = self.html_url
 
         title = self.title
 
         description = self.description
 
-        icon_kind = self.icon_kind.value
+        docs = []
+        for docs_item_data in self.docs:
+            docs_item = docs_item_data.to_dict()
+            docs.append(docs_item)
 
-        icon_name_or_emoji = self.icon_name_or_emoji
-
-        color_hex = self.color_hex
-
-        updated_by_client_duid: Union[None, Unset, str]
-        if isinstance(self.updated_by_client_duid, Unset):
-            updated_by_client_duid = UNSET
-        else:
-            updated_by_client_duid = self.updated_by_client_duid
-
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "duid": duid,
-                "spaceDuid": space_duid,
-                "kind": kind,
-                "order": order,
+                "id": id,
+                "htmlUrl": html_url,
                 "title": title,
                 "description": description,
-                "iconKind": icon_kind,
-                "iconNameOrEmoji": icon_name_or_emoji,
-                "colorHex": color_hex,
+                "docs": docs,
             }
         )
-        if updated_by_client_duid is not UNSET:
-            field_dict["updatedByClientDuid"] = updated_by_client_duid
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        duid = d.pop("duid")
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.doc import Doc
 
-        space_duid = d.pop("spaceDuid")
+        d = dict(src_dict)
+        id = d.pop("id")
 
-        kind = FolderKind(d.pop("kind"))
-
-        order = d.pop("order")
+        html_url = d.pop("htmlUrl")
 
         title = d.pop("title")
 
         description = d.pop("description")
 
-        icon_kind = IconKind(d.pop("iconKind"))
+        docs = []
+        _docs = d.pop("docs")
+        for docs_item_data in _docs:
+            docs_item = Doc.from_dict(docs_item_data)
 
-        icon_name_or_emoji = d.pop("iconNameOrEmoji")
-
-        color_hex = d.pop("colorHex")
-
-        def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            return cast(Union[None, Unset, str], data)
-
-        updated_by_client_duid = _parse_updated_by_client_duid(d.pop("updatedByClientDuid", UNSET))
+            docs.append(docs_item)
 
         folder = cls(
-            duid=duid,
-            space_duid=space_duid,
-            kind=kind,
-            order=order,
+            id=id,
+            html_url=html_url,
             title=title,
             description=description,
-            icon_kind=icon_kind,
-            icon_name_or_emoji=icon_name_or_emoji,
-            color_hex=color_hex,
-            updated_by_client_duid=updated_by_client_duid,
+            docs=docs,
         )
 
         folder.additional_properties = d
         return folder
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

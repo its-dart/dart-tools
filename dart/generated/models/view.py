@@ -1,11 +1,12 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.icon_kind import IconKind
-from ..models.view_kind import ViewKind
-from ..types import UNSET, Unset
+if TYPE_CHECKING:
+    from ..models.task import Task
+
 
 T = TypeVar("T", bound="View")
 
@@ -14,192 +15,81 @@ T = TypeVar("T", bound="View")
 class View:
     """
     Attributes:
-        duid (str):
-        kind (ViewKind): * `Custom` - CUSTOM
-            * `Search` - SEARCH
-            * `Trash` - TRASH
-            * `My tasks` - MY_TASKS
-        accessible_by_team (bool):
-        accessible_by_user_duids (List[str]):
-        public (bool):
-        order (str):
-        title (str):
-        description (str):
-        icon_kind (IconKind): * `None` - NONE
-            * `Icon` - ICON
-            * `Emoji` - EMOJI
-        icon_name_or_emoji (str):
-        color_hex (str):
-        layout_duid (str):
-        favorited_by_user_duids (List[str]):
-        always_shown_property_duids (List[str]):
-        always_hidden_property_duids (List[str]):
-        property_order_duids (List[str]):
-        property_width_map (Any):
-        updated_by_client_duid (Union[None, Unset, str]):
+        id (str): The universal, unique ID of the view.
+        html_url (str): The URL that can be used to open the view in the Dart web UI.
+        title (str): The title, which is a short description of the view.
+        description (str): The description, which is a longer description of the view.
+        tasks (list['Task']): The list of all of the tasks in the view.
     """
 
-    duid: str
-    kind: ViewKind
-    accessible_by_team: bool
-    accessible_by_user_duids: List[str]
-    public: bool
-    order: str
+    id: str
+    html_url: str
     title: str
     description: str
-    icon_kind: IconKind
-    icon_name_or_emoji: str
-    color_hex: str
-    layout_duid: str
-    favorited_by_user_duids: List[str]
-    always_shown_property_duids: List[str]
-    always_hidden_property_duids: List[str]
-    property_order_duids: List[str]
-    property_width_map: Any
-    updated_by_client_duid: Union[None, Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    tasks: list["Task"]
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        duid = self.duid
+    def to_dict(self) -> dict[str, Any]:
+        id = self.id
 
-        kind = self.kind.value
-
-        accessible_by_team = self.accessible_by_team
-
-        accessible_by_user_duids = self.accessible_by_user_duids
-
-        public = self.public
-
-        order = self.order
+        html_url = self.html_url
 
         title = self.title
 
         description = self.description
 
-        icon_kind = self.icon_kind.value
+        tasks = []
+        for tasks_item_data in self.tasks:
+            tasks_item = tasks_item_data.to_dict()
+            tasks.append(tasks_item)
 
-        icon_name_or_emoji = self.icon_name_or_emoji
-
-        color_hex = self.color_hex
-
-        layout_duid = self.layout_duid
-
-        favorited_by_user_duids = self.favorited_by_user_duids
-
-        always_shown_property_duids = self.always_shown_property_duids
-
-        always_hidden_property_duids = self.always_hidden_property_duids
-
-        property_order_duids = self.property_order_duids
-
-        property_width_map = self.property_width_map
-
-        updated_by_client_duid: Union[None, Unset, str]
-        if isinstance(self.updated_by_client_duid, Unset):
-            updated_by_client_duid = UNSET
-        else:
-            updated_by_client_duid = self.updated_by_client_duid
-
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "duid": duid,
-                "kind": kind,
-                "accessibleByTeam": accessible_by_team,
-                "accessibleByUserDuids": accessible_by_user_duids,
-                "public": public,
-                "order": order,
+                "id": id,
+                "htmlUrl": html_url,
                 "title": title,
                 "description": description,
-                "iconKind": icon_kind,
-                "iconNameOrEmoji": icon_name_or_emoji,
-                "colorHex": color_hex,
-                "layoutDuid": layout_duid,
-                "favoritedByUserDuids": favorited_by_user_duids,
-                "alwaysShownPropertyDuids": always_shown_property_duids,
-                "alwaysHiddenPropertyDuids": always_hidden_property_duids,
-                "propertyOrderDuids": property_order_duids,
-                "propertyWidthMap": property_width_map,
+                "tasks": tasks,
             }
         )
-        if updated_by_client_duid is not UNSET:
-            field_dict["updatedByClientDuid"] = updated_by_client_duid
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        duid = d.pop("duid")
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.task import Task
 
-        kind = ViewKind(d.pop("kind"))
+        d = dict(src_dict)
+        id = d.pop("id")
 
-        accessible_by_team = d.pop("accessibleByTeam")
-
-        accessible_by_user_duids = cast(List[str], d.pop("accessibleByUserDuids"))
-
-        public = d.pop("public")
-
-        order = d.pop("order")
+        html_url = d.pop("htmlUrl")
 
         title = d.pop("title")
 
         description = d.pop("description")
 
-        icon_kind = IconKind(d.pop("iconKind"))
+        tasks = []
+        _tasks = d.pop("tasks")
+        for tasks_item_data in _tasks:
+            tasks_item = Task.from_dict(tasks_item_data)
 
-        icon_name_or_emoji = d.pop("iconNameOrEmoji")
-
-        color_hex = d.pop("colorHex")
-
-        layout_duid = d.pop("layoutDuid")
-
-        favorited_by_user_duids = cast(List[str], d.pop("favoritedByUserDuids"))
-
-        always_shown_property_duids = cast(List[str], d.pop("alwaysShownPropertyDuids"))
-
-        always_hidden_property_duids = cast(List[str], d.pop("alwaysHiddenPropertyDuids"))
-
-        property_order_duids = cast(List[str], d.pop("propertyOrderDuids"))
-
-        property_width_map = d.pop("propertyWidthMap")
-
-        def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            return cast(Union[None, Unset, str], data)
-
-        updated_by_client_duid = _parse_updated_by_client_duid(d.pop("updatedByClientDuid", UNSET))
+            tasks.append(tasks_item)
 
         view = cls(
-            duid=duid,
-            kind=kind,
-            accessible_by_team=accessible_by_team,
-            accessible_by_user_duids=accessible_by_user_duids,
-            public=public,
-            order=order,
+            id=id,
+            html_url=html_url,
             title=title,
             description=description,
-            icon_kind=icon_kind,
-            icon_name_or_emoji=icon_name_or_emoji,
-            color_hex=color_hex,
-            layout_duid=layout_duid,
-            favorited_by_user_duids=favorited_by_user_duids,
-            always_shown_property_duids=always_shown_property_duids,
-            always_hidden_property_duids=always_hidden_property_duids,
-            property_order_duids=property_order_duids,
-            property_width_map=property_width_map,
-            updated_by_client_duid=updated_by_client_duid,
+            tasks=tasks,
         )
 
         view.additional_properties = d
         return view
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

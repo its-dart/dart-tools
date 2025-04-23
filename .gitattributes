@@ -1,1 +1,2 @@
-dart/generated/** linguist-generated=true
+**/generated/** linguist-generated=true
+**/uv.lock linguist-generated=true

@@ -1,13 +1,8 @@
-import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
-
-from ..models.icon_kind import IconKind
-from ..models.report_kind import ReportKind
-from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Doc")
 
@@ -16,218 +11,71 @@ T = TypeVar("T", bound="Doc")
 class Doc:
     """
     Attributes:
-        duid (str):
-        created_at (datetime.datetime):
-        updated_at (datetime.datetime):
-        drafter_duid (Union[None, str]):
-        in_trash (bool):
-        folder_duid (str):
-        report_kind (Union[None, ReportKind]):
-        order (str):
-        title (str):
-        text (Any):
-        edited_by_ai (bool):
-        recommendation_duid (Union[None, str]):
-        editor_duids (List[str]):
-        subscriber_duids (List[str]):
-        icon_kind (IconKind): * `None` - NONE
-            * `Icon` - ICON
-            * `Emoji` - EMOJI
-        icon_name_or_emoji (str):
-        color_hex (str):
-        updated_by_client_duid (Union[None, Unset, str]):
+        id (str): The universal, unique ID of the doc.
+        html_url (str): The URL that can be used to open the doc in the Dart web UI.
+        title (str): The title, which is a short description of the doc.
+        folder (str): The full title of the folder, which is a project or list of docs.
+        text (str): The full content of the doc, which can include markdown formatting.
     """
 
-    duid: str
-    created_at: datetime.datetime
-    updated_at: datetime.datetime
-    drafter_duid: Union[None, str]
-    in_trash: bool
-    folder_duid: str
-    report_kind: Union[None, ReportKind]
-    order: str
+    id: str
+    html_url: str
     title: str
-    text: Any
-    edited_by_ai: bool
-    recommendation_duid: Union[None, str]
-    editor_duids: List[str]
-    subscriber_duids: List[str]
-    icon_kind: IconKind
-    icon_name_or_emoji: str
-    color_hex: str
-    updated_by_client_duid: Union[None, Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    folder: str
+    text: str
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        duid = self.duid
+    def to_dict(self) -> dict[str, Any]:
+        id = self.id
 
-        created_at = self.created_at.isoformat()
-
-        updated_at = self.updated_at.isoformat()
-
-        drafter_duid: Union[None, str]
-        drafter_duid = self.drafter_duid
-
-        in_trash = self.in_trash
-
-        folder_duid = self.folder_duid
-
-        report_kind: Union[None, str]
-        if isinstance(self.report_kind, ReportKind):
-            report_kind = self.report_kind.value
-        else:
-            report_kind = self.report_kind
-
-        order = self.order
+        html_url = self.html_url
 
         title = self.title
 
+        folder = self.folder
+
         text = self.text
 
-        edited_by_ai = self.edited_by_ai
-
-        recommendation_duid: Union[None, str]
-        recommendation_duid = self.recommendation_duid
-
-        editor_duids = self.editor_duids
-
-        subscriber_duids = self.subscriber_duids
-
-        icon_kind = self.icon_kind.value
-
-        icon_name_or_emoji = self.icon_name_or_emoji
-
-        color_hex = self.color_hex
-
-        updated_by_client_duid: Union[None, Unset, str]
-        if isinstance(self.updated_by_client_duid, Unset):
-            updated_by_client_duid = UNSET
-        else:
-            updated_by_client_duid = self.updated_by_client_duid
-
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "duid": duid,
-                "createdAt": created_at,
-                "updatedAt": updated_at,
-                "drafterDuid": drafter_duid,
-                "inTrash": in_trash,
-                "folderDuid": folder_duid,
-                "reportKind": report_kind,
-                "order": order,
+                "id": id,
+                "htmlUrl": html_url,
                 "title": title,
+                "folder": folder,
                 "text": text,
-                "editedByAi": edited_by_ai,
-                "recommendationDuid": recommendation_duid,
-                "editorDuids": editor_duids,
-                "subscriberDuids": subscriber_duids,
-                "iconKind": icon_kind,
-                "iconNameOrEmoji": icon_name_or_emoji,
-                "colorHex": color_hex,
             }
         )
-        if updated_by_client_duid is not UNSET:
-            field_dict["updatedByClientDuid"] = updated_by_client_duid
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        duid = d.pop("duid")
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
+        id = d.pop("id")
 
-        created_at = isoparse(d.pop("createdAt"))
-
-        updated_at = isoparse(d.pop("updatedAt"))
-
-        def _parse_drafter_duid(data: object) -> Union[None, str]:
-            if data is None:
-                return data
-            return cast(Union[None, str], data)
-
-        drafter_duid = _parse_drafter_duid(d.pop("drafterDuid"))
-
-        in_trash = d.pop("inTrash")
-
-        folder_duid = d.pop("folderDuid")
-
-        def _parse_report_kind(data: object) -> Union[None, ReportKind]:
-            if data is None:
-                return data
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                report_kind_type_0 = ReportKind(data)
-
-                return report_kind_type_0
-            except:  # noqa: E722
-                pass
-            return cast(Union[None, ReportKind], data)
-
-        report_kind = _parse_report_kind(d.pop("reportKind"))
-
-        order = d.pop("order")
+        html_url = d.pop("htmlUrl")
 
         title = d.pop("title")
 
+        folder = d.pop("folder")
+
         text = d.pop("text")
 
-        edited_by_ai = d.pop("editedByAi")
-
-        def _parse_recommendation_duid(data: object) -> Union[None, str]:
-            if data is None:
-                return data
-            return cast(Union[None, str], data)
-
-        recommendation_duid = _parse_recommendation_duid(d.pop("recommendationDuid"))
-
-        editor_duids = cast(List[str], d.pop("editorDuids"))
-
-        subscriber_duids = cast(List[str], d.pop("subscriberDuids"))
-
-        icon_kind = IconKind(d.pop("iconKind"))
-
-        icon_name_or_emoji = d.pop("iconNameOrEmoji")
-
-        color_hex = d.pop("colorHex")
-
-        def _parse_updated_by_client_duid(data: object) -> Union[None, Unset, str]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            return cast(Union[None, Unset, str], data)
-
-        updated_by_client_duid = _parse_updated_by_client_duid(d.pop("updatedByClientDuid", UNSET))
-
         doc = cls(
-            duid=duid,
-            created_at=created_at,
-            updated_at=updated_at,
-            drafter_duid=drafter_duid,
-            in_trash=in_trash,
-            folder_duid=folder_duid,
-            report_kind=report_kind,
-            order=order,
+            id=id,
+            html_url=html_url,
             title=title,
+            folder=folder,
             text=text,
-            edited_by_ai=edited_by_ai,
-            recommendation_duid=recommendation_duid,
-            editor_duids=editor_duids,
-            subscriber_duids=subscriber_duids,
-            icon_kind=icon_kind,
-            icon_name_or_emoji=icon_name_or_emoji,
-            color_hex=color_hex,
-            updated_by_client_duid=updated_by_client_duid,
         )
 
         doc.additional_properties = d
         return doc
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

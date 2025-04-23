@@ -38,15 +38,22 @@ dependencies = [
   "httpx",
   "pick",
   "platformdirs",
-  "requests"
+]
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "flask>=3.1.0",
+    "isort>=6.0.1",
+    "openapi-python-client",
 ]
 
 [project.urls]
 "Homepage" = "https://www.itsdart.com/?nr=1"
 "Web App" = "https://app.itsdart.com/"
 "Help Center" = "https://help.itsdart.com/"
-"Bugs and Features" = "https://github.com/its-dart/dart-tools/issues"
-"Library Source" = "https://github.com/its-dart/dart-tools/"
+"Bugs and Features" = "https://github.com/its-dart/dart-tools-py/issues"
+"Library Source" = "https://github.com/its-dart/dart-tools-py/"
 
 [project.scripts]
 dart = "dart:cli"
@@ -54,6 +61,13 @@ dart = "dart:cli"
 [build-system]
 requires = ["setuptools>=43.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+line_length = 120
 
 [tool.setuptools.packages.find]
 where = ["."]
