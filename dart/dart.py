@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env uv run python3
 # -*- coding: utf-8 -*-
 
 """A CLI to interact with the Dart web app."""
@@ -19,15 +19,13 @@ from collections import defaultdict
 from datetime import timezone
 from functools import wraps
 from importlib.metadata import version
-from typing import Callable, NoReturn, TypeVar
+from typing import Callable, NoReturn, TypeVar, Union
 from webbrowser import open_new_tab
 
 import dateparser
 import httpx
 import platformdirs
 from pick import pick
-
-from dart.generated.types import Response
 
 from .exception import DartException
 from .generated import Client, api
@@ -54,7 +52,7 @@ from .generated.models import (
     WrappedTaskCreate,
     WrappedTaskUpdate,
 )
-from .generated.types import UNSET, Unset
+from .generated.types import UNSET, Response, Unset
 
 _APP = "dart-tools"
 _PROG = "dart"
@@ -66,7 +64,7 @@ _HOST_MAP = {"prod": _PROD_HOST, "stag": _STAG_HOST, "dev": _DEV_HOST}
 
 # Service commands
 _LOGIN_CMD = "login"
-_SET_HOST_CMD = "sethost"
+_SET_HOST_CMD = "host-set"
 _VERSION_CMD = "--version"
 # Task commands
 _CREATE_TASK_CMD = "task-create"
@@ -131,7 +129,7 @@ def _make_id() -> str:
     return "".join(random.choices(_ID_CHARS, k=12))
 
 
-def trim_slug_str(s: str, length: int, max_under: int | None = None) -> str:
+def trim_slug_str(s: str, length: int, max_under: Union[int, None] = None) -> str:
     max_under = max_under if max_under is not None else length // 6
     if len(s) <= length:
         return s
@@ -141,7 +139,7 @@ def trim_slug_str(s: str, length: int, max_under: int | None = None) -> str:
     return s[:length]
 
 
-def slugify_str(s: str, lower: bool = False, trim_kwargs: dict | None = None) -> str:
+def slugify_str(s: str, lower: bool = False, trim_kwargs: Union[dict, None] = None) -> str:
     lowered = s.lower() if lower else s
     formatted = _NON_ALPHANUM_RE.sub("-", lowered.replace("'", ""))
     formatted = _REPEATED_DASH_RE.sub("-", formatted).strip("-")
@@ -205,7 +203,7 @@ def _handle_request_errors(fn: Callable) -> Callable:
         except DartException as ex:
             _dart_exit(ex)
         except (httpx.TimeoutException, httpx.RequestError, httpx.ConnectError) as ex:
-            _dart_exit(f"Failed to execute API call. Reason: {ex}.")
+            _dart_exit(f"Failed to execute API call: {ex}.")
 
     return wrapper
 
@@ -276,7 +274,7 @@ class Dart:
     def get_client_id(self) -> str:
         return self._config.client_id
 
-    def get_auth_token(self) -> str | None:
+    def get_auth_token(self) -> Union[str, None]:
         result = self._config.get(_AUTH_TOKEN_KEY)
         if result is not None:
             return result
@@ -456,7 +454,7 @@ def _auth_failure_exit() -> NoReturn:
     _dart_exit(
         f"Not logged in, run\n\n  {_PROG} {_LOGIN_CMD}\n\nto log in."
         if _is_cli
-        else "Not logged in, either run dart.login(token) or save the token into the DART_TOKEN environment variable."
+        else "Not logged in, either run\n\n  dart.login(token)\n\nor save the token into the DART_TOKEN environment variable."
     )
 
 
@@ -492,7 +490,7 @@ def is_logged_in(should_raise: bool = False) -> bool:
 
     if not result and should_raise:
         _auth_failure_exit()
-    _log(f"You are {'' if result else 'not '}logged in")
+    _log(f"You are{'' if result else ' not'} logged in")
     return result
 
 
@@ -555,7 +553,7 @@ def begin_task() -> bool:
     return True
 
 
-def _normalize_priority(priority_int: int | None | Unset) -> str | None | Unset:
+def _normalize_priority(priority_int: Union[int, None, Unset]) -> Union[str, None, Unset]:
     if priority_int in (None, UNSET):
         return priority_int
 
@@ -565,13 +563,13 @@ def _normalize_priority(priority_int: int | None | Unset) -> str | None | Unset:
     return _PRIORITY_MAP[priority_int]
 
 
-def _get_due_at_from_str_arg(due_at_str: str | None | Unset) -> str | None | Unset:
+def _get_due_at_from_str_arg(due_at_str: Union[str, None, Unset]) -> Union[str, None, Unset]:
     if due_at_str in (None, UNSET):
         return due_at_str
 
     due_at = dateparser.parse(due_at_str)
     if not due_at:
-        _dart_exit(f"Could not parse due date '{due_at_str}'.")
+        _dart_exit(f"Could not parse due date: {due_at_str}.")
     due_at = due_at.replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=timezone.utc).isoformat()
 
     return due_at
@@ -580,13 +578,13 @@ def _get_due_at_from_str_arg(due_at_str: str | None | Unset) -> str | None | Uns
 def create_task(
     title: str,
     *,
-    dartboard_title: str | Unset = UNSET,
-    status_title: str | Unset = UNSET,
-    assignee_emails: list[str] | Unset = UNSET,
-    tag_titles: list[str] | Unset = UNSET,
-    priority_int: int | None | Unset = UNSET,
-    size_int: int | None | Unset = UNSET,
-    due_at_str: str | None | Unset = UNSET,
+    dartboard_title: Union[str, Unset] = UNSET,
+    status_title: Union[str, Unset] = UNSET,
+    assignee_emails: Union[list[str], Unset] = UNSET,
+    tag_titles: Union[list[str], Unset] = UNSET,
+    priority_int: Union[int, None, Unset] = UNSET,
+    size_int: Union[int, None, Unset] = UNSET,
+    due_at_str: Union[str, None, Unset] = UNSET,
     should_begin: bool = False,
 ) -> Task:
     dart = Dart()
@@ -603,7 +601,7 @@ def create_task(
         )
     )
     task = dart.create_task(task_create).item
-    _log(f"Created task (ID: {task.id}) {task.title} at {task.html_url}")
+    _log(f"Created task\n\n  {task.title}\n  {task.html_url}\n  ID: {task.id}\n")
 
     if should_begin:
         user = dart.get_config().user
@@ -616,14 +614,14 @@ def create_task(
 def update_task(
     id: str,
     *,
-    title: Unset | str = UNSET,
-    dartboard_title: str | Unset = UNSET,
-    status_title: str | Unset = UNSET,
-    assignee_emails: list[str] | Unset = UNSET,
-    tag_titles: list[str] | Unset = UNSET,
-    priority_int: int | None | Unset = UNSET,
-    size_int: int | None | Unset = UNSET,
-    due_at_str: str | None | Unset = UNSET,
+    title: Union[Unset, str] = UNSET,
+    dartboard_title: Union[str, Unset] = UNSET,
+    status_title: Union[str, Unset] = UNSET,
+    assignee_emails: Union[list[str], Unset] = UNSET,
+    tag_titles: Union[list[str], Unset] = UNSET,
+    priority_int: Union[int, None, Unset] = UNSET,
+    size_int: Union[int, None, Unset] = UNSET,
+    due_at_str: Union[str, None, Unset] = UNSET,
 ) -> Task:
     dart = Dart()
     task_update = WrappedTaskUpdate(
@@ -641,7 +639,7 @@ def update_task(
     )
     task = dart.update_task(id, task_update).item
 
-    _log(f"Updated task (ID: {task.id}) {task.title} at {task.html_url}")
+    _log(f"Updated task\n\n  {task.title}\n  {task.html_url}\n  ID: {task.id}\n")
     _log("Done.")
     return task
 
@@ -650,7 +648,7 @@ def delete_task(id: str) -> Task:
     dart = Dart()
     task = dart.delete_task(id).item
 
-    _log(f"Deleted task (ID: {task.id}) {task.title} at {task.html_url}")
+    _log(f"Deleted task\n\n  {task.title}\n  {task.html_url}\n  ID: {task.id}\n")
     _log("Done.")
     return task
 
@@ -658,14 +656,14 @@ def delete_task(id: str) -> Task:
 def create_doc(
     title: str,
     *,
-    folder: str | Unset = UNSET,
-    text: str | Unset = UNSET,
+    folder: Union[str, Unset] = UNSET,
+    text: Union[str, Unset] = UNSET,
 ) -> Doc:
     dart = Dart()
     doc_create = WrappedDocCreate(item=DocCreate(title=title, folder=folder, text=text))
     doc = dart.create_doc(doc_create).item
 
-    _log(f"Created doc (ID: {doc.id}) {doc.title} at {doc.html_url}")
+    _log(f"Created doc\n\n  {doc.title}\n  {doc.html_url}\n  ID: {doc.id}\n")
     _log("Done.")
     return doc
 
@@ -674,14 +672,14 @@ def update_doc(
     id: str,
     *,
     title: str,
-    folder: str | Unset = UNSET,
-    text: str | Unset = UNSET,
+    folder: Union[str, Unset] = UNSET,
+    text: Union[str, Unset] = UNSET,
 ) -> Doc:
     dart = Dart()
     doc_update = WrappedDocUpdate(item=DocUpdate(id, title=title, folder=folder, text=text))
     doc = dart.update_doc(id, doc_update).item
 
-    _log(f"Updated doc (ID: {doc.id}) {doc.title} at {doc.html_url}")
+    _log(f"Updated doc\n\n  {doc.title}\n  {doc.html_url}\n  ID: {doc.id}\n")
     _log("Done.")
     return doc
 
@@ -690,7 +688,7 @@ def delete_doc(id: str) -> Doc:
     dart = Dart()
     doc = dart.delete_doc(id).item
 
-    _log(f"Deleted doc (ID: {doc.id}) {doc.title} at {doc.html_url}")
+    _log(f"Deleted doc\n\n  {doc.title}\n  {doc.html_url}\n  ID: {doc.id}\n")
     _log("Done.")
     return doc
 
@@ -699,7 +697,7 @@ def create_comment(id: str, text: str) -> Comment:
     dart = Dart()
     comment_create = WrappedCommentCreate(item=CommentCreate(task_id=id, text=text))
     comment = dart.create_comment(comment_create).item
-    _log(f"Created comment (ID: {comment.id}) at {comment.html_url}")
+    _log(f"Created comment\n\n  {comment.html_url}\n  ID: {comment.id}\n")
     _log("Done.")
     return comment
 
@@ -793,7 +791,7 @@ def cli() -> None:
         metavar=f"{{{metavar}}}",
     )
 
-    set_host_parser = subparsers.add_parser(_SET_HOST_CMD, aliases=["h"])
+    set_host_parser = subparsers.add_parser(_SET_HOST_CMD, aliases=["sh"])
     set_host_parser.add_argument("host", help="the new host: {prod|stag|dev|[URL]}")
     set_host_parser.set_defaults(func=set_host)
 

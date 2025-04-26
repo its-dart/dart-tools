@@ -11,52 +11,63 @@
 
 `dart-tools` is the Dart CLI and Python Library. It enables direct integration with Dart through a terminal CLI or through Python.
 
-
 - [Installation](#installation)
+  - [Naming conflicts](#naming-conflicts)
 - [Using the CLI](#using-the-cli)
 - [Using the Python Library](#using-the-python-library)
 - [Using the Python Library in AWS Lambda Functions](#using-the-python-library-in-aws-lambda-functions)
-- [Advanced Usage](#advanced-usage)
+  - [Navigate to the directory containing your `lambda_function.py` source file. In this example, the directory is named `my_function`.](#navigate-to-the-directory-containing-your-lambda_functionpy-source-file-in-this-example-the-directory-is-named-my_function)
+  - [Create a Deployment Package](#create-a-deployment-package)
+  - [Zip the contents of the `package` directory along with your `lambda_function.py`](#zip-the-contents-of-the-package-directory-along-with-your-lambda_functionpy)
+  - [Deploy the Lambda function](#deploy-the-lambda-function)
 - [Help and Resources](#help-and-resources)
 - [Contributing](#contributing)
 - [License](#license)
 
-
 ## Installation
 
 In the terminal, install by running
+
 ```sh
 pip install dart-tools
 ```
 
+### Naming conflicts
+
+If you have a preexisting shell command named `dart`, a quick fix is to run `which -a dart` and fine the path for this `dart` application. Then you can create an alias and add it to your shell profile file (`.zshrc`, `.bashrc`, etc.). For example, open `~/.zshrc` and add a line like `alias dartai="/path/to/dart"`, save it, and restart your terminal.
 
 ## Using the CLI
 
 Start off by setting up authentication with
+
 ```sh
 dart login
 ```
 
 Then, you can create a new task with a command along the lines of
+
 ```sh
 dart task-create "Update the landing page" -p0 --tag marketing
 ```
+
 which will make a new task called 'Update the landing page' with priority 'Critical' (i.e. P0) and with the 'marketing' tag.
 
 You can explore all of these options and many more with `dart --help` or the more specific help for subcommands, in this case `dart task-create --help`.
 
 Another common workflow is to updating a preexisting task. To do this, run something like
+
 ```sh
 dart task-update [ID] -s Done
 ```
-This command will mark the referenced task 'Done'. Here `[ID]` is meant to be replaced (including the brackets) with the ID of an existing task. You can get a ID from any existing task in a number of ways, such as by copying it from the end of a task's URL or by clicking the '...' button in a task page in Dart and then choosing 'Copy ID'.
 
+This command will mark the referenced task 'Done'. Here `[ID]` is meant to be replaced (including the brackets) with the ID of an existing task. You can get a ID from any existing task in a number of ways, such as by copying it from the end of a task's URL or by clicking the '...' button in a task page in Dart and then choosing 'Copy ID'.
 
 ## Using the Python Library
 
 First, set up authentication. Run `dart login` in the terminal for an interactive process. Alternatively, copy your authentication token from [your Dart profile](https://app.itsdart.com/?settings=account) and save that as the `DART_TOKEN` environment variable.
 
 Then, you can run something like
+
 ```python
 import os
 from dart import create_task, is_logged_in, update_task
@@ -73,18 +84,17 @@ new_task = create_task(
 update_task(new_task.id, status_title="Done")
 ```
 
-
 ## Using the Python Library in AWS Lambda Functions
 
 To use the `dart-tools` Python library in an AWS Lambda function, you need to package the library with your Lambda deployment package (see more details at [Working with .zip file archives for Python Lambda functions](https://docs.aws.amazon.com/lambda/latest/dg/python-package.html)). Follow these steps:
 
-1. Navigate to the directory containing your `lambda_function.py` source file. In this example, the directory is named `my_function`.
+### Navigate to the directory containing your `lambda_function.py` source file. In this example, the directory is named `my_function`.
 
   ```sh
   cd my_function
   ```
 
-2. Create a Deployment Package
+### Create a Deployment Package
 
   Use Docker to create a deployment package that includes the `dart-tools` library. Run the following commands in your terminal, ensuring that the `RUNTIME_PYTHON_VERSION` and `RUNTIME_ARCHITECTURE` environment variables match the runtime settings of your Lambda function:
 
@@ -96,7 +106,7 @@ To use the `dart-tools` Python library in an AWS Lambda function, you need to pa
 
   This command installs the `dart-tools` library into a directory named `package` in your current working directory.
 
-3. Zip the contents of the `package` directory along with your `lambda_function.py`
+### Zip the contents of the `package` directory along with your `lambda_function.py`
 
   ```sh
   cd package
@@ -105,16 +115,15 @@ To use the `dart-tools` Python library in an AWS Lambda function, you need to pa
   zip -r my_deployment_package.zip lambda_function.py
   ```
 
-4. Deploy the Lambda function
+### Deploy the Lambda function
 
   Upload the `my_deployment_package.zip` file to AWS Lambda using the AWS Management Console or the AWS CLI.
 
 By following these steps, you can use the `dart-tools` Python library within your AWS Lambda functions.
 
-
 ## Help and Resources
 
-- [Homepage](https://www.itsdart.com/?nr=1)
+- [Homepage](https://itsdart.com/?nr=1)
 - [Web App](https://app.itsdart.com/)
 - [Help Center](https://help.itsdart.com/)
 - [Bugs and Features](https://app.itsdart.com/p/r/JFyPnhL9En61)

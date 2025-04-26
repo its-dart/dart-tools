@@ -7,7 +7,7 @@
 from __future__ import annotations
 
 from functools import wraps
-from typing import Any, Callable
+from typing import Any, Callable, Union
 
 import httpx
 
@@ -95,11 +95,11 @@ class DartOld(Dart):
 def replicate_space(
     space_id: str,
     *,
-    title: str | None = None,
-    abrev: str | None = None,
-    color_hex: str | None = None,
-    accessible_by_team: bool | None = None,
-    accessor_duids: list[str] | None = None,
+    title: Union[str, None] = None,
+    abrev: Union[str, None] = None,
+    color_hex: Union[str, None] = None,
+    accessible_by_team: Union[bool, None] = None,
+    accessor_duids: Union[list[str], None] = None,
 ) -> str:
     dart = DartOld()
     content = {}
@@ -135,7 +135,7 @@ def get_dartboards(space_id: str, include_special: bool = False) -> list[dict]:
     return dartboards
 
 
-def replicate_dartboard(dartboard_id: str, *, title: str | None = None) -> str:
+def replicate_dartboard(dartboard_id: str, *, title: Union[str, None] = None) -> str:
     dart = DartOld()
     content = {}
     if title is not None:
@@ -148,7 +148,7 @@ def replicate_dartboard(dartboard_id: str, *, title: str | None = None) -> str:
     return dartboard_id
 
 
-def update_dartboard(dartboard_id: str, *, title: str | None = None, color_hex: str | None = None) -> dict:
+def update_dartboard(dartboard_id: str, *, title: Union[str, None] = None, color_hex: Union[str, None] = None) -> dict:
     dart = DartOld()
     dartboard_update = {}
 
@@ -170,12 +170,12 @@ def update_dartboard(dartboard_id: str, *, title: str | None = None, color_hex: 
     response_json = response.json()
     dartboard = _parse_transaction_response_and_maybe_exit(response_json, "dartboard", dartboard_id)
 
-    _log(f"Updated dartboard {dartboard["title"]} at {_get_dartboard_url(dart.get_base_url(), dartboard["duid"])}")
+    _log(f"Updated dartboard {dartboard['title']} at {_get_dartboard_url(dart.get_base_url(), dartboard['duid'])}")
     _log("Done.")
     return dartboard
 
 
-def get_folders(space_id: str, *, include_special: bool = False) -> list[dict]:
+def get_folders(space_id: str, *, include_special: Union[bool, None] = False) -> list[dict]:
     dart = DartOld()
 
     response = dart.get(_LIST_FOLDERS_URL_FRAG, params={"space_duid": space_id})
@@ -189,7 +189,7 @@ def get_folders(space_id: str, *, include_special: bool = False) -> list[dict]:
     return folders
 
 
-def update_folder(folder_id: str, *, title: str | None = None, color_hex: str | None = None) -> dict:
+def update_folder(folder_id: str, *, title: Union[str, None] = None, color_hex: Union[str, None] = None) -> dict:
     dart = DartOld()
     folder_update = {}
 
@@ -211,6 +211,6 @@ def update_folder(folder_id: str, *, title: str | None = None, color_hex: str | 
     response_json = response.json()
     folder = _parse_transaction_response_and_maybe_exit(response_json, "folder", folder_id)
 
-    _log(f"Updated folder {folder["title"]} at {_get_folder_url(dart.get_base_url(), folder["duid"])}")
+    _log(f"Updated folder {folder['title']} at {_get_folder_url(dart.get_base_url(), folder['duid'])}")
     _log("Done.")
     return folder

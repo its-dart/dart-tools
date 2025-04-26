@@ -49,9 +49,7 @@ def _create_presigned_url_config(file_name: str, attachment_id: str) -> dict:
     return response.json()
 
 
-def _make_attachment(
-    task_id: str, attachment_id: str, file_name: str, file_type: str, file_url: str
-):
+def _make_attachment(task_id: str, attachment_id: str, file_name: str, file_type: str, file_url: str):
     response = requests.post(
         f"{_BASE_URL}/api/v0/transactions/create",
         json={
@@ -95,9 +93,7 @@ def _get_file(file_url: str) -> bytes:
 
 
 def _upload_file(file: bytes, presigned_url: str, signed_headers: dict):
-    response = requests.put(
-        presigned_url, data=file, headers=signed_headers, timeout=10
-    )
+    response = requests.put(presigned_url, data=file, headers=signed_headers, timeout=10)
     response.raise_for_status()
 
 
@@ -106,9 +102,7 @@ def upload_attachment(task_title: str, file_name: str, file_url: str) -> str:
     task_id = _get_task_id(task_title)
     attachment_id = _make_duid()
     presigned_url_config = _create_presigned_url_config(file_name, attachment_id)
-    _make_attachment(
-        task_id, attachment_id, file_name, file_type, presigned_url_config["filePath"]
-    )
+    _make_attachment(task_id, attachment_id, file_name, file_type, presigned_url_config["filePath"])
     file = _get_file(file_url)
     _upload_file(
         file,
