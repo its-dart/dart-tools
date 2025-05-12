@@ -791,7 +791,7 @@ def cli() -> None:
         metavar=f"{{{metavar}}}",
     )
 
-    set_host_parser = subparsers.add_parser(_SET_HOST_CMD, aliases=["sh"])
+    set_host_parser = subparsers.add_parser(_SET_HOST_CMD, aliases=["hs"])
     set_host_parser.add_argument("host", help="the new host: {prod|stag|dev|[URL]}")
     set_host_parser.set_defaults(func=set_host)
 

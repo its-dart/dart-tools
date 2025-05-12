@@ -31,5 +31,6 @@
 ## Deploy
 
 1. Bump the version in `pyproject.toml`
-2. Run `make deploy`
-3. Commit and push all local changes to GitHub
+2. Run `uv sync`
+3. Run `make deploy`
+4. Commit and push all local changes to GitHub

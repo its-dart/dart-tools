@@ -1,6 +1,6 @@
 import datetime
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar, cast
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -26,7 +26,7 @@ class UserSpaceConfiguration:
         assignees (list['User']):
         tags (list[str]):
         priorities (list[str]):
-        sizes (list[int]):
+        sizes (Union[list[Union[int, str]], str]):
     """
 
     today: datetime.date
@@ -38,7 +38,7 @@ class UserSpaceConfiguration:
     assignees: list["User"]
     tags: list[str]
     priorities: list[str]
-    sizes: list[int]
+    sizes: Union[list[Union[int, str]], str]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -63,7 +63,16 @@ class UserSpaceConfiguration:
 
         priorities = self.priorities
 
-        sizes = self.sizes
+        sizes: Union[list[Union[int, str]], str]
+        if isinstance(self.sizes, list):
+            sizes = []
+            for sizes_type_1_item_data in self.sizes:
+                sizes_type_1_item: Union[int, str]
+                sizes_type_1_item = sizes_type_1_item_data
+                sizes.append(sizes_type_1_item)
+
+        else:
+            sizes = self.sizes
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -112,7 +121,27 @@ class UserSpaceConfiguration:
 
         priorities = cast(list[str], d.pop("priorities"))
 
-        sizes = cast(list[int], d.pop("sizes"))
+        def _parse_sizes(data: object) -> Union[list[Union[int, str]], str]:
+            try:
+                if not isinstance(data, list):
+                    raise TypeError()
+                sizes_type_1 = []
+                _sizes_type_1 = data
+                for sizes_type_1_item_data in _sizes_type_1:
+
+                    def _parse_sizes_type_1_item(data: object) -> Union[int, str]:
+                        return cast(Union[int, str], data)
+
+                    sizes_type_1_item = _parse_sizes_type_1_item(sizes_type_1_item_data)
+
+                    sizes_type_1.append(sizes_type_1_item)
+
+                return sizes_type_1
+            except:  # noqa: E722
+                pass
+            return cast(Union[list[Union[int, str]], str], data)
+
+        sizes = _parse_sizes(d.pop("sizes"))
 
         user_space_configuration = cls(
             today=today,

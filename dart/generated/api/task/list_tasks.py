@@ -17,8 +17,8 @@ def _get_kwargs(
     dartboard: Union[Unset, str] = UNSET,
     dartboard_id: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
-    due_at_after: Union[Unset, datetime.datetime] = UNSET,
-    due_at_before: Union[Unset, datetime.datetime] = UNSET,
+    due_at_after: Union[Unset, datetime.date] = UNSET,
+    due_at_before: Union[Unset, datetime.date] = UNSET,
     ids: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_completed: Union[Unset, bool] = UNSET,
@@ -26,8 +26,8 @@ def _get_kwargs(
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
     size: Union[Unset, int] = UNSET,
-    start_at_after: Union[Unset, datetime.datetime] = UNSET,
-    start_at_before: Union[Unset, datetime.datetime] = UNSET,
+    start_at_after: Union[Unset, datetime.date] = UNSET,
+    start_at_before: Union[Unset, datetime.date] = UNSET,
     status: Union[Unset, str] = UNSET,
     status_id: Union[Unset, str] = UNSET,
     tag: Union[Unset, str] = UNSET,
@@ -139,8 +139,8 @@ def sync_detailed(
     dartboard: Union[Unset, str] = UNSET,
     dartboard_id: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
-    due_at_after: Union[Unset, datetime.datetime] = UNSET,
-    due_at_before: Union[Unset, datetime.datetime] = UNSET,
+    due_at_after: Union[Unset, datetime.date] = UNSET,
+    due_at_before: Union[Unset, datetime.date] = UNSET,
     ids: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_completed: Union[Unset, bool] = UNSET,
@@ -148,8 +148,8 @@ def sync_detailed(
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
     size: Union[Unset, int] = UNSET,
-    start_at_after: Union[Unset, datetime.datetime] = UNSET,
-    start_at_before: Union[Unset, datetime.datetime] = UNSET,
+    start_at_after: Union[Unset, datetime.date] = UNSET,
+    start_at_before: Union[Unset, datetime.date] = UNSET,
     status: Union[Unset, str] = UNSET,
     status_id: Union[Unset, str] = UNSET,
     tag: Union[Unset, str] = UNSET,
@@ -158,15 +158,17 @@ def sync_detailed(
     type_: Union[Unset, str] = UNSET,
     type_id: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedConciseTaskList]:
-    """
+    """List all tasks that the user has access to. This will return a list of tasks, including the title,
+    dartboard, status, description and others.
+
     Args:
         assignee (Union[Unset, str]):
         assignee_id (Union[Unset, str]):
         dartboard (Union[Unset, str]):
         dartboard_id (Union[Unset, str]):
         description (Union[Unset, str]):
-        due_at_after (Union[Unset, datetime.datetime]):
-        due_at_before (Union[Unset, datetime.datetime]):
+        due_at_after (Union[Unset, datetime.date]):
+        due_at_before (Union[Unset, datetime.date]):
         ids (Union[Unset, str]):
         in_trash (Union[Unset, bool]):
         is_completed (Union[Unset, bool]):
@@ -174,8 +176,8 @@ def sync_detailed(
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
         size (Union[Unset, int]):
-        start_at_after (Union[Unset, datetime.datetime]):
-        start_at_before (Union[Unset, datetime.datetime]):
+        start_at_after (Union[Unset, datetime.date]):
+        start_at_before (Union[Unset, datetime.date]):
         status (Union[Unset, str]):
         status_id (Union[Unset, str]):
         tag (Union[Unset, str]):
@@ -233,8 +235,8 @@ def sync(
     dartboard: Union[Unset, str] = UNSET,
     dartboard_id: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
-    due_at_after: Union[Unset, datetime.datetime] = UNSET,
-    due_at_before: Union[Unset, datetime.datetime] = UNSET,
+    due_at_after: Union[Unset, datetime.date] = UNSET,
+    due_at_before: Union[Unset, datetime.date] = UNSET,
     ids: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_completed: Union[Unset, bool] = UNSET,
@@ -242,8 +244,8 @@ def sync(
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
     size: Union[Unset, int] = UNSET,
-    start_at_after: Union[Unset, datetime.datetime] = UNSET,
-    start_at_before: Union[Unset, datetime.datetime] = UNSET,
+    start_at_after: Union[Unset, datetime.date] = UNSET,
+    start_at_before: Union[Unset, datetime.date] = UNSET,
     status: Union[Unset, str] = UNSET,
     status_id: Union[Unset, str] = UNSET,
     tag: Union[Unset, str] = UNSET,
@@ -252,15 +254,17 @@ def sync(
     type_: Union[Unset, str] = UNSET,
     type_id: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedConciseTaskList]:
-    """
+    """List all tasks that the user has access to. This will return a list of tasks, including the title,
+    dartboard, status, description and others.
+
     Args:
         assignee (Union[Unset, str]):
         assignee_id (Union[Unset, str]):
         dartboard (Union[Unset, str]):
         dartboard_id (Union[Unset, str]):
         description (Union[Unset, str]):
-        due_at_after (Union[Unset, datetime.datetime]):
-        due_at_before (Union[Unset, datetime.datetime]):
+        due_at_after (Union[Unset, datetime.date]):
+        due_at_before (Union[Unset, datetime.date]):
         ids (Union[Unset, str]):
         in_trash (Union[Unset, bool]):
         is_completed (Union[Unset, bool]):
@@ -268,8 +272,8 @@ def sync(
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
         size (Union[Unset, int]):
-        start_at_after (Union[Unset, datetime.datetime]):
-        start_at_before (Union[Unset, datetime.datetime]):
+        start_at_after (Union[Unset, datetime.date]):
+        start_at_before (Union[Unset, datetime.date]):
         status (Union[Unset, str]):
         status_id (Union[Unset, str]):
         tag (Union[Unset, str]):
@@ -322,8 +326,8 @@ async def asyncio_detailed(
     dartboard: Union[Unset, str] = UNSET,
     dartboard_id: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
-    due_at_after: Union[Unset, datetime.datetime] = UNSET,
-    due_at_before: Union[Unset, datetime.datetime] = UNSET,
+    due_at_after: Union[Unset, datetime.date] = UNSET,
+    due_at_before: Union[Unset, datetime.date] = UNSET,
     ids: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_completed: Union[Unset, bool] = UNSET,
@@ -331,8 +335,8 @@ async def asyncio_detailed(
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
     size: Union[Unset, int] = UNSET,
-    start_at_after: Union[Unset, datetime.datetime] = UNSET,
-    start_at_before: Union[Unset, datetime.datetime] = UNSET,
+    start_at_after: Union[Unset, datetime.date] = UNSET,
+    start_at_before: Union[Unset, datetime.date] = UNSET,
     status: Union[Unset, str] = UNSET,
     status_id: Union[Unset, str] = UNSET,
     tag: Union[Unset, str] = UNSET,
@@ -341,15 +345,17 @@ async def asyncio_detailed(
     type_: Union[Unset, str] = UNSET,
     type_id: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedConciseTaskList]:
-    """
+    """List all tasks that the user has access to. This will return a list of tasks, including the title,
+    dartboard, status, description and others.
+
     Args:
         assignee (Union[Unset, str]):
         assignee_id (Union[Unset, str]):
         dartboard (Union[Unset, str]):
         dartboard_id (Union[Unset, str]):
         description (Union[Unset, str]):
-        due_at_after (Union[Unset, datetime.datetime]):
-        due_at_before (Union[Unset, datetime.datetime]):
+        due_at_after (Union[Unset, datetime.date]):
+        due_at_before (Union[Unset, datetime.date]):
         ids (Union[Unset, str]):
         in_trash (Union[Unset, bool]):
         is_completed (Union[Unset, bool]):
@@ -357,8 +363,8 @@ async def asyncio_detailed(
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
         size (Union[Unset, int]):
-        start_at_after (Union[Unset, datetime.datetime]):
-        start_at_before (Union[Unset, datetime.datetime]):
+        start_at_after (Union[Unset, datetime.date]):
+        start_at_before (Union[Unset, datetime.date]):
         status (Union[Unset, str]):
         status_id (Union[Unset, str]):
         tag (Union[Unset, str]):
@@ -414,8 +420,8 @@ async def asyncio(
     dartboard: Union[Unset, str] = UNSET,
     dartboard_id: Union[Unset, str] = UNSET,
     description: Union[Unset, str] = UNSET,
-    due_at_after: Union[Unset, datetime.datetime] = UNSET,
-    due_at_before: Union[Unset, datetime.datetime] = UNSET,
+    due_at_after: Union[Unset, datetime.date] = UNSET,
+    due_at_before: Union[Unset, datetime.date] = UNSET,
     ids: Union[Unset, str] = UNSET,
     in_trash: Union[Unset, bool] = UNSET,
     is_completed: Union[Unset, bool] = UNSET,
@@ -423,8 +429,8 @@ async def asyncio(
     offset: Union[Unset, int] = UNSET,
     priority: Union[Unset, str] = UNSET,
     size: Union[Unset, int] = UNSET,
-    start_at_after: Union[Unset, datetime.datetime] = UNSET,
-    start_at_before: Union[Unset, datetime.datetime] = UNSET,
+    start_at_after: Union[Unset, datetime.date] = UNSET,
+    start_at_before: Union[Unset, datetime.date] = UNSET,
     status: Union[Unset, str] = UNSET,
     status_id: Union[Unset, str] = UNSET,
     tag: Union[Unset, str] = UNSET,
@@ -433,15 +439,17 @@ async def asyncio(
     type_: Union[Unset, str] = UNSET,
     type_id: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedConciseTaskList]:
-    """
+    """List all tasks that the user has access to. This will return a list of tasks, including the title,
+    dartboard, status, description and others.
+
     Args:
         assignee (Union[Unset, str]):
         assignee_id (Union[Unset, str]):
         dartboard (Union[Unset, str]):
         dartboard_id (Union[Unset, str]):
         description (Union[Unset, str]):
-        due_at_after (Union[Unset, datetime.datetime]):
-        due_at_before (Union[Unset, datetime.datetime]):
+        due_at_after (Union[Unset, datetime.date]):
+        due_at_before (Union[Unset, datetime.date]):
         ids (Union[Unset, str]):
         in_trash (Union[Unset, bool]):
         is_completed (Union[Unset, bool]):
@@ -449,8 +457,8 @@ async def asyncio(
         offset (Union[Unset, int]):
         priority (Union[Unset, str]):
         size (Union[Unset, int]):
-        start_at_after (Union[Unset, datetime.datetime]):
-        start_at_before (Union[Unset, datetime.datetime]):
+        start_at_after (Union[Unset, datetime.date]):
+        start_at_before (Union[Unset, datetime.date]):
         status (Union[Unset, str]):
         status_id (Union[Unset, str]):
         tag (Union[Unset, str]):

@@ -31,12 +31,12 @@ class Task:
             be short and descriptive. This list can be empty.
         priority (Union[None, Priority, Unset]): The priority, which is a string that can be one of the specified
             options. This is used to sort tasks and determine which tasks should be done first.
-        start_at (Union[None, Unset, str]): The start date, which is a date and time that the task should be started by
-            in ISO format. It should be at 9:00am in the timezone of the user.
-        due_at (Union[None, Unset, str]): The due date, which is a date and time that the task should be completed by in
-            ISO format. It should be at 9:00am in the timezone of the user.
-        size (Union[None, Unset, int]): The size, which is a number that represents the amount of work that needs to be
-            done. This is used to determine how long the task will take to complete.
+        start_at (Union[None, Unset, str]): The start date, which is a date that the task should be started by in ISO
+            format, like YYYY-MM-DD.
+        due_at (Union[None, Unset, str]): The due date, which is a date that the task should be completed by in ISO
+            format, like YYYY-MM-DD.
+        size (Union[None, Unset, int, str]): The size, which represents the amount of work that needs to be done. This
+            is used to determine how long the task will take to complete.
         time_tracking (Union[Unset, str]): The time tracking, which is a string that indicates the amount of time spent
             on the task in hh:mm:ss format (or an empty string if no time has been tracked).
     """
@@ -55,7 +55,7 @@ class Task:
     priority: Union[None, Priority, Unset] = UNSET
     start_at: Union[None, Unset, str] = UNSET
     due_at: Union[None, Unset, str] = UNSET
-    size: Union[None, Unset, int] = UNSET
+    size: Union[None, Unset, int, str] = UNSET
     time_tracking: Union[Unset, str] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -111,7 +111,7 @@ class Task:
         else:
             due_at = self.due_at
 
-        size: Union[None, Unset, int]
+        size: Union[None, Unset, int, str]
         if isinstance(self.size, Unset):
             size = UNSET
         else:
@@ -224,12 +224,12 @@ class Task:
 
         due_at = _parse_due_at(d.pop("dueAt", UNSET))
 
-        def _parse_size(data: object) -> Union[None, Unset, int]:
+        def _parse_size(data: object) -> Union[None, Unset, int, str]:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, int], data)
+            return cast(Union[None, Unset, int, str], data)
 
         size = _parse_size(d.pop("size", UNSET))
 
