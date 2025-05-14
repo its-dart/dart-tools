@@ -35,6 +35,6 @@
 3. Run `make deploy`
 4. Commit and push all local changes to GitHub
 
-### Dependency updating
+### Dependency upgrading
 
 1. Run `make req-up-all` to update all BE dependencies
