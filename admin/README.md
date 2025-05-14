@@ -34,3 +34,7 @@
 2. Run `uv sync`
 3. Run `make deploy`
 4. Commit and push all local changes to GitHub
+
+### Dependency updating
+
+1. Run `make req-up-all` to update all BE dependencies

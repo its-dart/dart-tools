@@ -15,3 +15,7 @@ deploy:
 # Format imports on python files.
 isort:
 	uv run isort ./dart ./examples
+
+# Update all dependencies.
+req-up-all:
+	uv lock --upgrade && uv sync
