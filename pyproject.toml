@@ -32,19 +32,19 @@ classifiers=[
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
-  "attrs",
-  "dateparser",
-  "httpx",
-  "pick",
-  "platformdirs",
+  "attrs>=25.3",
+  "dateparser>=1.2",
+  "httpx>=0.28",
+  "pick>=2.4",
+  "platformdirs>=4.3",
 ]
 
 [dependency-groups]
 dev = [
-    "black>=25.1.0",
-    "flask>=3.1.0",
-    "isort>=6.0.1",
-    "openapi-python-client",
+    "black==25.1.0",
+    "flask==3.1.1",
+    "isort==6.0.1",
+    "openapi-python-client==0.24.3",
 ]
 
 [project.urls]
