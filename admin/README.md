@@ -6,6 +6,7 @@
   - [Sync API](#sync-api)
   - [Deploy setup](#deploy-setup)
   - [Deploy](#deploy)
+  - [Dependency updating](#dependency-updating)
 
 ## Install local version
 
@@ -35,6 +36,9 @@
 3. Run `make deploy`
 4. Commit and push all local changes to GitHub
 
-### Dependency upgrading
+## Dependency updating
 
-1. Run `make req-up-all` to update all BE dependencies
+1. Manually bump versions in `pyproject.toml`
+   1. Bump the dependencies in `dependencies` to be >= the lowest functional minor version
+   2. Bump the dependencies in `[dependency-groups]` to be == the latest patch version
+2. Run `make req-up-all`
